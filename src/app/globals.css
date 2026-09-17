@@ -18,10 +18,19 @@
   --foreground: #171717;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/*
+ * Layered so Tailwind's utility classes (mx-auto, px-*, gap-*, etc. — emitted
+ * in the higher-priority `utilities` layer) can override this reset. An
+ * unlayered `* { margin: 0; padding: 0; }` here would beat every spacing
+ * utility on the site regardless of source order, since unlayered CSS always
+ * wins over any `@layer` content in the cascade.
+ */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html {
