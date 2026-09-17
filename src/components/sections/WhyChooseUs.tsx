@@ -65,7 +65,7 @@ export default function WhyChooseUs() {
               alt="ELFA EV-1 Scooty"
               width={514}
               height={538}
-              className="h-auto w-full max-w-[400px] object-contain"
+              className="h-auto w-full max-w-[560px] object-contain"
             />
           </div>
 

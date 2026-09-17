@@ -5,6 +5,7 @@ import ProductShowcase from "@/components/sections/ProductShowcase";
 import SavingsCalculator from "@/components/sections/SavingsCalculator";
 import Welcome from "@/components/sections/Welcome";
 import Features from "@/components/sections/Features";
+import CustomerFeedback from "@/components/sections/CustomerFeedback";
 import RideFeatures from "@/components/sections/RideFeatures";
 import HeadlineBanner from "@/components/sections/HeadlineBanner";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
@@ -26,6 +27,7 @@ export default function Home() {
         <SavingsCalculator />
         <Welcome />
         <Features />
+        <CustomerFeedback />
         {/* Live site repeats this CTA banner twice — once here, once near the footer */}
         <FinalCTA />
         <RideFeatures />

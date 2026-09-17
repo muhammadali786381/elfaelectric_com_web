@@ -1,131 +1,148 @@
+"use client";
+
 import Image from "next/image";
+import { Star } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation } from "swiper/modules";
+import "swiper/css";
 
 const testimonials = [
-  { name: "Muhammad Nawab", img: "/assets/images/customer-1-1.jpg", rating: 5, text: "Best electric bike in Pakistan. Battery life is excellent and the bike is very smooth to ride. Highly recommended!" },
-  { name: "Zia", img: "/assets/images/customer-2-1.jpg", rating: 5, text: "I've been using ELFA for 6 months now. Saving a lot on fuel costs. The service team is very responsive." },
-  { name: "Ghulam Sabbir", img: "/assets/images/customer-3-1.jpg", rating: 5, text: "Amazing quality and build. The range is as advertised — I easily cover 90+ km on a single charge daily." },
-  { name: "Muhammad Hussain", img: "/assets/images/customer-4-1.jpg", rating: 5, text: "Very impressed with the top speed and power. The disc brakes provide excellent stopping power. Worth every rupee." },
-  { name: "Adeel Ahmed", img: "/assets/images/customer-5-1.jpg", rating: 5, text: "Switched from petrol 8 months ago. Saving over PKR 8,000/month. ELFA has changed my commute completely." },
-  { name: "Alamgir", img: "/assets/images/customer-6.jpg", rating: 5, text: "Great customer support and after-sales service. The team helped me with setup and any questions I had." },
-  { name: "Danial Baig", img: "/assets/images/customer-7.jpg", rating: 5, text: "The digital LED meter is impressive — shows everything clearly. Stylish design that turns heads on the road." },
-  { name: "Farzan Raza", img: "/assets/images/customer-8.jpg", rating: 5, text: "Water-resistant battery is a big plus for monsoon season. Rode through heavy rain with zero issues." },
-  { name: "Ghareebo Khan Baloch", img: "/assets/images/customer-9.jpg", rating: 4, text: "Really good electric bike for the price. Performance is strong and the LiFePO4 battery is very safe." },
-  { name: "Haji Zareen", img: "/assets/images/customer-10.jpg", rating: 5, text: "My second ELFA purchase. Bought one for my son too. Family-approved! Great company with great products." },
-  { name: "Muhammad Ilyas", img: "/assets/images/customer-11-1.jpg", rating: 5, text: "The app tracking feature is very useful. I can monitor battery level before leaving home. Smart innovation." },
-  { name: "Umer Farooq", img: "/assets/images/customer-1a.jpg", rating: 5, text: "Excellent fuel savings. I calculated and I save about PKR 10,000 per month. This bike paid for itself!" },
+  {
+    name: "Muhammad Nawab",
+    img: "/assets/images/customer-1-1.jpg",
+    rating: 5,
+    text: "ELFA EV bike teen maheene se use kar raha hoon, bohot achi performance hai aur petrol ka kharcha bilkul khatam ho gaya hai. Maintenance bhi na ke barabar hai.",
+  },
+  {
+    name: "Zia",
+    img: "/assets/images/customer-2-1.jpg",
+    rating: 5,
+    text: "ELFA EV-125 ka rider hoon aur bohot mutma'in hoon. Charging asaan hai aur range roz ki zaroorat ke liye kaafi hai. Sab ko recommend karta hoon.",
+  },
+  {
+    name: "Ghulam Sabbir",
+    img: "/assets/images/customer-3-1.jpg",
+    rating: 5,
+    text: "ELFA bike teen maheene se chala raha hoon, build quality bohot mazboot hai aur ride bohot smooth hai. Best decision tha electric par switch karna.",
+  },
+  {
+    name: "Muhammad Hussain",
+    img: "/assets/images/customer-4-1.jpg",
+    rating: 5,
+    text: "ELFA bike January 2025 mein khareedi thi ab 10 maheene ho gaye hain. Aaj tak koi complaint nahi aayi, baarish aur paani mein bhi perfect chalti hai. Main is se bohot mutma'in aur khush hoon, aur apne doston ko bhi recommend karta hoon. Meri dua hai ke poora Pakistan EV par shift ho taake hum sab green city ka hissa ban sakein!",
+  },
+  {
+    name: "Adeel Ahmed",
+    img: "/assets/images/customer-5-1.jpg",
+    rating: 5,
+    text: "ELFA chala raha hoon aur ye Karachi ki number one electric bike lagti hai mujhe. Power aur range dono acha hai.",
+  },
+  {
+    name: "Alamgir",
+    img: "/assets/images/customer-6.jpg",
+    rating: 5,
+    text: "EV Technology mere liye faidemand hai — fuel ka masla khatam, aur ride bhi comfortable hai. Family ke liye bhi safe hai.",
+  },
+  {
+    name: "Danial Baig",
+    img: "/assets/images/customer-7.jpg",
+    rating: 5,
+    text: "ELFA teen chaar maheenon se use kar raha hoon, koi dikkat nahi aayi. Digital meter aur design dono pasand aaye.",
+  },
+  {
+    name: "Farzan Raza",
+    img: "/assets/images/customer-8.jpg",
+    rating: 5,
+    text: "ELFA EV-125 6 maheenon se chala raha hoon. Pehle petrol wali 125 par roz ka 500-1000 rupay lagta tha, ab petrol ka kharcha zero hai. Maintenance bhi zero ke barabar hai na oil, na chain ka masla. Ride bohot comfort-able hai, main ELFA sab ko recommend karta hoon!",
+  },
+  {
+    name: "Ghareebo Khan Baloch",
+    img: "/assets/images/customer-9.jpg",
+    rating: 5,
+    text: "ELFA EV-125 use karte hue 9 maheene ho gaye hain. Har mahine paise bachte hain na petrol ka kharcha, bohot aramdeh aur support bhi zabardast raha hai, lekin ELFA ko sabse zyada dosto ko diya hai!",
+  },
+  {
+    name: "Haji Zareen",
+    img: "/assets/images/customer-10.jpg",
+    rating: 5,
+    text: "ELFA Scooty 7-8 maheene se use kar raha hoon. Do dafa ise Quetta bus ke zariye le gaya hoon mashallah bohot kaamyab aur aaraam deh ride hai. Ab tak koi badi dikkat nahi aayi, aur 70-80 km tak chal jaati hai, bohot faidemand hai. Yeh buzurg aur bari umar walon ke liye perfect ride hai hum bohot khush aur mutma'in hain!",
+  },
+  {
+    name: "Muhammad Ilyas",
+    img: "/assets/images/customer-11-1.jpg",
+    rating: 5,
+    text: "ELFA 125 teen maheene se use kar raha hoon. App tracking feature bohot useful hai, ghar se nikalne se pehle battery level check kar leta hoon. Smart innovation hai.",
+  },
+  {
+    name: "Nazir Khatak",
+    img: "/assets/images/customer-1aa.jpg",
+    rating: 5,
+    text: "ELFA 125 ek maheene se use kar raha hoon, ab tak performance se bohot khush hoon. Charging fast hai aur range bhi expectation se zyada mili.",
+  },
+  {
+    name: "Umer Farooq",
+    img: "/assets/images/customer-1a.jpg",
+    rating: 5,
+    text: "ELFA bike teen maheene se chala raha hoon. Excellent fuel savings — hisaab lagaya to PKR 10,000 per month bach rahe hain. Ye bike apna paisa khud wasool kar leti hai!",
+  },
 ];
 
 function StarRating({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-0.5">
+    <div className="flex gap-1">
       {[1, 2, 3, 4, 5].map((star) => (
-        <svg
+        <Star
           key={star}
-          className={`w-4 h-4 ${star <= rating ? "text-yellow-400" : "text-gray-200"}`}
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
+          className={`h-5 w-5 ${star <= rating ? "fill-[#ffc107] text-[#ffc107]" : "fill-transparent text-white/30"}`}
+        />
       ))}
     </div>
   );
 }
 
 export default function Testimonials() {
-  // Split into 3 columns for a masonry-style layout
-  const cols = [
-    testimonials.filter((_, i) => i % 3 === 0),
-    testimonials.filter((_, i) => i % 3 === 1),
-    testimonials.filter((_, i) => i % 3 === 2),
-  ];
-
   return (
-    <section className="py-20 lg:py-28 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-14">
-          <span className="inline-block text-red-600 text-sm font-bold uppercase tracking-widest mb-3">
-            Reviews
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
-            Our Happy Customers
-          </h2>
-          <p className="text-gray-500 max-w-xl mx-auto">
-            Join thousands of satisfied ELFA riders across Pakistan.
-          </p>
-          {/* Average rating */}
-          <div className="flex items-center justify-center gap-2 mt-4">
-            <StarRating rating={5} />
-            <span className="font-bold text-gray-700">4.9 / 5</span>
-            <span className="text-gray-400 text-sm">({testimonials.length}+ reviews)</span>
-          </div>
-        </div>
+    <section className="bg-white py-16 lg:py-20">
+      <h2 className="font-montserrat mb-10 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
+        Our Happy Customers
+      </h2>
 
-        {/* Masonry columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {cols.map((col, ci) => (
-            <div key={ci} className="flex flex-col gap-4">
-              {col.map((t) => (
-                <div
-                  key={t.name}
-                  className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow border border-gray-100"
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
-                      <Image
-                        src={t.img}
-                        alt={t.name}
-                        fill
-                        className="object-cover"
-                        sizes="40px"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold text-gray-900 text-sm">{t.name}</p>
-                      <StarRating rating={t.rating} />
-                    </div>
-                  </div>
-                  <p className="text-gray-500 text-sm leading-relaxed">&ldquo;{t.text}&rdquo;</p>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-
-        {/* Customer photos strip */}
-        <div className="mt-14 text-center">
-          <p className="text-sm text-gray-400 uppercase tracking-widest font-semibold mb-6">
-            Customer Photo Gallery
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              "/assets/images/customer-1aa.jpg",
-              "/assets/images/customer-2a.jpg",
-              "/assets/images/customer-1a.jpg",
-              "/assets/images/customer-5-1.jpg",
-              "/assets/images/customer-3-1.jpg",
-              "/assets/images/customer-7.jpg",
-            ].map((src, i) => (
-              <div
-                key={i}
-                className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-white shadow-md ring-2 ring-gray-100 hover:ring-red-400 transition-all"
-              >
-                <Image
-                  src={src}
-                  alt={`Customer ${i + 1}`}
-                  fill
-                  className="object-cover"
-                  sizes="80px"
-                />
+      <Swiper
+        modules={[Autoplay, Navigation]}
+        slidesPerView={1.15}
+        centeredSlides
+        spaceBetween={20}
+        loop
+        speed={800}
+        autoplay={{ delay: 4000, pauseOnMouseEnter: true, disableOnInteraction: true }}
+        breakpoints={{
+          1024: { slidesPerView: 1.6, centeredSlides: false, spaceBetween: 20 },
+        }}
+        className="!px-4 sm:!px-6"
+      >
+        {testimonials.map((t) => (
+          <SwiperSlide key={t.name}>
+            <div
+              className="relative grid h-full grid-cols-[224px_1fr] overflow-hidden rounded-[16px]"
+              style={{ backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)" }}
+            >
+              <div className="relative hidden h-full min-h-[346px] w-[224px] shrink-0 sm:block">
+                <Image src={t.img} alt={t.name} fill className="object-cover" sizes="224px" />
               </div>
-            ))}
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
-              +More
+              <div className="relative flex flex-col justify-center gap-3 p-6 sm:p-8 sm:pr-[180px]">
+                <h3 className="font-montserrat text-[24px] font-bold text-white sm:text-[30px]">{t.name}</h3>
+                <StarRating rating={t.rating} />
+                <p className="font-roboto text-[15px] leading-relaxed text-white sm:text-[17px]">
+                  &ldquo;{t.text}&rdquo;
+                </p>
+              </div>
+              <div className="absolute right-8 top-1/2 hidden h-[150px] w-[150px] -translate-y-1/2 overflow-hidden rounded-[8px] border-2 border-white sm:block">
+                <Image src={t.img} alt="" fill className="object-cover" sizes="140px" />
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </section>
   );
 }

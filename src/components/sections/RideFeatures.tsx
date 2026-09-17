@@ -1,19 +1,25 @@
+import Image from "next/image";
+
 const features = [
   {
     title: "Digital LED Meter",
     desc: "Engaging LED display showing speed modes, battery alerts, and kilometers covered.",
+    image: "/assets/images/metter.webp",
   },
   {
     title: "Disc Brake",
     desc: "Reliable brakes that ensure smooth stopping, with enhanced stability for a safe ride every time.",
+    image: "/assets/images/Disc-Brake.png",
   },
   {
     title: "Superior Performance Tyres",
     desc: "Tyres that guarantee stability, smooth handling, and optimal ground clearance.",
+    image: "/assets/images/bike-t.webp",
   },
   {
     title: "Water Resistant Battery",
     desc: "Protects the battery from water and allowing you to ride confidently in the rain.",
+    image: "/assets/images/batter-1.webp",
   },
 ];
 
@@ -30,10 +36,16 @@ export default function RideFeatures() {
         {features.map((f) => (
           <div
             key={f.title}
-            className="flex h-[330px] flex-col justify-end rounded-[19px] border-[3px] border-[#61ce70] bg-black p-6"
+            className="relative flex h-[330px] flex-col justify-end overflow-hidden rounded-[19px] border-[3px] border-[#61ce70] bg-black p-6"
           >
-            <h3 className="font-montserrat mb-2 text-center text-[18px] font-bold text-white">{f.title}</h3>
-            <p className="font-roboto text-center text-[14px] leading-relaxed text-white/75">{f.desc}</p>
+            <Image src={f.image} alt={f.title} fill className="object-cover" sizes="(min-width: 1024px) 25vw, 50vw" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+            <h3 className="font-montserrat relative z-10 mb-2 text-center text-[18px] font-bold text-white">
+              {f.title}
+            </h3>
+            <p className="font-roboto relative z-10 text-center text-[14px] leading-relaxed text-white/75">
+              {f.desc}
+            </p>
           </div>
         ))}
       </div>
