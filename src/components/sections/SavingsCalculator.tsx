@@ -2,169 +2,146 @@
 
 import { useState } from "react";
 
-const PETROL_PRICE = 280; // PKR per litre (default)
-const KM_PER_LITRE = 45;
-const KWH_COST = 50; // PKR per kWh (approx)
-const KM_PER_KWH = 80; // ELFA efficiency
+type CalculatorConfig = {
+  id: string;
+  label: string;
+  kmPerLitrePetrol: number;
+  kmPerUnitElfa: number;
+};
 
-export default function SavingsCalculator() {
-  const [kmPerDay, setKmPerDay] = useState(30);
-  const [petrolPrice, setPetrolPrice] = useState(PETROL_PRICE);
+// km/kWh derived from each bike's own spec sheet: battery capacity (V x Ah)
+// against its rated range — EV-125 is 72V/30Ah (2.16kWh) for 100+ km,
+// EV-1 is 64V/30Ah (1.92kWh) for 75 km.
+const calculators: CalculatorConfig[] = [
+  { id: "ev125", label: "EV-125 vs Petrol Bike", kmPerLitrePetrol: 45, kmPerUnitElfa: 46 },
+  { id: "ev1", label: "EV-1 vs Petrol Bike", kmPerLitrePetrol: 40, kmPerUnitElfa: 39 },
+];
 
-  // Annual savings calc
-  const kmPerYear = kmPerDay * 365;
-  const petrolCostPerYear = (kmPerYear / KM_PER_LITRE) * petrolPrice;
-  const electricCostPerYear = (kmPerYear / KM_PER_KWH) * KWH_COST;
-  const annualSavings = petrolCostPerYear - electricCostPerYear;
-  const monthlySavings = annualSavings / 12;
+const fmt = (n: number) => `Rs. ${Math.round(n).toLocaleString("en-US")}`;
 
-  const fmt = (n: number) =>
-    new Intl.NumberFormat("en-PK", {
-      style: "currency",
-      currency: "PKR",
-      maximumFractionDigits: 0,
-    }).format(Math.round(n));
+function CalculatorCard({ config }: { config: CalculatorConfig }) {
+  const [mileage, setMileage] = useState(50);
+  const [petrolPrice, setPetrolPrice] = useState(386);
+  const [unitCost, setUnitCost] = useState(55);
 
-  const savingPct = Math.round((annualSavings / petrolCostPerYear) * 100);
+  const annualKm = mileage * 365;
+  const petrolCost = (annualKm / config.kmPerLitrePetrol) * petrolPrice;
+  const elfaCost = (annualKm / config.kmPerUnitElfa) * unitCost;
+  const savings = petrolCost - elfaCost;
 
   return (
-    <section className="bg-gray-50 py-20 lg:py-28" id="calculator">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <span className="inline-block text-red-600 text-sm font-bold uppercase tracking-widest mb-3">
-            Smart Choice
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
-            ELFA Savings Calculator
-          </h2>
-          <p className="text-gray-500 max-w-xl mx-auto">
-            See how much you save by switching from petrol to ELFA Electric.
-          </p>
-        </div>
+    <div
+      className="rounded-xl p-6 sm:p-8 lg:p-10"
+      style={{ backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)" }}
+    >
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10">
+        {/* Inputs */}
+        <div>
+          <h3 className="font-montserrat text-[24px] font-bold text-white sm:text-[28px]">
+            Calculate Your Savings
+          </h3>
+          <p className="font-roboto mb-6 text-[14px] italic text-white/70">{config.label}</p>
 
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* Input panel */}
-            <div className="p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-gray-100">
-              <h3 className="text-lg font-black text-gray-900 uppercase tracking-wide mb-7">
-                Calculate Your Savings
-              </h3>
-
-              {/* KM per day */}
-              <div className="mb-8">
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-sm font-semibold text-gray-700">
-                    Daily Distance
-                  </label>
-                  <span className="text-red-600 font-black text-lg">
-                    {kmPerDay} km
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={5}
-                  max={200}
-                  value={kmPerDay}
-                  onChange={(e) => setKmPerDay(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-red-600"
-                />
-                <div className="flex justify-between mt-1 text-xs text-gray-400">
-                  <span>5 km</span>
-                  <span>200 km</span>
-                </div>
-              </div>
-
-              {/* Petrol price */}
-              <div className="mb-8">
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-sm font-semibold text-gray-700">
-                    Petrol Price per Litre
-                  </label>
-                  <span className="text-red-600 font-black text-lg">
-                    PKR {petrolPrice}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={200}
-                  max={500}
-                  step={5}
-                  value={petrolPrice}
-                  onChange={(e) => setPetrolPrice(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-red-600"
-                />
-                <div className="flex justify-between mt-1 text-xs text-gray-400">
-                  <span>PKR 200</span>
-                  <span>PKR 500</span>
-                </div>
-              </div>
-
-              {/* Assumptions */}
-              <div className="bg-gray-50 rounded-xl p-4 text-xs text-gray-500 space-y-1">
-                <p className="font-semibold text-gray-600 mb-2">Assumptions:</p>
-                <p>• Petrol bike: {KM_PER_LITRE} km/litre average</p>
-                <p>• ELFA: {KM_PER_KWH} km/kWh efficiency</p>
-                <p>• Electricity: PKR {KWH_COST}/kWh</p>
-              </div>
+          <div className="mb-6">
+            <div className="mb-2 flex items-center justify-between">
+              <label className="font-montserrat text-[16px] font-semibold text-white sm:text-[18px]">
+                Daily Mileage (km)
+              </label>
+              <span className="font-montserrat rounded-lg bg-[#fcfcfc] px-3 py-1.5 text-[14px] font-semibold text-[#212121]">
+                {mileage} km
+              </span>
             </div>
+            <input
+              type="range"
+              min={5}
+              max={150}
+              value={mileage}
+              onChange={(e) => setMileage(Number(e.target.value))}
+              className="h-2 w-full cursor-pointer appearance-none rounded-full bg-black/40 accent-[#61ce70]"
+            />
+          </div>
 
-            {/* Results panel */}
-            <div className="p-8 lg:p-10 bg-gradient-to-br from-gray-950 to-gray-900 text-white">
-              <h3 className="text-lg font-black text-white uppercase tracking-wide mb-7">
-                Your Annual Savings
-              </h3>
+          <div className="mb-6">
+            <label className="font-montserrat mb-2 block text-[16px] font-semibold text-white sm:text-[18px]">
+              Petrol Price (Rs. per liter)
+            </label>
+            <input
+              type="number"
+              value={petrolPrice}
+              onChange={(e) => setPetrolPrice(Number(e.target.value))}
+              className="font-roboto h-[49px] w-full rounded-lg bg-[#fcfcfc] px-4 text-[16px] text-[#212121] outline-none"
+            />
+          </div>
 
-              {/* Big savings number */}
-              <div className="mb-6 bg-red-600 rounded-2xl p-6 text-center">
-                <p className="text-red-200 text-xs uppercase tracking-widest mb-1">
-                  You save per year
-                </p>
-                <p className="text-4xl font-black text-white">{fmt(annualSavings)}</p>
-                <p className="text-red-200 text-sm mt-1">{savingPct}% less than petrol</p>
-              </div>
-
-              {/* Breakdown */}
-              <div className="space-y-3">
-                {[
-                  {
-                    label: "Monthly Savings",
-                    value: fmt(monthlySavings),
-                    color: "text-green-400",
-                  },
-                  {
-                    label: "Annual Petrol Cost",
-                    value: fmt(petrolCostPerYear),
-                    color: "text-red-400",
-                    sub: "without ELFA",
-                  },
-                  {
-                    label: "Annual Electricity Cost",
-                    value: fmt(electricCostPerYear),
-                    color: "text-blue-400",
-                    sub: "with ELFA",
-                  },
-                ].map((row) => (
-                  <div
-                    key={row.label}
-                    className="flex items-center justify-between bg-white/5 rounded-xl px-4 py-3"
-                  >
-                    <div>
-                      <p className="text-gray-300 text-sm font-medium">{row.label}</p>
-                      {row.sub && (
-                        <p className="text-gray-500 text-xs">{row.sub}</p>
-                      )}
-                    </div>
-                    <p className={`font-black text-lg ${row.color}`}>{row.value}</p>
-                  </div>
-                ))}
-              </div>
-
-              <p className="text-gray-600 text-xs text-center mt-5">
-                * Calculations are estimates based on average usage
-              </p>
-            </div>
+          <div>
+            <label className="font-montserrat mb-2 block text-[16px] font-semibold text-white sm:text-[18px]">
+              Electricity Unit Cost (Rs.)
+            </label>
+            <input
+              type="number"
+              value={unitCost}
+              onChange={(e) => setUnitCost(Number(e.target.value))}
+              className="font-roboto h-[49px] w-full rounded-lg bg-[#fcfcfc] px-4 text-[16px] text-[#212121] outline-none"
+            />
           </div>
         </div>
+
+        {/* Results */}
+        <div>
+          <h3 className="font-montserrat mb-6 text-[24px] font-bold text-white sm:text-[28px]">
+            Your Annual Savings
+          </h3>
+
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between border-b border-white/15 py-4">
+              <span className="font-montserrat text-[15px] font-semibold text-white sm:text-[16px]">
+                Annual Cost of Petrol
+              </span>
+              <span className="font-montserrat text-[18px] font-bold text-white sm:text-[20px]">
+                {fmt(petrolCost)}
+              </span>
+            </div>
+            <div className="flex items-center justify-between border-b border-white/15 py-4">
+              <span className="font-montserrat text-[15px] font-semibold text-white sm:text-[16px]">
+                Cost of Running ELFA {config.id === "ev125" ? "EV-125" : "EV-1"}
+              </span>
+              <span className="font-montserrat text-[18px] font-bold text-white sm:text-[20px]">
+                {fmt(elfaCost)}
+              </span>
+            </div>
+            <div className="flex items-center justify-between py-4">
+              <span className="font-montserrat text-[15px] font-semibold text-white sm:text-[16px]">
+                Annual Savings
+              </span>
+              <span className="font-montserrat text-[18px] font-bold text-white sm:text-[20px]">
+                {fmt(savings)}
+              </span>
+            </div>
+          </div>
+
+          <a
+            href="/contact-us"
+            className="font-montserrat mt-4 flex h-[52px] w-full items-center justify-center rounded-lg bg-[#fcfcfc] text-[16px] font-semibold text-[#212121] transition-opacity hover:opacity-90"
+          >
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function SavingsCalculator() {
+  return (
+    <section className="bg-white py-16 lg:py-20">
+      <h2 className="font-montserrat mb-8 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
+        ELFA Savings Calculator
+      </h2>
+
+      <div className="mx-auto flex w-full max-w-[1140px] flex-col gap-5 px-4 sm:px-6">
+        {calculators.map((config) => (
+          <CalculatorCard key={config.id} config={config} />
+        ))}
       </div>
     </section>
   );
