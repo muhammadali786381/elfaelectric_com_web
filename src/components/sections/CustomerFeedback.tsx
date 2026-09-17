@@ -76,8 +76,8 @@ export default function CustomerFeedback() {
                 }}
                 className="w-full max-w-[380px] !pb-10"
               >
-                {videos.map((v) => (
-                  <SwiperSlide key={v.youtubeId} className="!w-[130px]">
+                {[...videos, ...videos, ...videos].map((v, i) => (
+                  <SwiperSlide key={`${v.youtubeId}-${i}`} className="!w-[130px]">
                     <button
                       type="button"
                       onClick={() => setOpenVideo(v.youtubeId)}
