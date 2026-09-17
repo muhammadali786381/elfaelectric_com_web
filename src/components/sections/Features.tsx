@@ -25,33 +25,37 @@ export default function Features() {
   return (
     <>
       {/* Solutions that we offer */}
-      <section className="overflow-hidden bg-white py-16 lg:py-20">
+      <section
+        className="overflow-hidden py-16 lg:py-20"
+        style={{ backgroundImage: "linear-gradient(135deg, #1a1a1a 0%, #010404 55%, #103d1e 100%)" }}
+      >
         <div className="mx-auto w-full max-w-[1150px] px-4 sm:px-6">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-[#212121] sm:text-[41px]">
+              <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-white sm:text-[41px]">
                 Solutions that we offer
               </h2>
               <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
                 {solutions.map((s) => (
                   <div key={s.title}>
-                    <h3 className="font-montserrat mb-2 text-[19px] font-bold text-[#212121] sm:text-[20px]">
+                    <h3 className="font-montserrat mb-2 text-[19px] font-bold text-white sm:text-[20px]">
                       {s.title}
                     </h3>
-                    <p className="font-roboto text-[15px] leading-relaxed text-[#212121]/80">{s.desc}</p>
+                    <p className="font-roboto text-[15px] leading-relaxed text-white/75">{s.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="relative flex justify-center">
-              <div className="absolute right-0 top-1/2 h-[420px] w-[260px] -translate-y-1/2 -rotate-[18deg] bg-[#61ce70]/25" />
+            {/* Real live-site asset — scooty + green bolt graphic are baked
+                into this one image (background-position: top right, contain). */}
+            <div className="flex justify-center lg:justify-end">
               <Image
-                src="/assets/images/scooty-hero.webp"
+                src="/assets/images/solutions.webp"
                 alt="ELFA EV-1 Scooty"
-                width={520}
-                height={624}
-                className="relative z-10 h-auto w-full max-w-[420px] object-contain"
+                width={753}
+                height={1024}
+                className="h-auto w-full max-w-[300px] object-contain"
               />
             </div>
           </div>
