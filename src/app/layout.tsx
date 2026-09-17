@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Poppins, Roboto } from "next/font/google";
+import { Anton, Montserrat, Poppins, Roboto } from "next/font/google";
 import FloatingActions from "@/components/layout/FloatingActions";
 import "./globals.css";
 
@@ -25,6 +25,13 @@ const poppins = Poppins({
   display: "swap",
 });
 
+const anton = Anton({
+  variable: "--font-anton",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "ELFA Electric – Best Selling Electric Bike in Pakistan",
   description:
@@ -47,7 +54,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${montserrat.variable} ${roboto.variable} ${poppins.variable}`}
+      className={`${montserrat.variable} ${roboto.variable} ${poppins.variable} ${anton.variable}`}
     >
       <body className="min-h-screen flex flex-col antialiased">
         {children}
