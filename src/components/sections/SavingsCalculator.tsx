@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Calculator } from "lucide-react";
 
 type CalculatorConfig = {
   id: string;
@@ -31,7 +32,8 @@ function CalculatorCard({ config }: { config: CalculatorConfig }) {
 
   return (
     <div
-      className="rounded-xl p-6 sm:p-8 lg:p-10"
+      id={`${config.id}-calculator`}
+      className="scroll-mt-24 rounded-xl p-6 sm:p-8 lg:p-10"
       style={{ backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)" }}
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10">
@@ -137,6 +139,23 @@ export default function SavingsCalculator() {
       <h2 className="font-montserrat mb-8 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
         ELFA Savings Calculator
       </h2>
+
+      <div className="mb-8 flex flex-wrap justify-center gap-5">
+        <a
+          href="#ev125-calculator"
+          className="font-roboto inline-flex h-10 items-center gap-2 rounded-[3px] bg-[#212121] px-5 text-[16px] font-normal text-white transition-colors hover:bg-black"
+        >
+          <Calculator className="h-4 w-4" strokeWidth={2} />
+          EV-125 BIKE
+        </a>
+        <a
+          href="#ev1-calculator"
+          className="font-roboto inline-flex h-10 items-center gap-2 rounded-[3px] bg-[#212121] px-5 text-[16px] font-normal text-white transition-colors hover:bg-black"
+        >
+          <Calculator className="h-4 w-4" strokeWidth={2} />
+          EV-1 Scooty
+        </a>
+      </div>
 
       <div className="mx-auto flex w-full max-w-[1140px] flex-col gap-5 px-4 sm:px-6">
         {calculators.map((config) => (
