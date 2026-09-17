@@ -1,22 +1,27 @@
 "use client";
 
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { Heart, ThumbsUp, Play, ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef } from "react";
+import { Heart, ThumbsUp, Play, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
 
+// Real videos + thumbnails pulled directly from the live site's carousel
+// (each slide is a lightbox link with a YouTube embed src).
 const videos = [
-  { name: "Muhammad Hussain", img: "/assets/images/customer-4-1.jpg" },
-  { name: "Agay Bashir", img: "/assets/images/customer-3-1.jpg" },
-  { name: "Umer Farooq", img: "/assets/images/customer-1a.jpg" },
-  { name: "Zia", img: "/assets/images/customer-2-1.jpg" },
+  { title: "End_Frame", thumb: "/assets/images/End_Frame.jpg", youtubeId: "C3-GxOpgu_4" },
+  { title: "Thumbnail", thumb: "/assets/images/Thumbnail.jpg", youtubeId: "HLvrKI3gR5U" },
+  { title: "End_Frame-1", thumb: "/assets/images/End_Frame-1.jpg", youtubeId: "SSH8M8xy64k" },
+  { title: "End_Frame-2", thumb: "/assets/images/End_Frame-2.jpg", youtubeId: "qWajE9foGCE" },
 ];
 
 export default function CustomerFeedback() {
   const swiperRef = useRef<SwiperType | null>(null);
+  const [openVideo, setOpenVideo] = useState<string | null>(null);
 
   return (
     <section
@@ -42,7 +47,7 @@ export default function CustomerFeedback() {
 
           {/* Video testimonial carousel + heading */}
           <div className="relative">
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-3">
               <button
                 type="button"
                 onClick={() => swiperRef.current?.slidePrev()}
@@ -52,36 +57,41 @@ export default function CustomerFeedback() {
                 <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
               </button>
 
+              {/* Matches the live site's Elementor "coverflow" carousel
+                  (skin:coverflow, loop, 5s autoplay, 500ms speed) using
+                  Swiper's own effect-coverflow demo pattern. */}
               <Swiper
-                modules={[Autoplay]}
-                slidesPerView={3}
+                modules={[Autoplay, EffectCoverflow, Navigation, Pagination]}
+                effect="coverflow"
+                grabCursor
                 centeredSlides
-                spaceBetween={14}
+                slidesPerView="auto"
+                loop
                 speed={500}
-                autoplay={{ delay: 5000, pauseOnMouseEnter: true, disableOnInteraction: true }}
+                autoplay={{ delay: 2000, disableOnInteraction: false, pauseOnMouseEnter: false }}
+                coverflowEffect={{ rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: true }}
+                pagination={{ clickable: true }}
                 onSwiper={(s) => {
                   swiperRef.current = s;
                 }}
-                className="w-full max-w-[380px] !overflow-visible [&_.swiper-slide]:transition-transform [&_.swiper-slide]:duration-300 [&_.swiper-slide-active]:z-10 [&_.swiper-slide-active]:scale-125"
+                className="w-full max-w-[380px] !pb-10"
               >
                 {videos.map((v) => (
-                  <SwiperSlide key={v.name} className="!h-auto">
-                    <div className="relative aspect-[2/3] overflow-hidden rounded-[10px] border-2 border-[#61ce70] bg-black shadow-xl">
-                      <Image src={v.img} alt={v.name} fill className="object-cover" sizes="120px" />
+                  <SwiperSlide key={v.youtubeId} className="!w-[130px]">
+                    <button
+                      type="button"
+                      onClick={() => setOpenVideo(v.youtubeId)}
+                      aria-label={`Play video: ${v.title}`}
+                      className="relative block aspect-[2/3] w-full overflow-hidden rounded-[10px] border-2 border-[#61ce70] bg-black shadow-xl"
+                    >
+                      <Image src={v.thumb} alt={v.title} fill className="object-cover" sizes="130px" />
                       <div className="absolute inset-0 bg-black/25" />
-                      <Image
-                        src="/assets/images/logo.png"
-                        alt=""
-                        width={60}
-                        height={11}
-                        className="absolute left-1.5 top-1.5 h-auto w-[38px] brightness-0 invert"
-                      />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-black/30">
-                          <Play className="h-3 w-3 fill-white text-white" />
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-black/30">
+                          <Play className="h-3.5 w-3.5 fill-white text-white" />
                         </div>
                       </div>
-                    </div>
+                    </button>
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -111,6 +121,34 @@ export default function CustomerFeedback() {
           </div>
         </div>
       </div>
+
+      {openVideo && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4"
+          onClick={() => setOpenVideo(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setOpenVideo(null)}
+            aria-label="Close video"
+            className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <div
+            className="aspect-video w-full max-w-3xl overflow-hidden rounded-[12px] bg-black"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <iframe
+              src={`https://www.youtube.com/embed/${openVideo}?autoplay=1&rel=0`}
+              title="Customer feedback video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="h-full w-full"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
