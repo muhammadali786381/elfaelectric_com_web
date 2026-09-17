@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -17,19 +16,14 @@ export default function Hero() {
 
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="relative h-[min(78vh,640px)] min-h-[520px] w-full md:h-[495px] md:min-h-0">
-        <div className="absolute inset-0">
-          <Image
-            src="/assets/images/Hero-Banner-Background.webp"
-            alt=""
-            fill
-            priority
-            className="object-cover object-center"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-black/20" />
-        </div>
-
+      {/*
+       * Live site's hero holds a constant ~0.3561 height/width ratio (684px
+       * tall at a 1920px viewport, 512.8px at 1440px, 911.6px at 2560px —
+       * verified directly against elfaelectric.com) rather than a fixed
+       * pixel height, so it's replicated here with aspect-ratio instead of
+       * a flat md:h-[495px].
+       */}
+      <div className="relative h-[min(78vh,640px)] min-h-[520px] w-full md:aspect-[1920/684] md:h-auto md:min-h-0">
         <Swiper
           modules={[Autoplay, Navigation]}
           onSwiper={(swiper) => {

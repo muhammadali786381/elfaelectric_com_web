@@ -8,6 +8,7 @@ export type Slide =
   | {
       id: string;
       layout: "split";
+      background: string;
       title: string;
       subtitle: string;
       productImage: string;
@@ -18,19 +19,21 @@ export type Slide =
   | {
       id: string;
       layout: "center";
+      background: string;
       title: string;
       subtitle: string;
-      productImage: string;
-      productAlt: string;
     };
 
 export const slides: Slide[] = [
   {
     id: "ev125",
     layout: "split",
+    // Full-bleed product photo — live site uses this as the left-column
+    // image itself (edge-to-edge, cropped), not a floating cutout.
+    background: "/assets/images/Hero-Banner-Background.webp",
     title: "EV-125 BIKE",
     subtitle: "Designed to perform on rough and\nchallenging roads!",
-    productImage: "/assets/images/ev125-hero.webp",
+    productImage: "/assets/images/removed-ppr.webp",
     productAlt: "ELFA EV-125 electric bike",
     exploreHref: "/ev-125",
     specs: [
@@ -43,6 +46,7 @@ export const slides: Slide[] = [
   {
     id: "scooty",
     layout: "split",
+    background: "/assets/images/Hero-Banner-Background.webp",
     title: "EV-1 Scooty",
     subtitle: "Ready to handle every local\nroad challenge.",
     productImage: "/assets/images/scooty-hero.webp",
@@ -58,9 +62,10 @@ export const slides: Slide[] = [
   {
     id: "battery",
     layout: "center",
+    // Live site uses a single flat background photo for this slide — no
+    // separate floating product cutout.
+    background: "/assets/images/home-page.jpg",
     title: "Advanced Lithium Iron Phosphate\nBatteries",
     subtitle: "Safer and longer-lasting than graphene.",
-    productImage: "/assets/images/bike-red.png",
-    productAlt: "ELFA bike with LiFePO4 battery",
   },
 ];

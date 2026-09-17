@@ -8,22 +8,31 @@ import type { Slide, Spec } from "./hero.data";
 
 function SpecCard({ spec }: { spec: Spec }) {
   return (
-    <div className="flex w-[calc(50%-6.5px)] shrink-0 flex-col gap-[5px] sm:w-[110px] lg:w-[131px]">
-      <div className="flex h-[78px] w-full flex-col items-center justify-between rounded-[9px] border-2 border-white bg-black/30 px-[5px] py-2 lg:h-[91px] lg:py-[10px]">
-        <span className="font-montserrat text-center text-[11px] font-semibold leading-tight text-white lg:text-[13px] lg:leading-[13px]">
+    <div className="flex w-[calc(50%-8px)] shrink-0 flex-col gap-[6px] sm:w-[150px] xl:w-[185px]">
+      <div className="flex h-[95px] w-full flex-col items-center justify-between rounded-[9px] border-2 border-white bg-black/30 px-[6px] py-2 xl:h-[112px]">
+        <span className="font-montserrat text-center text-[12px] font-semibold leading-tight text-white xl:text-[15px] xl:leading-[15px]">
           {spec.value}
         </span>
         <Image
           src={spec.icon}
           alt=""
-          width={36}
-          height={36}
-          className="h-7 w-7 object-contain brightness-0 invert lg:h-9 lg:w-9"
+          width={56}
+          height={56}
+          className="h-9 w-9 object-contain brightness-0 invert xl:h-[56px] xl:w-[56px]"
         />
       </div>
-      <p className="font-roboto whitespace-pre-line text-center text-[11px] font-semibold uppercase leading-[13px] text-white lg:text-[14px] lg:leading-[15px]">
+      <p className="font-roboto whitespace-pre-line text-center text-[11px] font-semibold uppercase leading-[13px] text-white xl:text-[14px] xl:leading-[15px]">
         {spec.label}
       </p>
+    </div>
+  );
+}
+
+function SlideBackground({ background }: { background: string }) {
+  return (
+    <div className="absolute inset-0">
+      <Image src={background} alt="" fill priority className="object-cover object-center" sizes="100vw" />
+      <div className="absolute inset-0 bg-black/20" />
     </div>
   );
 }
@@ -31,38 +40,42 @@ function SpecCard({ spec }: { spec: Spec }) {
 export function SplitSlide({ slide }: { slide: Extract<Slide, { layout: "split" }> }) {
   return (
     <div className="relative flex h-full w-full flex-col lg:flex-row lg:items-stretch">
-      {/* Product — left; live bike sits mid-left of the 495px frame */}
+      <SlideBackground background={slide.background} />
+
+      {/* Product photo — full-bleed, edge-to-edge, 55% of the hero width on
+          desktop (matches the live site's actual image box exactly). */}
       <motion.div
         initial={{ opacity: 0, x: -28 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="relative flex h-[42%] w-full items-center justify-center px-8 pt-4 lg:h-full lg:w-[52%] lg:justify-start lg:pl-8 lg:pt-0 xl:pl-12"
+        className="relative h-[42%] w-full lg:h-full lg:w-[55%]"
       >
         <Image
           src={slide.productImage}
           alt={slide.productAlt}
-          width={900}
-          height={700}
+          fill
           priority
-          className="h-auto max-h-[95%] w-full max-w-[740px] object-contain object-center lg:object-left"
+          className="object-cover object-center"
+          sizes="(min-width: 1024px) 55vw, 100vw"
         />
       </motion.div>
 
-      {/* Right column — live title ~63px from hero top (not vertically centered) */}
+      {/* Right column — starts flush at the 55% mark, title sits 147px down
+          from the hero top on desktop (measured from the live site). */}
       <motion.div
         initial={{ opacity: 0, x: 36 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-        className="relative flex h-[58%] w-full flex-col justify-start px-5 pb-4 pt-2 lg:h-full lg:w-[48%] lg:justify-start lg:px-0 lg:pb-0 lg:pr-12 lg:pt-[56px] xl:pr-16 xl:pt-[63px]"
+        className="relative flex h-[58%] w-full flex-col justify-start px-5 pb-4 pt-2 lg:h-full lg:w-[45%] lg:justify-start lg:px-0 lg:pb-0 lg:pr-10 lg:pt-[110px] xl:pt-[147px]"
       >
-        <h1 className="font-montserrat mb-2 text-[32px] font-extrabold italic leading-none text-white sm:text-[40px] lg:mb-[20px] lg:text-[55px] xl:text-[65px] xl:leading-[65px]">
+        <h1 className="font-montserrat mb-3 text-[32px] font-extrabold italic leading-none text-white sm:text-[40px] lg:mb-[20px] lg:text-[55px] xl:text-[65px] xl:leading-[65px]">
           {slide.title}
         </h1>
-        <p className="font-roboto mb-4 max-w-[483px] whitespace-pre-line text-[18px] font-medium leading-[1.15] text-[#fcfcfc] sm:text-[22px] lg:mb-[36px] lg:text-[28px] xl:text-[34px] xl:leading-[38px]">
+        <p className="font-roboto mb-3 max-w-[520px] whitespace-pre-line text-[18px] font-medium leading-[1.15] text-[#fcfcfc] sm:text-[22px] lg:mb-[20px] lg:text-[28px] xl:text-[34px] xl:leading-[38px]">
           {slide.subtitle}
         </p>
 
-        <div className="mb-4 flex flex-wrap gap-5 lg:mb-[30px]">
+        <div className="mb-3 flex flex-wrap gap-5 lg:mb-[20px]">
           <Link
             href="/book-a-test-ride"
             className="font-roboto inline-flex h-10 items-center gap-2 rounded-[3px] bg-[#61ce70] px-6 text-[13px] font-normal uppercase leading-none tracking-[1.2px] text-white transition-colors hover:bg-[#4fbf5f] lg:text-[16px]"
@@ -79,7 +92,7 @@ export function SplitSlide({ slide }: { slide: Extract<Slide, { layout: "split" 
           </Link>
         </div>
 
-        <div className="flex flex-wrap gap-[13px]">
+        <div className="flex flex-wrap gap-[18px] xl:gap-[27px]">
           {slide.specs.map((spec, i) => (
             <motion.div
               key={spec.label}
@@ -99,18 +112,9 @@ export function SplitSlide({ slide }: { slide: Extract<Slide, { layout: "split" 
 export function CenterSlide({ slide }: { slide: Extract<Slide, { layout: "center" }> }) {
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-end pb-8 text-center lg:pb-10">
-      <div className="absolute inset-0 flex items-center justify-center pt-2">
-        <Image
-          src={slide.productImage}
-          alt={slide.productAlt}
-          width={900}
-          height={600}
-          priority
-          className="h-auto max-h-[70%] w-auto max-w-[780px] object-contain drop-shadow-2xl lg:max-h-[78%]"
-        />
-      </div>
+      <SlideBackground background={slide.background} />
       <div className="relative z-10 px-4">
-        <h1 className="font-poppins mx-auto max-w-[600px] whitespace-pre-line text-[28px] font-extrabold italic leading-none tracking-[-1.5px] text-white sm:text-[36px] lg:text-[40px] xl:text-[45px] xl:tracking-[-2px]">
+        <h1 className="font-poppins mx-auto max-w-[830px] whitespace-pre-line text-[28px] font-extrabold italic leading-none tracking-[-1.5px] text-white sm:text-[36px] lg:text-[40px] xl:text-[45px] xl:tracking-[-2px]">
           {slide.title}
         </h1>
         <p className="font-roboto mt-3 text-[16px] font-medium leading-none text-[#fcfcfc] lg:text-[20px]">
