@@ -48,7 +48,7 @@ export default function ProductShowcase() {
         Our Products
       </h2>
 
-      <div className="mx-auto w-full max-w-[900px] px-4 sm:px-6">
+      <div className="mx-auto w-full max-w-[950px] px-4 sm:px-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           {products.map((product) => (
             <article key={product.id} className="overflow-hidden rounded-[20px] bg-[#010404]">
@@ -70,8 +70,8 @@ export default function ProductShowcase() {
                 />
               </div>
 
-              <div className="px-6 pb-7 pt-6 sm:px-8">
-                <h3 className="font-montserrat mb-4 text-[36px] font-normal leading-none sm:text-[44px] lg:text-[52px]">
+              <div className="px-6 pb-7 pt-6 sm:px-6 text-center ">
+                <h3 className="font-montserrat mb-4 text-[36px] font-bold leading-none sm:text-[44px] lg:text-[52px]">
                   <span className="text-[#61ce70]">{product.nameHighlight}</span>
                   <span className="text-[#fcfcfc]">{product.nameRest}</span>
                 </h3>
@@ -82,13 +82,15 @@ export default function ProductShowcase() {
                       <span className="font-montserrat text-[10px] font-medium leading-tight text-white sm:text-[11px]">
                         {spec.value}
                       </span>
-                      <Image
-                        src={spec.icon}
-                        alt=""
-                        width={36}
-                        height={35}
-                        className="h-7 w-7 object-contain brightness-0 invert sm:h-9 sm:w-9"
-                      />
+                      <div className="relative h-7 w-7 sm:h-9 sm:w-9">
+                        <Image
+                          src={spec.icon}
+                          alt=""
+                          fill
+                          className="object-contain brightness-0 invert"
+                          sizes="36px"
+                        />
+                      </div>
                       <span className="font-montserrat text-[10px] font-semibold uppercase leading-tight text-white sm:text-[11px]">
                         {spec.label}
                       </span>

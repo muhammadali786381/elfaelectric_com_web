@@ -30,36 +30,43 @@ function CalculatorCard({ config }: { config: CalculatorConfig }) {
   const elfaCost = (annualKm / config.kmPerUnitElfa) * unitCost;
   const savings = petrolCost - elfaCost;
 
+  // Range progress % for green/white track split
+  const mileagePct = ((mileage - 5) / (150 - 5)) * 100;
+
   return (
     <div
-      className="rounded-xl p-6 sm:p-8 lg:p-10"
+      className="rounded-[12px] p-6 sm:py-8  lg:px-30 lg:py-10 "
       style={{ backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)" }}
     >
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10">
-        {/* Inputs */}
-        <div>
+      {/* Equal columns; stretch so bottoms of left inputs + Contact Us align */}
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-12">
+        {/* Left — inputs */}
+        <div className="flex min-w-0 flex-col">
           <h3 className="font-montserrat text-[24px] font-bold text-white sm:text-[28px]">
             Calculate Your Savings
           </h3>
           <p className="font-roboto mb-6 text-[14px] italic text-white/70">{config.label}</p>
 
           <div className="mb-6">
-            <div className="mb-2 flex items-center justify-between">
-              <label className="font-montserrat text-[16px] font-semibold text-white sm:text-[18px]">
-                Daily Mileage (km)
-              </label>
-              <span className="font-montserrat rounded-lg bg-[#fcfcfc] px-3 py-1.5 text-[14px] font-semibold text-[#212121]">
+            <label className="font-montserrat mb-3 block text-[16px] font-semibold text-white sm:text-[18px]">
+              Daily Mileage (km)
+            </label>
+            <div className="flex items-center gap-3">
+              <input
+                type="range"
+                min={5}
+                max={150}
+                value={mileage}
+                onChange={(e) => setMileage(Number(e.target.value))}
+                className="savings-range h-2.5 w-full min-w-0 flex-1 cursor-pointer appearance-none rounded-full"
+                style={{
+                  background: `linear-gradient(to right, #61ce70 0%, #61ce70 ${mileagePct}%, #ffffff ${mileagePct}%, #ffffff 100%)`,
+                }}
+              />
+              <span className="font-montserrat shrink-0 rounded-[6px] bg-white px-3 py-1.5 text-[14px] font-semibold text-[#212121]">
                 {mileage} km
               </span>
             </div>
-            <input
-              type="range"
-              min={5}
-              max={150}
-              value={mileage}
-              onChange={(e) => setMileage(Number(e.target.value))}
-              className="h-2 w-full cursor-pointer appearance-none rounded-full bg-black/40 accent-[#61ce70]"
-            />
           </div>
 
           <div className="mb-6">
@@ -70,7 +77,7 @@ function CalculatorCard({ config }: { config: CalculatorConfig }) {
               type="number"
               value={petrolPrice}
               onChange={(e) => setPetrolPrice(Number(e.target.value))}
-              className="font-roboto h-[49px] w-full rounded-lg bg-[#fcfcfc] px-4 text-[16px] text-[#212121] outline-none"
+              className="font-roboto h-[49px] w-full rounded-[8px] border-0 bg-white px-4 text-[16px] text-black outline-none"
             />
           </div>
 
@@ -82,19 +89,19 @@ function CalculatorCard({ config }: { config: CalculatorConfig }) {
               type="number"
               value={unitCost}
               onChange={(e) => setUnitCost(Number(e.target.value))}
-              className="font-roboto h-[49px] w-full rounded-lg bg-[#fcfcfc] px-4 text-[16px] text-[#212121] outline-none"
+              className="font-roboto h-[49px] w-full rounded-[8px] border-0 bg-white px-4 text-[16px] text-black outline-none"
             />
           </div>
         </div>
 
-        {/* Results */}
-        <div>
+        {/* Right — results; Contact Us pinned to bottom */}
+        <div className="flex min-w-0 flex-col">
           <h3 className="font-montserrat mb-6 text-[24px] font-bold text-white sm:text-[28px]">
             Your Annual Savings
           </h3>
 
           <div className="flex flex-col">
-            <div className="flex items-center justify-between border-b border-white/15 py-4">
+            <div className="flex items-center justify-between border-b border-white/20 py-4">
               <span className="font-montserrat text-[15px] font-semibold text-white sm:text-[16px]">
                 Annual Cost of Petrol
               </span>
@@ -102,7 +109,7 @@ function CalculatorCard({ config }: { config: CalculatorConfig }) {
                 {fmt(petrolCost)}
               </span>
             </div>
-            <div className="flex items-center justify-between border-b border-white/15 py-4">
+            <div className="flex items-center justify-between border-b border-white/20 py-4">
               <span className="font-montserrat text-[15px] font-semibold text-white sm:text-[16px]">
                 Cost of Running ELFA {config.id === "ev125" ? "EV-125" : "EV-1"}
               </span>
@@ -111,10 +118,10 @@ function CalculatorCard({ config }: { config: CalculatorConfig }) {
               </span>
             </div>
             <div className="flex items-center justify-between py-4">
-              <span className="font-montserrat text-[15px] font-semibold text-white sm:text-[16px]">
+              <span className="font-montserrat text-[16px] font-bold text-white sm:text-[18px]">
                 Annual Savings
               </span>
-              <span className="font-montserrat text-[18px] font-bold text-white sm:text-[20px]">
+              <span className="font-montserrat text-[22px] font-bold text-white sm:text-[26px]">
                 {fmt(savings)}
               </span>
             </div>
@@ -122,7 +129,7 @@ function CalculatorCard({ config }: { config: CalculatorConfig }) {
 
           <a
             href="/contact-us"
-            className="font-montserrat mt-4 flex h-[52px] w-full items-center justify-center rounded-lg bg-[#fcfcfc] text-[16px] font-semibold text-[#212121] transition-opacity hover:opacity-90"
+            className="font-montserrat mt-auto flex h-[52px] w-full items-center justify-center rounded-[8px] bg-white text-[16px] font-semibold text-black transition-opacity hover:opacity-90"
           >
             Contact Us
           </a>
@@ -137,7 +144,7 @@ export default function SavingsCalculator() {
   const activeConfig = calculators.find((c) => c.id === active) ?? calculators[0];
 
   return (
-    <section className="bg-white py-16 lg:py-20">
+    <section className="bg-white py-16 lg:py-20 lg:px-30">
       <h2 className="font-montserrat mb-8 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
         ELFA Savings Calculator
       </h2>
@@ -159,7 +166,7 @@ export default function SavingsCalculator() {
         ))}
       </div>
 
-      <div className="mx-auto w-full max-w-[1140px] px-4 sm:px-6">
+      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
         <CalculatorCard key={activeConfig.id} config={activeConfig} />
       </div>
     </section>

@@ -23,17 +23,27 @@ const navLinks = [
   { label: "Contact us", href: "/contact-us" },
 ];
 
+const actionLinks = [
+  { label: "Book a test ride", href: "/book-a-test-ride" },
+  { label: "Login", href: "/login" },
+];
+
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
+  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+
+  const closeMobile = () => {
+    setIsMobileMenuOpen(false);
+    setIsMobileProductsOpen(false);
+  };
 
   return (
     <header className="relative z-50 h-[70px] w-full">
       {/* Fixed bar — matches live site 70px white header */}
       <div className="fixed inset-x-0 top-0 z-50 h-[70px] bg-white">
-        <div className="mx-auto flex h-full w-full max-w-[1400px] items-center justify-between px-6 lg:px-10 xl:px-[100px]">
-          {/* Logo ~127×23 on live */}
-          <Link href="/" className="relative z-50 flex shrink-0 items-center">
+        <div className="mx-auto flex h-full w-full max-w-[1400px] items-center justify-between px-4 sm:px-6 xl:px-10 2xl:px-[100px]">
+          <Link href="/" className="relative z-50 flex shrink-0 items-center" onClick={closeMobile}>
             <Image
               src="/assets/images/logo.png"
               alt="ELFA Electric"
@@ -44,8 +54,8 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop nav — Roboto 16px, ~19px gaps between items */}
-          <nav className="hidden items-center gap-5 lg:flex xl:gap-[19px]">
+          {/* Desktop / tablet nav — nowrap so labels don't stack on mid widths */}
+          <nav className="hidden items-center gap-2 lg:flex xl:gap-3 2xl:gap-[19px]">
             {navLinks.map((link) => (
               <div
                 key={link.label}
@@ -56,16 +66,16 @@ export default function Header() {
                 {link.hasDropdown ? (
                   <button
                     type="button"
-                    className="font-roboto flex items-center gap-[5px] text-[16px] font-normal leading-none text-[#333] transition-colors hover:text-[#61ce70]"
+                    className="font-roboto flex items-center gap-[5px] whitespace-nowrap text-[14px] font-normal leading-none text-[#333] transition-colors hover:text-[#61ce70] xl:text-[15px] 2xl:text-[16px]"
                     aria-expanded={isProductsOpen}
                   >
                     {link.label}
-                    <ChevronDown className="h-3.5 w-3.5 text-[#333]" strokeWidth={2} />
+                    <ChevronDown className="h-3.5 w-3.5 shrink-0 text-[#333]" strokeWidth={2} />
                   </button>
                 ) : (
                   <Link
                     href={link.href}
-                    className="font-roboto text-[16px] font-normal leading-none text-[#333] transition-colors hover:text-[#61ce70]"
+                    className="font-roboto whitespace-nowrap text-[14px] font-normal leading-none text-[#333] transition-colors hover:text-[#61ce70] xl:text-[15px] 2xl:text-[16px]"
                   >
                     {link.label}
                   </Link>
@@ -98,20 +108,20 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CTA buttons — #212121, 14px, letter-spacing 1.2px, h-40, radius 3px */}
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-2 xl:gap-5">
+            {/* Header CTAs — hidden below lg; appear as text links in hamburger */}
             <Link
               href="/book-a-test-ride"
-              className="font-roboto hidden h-10 items-center gap-2 rounded-[3px] bg-[#212121] px-[13px] text-[14px] font-medium uppercase leading-none tracking-[1.2px] text-[#fcfcfc] transition-colors hover:bg-black md:inline-flex"
+              className="font-roboto hidden h-9 items-center gap-1.5 whitespace-nowrap rounded-[3px] bg-[#212121] px-2.5 text-[11px] font-medium uppercase leading-none tracking-[1px] text-[#fcfcfc] transition-colors hover:bg-black lg:inline-flex xl:h-10 xl:gap-2 xl:px-[13px] xl:text-[13px] xl:tracking-[1.2px] 2xl:text-[14px]"
             >
-              <Calendar className="h-4 w-4 shrink-0" strokeWidth={2} />
+              <Calendar className="h-3.5 w-3.5 shrink-0 xl:h-4 xl:w-4" strokeWidth={2} />
               Book a test ride
             </Link>
             <Link
               href="/login"
-              className="font-roboto hidden h-10 items-center gap-2 rounded-[3px] bg-[#212121] px-[18px] py-[13px] text-[14px] font-medium uppercase leading-none tracking-[1.2px] text-[#fcfcfc] transition-colors hover:bg-black md:inline-flex"
+              className="font-roboto hidden h-9 items-center gap-1.5 whitespace-nowrap rounded-[3px] bg-[#212121] px-3 text-[11px] font-medium uppercase leading-none tracking-[1px] text-[#fcfcfc] transition-colors hover:bg-black lg:inline-flex xl:h-10 xl:gap-2 xl:px-[18px] xl:text-[13px] xl:tracking-[1.2px] 2xl:text-[14px]"
             >
-              <User className="h-4 w-4 shrink-0" strokeWidth={2} />
+              <User className="h-3.5 w-3.5 shrink-0 xl:h-4 xl:w-4" strokeWidth={2} />
               Login
             </Link>
 
@@ -120,6 +130,7 @@ export default function Header() {
               onClick={() => setIsMobileMenuOpen((v) => !v)}
               className="relative z-50 p-2 text-[#333] lg:hidden"
               aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -127,7 +138,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Tablet / mobile menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -137,51 +148,63 @@ export default function Header() {
             transition={{ duration: 0.28, ease: "easeInOut" }}
             className="fixed inset-0 z-40 overflow-y-auto bg-white pt-[70px] lg:hidden"
           >
-            <div className="mt-4 flex flex-col gap-6 px-6">
+            <nav className="mt-4 flex flex-col gap-1 px-6 pb-10">
               {navLinks.map((link) => (
-                <div key={link.label}>
+                <div key={link.label} className="border-b border-gray-100 py-4">
+                  {link.hasDropdown ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setIsMobileProductsOpen((v) => !v)}
+                        className="font-roboto flex w-full items-center justify-between text-lg font-medium text-[#333]"
+                        aria-expanded={isMobileProductsOpen}
+                      >
+                        {link.label}
+                        <ChevronDown
+                          className={`h-4 w-4 transition-transform ${isMobileProductsOpen ? "rotate-180" : ""}`}
+                          strokeWidth={2}
+                        />
+                      </button>
+                      {isMobileProductsOpen && (
+                        <div className="mt-3 flex flex-col gap-3 border-l-2 border-[#61ce70] pl-4">
+                          {link.dropdown?.map((item) => (
+                            <Link
+                              key={item.label}
+                              href={item.href}
+                              onClick={closeMobile}
+                              className="font-roboto block text-base text-gray-600"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      onClick={closeMobile}
+                      className="font-roboto block text-lg font-medium text-[#333]"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </div>
+              ))}
+
+              {/* CTAs as plain links in the hamburger menu */}
+              {actionLinks.map((link) => (
+                <div key={link.label} className="border-b border-gray-100 py-4">
                   <Link
                     href={link.href}
-                    onClick={() => !link.hasDropdown && setIsMobileMenuOpen(false)}
+                    onClick={closeMobile}
                     className="font-roboto block text-lg font-medium text-[#333]"
                   >
                     {link.label}
                   </Link>
-                  {link.hasDropdown && (
-                    <div className="mt-3 flex flex-col gap-3 border-l-2 border-[#61ce70] pl-4">
-                      {link.dropdown?.map((item) => (
-                        <Link
-                          key={item.label}
-                          href={item.href}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className="font-roboto block text-base text-gray-600"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
-              <div className="flex flex-col gap-4 border-t border-gray-100 pt-6">
-                <Link
-                  href="/book-a-test-ride"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="font-roboto flex items-center justify-center gap-2 rounded-[3px] bg-[#212121] px-6 py-3 text-sm font-medium uppercase tracking-[1.2px] text-white"
-                >
-                  <Calendar className="h-4 w-4" />
-                  Book a test ride
-                </Link>
-                <Link
-                  href="/login"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="font-roboto flex items-center justify-center gap-2 rounded-[3px] bg-[#212121] px-6 py-3 text-sm font-medium uppercase tracking-[1.2px] text-white"
-                >
-                  <User className="h-4 w-4" />
-                  Login
-                </Link>
-              </div>
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

@@ -24,39 +24,37 @@ const solutions = [
 export default function Features() {
   return (
     <>
-      {/* Solutions that we offer */}
+      {/* Solutions that we offer — spark gradient + right-pinned scooty (live match) */}
       <section
-        className="relative overflow-hidden py-16 lg:min-h-[680px] lg:py-20"
-        style={{ backgroundImage: "linear-gradient(135deg, #1a1a1a 0%, #010404 55%, #103d1e 100%)" }}
+        className="relative flex min-h-[560px] items-center overflow-hidden py-16 lg:min-h-[720px] lg:py-20"
+        style={{
+          backgroundImage: "linear-gradient(135deg, #00C853 -80%, #000000 50%, #00C853 290%)",
+        }}
       >
-        {/* Real live-site asset — scooty + green bolt graphic are baked into
-            this one image. Sized large and pinned to the right, matching the
-            live site's bleed-off-the-edge treatment. */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[55%] lg:block">
-          <Image
-            src="/assets/images/solutions.webp"
-            alt="ELFA EV-1 Scooty"
-            fill
-            className="object-cover object-[70%_center]"
-            sizes="55vw"
-          />
-        </div>
+        {/* Live uses ::before with contain + right-top — same treatment here */}
+        <div
+          className="pointer-events-none absolute inset-0 hidden bg-contain bg-right-top bg-no-repeat lg:block"
+          style={{ backgroundImage: "url('/assets/images/solutions.webp')" }}
+          aria-hidden
+        />
 
-        <div className="relative z-10 mx-auto w-full max-w-[1150px] px-4 sm:px-6">
-          <div className="flex justify-center lg:hidden">
+        <div className="relative z-10 mx-auto flex w-full max-w-[1150px] flex-col justify-center px-4 sm:px-6">
+          <div className="mb-8 flex justify-center lg:hidden">
             <Image
               src="/assets/images/solutions.webp"
               alt="ELFA EV-1 Scooty"
-              width={753}
-              height={1024}
-              className="mb-10 h-auto w-full max-w-[300px] object-contain"
+              width={1311}
+              height={1784}
+              className="h-auto w-full max-w-[280px] object-contain"
             />
           </div>
 
-          <div className="lg:max-w-[55%]">
+          {/* Text block ~70% width, vertically centered via section flex */}
+          <div className="w-full lg:max-w-[70%]">
             <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-white sm:text-[41px]">
               Solutions that we offer
             </h2>
+
             <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
               {solutions.map((s) => (
                 <div key={s.title}>
@@ -72,11 +70,11 @@ export default function Features() {
       </section>
 
       {/* About ELFA Electric Motorcycle */}
-      <section className="bg-white pb-16 lg:pb-20">
+      <section className="bg-white py-16 lg:pb-20">
         <div className="mx-auto w-full max-w-[1150px] px-4 sm:px-6">
           <div className="relative overflow-hidden rounded-[19px] border border-[#61ce70] bg-black px-6 py-12 text-center sm:px-12 lg:px-16 lg:py-16">
             <div
-              className="pointer-events-none absolute inset-0 opacity-[0.07]"
+              className="pointer-events-none absolute inset-0 opacity-[0.15]"
               style={{
                 backgroundImage: "url('/assets/images/solutions.webp')",
                 backgroundSize: "auto 140%",

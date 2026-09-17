@@ -1,10 +1,8 @@
 "use client";
 
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Star } from "lucide-react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
-import "swiper/css";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 const testimonials = [
   {
@@ -87,9 +85,13 @@ const testimonials = [
   },
 ];
 
+const COUNT = testimonials.length;
+// Triple the list so we can jump between copies for seamless infinite loop
+const LOOP = [...testimonials, ...testimonials, ...testimonials];
+
 function StarRating({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1" role="img" aria-label={`Rated ${rating} out of 5`}>
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
@@ -100,49 +102,175 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
+function Card({
+  t,
+  active,
+}: {
+  t: (typeof testimonials)[0];
+  active: boolean;
+}) {
+  return (
+    <article
+      className="flex h-full w-full flex-row items-center gap-5 rounded-[20px] px-6 py-6 sm:gap-6 sm:px-10 sm:py-7 lg:gap-10 lg:px-12 lg:py-8"
+      style={{
+        backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)",
+      }}
+      aria-hidden={!active}
+    >
+      <div className="flex min-w-0 flex-1 flex-col justify-center gap-3 sm:gap-4">
+        <h3 className="font-montserrat text-[22px] font-bold leading-none text-white sm:text-[28px] lg:text-[30px]">
+          {t.name}
+        </h3>
+        <StarRating rating={t.rating} />
+        <p className="font-roboto text-[14px] leading-relaxed text-white sm:text-[16px] lg:text-[17px]">
+          &ldquo;{t.text}&rdquo;
+        </p>
+      </div>
+
+      {/* Smaller portrait — leaves more room for text / wider card feel */}
+      <div className="relative hidden aspect-square w-[100px] shrink-0 overflow-hidden rounded-[10px] border-2 border-white sm:block sm:w-[140px] lg:w-[180px] xl:w-[200px]">
+        <Image
+          src={t.img}
+          alt={t.name}
+          fill
+          className="object-cover object-top"
+          sizes="(min-width: 1280px) 200px, (min-width: 1024px) 180px, 140px"
+        />
+      </div>
+    </article>
+  );
+}
+
 export default function Testimonials() {
+  // Start in the middle copy so we can go either direction infinitely
+  const [index, setIndex] = useState(COUNT);
+  const [animate, setAnimate] = useState(true);
+  const [paused, setPaused] = useState(false);
+  const [offset, setOffset] = useState(0);
+
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const measure = useCallback(() => {
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    if (!viewport || !track) return;
+    const slide = track.children[index] as HTMLElement | undefined;
+    if (!slide) return;
+    // Center the active slide in the viewport → half cards peek left & right
+    const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+    setOffset(viewport.clientWidth / 2 - slideCenter);
+  }, [index]);
+
+  useLayoutEffect(() => {
+    measure();
+  }, [measure]);
+
+  useEffect(() => {
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [measure]);
+
+  // Seamless infinite: when we drift into a clone zone, snap back to the middle copy
+  useEffect(() => {
+    if (index >= COUNT * 2) {
+      const t = window.setTimeout(() => {
+        setAnimate(false);
+        setIndex((i) => i - COUNT);
+      }, 700);
+      return () => window.clearTimeout(t);
+    }
+    if (index < COUNT) {
+      const t = window.setTimeout(() => {
+        setAnimate(false);
+        setIndex((i) => i + COUNT);
+      }, 700);
+      return () => window.clearTimeout(t);
+    }
+  }, [index]);
+
+  // Re-enable transition after a silent snap
+  useEffect(() => {
+    if (!animate) {
+      const id = requestAnimationFrame(() => {
+        requestAnimationFrame(() => setAnimate(true));
+      });
+      return () => cancelAnimationFrame(id);
+    }
+  }, [animate, index]);
+
+  const prev = () => {
+    setAnimate(true);
+    setIndex((i) => i - 1);
+  };
+  const next = () => {
+    setAnimate(true);
+    setIndex((i) => i + 1);
+  };
+
+  // Autoplay
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(() => {
+      setAnimate(true);
+      setIndex((i) => i + 1);
+    }, 4000);
+    return () => window.clearInterval(id);
+  }, [paused]);
+
   return (
     <section className="bg-white py-16 lg:py-20">
-      <h2 className="font-montserrat mb-10 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
-        Our Happy Customers
-      </h2>
+      <div className="mx-auto w-full min-w-[100px] max-w-[1140px]">
+        <h2 className="font-montserrat mb-10 px-4 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
+          Our Happy Customers
+        </h2>
 
-      <Swiper
-        modules={[Autoplay, Navigation]}
-        slidesPerView={1.15}
-        centeredSlides
-        spaceBetween={20}
-        loop
-        speed={800}
-        autoplay={{ delay: 4000, pauseOnMouseEnter: true, disableOnInteraction: true }}
-        breakpoints={{
-          1024: { slidesPerView: 1.6, centeredSlides: false, spaceBetween: 20 },
-        }}
-        className="!px-4 sm:!px-6"
-      >
-        {testimonials.map((t) => (
-          <SwiperSlide key={t.name}>
-            <div
-              className="relative grid h-full grid-cols-[224px_1fr] overflow-hidden rounded-[16px]"
-              style={{ backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)" }}
-            >
-              <div className="relative hidden h-full min-h-[346px] w-[224px] shrink-0 sm:block">
-                <Image src={t.img} alt={t.name} fill className="object-cover" sizes="224px" />
+        {/*
+          Card width = ~50% of container.
+          Centered active slide → left & right neighbors are cut exactly in half.
+        */}
+        <div
+          ref={viewportRef}
+          className="relative w-full overflow-hidden"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div
+            ref={trackRef}
+            className={`flex items-stretch gap-3 ${animate ? "transition-transform duration-700 ease-out" : ""}`}
+            style={{ transform: `translateX(${offset}px)` }}
+          >
+            {LOOP.map((t, i) => (
+              <div
+                key={`${t.name}-${i}`}
+                /* Wider cards (~70%) — still peeks half-ish neighbors on both sides */
+                className="w-[calc(70%-8px)] shrink-0 sm:w-[calc(70%-100px)]"
+              >
+                <Card t={t} active={i === index} />
               </div>
-              <div className="relative flex flex-col justify-center gap-3 p-6 sm:p-8 sm:pr-[180px]">
-                <h3 className="font-montserrat text-[24px] font-bold text-white sm:text-[30px]">{t.name}</h3>
-                <StarRating rating={t.rating} />
-                <p className="font-roboto text-[15px] leading-relaxed text-white sm:text-[17px]">
-                  &ldquo;{t.text}&rdquo;
-                </p>
-              </div>
-              <div className="absolute right-8 top-1/2 hidden h-[150px] w-[150px] -translate-y-1/2 overflow-hidden rounded-[8px] border-2 border-white sm:block">
-                <Image src={t.img} alt="" fill className="object-cover" sizes="140px" />
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 flex items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={prev}
+            aria-label="Previous"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-[#61ce70] text-white transition-colors hover:bg-[#4fbf5f]"
+          >
+            <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            aria-label="Next"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-[#61ce70] text-white transition-colors hover:bg-[#4fbf5f]"
+          >
+            <ChevronRight className="h-5 w-5" strokeWidth={2.5} />
+          </button>
+        </div>
+      </div>
     </section>
   );
 }

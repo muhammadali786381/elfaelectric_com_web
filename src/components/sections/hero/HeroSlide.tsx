@@ -13,13 +13,15 @@ function SpecCard({ spec }: { spec: Spec }) {
         <span className="font-montserrat text-center text-[12px] font-semibold leading-tight text-white xl:text-[15px] xl:leading-[15px]">
           {spec.value}
         </span>
-        <Image
-          src={spec.icon}
-          alt=""
-          width={56}
-          height={56}
-          className="h-9 w-9 object-contain brightness-0 invert xl:h-[56px] xl:w-[56px]"
-        />
+        <div className="relative h-9 w-9 xl:h-[56px] xl:w-[56px]">
+          <Image
+            src={spec.icon}
+            alt=""
+            fill
+            className="object-contain brightness-0 invert"
+            sizes="56px"
+          />
+        </div>
       </div>
       <p className="font-roboto whitespace-pre-line text-center text-[11px] font-semibold uppercase leading-[13px] text-white xl:text-[14px] xl:leading-[15px]">
         {spec.label}

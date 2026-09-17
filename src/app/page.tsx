@@ -12,6 +12,7 @@ import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ";
 import FinalCTA from "@/components/sections/FinalCTA";
+import AdventureCTA from "@/components/sections/AdventureCTA";
 import Marquee from "@/components/sections/Marquee";
 
 // Static page — fully pre-rendered at build time for maximum performance
@@ -35,7 +36,7 @@ export default function Home() {
         <WhyChooseUs />
         <Testimonials />
         <FAQ />
-        <FinalCTA />
+        <AdventureCTA />
         <Marquee />
       </main>
       <Footer />
