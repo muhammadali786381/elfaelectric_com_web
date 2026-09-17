@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Poppins, Roboto } from "next/font/google";
+import FloatingActions from "@/components/layout/FloatingActions";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -45,10 +46,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${montserrat.variable} ${roboto.variable} ${poppins.variable}`}
     >
       <body className="min-h-screen flex flex-col antialiased">
         {children}
+        <FloatingActions />
       </body>
     </html>
   );
