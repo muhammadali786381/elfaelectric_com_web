@@ -50,7 +50,7 @@ function List({ items, align }: { items: typeof whyChooseUs; align: "left" | "ri
 export default function WhyChooseUs() {
   return (
     <section className="bg-white py-16 lg:py-20">
-      <div className="mx-auto w-full max-w-[1150px] px-4 sm:px-6">
+      <div className="mx-auto w-full max-w-container px-4 sm:px-6">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.1fr_1fr]">
           <div>
             <h3 className="font-montserrat mb-8 text-[24px] font-bold text-[#61ce70] sm:text-[26px]">

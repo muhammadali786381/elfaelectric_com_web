@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 
 const sizeClasses = {
-  default: "max-w-7xl",
+  default: "max-w-container",
   wide: "max-w-[1400px]",
   narrow: "max-w-3xl",
 } as const;

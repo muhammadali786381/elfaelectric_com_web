@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { Calendar, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function FinalCTA() {
   return (
     <section className="bg-white py-8 lg:py-10">
-      <div className="mx-auto w-full max-w-[1150px] px-4 sm:px-6">
+      <div className="mx-auto w-full max-w-container px-4 sm:px-6">
         <div
           className="flex flex-col items-center justify-between gap-6 rounded-[12px] px-6 py-10 text-center sm:flex-row sm:px-10 sm:text-left"
           style={{ backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)" }}

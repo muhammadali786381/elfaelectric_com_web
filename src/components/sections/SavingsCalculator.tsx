@@ -166,7 +166,7 @@ export default function SavingsCalculator() {
         ))}
       </div>
 
-      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+      <div className="mx-auto w-full max-w-container px-4 sm:px-6">
         <CalculatorCard key={activeConfig.id} config={activeConfig} />
       </div>
     </section>

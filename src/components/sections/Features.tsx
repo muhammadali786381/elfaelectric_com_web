@@ -38,7 +38,7 @@ export default function Features() {
           aria-hidden
         />
 
-        <div className="relative z-10 mx-auto flex w-full max-w-[1150px] flex-col justify-center px-4 sm:px-6">
+        <div className="relative z-10 mx-auto flex w-full max-w-container flex-col justify-center px-4 sm:px-6">
           <div className="mb-8 flex justify-center lg:hidden">
             <Image
               src="/assets/images/solutions.webp"
@@ -71,7 +71,7 @@ export default function Features() {
 
       {/* About ELFA Electric Motorcycle */}
       <section className="bg-white py-16 lg:pb-20">
-        <div className="mx-auto w-full max-w-[1150px] px-4 sm:px-6">
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6">
           <div className="relative overflow-hidden rounded-[19px] border border-[#61ce70] bg-black px-6 py-12 text-center sm:px-12 lg:px-16 lg:py-16">
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.15]"

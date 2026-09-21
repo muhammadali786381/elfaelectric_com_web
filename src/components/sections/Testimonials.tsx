@@ -220,7 +220,7 @@ export default function Testimonials() {
 
   return (
     <section className="bg-white py-16 lg:py-20">
-      <div className="mx-auto w-full min-w-[100px] max-w-[1140px]">
+      <div className="mx-auto w-full min-w-[100px] max-w-container">
         <h2 className="font-montserrat mb-10 px-4 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
           Our Happy Customers
         </h2>

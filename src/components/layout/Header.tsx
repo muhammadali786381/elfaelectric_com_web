@@ -54,8 +54,8 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop / tablet nav — nowrap so labels don't stack on mid widths */}
-          <nav className="hidden items-center gap-2 lg:flex xl:gap-3 2xl:gap-[19px]">
+          {/* Desktop / tablet nav — roomy gaps so Contact us never crowds the CTAs */}
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-3 lg:flex xl:gap-5 2xl:gap-6">
             {navLinks.map((link) => (
               <div
                 key={link.label}
@@ -108,20 +108,20 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 xl:gap-5">
+          <div className="flex shrink-0 items-center gap-3 pl-4 xl:gap-[53px] xl:pl-8">
             {/* Header CTAs — hidden below lg; appear as text links in hamburger */}
             <Link
               href="/book-a-test-ride"
-              className="font-roboto hidden h-9 items-center gap-1.5 whitespace-nowrap rounded-[3px] bg-[#212121] px-2.5 text-[11px] font-medium uppercase leading-none tracking-[1px] text-[#fcfcfc] transition-colors hover:bg-black lg:inline-flex xl:h-10 xl:gap-2 xl:px-[13px] xl:text-[13px] xl:tracking-[1.2px] 2xl:text-[14px]"
+              className="font-roboto hidden h-10 items-center gap-2 whitespace-nowrap rounded-[3px] bg-[#212121] px-[13px] text-[13px] font-medium uppercase leading-none tracking-[1.2px] text-[#fcfcfc] transition-colors hover:bg-black lg:inline-flex 2xl:text-[14px]"
             >
-              <Calendar className="h-3.5 w-3.5 shrink-0 xl:h-4 xl:w-4" strokeWidth={2} />
+              <Calendar className="h-4 w-4 shrink-0" strokeWidth={2} />
               Book a test ride
             </Link>
             <Link
               href="/login"
-              className="font-roboto hidden h-9 items-center gap-1.5 whitespace-nowrap rounded-[3px] bg-[#212121] px-3 text-[11px] font-medium uppercase leading-none tracking-[1px] text-[#fcfcfc] transition-colors hover:bg-black lg:inline-flex xl:h-10 xl:gap-2 xl:px-[18px] xl:text-[13px] xl:tracking-[1.2px] 2xl:text-[14px]"
+              className="font-roboto hidden h-10 items-center gap-2 whitespace-nowrap rounded-[3px] bg-[#212121] px-[18px] text-[13px] font-medium uppercase leading-none tracking-[1.2px] text-[#fcfcfc] transition-colors hover:bg-black lg:inline-flex 2xl:text-[14px]"
             >
-              <User className="h-3.5 w-3.5 shrink-0 xl:h-4 xl:w-4" strokeWidth={2} />
+              <User className="h-4 w-4 shrink-0" strokeWidth={2} />
               Login
             </Link>
 

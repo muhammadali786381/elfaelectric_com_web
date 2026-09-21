@@ -40,7 +40,7 @@ export default function CustomerFeedback() {
       />
 
       {/* Mobile (<768): carousel top, image bottom. md+: image | carousel */}
-      <div className="relative z-10 mx-auto flex w-full max-w-[1150px] flex-col items-center md:grid md:min-h-[443px] md:grid-cols-[1.15fr_1fr] md:items-center lg:min-h-[569px]">
+      <div className="relative z-10 mx-auto flex w-full max-w-container flex-col items-center md:grid md:min-h-[443px] md:grid-cols-[1.15fr_1fr] md:items-center lg:min-h-[569px]">
         {/* Customer cutout — bottom on mobile, left on md+ */}
         <div className="relative order-2 mx-auto w-full max-w-[400px] md:order-1 md:mx-0 md:max-w-none md:self-stretch">
           <div className="relative aspect-[644/569] w-full overflow-hidden md:absolute md:inset-0 md:aspect-auto">

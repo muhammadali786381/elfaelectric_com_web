@@ -4,7 +4,7 @@ import { Calendar, ArrowRight } from "lucide-react";
 export default function AdventureCTA() {
   return (
     <section className="bg-white py-10 lg:py-14">
-      <div className="mx-auto w-full max-w-[1150px] px-4 ">
+      <div className="mx-auto w-full max-w-container px-4 ">
         <div
           className="flex flex-col items-center rounded-[16px]  py-12 text-center  "
           style={{

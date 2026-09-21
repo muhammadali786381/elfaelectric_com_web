@@ -7,7 +7,7 @@ const quickLinks = [
   { label: "Newsroom", href: "/newsroom" },
   { label: "Blog", href: "/blog" },
   { label: "Referral", href: "/referral" },
-  { label: "FAQs", href: "#faq" },
+  { label: "FAQs", href: "/faqs" },
   { label: "About us", href: "/about-us" },
   { label: "Certified Mechanics", href: "/certified-mechanics" },
   { label: "Contact Us", href: "/contact-us" },
@@ -77,8 +77,8 @@ export default function Footer() {
         backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)",
       }}
     >
-      {/* Main columns — max 1140 to match site container */}
-      <div className="mx-auto w-full min-w-[100px] max-w-[1140px] px-4 py-[50px] sm:px-6">
+      {/* Main columns */}
+      <div className="mx-auto w-full min-w-[100px] max-w-container px-4 py-[50px] sm:px-6">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1.1fr] lg:gap-12">
           {/* Brand */}
           <div>
@@ -87,7 +87,7 @@ export default function Footer() {
               alt="ELFA Electric"
               width={240}
               height={60}
-              className="mb-5 h-11 w-auto object-contain brightness-0 invert"
+              className="mb-5 h-14 w-auto object-contain"
             />
             <p className="font-poppins mb-6 max-w-[320px] text-[14px] font-normal leading-relaxed text-[#fcfcfc]">
               Transforming perceptions of motorbikes and their environmental impact, for a greener
@@ -196,8 +196,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar — divider matches content width (max 1140) */}
-      <div className="mx-auto w-full border-t border-white min-w-[100px] max-w-[1140px] px-4 sm:px-6">
+      {/* Bottom bar */}
+      <div className="mx-auto w-full border-t border-white min-w-[100px] max-w-container px-4 sm:px-6">
         <div className="flex flex-col items-center justify-between gap-3 border-t border-white/15 py-5 sm:flex-row">
           <p className="font-poppins text-[14px] font-normal text-[#fcfcfc] sm:text-[16px]">
             Copyright © {new Date().getFullYear()} ELFA. All rights reserved.

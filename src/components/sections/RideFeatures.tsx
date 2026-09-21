@@ -32,7 +32,7 @@ export default function RideFeatures() {
         Smoother and Comfortable
       </h2>
 
-      <div className="mx-auto grid w-full max-w-[1150px] grid-cols-1 gap-5 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
+      <div className="mx-auto grid w-full max-w-container grid-cols-1 gap-5 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         {features.map((f) => (
           <div
             key={f.title}
