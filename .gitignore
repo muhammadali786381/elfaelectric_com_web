@@ -12,6 +12,9 @@
 /coverage
 
 # next.js
+
+.cursor
+.gemini
 /.next/
 /out/
 
