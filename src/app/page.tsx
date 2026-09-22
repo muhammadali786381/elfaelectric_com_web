@@ -29,7 +29,6 @@ export default function Home() {
         <Welcome />
         <Features />
         <CustomerFeedback />
-        {/* Live site repeats this CTA banner twice — once here, once near the footer */}
         <FinalCTA />
         <RideFeatures />
         <HeadlineBanner />

@@ -9,7 +9,7 @@ import "swiper/css";
 
 import { slides } from "./hero.data";
 import { heroSwiperConfig } from "./hero.config";
-import { SplitSlide, CenterSlide } from "./HeroSlide";
+import { SplitSlide, BannerSlide } from "./HeroSlide";
 
 export default function Hero() {
   const swiperRef = useRef<SwiperType | null>(null);
@@ -34,7 +34,11 @@ export default function Hero() {
         >
           {slides.map((slide) => (
             <SwiperSlide key={slide.id} className="h-full w-full">
-              {slide.layout === "split" ? <SplitSlide slide={slide} /> : <CenterSlide slide={slide} />}
+              {slide.layout === "split" ? (
+                <SplitSlide slide={slide} />
+              ) : (
+                <BannerSlide slide={slide} />
+              )}
             </SwiperSlide>
           ))}
         </Swiper>

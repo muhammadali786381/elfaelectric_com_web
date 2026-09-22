@@ -50,9 +50,12 @@ body {
 
 
 
-/* Smooth transitions */
+/* Smooth transitions + pointer on interactive elements */
 a,
-button {
+button,
+[role="button"],
+summary {
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
@@ -119,3 +122,67 @@ button {
   box-shadow: none;
   cursor: pointer;
 }
+
+/* EV product page — live LTO badge + diagonal cut-price */
+.lto-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #ff4d2e;
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  animation: pulseGlow 1.6s ease infinite;
+}
+.lto-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  flex-shrink: 0;
+  animation: dotBlink 1s ease infinite;
+}
+.lto-text {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  line-height: 1;
+  text-transform: none;
+}
+@keyframes dotBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 46, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 14px 3px rgba(255, 77, 46, 0.55);
+  }
+}
+.cutprice {
+  position: relative;
+  display: inline-block;
+  text-decoration: none !important;
+}
+.cutprice::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 40%;
+  width: 100%;
+  height: 3px;
+  background: red;
+  transform: rotate(-7deg);
+  transform-origin: center center;
+}
+

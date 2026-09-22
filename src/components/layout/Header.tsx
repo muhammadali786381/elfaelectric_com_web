@@ -49,7 +49,7 @@ export default function Header() {
               alt="ELFA Electric"
               width={160}
               height={29}
-              className="h-[23px] w-auto object-contain sm:h-[26px]"
+              className="h-[23px] w-auto object-contain  sm:h-[26px]"
               priority
             />
           </Link>

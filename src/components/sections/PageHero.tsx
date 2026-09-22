@@ -21,8 +21,10 @@ type PageHeroProps = {
    * taller hero. Pass white <span>s inside title for mixed coloring.
    */
   greenTitle?: boolean;
-  /** Large 60px title with bikes — Privacy / Consent policy pages */
+  /** Large 60px title with bikes — Privacy / Consent / Certified Mechanics */
   largeTitle?: boolean;
+  /** 70px title — Blog / Newsroom live */
+  bigTitle?: boolean;
   /** Extra-large 86px title — Financing Partners live */
   xlTitle?: boolean;
 };
@@ -38,6 +40,7 @@ export default function PageHero({
   bodySubtitle,
   greenTitle,
   largeTitle,
+  bigTitle,
   xlTitle,
 }: PageHeroProps) {
   return (
@@ -49,7 +52,7 @@ export default function PageHero({
             ? "min-h-[480px] items-center lg:min-h-[640px]"
             : bodySubtitle
               ? "min-h-[460px] items-center lg:min-h-[518px]"
-              : xlTitle || largeTitle
+              : xlTitle || largeTitle || bigTitle
                 ? "min-h-[420px] items-center lg:min-h-[518px]"
                 : "h-[420px] items-center lg:h-[510px]"
       }`}
@@ -81,7 +84,7 @@ export default function PageHero({
               className={
                 compact
                   ? "relative z-10 w-full max-w-[725px] text-left lg:translate-y-12"
-                  : xlTitle || largeTitle
+                  : xlTitle || largeTitle || bigTitle
                     ? "max-w-[640px] text-left"
                     : greenTitle || bodySubtitle
                       ? "max-w-[560px] text-left"
@@ -94,6 +97,8 @@ export default function PageHero({
                     ? "font-montserrat text-left text-[26px] font-bold uppercase leading-[38px] text-white sm:text-[32px] sm:leading-[46px] lg:text-[36px] lg:leading-[48px]"
                     : xlTitle
                       ? "font-montserrat text-left text-[36px] font-bold uppercase leading-[1.05] text-white sm:text-[56px] sm:leading-[1] lg:text-[86px] lg:leading-[81px]"
+                      : bigTitle
+                        ? "font-montserrat text-left text-[36px] font-bold uppercase leading-[1.05] text-white sm:text-[52px] sm:leading-[1] lg:text-[70px] lg:leading-[70px]"
                       : largeTitle
                         ? "font-montserrat text-left text-[32px] font-bold uppercase leading-tight text-white sm:text-[46px] lg:text-[60px] lg:leading-[60px]"
                         : greenTitle
@@ -122,7 +127,7 @@ export default function PageHero({
                 className={`font-roboto flex items-center gap-2 text-left text-white ${
                   compact
                     ? "mt-3 text-[18px] sm:text-[22px] lg:mt-[20px] lg:text-[27px]"
-                    : xlTitle || largeTitle
+                    : xlTitle || largeTitle || bigTitle
                       ? "mt-5 text-[18px] sm:text-[21px]"
                       : greenTitle || bodySubtitle
                         ? "mt-4 text-[18px] sm:text-[21px]"

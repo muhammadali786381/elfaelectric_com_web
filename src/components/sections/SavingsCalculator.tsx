@@ -139,9 +139,16 @@ function CalculatorCard({ config }: { config: CalculatorConfig }) {
   );
 }
 
-export default function SavingsCalculator() {
-  const [active, setActive] = useState<string>(calculators[0].id);
-  const activeConfig = calculators.find((c) => c.id === active) ?? calculators[0];
+export default function SavingsCalculator({
+  productId,
+}: {
+  /** When set, hide the EV-125 / EV-1 toggle and lock to this calculator. */
+  productId?: "ev125" | "ev1";
+}) {
+  const locked = Boolean(productId);
+  const [active, setActive] = useState<string>(productId ?? calculators[0].id);
+  const activeConfig =
+    calculators.find((c) => c.id === (locked ? productId : active)) ?? calculators[0];
 
   return (
     <section className="bg-white py-16 lg:py-20 lg:px-30">
@@ -149,22 +156,26 @@ export default function SavingsCalculator() {
         ELFA Savings Calculator
       </h2>
 
-      <div className="mb-8 flex flex-wrap justify-center gap-5">
-        {calculators.map((config) => (
-          <button
-            key={config.id}
-            type="button"
-            onClick={() => setActive(config.id)}
-            aria-pressed={active === config.id}
-            className={`font-roboto inline-flex h-10 items-center gap-2 rounded-[3px] px-5 text-[16px] font-normal transition-colors ${
-              active === config.id ? "bg-[#61ce70] text-white" : "bg-[#212121] text-white hover:bg-black"
-            }`}
-          >
-            <Calculator className="h-4 w-4" strokeWidth={2} />
-            {config.id === "ev125" ? "EV-125 BIKE" : "EV-1 Scooty"}
-          </button>
-        ))}
-      </div>
+      {!locked ? (
+        <div className="mb-8 flex flex-wrap justify-center gap-5">
+          {calculators.map((config) => (
+            <button
+              key={config.id}
+              type="button"
+              onClick={() => setActive(config.id)}
+              aria-pressed={active === config.id}
+              className={`font-roboto inline-flex h-10 items-center gap-2 rounded-[3px] px-5 text-[16px] font-normal transition-colors ${
+                active === config.id
+                  ? "bg-[#61ce70] text-white"
+                  : "bg-[#212121] text-white hover:bg-black"
+              }`}
+            >
+              <Calculator className="h-4 w-4" strokeWidth={2} />
+              {config.id === "ev125" ? "EV-125 BIKE" : "EV-1 Scooty"}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       <div className="mx-auto w-full max-w-container px-4 sm:px-6">
         <CalculatorCard key={activeConfig.id} config={activeConfig} />

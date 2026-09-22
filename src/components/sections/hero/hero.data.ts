@@ -18,10 +18,13 @@ export type Slide =
     }
   | {
       id: string;
-      layout: "center";
-      background: string;
-      title: string;
-      subtitle: string;
+      layout: "banner";
+      /** Full-bleed composed banner (desktop). */
+      image: string;
+      /** Optional taller crop for small screens. */
+      imageMobile?: string;
+      alt: string;
+      href: string;
     };
 
 export const slides: Slide[] = [
@@ -60,12 +63,11 @@ export const slides: Slide[] = [
     ],
   },
   {
-    id: "battery",
-    layout: "center",
-    // Live site uses a single flat background photo for this slide — no
-    // separate floating product cutout.
-    background: "/assets/images/home-page.jpg",
-    title: "Advanced Lithium Iron Phosphate\nBatteries",
-    subtitle: "Safer and longer-lasting than graphene.",
+    id: "pave",
+    layout: "banner",
+    image: "/assets/images/hero-pave-gr.webp",
+    imageMobile: "/assets/images/hero-pave-gr-vertical.webp",
+    alt: "PAVE pre-booking — get Rs. 80,000 government subsidy on ELFA EV125 and EV1",
+    href: "/pave-scheme",
   },
 ];

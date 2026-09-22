@@ -151,6 +151,7 @@ export default function NewsroomPage() {
           subtitle="Read the latest trends around the world"
           breadcrumb="Newsroom"
           withBikes
+          bigTitle
           backgroundSrc="/assets/images/blog-hero-bg.jpg"
           bikesSrc="/assets/images/blog-page.png"
         />

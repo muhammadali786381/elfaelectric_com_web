@@ -66,6 +66,7 @@ export default function CertifiedMechanicsPage() {
           title="ELFA Certified Mechanics"
           breadcrumb="ELFA Certified Mechanics"
           withBikes
+          largeTitle
           backgroundSrc="/assets/images/blog-hero-bg.jpg"
           bikesSrc="/assets/images/blog-page.png"
         />

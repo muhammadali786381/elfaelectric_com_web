@@ -117,8 +117,9 @@ export default function BlogPage() {
         <PageHero
           title="Latest Blog"
           subtitle="Read the latest trends around the world"
-          breadcrumb="Book a Test Ride"
+          breadcrumb="Blog"
           withBikes
+          bigTitle
           backgroundSrc="/assets/images/blog-hero-bg.jpg"
           bikesSrc="/assets/images/blog-page.png"
         />

@@ -8,22 +8,22 @@ import type { Slide, Spec } from "./hero.data";
 
 function SpecCard({ spec }: { spec: Spec }) {
   return (
-    <div className="flex w-[calc(50%-8px)] shrink-0 flex-col gap-[6px] sm:w-[150px] xl:w-[185px]">
-      <div className="flex h-[95px] w-full flex-col items-center justify-between rounded-[9px] border-2 border-white bg-black/30 px-[6px] py-2 xl:h-[112px]">
-        <span className="font-montserrat text-center text-[12px] font-semibold leading-tight text-white xl:text-[15px] xl:leading-[15px]">
+    <div className="flex min-w-0 flex-1 flex-col gap-[6px]">
+      <div className="flex h-[100px] w-full flex-col items-center justify-between rounded-[9px] border-2 border-white bg-black/30 px-[8px] py-2.5 sm:h-[115px]">
+        <span className="font-montserrat text-center text-[11px] font-semibold leading-tight text-white sm:text-[14px] xl:text-[17px] xl:leading-[18px]">
           {spec.value}
         </span>
-        <div className="relative h-9 w-9 xl:h-[56px] xl:w-[56px]">
+        <div className="relative h-12 w-12 sm:h-[58px] sm:w-[58px] xl:h-[68px] xl:w-[76px]">
           <Image
             src={spec.icon}
             alt=""
             fill
             className="object-contain brightness-0 invert"
-            sizes="56px"
+            sizes="76px"
           />
         </div>
       </div>
-      <p className="font-roboto whitespace-pre-line text-center text-[11px] font-semibold uppercase leading-[13px] text-white xl:text-[14px] xl:leading-[15px]">
+      <p className="font-roboto whitespace-pre-line text-center text-[10px] font-semibold uppercase leading-[12px] text-white sm:text-[13px] sm:leading-[15px] xl:text-[15px] xl:leading-[17px]">
         {spec.label}
       </p>
     </div>
@@ -33,7 +33,14 @@ function SpecCard({ spec }: { spec: Spec }) {
 function SlideBackground({ background }: { background: string }) {
   return (
     <div className="absolute inset-0">
-      <Image src={background} alt="" fill priority className="object-cover object-center" sizes="100vw" />
+      <Image
+        src={background}
+        alt=""
+        fill
+        priority
+        className="object-cover object-top"
+        sizes="100vw"
+      />
       <div className="absolute inset-0 bg-black/20" />
     </div>
   );
@@ -57,7 +64,7 @@ export function SplitSlide({ slide }: { slide: Extract<Slide, { layout: "split" 
           alt={slide.productAlt}
           fill
           priority
-          className="object-cover object-center"
+          className="object-cover object-bottom"
           sizes="(min-width: 1024px) 55vw, 100vw"
         />
       </motion.div>
@@ -94,10 +101,12 @@ export function SplitSlide({ slide }: { slide: Extract<Slide, { layout: "split" 
           </Link>
         </div>
 
-        <div className="flex flex-wrap gap-[18px] xl:gap-[27px]">
+        {/* Specs stay on one row — never wrap into a 2×2 grid */}
+        <div className="flex w-full max-w-[560px] flex-nowrap gap-2 sm:gap-3 xl:max-w-[700px] xl:gap-4">
           {slide.specs.map((spec, i) => (
             <motion.div
               key={spec.label}
+              className="min-w-0 flex-1"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.22 + i * 0.06, ease: "easeOut" }}
@@ -111,18 +120,35 @@ export function SplitSlide({ slide }: { slide: Extract<Slide, { layout: "split" 
   );
 }
 
-export function CenterSlide({ slide }: { slide: Extract<Slide, { layout: "center" }> }) {
+/** Full-bleed PAVE (or similar) composed banner — replaces the old battery slide. */
+export function BannerSlide({ slide }: { slide: Extract<Slide, { layout: "banner" }> }) {
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-end pb-8 text-center lg:pb-10">
-      <SlideBackground background={slide.background} />
-      <div className="relative z-10 px-4">
-        <h1 className="font-poppins mx-auto max-w-[830px] whitespace-pre-line text-[28px] font-extrabold italic leading-none tracking-[-1.5px] text-white sm:text-[36px] lg:text-[40px] xl:text-[45px] xl:tracking-[-2px]">
-          {slide.title}
-        </h1>
-        <p className="font-roboto mt-3 text-[16px] font-medium leading-none text-[#fcfcfc] lg:text-[20px]">
-          {slide.subtitle}
-        </p>
-      </div>
-    </div>
+    <Link href={slide.href} className="relative block h-full w-full" aria-label={slide.alt}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.55, ease: "easeOut" }}
+        className="absolute inset-0"
+      >
+        {/* Desktop / tablet composition */}
+        <Image
+          src={slide.image}
+          alt={slide.alt}
+          fill
+          priority
+          className="hidden object-cover object-bottom sm:block"
+          sizes="(min-width: 640px) 100vw, 1px"
+        />
+        {/* Tall crop for phones */}
+        <Image
+          src={slide.imageMobile ?? slide.image}
+          alt=""
+          fill
+          priority
+          className="object-cover object-bottom sm:hidden"
+          sizes="(max-width: 639px) 100vw, 1px"
+        />
+      </motion.div>
+    </Link>
   );
 }

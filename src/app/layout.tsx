@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Anton, Montserrat, Poppins, Roboto } from "next/font/google";
-import FloatingActions from "@/components/layout/FloatingActions";
+import CartShell from "@/components/cart/CartShell";
+import Click2Connect from "@/components/layout/Click2Connect";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -57,8 +58,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${montserrat.variable} ${roboto.variable} ${poppins.variable} ${anton.variable}`}
     >
       <body className="min-h-screen flex flex-col antialiased">
-        {children}
-        <FloatingActions />
+        <CartShell>
+          {children}
+          <Click2Connect />
+        </CartShell>
       </body>
     </html>
   );
