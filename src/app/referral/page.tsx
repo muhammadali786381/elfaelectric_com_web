@@ -4,6 +4,7 @@ import { ChevronRight, Mail } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 export const metadata: Metadata = {
   title: "ELFA Referral Program Pakistan | Earn PKR 10,000 Per Friend",
@@ -99,7 +100,7 @@ export default function ReferralPage() {
 
         {/* Exciting News */}
         <section className="bg-white pt-12 pb-8 lg:pt-16 lg:pb-10">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
+          <div className="mx-auto w-full max-w-container px-4 text-center sm:px-6">
             <h2 className="font-montserrat text-[32px] font-bold uppercase leading-tight text-[#61ce70] sm:text-[42px] lg:text-[52px]">
               Exciting News from ELFA Electric!
             </h2>
@@ -109,11 +110,13 @@ export default function ReferralPage() {
           </div>
         </section>
 
-        {/* How it works + Why join */}
+        {/* How it works + Why join — fade from left */}
         <section className="bg-white pb-10 lg:pb-12">
-          <div className="mx-auto grid w-full max-w-container gap-5 px-4 sm:px-6 lg:grid-cols-2">
-            <div
-              className="rounded-[19px] border border-[#61ce70] p-[30px]"
+          <div className="mx-auto grid w-full max-w-container items-stretch gap-5 px-4 sm:px-6 lg:grid-cols-2">
+            <FadeIn
+              variant="fadeInLeft"
+              speed="normal"
+              className="h-full rounded-[19px] border border-[#61ce70] p-[30px]"
               style={{ backgroundImage: SPARK }}
             >
               <SectionTitle>How the ELFA Referral Program Pakistan Works</SectionTitle>
@@ -121,22 +124,25 @@ export default function ReferralPage() {
                 Participating in the ELFA referral program Pakistan is simple and rewarding:
               </p>
               <ChevronList items={howItWorks} />
-            </div>
+            </FadeIn>
 
-            <div
-              className="rounded-[19px] border border-[#61ce70] p-[30px]"
+            <FadeIn
+              variant="fadeInLeft"
+              speed="normal"
+              delay={0.12}
+              className="h-full rounded-[19px] border border-[#61ce70] p-[30px]"
               style={{ backgroundImage: SPARK }}
             >
               <SectionTitle>Why Join Our Electric Bike Referral Rewards?</SectionTitle>
               <ChevronList items={benefits} />
-            </div>
+            </FadeIn>
           </div>
         </section>
 
         {/* Step-by-step + single big spark panel */}
         <section className="bg-white pb-14 lg:pb-20">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <h2 className="font-montserrat mb-8 text-[28px] font-bold text-[#61ce70] sm:text-[35px]">
+            <h2 className="font-montserrat mb-8 text-center text-[28px] font-bold text-[#61ce70] sm:text-[35px]">
               Step-by-Step Guide to Earn PKR 10,000 Per Referral
             </h2>
 

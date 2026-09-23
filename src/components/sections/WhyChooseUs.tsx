@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Zap } from "lucide-react";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 const whyChooseUs = [
   {
@@ -31,49 +34,57 @@ const whatSetsUsApart = [
   },
 ];
 
-function List({ items, align }: { items: typeof whyChooseUs; align: "left" | "right" }) {
+function List({ items }: { items: typeof whyChooseUs }) {
   return (
-    <div className={`flex flex-col gap-8 ${align === "right" ? "sm:items-end sm:text-right" : ""}`}>
+    <div className="flex flex-col gap-6">
       {items.map((item) => (
         <div key={item.label}>
-          <p className={`font-roboto mb-1.5 flex items-center gap-2 text-[16px] text-[#212121] ${align === "right" ? "sm:flex-row-reverse" : ""}`}>
-            <Zap className="h-4 w-4 shrink-0 fill-[#61ce70] text-[#61ce70]" />
-            <span className="font-semibold">{item.label}</span>
+          <p className="font-roboto mb-1.5 flex items-start gap-2 text-left text-[18px] font-semibold leading-snug text-[#212121]">
+            <Zap className="mt-0.5 h-4 w-4 shrink-0 fill-[#61ce70] text-[#61ce70]" />
+            <span>{item.label}</span>
           </p>
-          <p className="font-roboto text-[15px] leading-relaxed text-[#212121]/75">{item.desc}</p>
+          <p className="font-roboto pl-6 text-left text-[16px] font-normal leading-[1.55] text-[#212121]">
+            {item.desc}
+          </p>
         </div>
       ))}
     </div>
   );
 }
 
+/** Scooty fades in — copy stays static. Layout matches live elfaelectric.com. */
 export default function WhyChooseUs() {
   return (
-    <section className="bg-white py-16 lg:py-20">
+    <section className="bg-white pb-16 lg:pb-20">
       <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.1fr_1fr]">
-          <div>
-            <h3 className="font-montserrat mb-8 text-[24px] font-bold text-[#61ce70] sm:text-[26px]">
+        {/*
+          Ref @1280: cols ~276px | image 514×538 | cols ~276px
+          Both columns left-aligned (including “What sets us apart”).
+        */}
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_514px_minmax(0,1fr)] lg:gap-8 xl:gap-10">
+          <div className="max-w-[276px] justify-self-start lg:max-w-none">
+            <h3 className="font-montserrat mb-6 text-left text-[24px] font-bold text-[#61ce70] sm:text-[26px]">
               Why choose us
             </h3>
-            <List items={whyChooseUs} align="left" />
+            <List items={whyChooseUs} />
           </div>
 
-          <div className="flex justify-center">
+          <FadeIn variant="fadeIn" speed="slow" className="flex justify-center">
             <Image
               src="/assets/images/sut.webp"
               alt="ELFA EV-1 Scooty"
               width={514}
               height={538}
-              className="h-auto w-full max-w-[560px] object-contain"
+              className="h-auto w-full max-w-[514px] object-contain"
+              sizes="(max-width: 1024px) 80vw, 514px"
             />
-          </div>
+          </FadeIn>
 
-          <div>
-            <h3 className="font-montserrat mb-8 text-[24px] font-bold text-[#61ce70] sm:text-right sm:text-[26px]">
+          <div className="max-w-[276px] justify-self-start lg:max-w-none">
+            <h3 className="font-montserrat mb-6 text-left text-[24px] font-bold text-[#61ce70] sm:text-[26px]">
               What sets us apart
             </h3>
-            <List items={whatSetsUsApart} align="right" />
+            <List items={whatSetsUsApart} />
           </div>
         </div>
       </div>

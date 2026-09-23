@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import DealersHero from "@/components/sections/DealersHero";
 import Marquee from "@/components/sections/Marquee";
+import { FadeIn } from "@/components/motion/FadeIn";
 import DealersDirectory from "./DealersDirectory";
 
 export const metadata: Metadata = {
@@ -23,6 +24,10 @@ const whyItems = [
   "After-sales support and maintenance services.",
 ];
 
+/**
+ * Animations: opacity + px translate only.
+ * FadeIn IS the card (same classes) — no size/spacing changes.
+ */
 export default function OurDealersPage() {
   return (
     <>
@@ -30,10 +35,12 @@ export default function OurDealersPage() {
       <main className="flex-1">
         <DealersHero />
 
-        {/* Looking for dealers — mobile: content top, image bottom; desktop: image left, content right */}
+        {/* Bike from left · card from right */}
         <section className="bg-white py-10 lg:py-14">
           <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
-            <div
+            <FadeIn
+              variant="fadeInRight"
+              speed="slow"
               className="order-1 rounded-[16px] border-2 border-[#61ce70] px-4 py-8 sm:rounded-[20px] sm:px-8 sm:py-20 lg:order-2"
               style={{ backgroundImage: SPARK }}
             >
@@ -46,8 +53,12 @@ export default function OurDealersPage() {
                 electric bike, schedule a test ride, or become an ELFA dealer, we have got you
                 covered.
               </p>
-            </div>
-            <div className="relative order-2 mx-auto aspect-square w-full max-w-[360px] sm:max-w-[480px] lg:order-1">
+            </FadeIn>
+            <FadeIn
+              variant="fadeInLeft"
+              speed="slow"
+              className="relative order-2 mx-auto aspect-square w-full max-w-[360px] sm:max-w-[480px] lg:order-1"
+            >
               <Image
                 src="/assets/images/dealers/red-bike.png"
                 alt="ELFA EV-125 red electric motorcycle"
@@ -55,14 +66,16 @@ export default function OurDealersPage() {
                 className="object-contain"
                 sizes="480px"
               />
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* Why buy — mobile: content top, image bottom; desktop: content left, image right */}
+        {/* Card + scooty both from left */}
         <section className="bg-white pb-10 lg:pb-14">
           <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
-            <div
+            <FadeIn
+              variant="fadeInLeft"
+              speed="slow"
               className="order-1 rounded-[16px] border-2 border-[#61ce70] px-4 py-8 sm:rounded-[20px] sm:px-8 sm:py-16"
               style={{ backgroundImage: SPARK }}
             >
@@ -89,8 +102,13 @@ export default function OurDealersPage() {
               <p className="font-roboto mt-5 text-[14px] leading-relaxed text-white sm:text-[16px]">
                 Visit your nearest EV bike showroom in Pakistan for the complete experience!
               </p>
-            </div>
-            <div className="relative order-2 mx-auto aspect-square w-full max-w-[360px] sm:max-w-[480px]">
+            </FadeIn>
+            <FadeIn
+              variant="fadeInLeft"
+              speed="slow"
+              delay={0.12}
+              className="relative order-2 mx-auto aspect-square w-full max-w-[360px] sm:max-w-[480px]"
+            >
               <Image
                 src="/assets/images/contact/new-bike-scooty.png"
                 alt="ELFA EV-125 and EV-1 scooty"
@@ -98,27 +116,34 @@ export default function OurDealersPage() {
                 className="object-contain"
                 sizes="480px"
               />
-            </div>
+            </FadeIn>
           </div>
         </section>
 
         <DealersDirectory />
 
-        {/* Apply / dealer support CTA */}
-        <section className="bg-[#f4f4f4] py-12 lg:py-16">
-          <div className="mx-auto w-full max-w-container px-4 text-center sm:px-6">
-            <h2 className="font-montserrat mb-3 text-[28px] font-bold text-[#212121] sm:text-[36px]">
-              Contact Our Dealer Support Team
-            </h2>
-            <p className="font-roboto mx-auto mb-6 max-w-[560px] text-[15px] text-[#333] sm:text-[16px]">
-              Apply online to become an ELFA dealer today!
-            </p>
-            <Link
-              href="/contact-us"
-              className="font-roboto inline-flex h-[48px] items-center justify-center rounded-[3px] bg-[#61ce70] px-8 text-[16px] font-semibold uppercase tracking-wide text-[#fcfcfc] transition-colors hover:bg-[#4fbf5f]"
+        {/* Apply CTA — spark gradient + fade up */}
+        <section className="bg-white py-12 lg:py-16">
+          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
+            <FadeIn
+              variant="fadeInUp"
+              speed="slow"
+              className="rounded-[15px] px-6 py-10 text-center sm:px-10 sm:py-12"
+              style={{ backgroundImage: SPARK }}
             >
-              Apply Online
-            </Link>
+              <h2 className="font-montserrat mb-3 text-[28px] font-bold text-white sm:text-[36px]">
+                Contact Our Dealer Support Team
+              </h2>
+              <p className="font-roboto mx-auto mb-6 max-w-[560px] text-[15px] text-white sm:text-[16px]">
+                Apply online to become an ELFA dealer today!
+              </p>
+              <Link
+                href="/contact-us"
+                className="font-roboto inline-flex h-[48px] items-center justify-center rounded-[3px] bg-[#61ce70] px-8 text-[16px] font-semibold uppercase tracking-wide text-[#fcfcfc] transition-colors hover:bg-[#4fbf5f]"
+              >
+                Apply Online
+              </Link>
+            </FadeIn>
           </div>
         </section>
 

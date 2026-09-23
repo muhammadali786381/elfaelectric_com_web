@@ -9,6 +9,7 @@ import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 // Real videos + thumbnails pulled directly from the live site's carousel
 const videos = [
@@ -120,11 +121,13 @@ export default function CustomerFeedback() {
             </button>
           </div>
 
-          <h2 className="font-anton mt-4 text-center text-[40px] italic uppercase leading-[0.95] text-white sm:text-[64px] lg:text-[95px]">
-            CUSTOMER
-            <br />
-            FEEDBACK
-          </h2>
+          <FadeIn variant="fadeIn" speed="slow">
+            <h2 className="font-anton mt-4 text-center text-[40px] italic uppercase leading-[0.95] text-white sm:text-[64px] lg:text-[95px]">
+              CUSTOMER
+              <br />
+              FEEDBACK
+            </h2>
+          </FadeIn>
         </div>
       </div>
 

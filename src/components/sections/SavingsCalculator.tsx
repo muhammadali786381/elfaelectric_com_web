@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Calculator } from "lucide-react";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 type CalculatorConfig = {
   id: string;
@@ -152,9 +153,11 @@ export default function SavingsCalculator({
 
   return (
     <section className="bg-white py-16 lg:py-20 lg:px-30">
-      <h2 className="font-montserrat mb-8 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
-        ELFA Savings Calculator
-      </h2>
+      <FadeIn variant="fadeInUp" speed="slow">
+        <h2 className="font-montserrat mb-8 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
+          ELFA Savings Calculator
+        </h2>
+      </FadeIn>
 
       {!locked ? (
         <div className="mb-8 flex flex-wrap justify-center gap-5">

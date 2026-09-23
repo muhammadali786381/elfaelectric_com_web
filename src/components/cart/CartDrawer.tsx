@@ -202,7 +202,7 @@ export default function CartDrawer() {
                 View Cart
               </Link>
               <Link
-                href="/contact-us"
+                href="/checkout"
                 onClick={closeCart}
                 className="font-roboto inline-flex h-12 items-center justify-center rounded bg-[#045e54] text-[15px] font-semibold text-white hover:bg-[#034940]"
               >

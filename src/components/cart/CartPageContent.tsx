@@ -237,7 +237,7 @@ export default function CartPageContent() {
           </table>
 
           <Link
-            href="/contact-us"
+            href="/checkout"
             className="font-roboto mt-4 flex w-full items-center justify-center rounded-[3px] bg-[#61ce70] px-[15px] py-[15px] text-[15px] font-bold leading-none text-white hover:bg-[#4fbf5f]"
           >
             Proceed to Checkout

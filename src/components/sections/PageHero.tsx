@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 type PageHeroProps = {
   title: ReactNode;
@@ -83,29 +84,29 @@ export default function PageHero({
             <div
               className={
                 compact
-                  ? "relative z-10 w-full max-w-[725px] text-left lg:translate-y-12"
+                  ? "relative z-10 w-full max-w-[725px] text-center lg:translate-y-12 lg:text-left"
                   : xlTitle || largeTitle || bigTitle
-                    ? "max-w-[640px] text-left"
+                    ? "mx-auto max-w-[640px] text-center lg:mx-0 lg:text-left"
                     : greenTitle || bodySubtitle
-                      ? "max-w-[560px] text-left"
-                      : "max-w-[520px] text-left"
+                      ? "mx-auto max-w-[560px] text-center lg:mx-0 lg:text-left"
+                      : "mx-auto max-w-[520px] text-center lg:mx-0 lg:text-left"
               }
             >
               <h1
                 className={
                   compact
-                    ? "font-montserrat text-left text-[26px] font-bold uppercase leading-[38px] text-white sm:text-[32px] sm:leading-[46px] lg:text-[36px] lg:leading-[48px]"
+                    ? "font-montserrat text-center text-[26px] font-bold uppercase leading-[38px] text-white sm:text-[32px] sm:leading-[46px] lg:text-left lg:text-[36px] lg:leading-[48px]"
                     : xlTitle
-                      ? "font-montserrat text-left text-[36px] font-bold uppercase leading-[1.05] text-white sm:text-[56px] sm:leading-[1] lg:text-[86px] lg:leading-[81px]"
+                      ? "font-montserrat text-center text-[36px] font-bold uppercase leading-[1.05] text-white sm:text-[56px] sm:leading-[1] lg:text-left lg:text-[86px] lg:leading-[81px]"
                       : bigTitle
-                        ? "font-montserrat text-left text-[36px] font-bold uppercase leading-[1.05] text-white sm:text-[52px] sm:leading-[1] lg:text-[70px] lg:leading-[70px]"
+                        ? "font-montserrat text-center text-[36px] font-bold uppercase leading-[1.05] text-white sm:text-[52px] sm:leading-[1] lg:text-left lg:text-[70px] lg:leading-[70px]"
                       : largeTitle
-                        ? "font-montserrat text-left text-[32px] font-bold uppercase leading-tight text-white sm:text-[46px] lg:text-[60px] lg:leading-[60px]"
+                        ? "font-montserrat text-center text-[32px] font-bold uppercase leading-tight text-white sm:text-[46px] lg:text-left lg:text-[60px] lg:leading-[60px]"
                         : greenTitle
-                          ? "font-montserrat text-left text-[28px] font-bold uppercase leading-[36px] text-[#61ce70] sm:text-[34px] sm:leading-[44px] lg:text-[40px] lg:leading-[52px]"
+                          ? "font-montserrat text-center text-[28px] font-bold uppercase leading-[36px] text-[#61ce70] sm:text-[34px] sm:leading-[44px] lg:text-left lg:text-[40px] lg:leading-[52px]"
                           : bodySubtitle
-                            ? "font-montserrat text-left text-[24px] font-bold uppercase leading-[32px] text-white sm:text-[28px] sm:leading-[36px] lg:text-[32px] lg:leading-[42px]"
-                            : "font-montserrat text-left text-[28px] font-bold uppercase leading-[1.15] text-white sm:text-[36px] lg:text-[45px] lg:leading-[57px]"
+                            ? "font-montserrat text-center text-[24px] font-bold uppercase leading-[32px] text-white sm:text-[28px] sm:leading-[36px] lg:text-left lg:text-[32px] lg:leading-[42px]"
+                            : "font-montserrat text-center text-[28px] font-bold uppercase leading-[1.15] text-white sm:text-[36px] lg:text-left lg:text-[45px] lg:leading-[57px]"
                 }
               >
                 {title}
@@ -114,17 +115,17 @@ export default function PageHero({
                 <p
                   className={
                     greenTitle
-                      ? "font-roboto mt-3 text-left text-[22px] font-medium capitalize leading-[28px] text-[#fcfcfc] sm:mt-4 sm:text-[30px] sm:leading-[30px]"
+                      ? "font-roboto mt-3 text-center text-[22px] font-medium capitalize leading-[28px] text-[#fcfcfc] sm:mt-4 sm:text-[30px] sm:leading-[30px] lg:text-left"
                       : bodySubtitle
-                        ? "font-roboto mt-3 max-w-[536px] text-left text-[14px] font-normal leading-[22px] text-white sm:mt-4 sm:text-[16px] sm:leading-[25px]"
-                        : "font-roboto mt-4 text-left text-[18px] font-medium leading-[25px] text-[#fcfcfc] sm:text-[23px]"
+                        ? "font-roboto mx-auto mt-3 max-w-[536px] text-center text-[14px] font-normal leading-[22px] text-white sm:mt-4 sm:text-[16px] sm:leading-[25px] lg:mx-0 lg:text-left"
+                        : "font-roboto mt-4 text-center text-[18px] font-medium leading-[25px] text-[#fcfcfc] sm:text-[23px] lg:text-left"
                   }
                 >
                   {subtitle}
                 </p>
               )}
               <div
-                className={`font-roboto flex items-center gap-2 text-left text-white ${
+                className={`font-roboto flex items-center justify-center gap-2 text-white lg:justify-start ${
                   compact
                     ? "mt-3 text-[18px] sm:text-[22px] lg:mt-[20px] lg:text-[27px]"
                     : xlTitle || largeTitle || bigTitle
@@ -146,14 +147,16 @@ export default function PageHero({
             {compact ? (
               <div className="pointer-events-none absolute bottom-6 right-0 hidden h-[380px] w-[520px]  xl:h-[460px] xl:w-[660px] lg:block">
                 {bikesSrc ? (
-                  <Image
-                    src={bikesSrc}
-                    alt="ELFA electric bikes"
-                    fill
-                    className="object-contain object-right-bottom"
-                    sizes="700px"
-                    priority
-                  />
+                  <FadeIn variant="fadeIn" speed="slow" className="absolute inset-0" immediate>
+                    <Image
+                      src={bikesSrc}
+                      alt="ELFA electric bikes"
+                      fill
+                      className="object-contain object-right-bottom"
+                      sizes="700px"
+                      priority
+                    />
+                  </FadeIn>
                 ) : null}
               </div>
             ) : (
@@ -167,14 +170,16 @@ export default function PageHero({
                 }`}
               >
                 {bikesSrc ? (
-                  <Image
-                    src={bikesSrc}
-                    alt="ELFA electric bikes"
-                    fill
-                    className="object-contain object-right-bottom"
-                    sizes="679px"
-                    priority
-                  />
+                  <FadeIn variant="fadeIn" speed="slow" className="absolute inset-0" immediate>
+                    <Image
+                      src={bikesSrc}
+                      alt="ELFA electric bikes"
+                      fill
+                      className="object-contain object-right-bottom"
+                      sizes="679px"
+                      priority
+                    />
+                  </FadeIn>
                 ) : (
                   <>
                     <div className="absolute bottom-0 right-24 h-[320px] w-[360px]">
@@ -202,15 +207,15 @@ export default function PageHero({
           </div>
         ) : (
           <>
-            <h1 className="font-montserrat max-w-[820px] text-[32px] font-bold uppercase leading-tight text-white sm:text-[46px] lg:text-[60px]">
+            <h1 className="font-montserrat mx-auto max-w-[820px] text-center text-[32px] font-bold uppercase leading-tight text-white sm:text-[46px] lg:mx-0 lg:text-left lg:text-[60px]">
               {title}
             </h1>
             {subtitle && (
-              <p className="font-roboto mt-4 max-w-[640px] text-[16px] leading-relaxed text-white/85">
+              <p className="font-roboto mx-auto mt-4 max-w-[640px] text-center text-[16px] leading-relaxed text-white/85 lg:mx-0 lg:text-left">
                 {subtitle}
               </p>
             )}
-            <div className="mt-5 flex items-center gap-2 text-[16px] text-white">
+            <div className="mt-5 flex items-center justify-center gap-2 text-[16px] text-white lg:justify-start">
               <Link href="/" className="transition-colors hover:text-[#61ce70]">
                 Home
               </Link>

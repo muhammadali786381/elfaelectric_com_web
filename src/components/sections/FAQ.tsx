@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 // Questions & answers scraped directly from elfaelectric.com
 const faqs = [
@@ -96,9 +97,11 @@ export default function FAQ() {
   return (
     <section id="faq" className="bg-white py-16 lg:py-20">
       <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-        <h2 className="font-montserrat mb-10 text-center text-[32px] font-bold text-[#212121] sm:text-[38px] lg:text-[44px]">
-          Frequently Asked Questions
-        </h2>
+        <FadeIn variant="fadeInUp" speed="slow">
+          <h2 className="font-montserrat mb-10 text-center text-[32px] font-bold text-[#212121] sm:text-[38px] lg:text-[44px]">
+            Frequently Asked Questions
+          </h2>
+        </FadeIn>
 
         {/* 2-column grid matching the reference site layout */}
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">

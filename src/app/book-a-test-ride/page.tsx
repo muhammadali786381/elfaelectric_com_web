@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 import Marquee from "@/components/sections/Marquee";
 import JoinRevolutionCTA from "@/components/sections/JoinRevolutionCTA";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 export const metadata: Metadata = {
   title: "Book a Test Ride – ELFA Electric Bikes & Scooty in Pakistan",
@@ -63,14 +64,18 @@ function SparkCard({
   intro,
   items,
   footer,
+  from,
 }: {
   title: string;
   intro?: string;
   items: string[];
   footer?: ReactNode;
+  from: "left" | "right";
 }) {
   return (
-    <div
+    <FadeIn
+      variant={from === "left" ? "fadeInLeft" : "fadeInRight"}
+      speed="normal"
       className="flex h-full flex-col rounded-[19px] p-[30px]"
       style={{ backgroundImage: SPARK }}
     >
@@ -91,7 +96,7 @@ function SparkCard({
         ))}
       </ul>
       {footer}
-    </div>
+    </FadeIn>
   );
 }
 
@@ -100,7 +105,6 @@ export default function BookTestRidePage() {
     <>
       <Header />
       <main className="flex-1">
-        {/* Hero — same as Newsroom */}
         <PageHero
           title={
             <>
@@ -116,15 +120,17 @@ export default function BookTestRidePage() {
           bikesSrc="/assets/images/blog-page.png"
         />
 
-        {/* Why + How — live: 50px section pad, 22px gap, spark cards */}
+        {/* Why + How — left / right */}
         <section className="bg-[#fcfcfc] py-[50px]">
-          <div className="mx-auto grid w-full max-w-container grid-cols-1 gap-[22px] px-4 sm:px-6 lg:grid-cols-2">
+          <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-[22px] px-4 sm:px-6 lg:grid-cols-2">
             <SparkCard
+              from="left"
               title="Why Book a Test Ride with ELFA Electric?"
               intro="Book a test ride with ELFA and feel the difference! Our test rides let you experience:"
               items={whyItems}
             />
             <SparkCard
+              from="right"
               title="How to Schedule Your Electric Bike Demo"
               intro="Schedule your electric bike demo Pakistan in 3 easy steps:"
               items={scheduleItems}
@@ -132,17 +138,19 @@ export default function BookTestRidePage() {
           </div>
         </section>
 
-        {/* Intro band — full-width spark */}
+        {/* Intro band — fade up */}
         <section className="bg-white py-[50px]">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <div
-              className="rounded-[15px] text-center px-6 py-[30px] sm:px-10"
+            <FadeIn
+              variant="fadeInUp"
+              speed="normal"
+              className="rounded-[15px] px-6 py-[30px] text-center sm:px-10"
               style={{ backgroundImage: SPARK }}
             >
               <h2 className="font-montserrat mb-5 text-[28px] font-bold leading-tight text-[#61ce70] sm:text-[36px] lg:text-[45px] lg:leading-[45px]">
                 Book a test ride with an electric bike
               </h2>
-              <div className="font-roboto flex max-w-[1000px] flex-col gap-3  text-[18px] font-normal leading-relaxed text-[#fcfcfc]">
+              <div className="font-roboto mx-auto flex max-w-[1000px] flex-col gap-3 text-[18px] font-normal leading-relaxed text-[#fcfcfc]">
                 <p>
                   Book a test ride with an electric bike brand proudly made in Pakistan and
                   experience the future of mobility with ELFA Electric!
@@ -157,18 +165,20 @@ export default function BookTestRidePage() {
                   electric bike and electric scooty brand!
                 </p>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* Models + Locations */}
+        {/* Models + Locations — left / right */}
         <section className="bg-[#fcfcfc] py-[50px]">
-          <div className="mx-auto grid w-full max-w-container grid-cols-1 gap-[22px] px-4 sm:px-6 lg:grid-cols-2">
+          <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-[22px] px-4 sm:px-6 lg:grid-cols-2">
             <SparkCard
+              from="left"
               title="Available Models for Test Ride: EV125 & EV-1 Scooty"
               items={modelItems}
             />
             <SparkCard
+              from="right"
               title="Test Ride Locations in Karachi, Hyderabad & DHA"
               intro="We offer test rides at:"
               items={locationItems}
@@ -176,16 +186,18 @@ export default function BookTestRidePage() {
           </div>
         </section>
 
-        {/* Reach + booking iframe */}
+        {/* Reach title from right (stay centered) + booking iframe */}
         <section id="booking" className="bg-white py-[60px]">
-          <div className="mx-auto w-full text-center max-w-container px-4 sm:px-6 ">
-            <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-none text-[#61ce70] sm:text-[36px] lg:text-[42px]">
-              Reach Our Experts For Support
-            </h2>
-            <p className="font-roboto mb-12 text-[16px] font-normal leading-6 text-[#212121]">
-              Experience the thrill of riding our electric bikes firsthand. Book your test ride
-              today and feel the power and innovation in every journey!
-            </p>
+          <div className="mx-auto w-full max-w-container px-4 text-center sm:px-6">
+            <FadeIn variant="fadeInRight" speed="normal" className="text-center">
+              <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-none text-[#61ce70] sm:text-[36px] lg:text-[42px]">
+                Reach Our Experts For Support
+              </h2>
+              <p className="font-roboto mb-12 text-[16px] font-normal leading-6 text-[#212121]">
+                Experience the thrill of riding our electric bikes firsthand. Book your test ride
+                today and feel the power and innovation in every journey!
+              </p>
+            </FadeIn>
             <div className="w-full overflow-hidden rounded-[12px]">
               <iframe
                 src={BOOKING_IFRAME}
@@ -198,10 +210,11 @@ export default function BookTestRidePage() {
           </div>
         </section>
 
-        {/* Expect + 5 Reasons */}
+        {/* Expect + 5 Reasons — left / right */}
         <section className="bg-[#fcfcfc] py-[50px]">
-          <div className="mx-auto grid w-full max-w-container grid-cols-1 gap-[22px] px-4 sm:px-6 lg:grid-cols-2">
+          <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-[22px] px-4 sm:px-6 lg:grid-cols-2">
             <SparkCard
+              from="left"
               title="What to Expect During Your Test Ride"
               intro="During your ELFA test ride, you’ll:"
               items={expectItems}
@@ -212,6 +225,7 @@ export default function BookTestRidePage() {
               }
             />
             <SparkCard
+              from="right"
               title="5 Reasons to Try ELFA Electric Bikes Today"
               items={reasonItems}
             />

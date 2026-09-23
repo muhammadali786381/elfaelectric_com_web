@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ArrowRight, Bike, Clock } from "lucide-react";
 
 const PAVE_FORM_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSdxnx9J7GDgtDHg3_jnbsRfdYb_dR79s9VJc0xZ4kKxqcsA1w/viewform?usp=publish-editor";
+  "https://docs.google.com/forms/d/e/1FAIpQLSdxnx9J7GDgtDHg3_jnbsRfdYb_dR79s9VJc0xZ4kKxqcsA1w/viewform";
 
 const products = [
   { label: "EV125 MOTORBIKE", image: "/assets/images/ev125-hero.webp" },
@@ -38,9 +38,12 @@ export default function PavePromo() {
             </h3>
             <div className="mb-5 flex flex-col gap-3">
               {products.map((p) => (
-                <div
+                <a
                   key={p.label}
-                  className="flex items-center justify-between rounded-[8px] border border-gray-200 px-4 py-3"
+                  href={PAVE_FORM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between rounded-[8px] border border-gray-200 px-4 py-3 transition-colors hover:border-[#61ce70]"
                 >
                   <div className="flex items-center gap-3">
                     <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[6px] bg-gray-50">
@@ -54,7 +57,7 @@ export default function PavePromo() {
                     </div>
                   </div>
                   <ArrowRight className="h-4 w-4 shrink-0 text-gray-400" />
-                </div>
+                </a>
               ))}
             </div>
             <p className="font-roboto mb-4 text-[13px] text-gray-500">
