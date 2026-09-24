@@ -26,12 +26,12 @@ const emptyAddress = (): CheckoutAddress => ({
 });
 
 const fieldClass =
-  "font-roboto h-[50px] w-full rounded border border-[rgba(43,45,47,0.8)] bg-white px-3 text-[16px] text-[#212121] outline-none transition-colors placeholder:text-[#999] focus:border-[#61ce70]";
+  "font-roboto h-[50px] w-full rounded border border-[rgba(43,45,47,0.8)] bg-bg-primary px-3 text-[16px] text-text-primary outline-none transition-colors placeholder:text-text-secondary focus:border-brand-primary";
 
-const labelClass = "font-roboto mb-1.5 block text-[13px] font-medium text-[#333]";
+const labelClass = "font-roboto mb-1.5 block text-[13px] font-medium text-text-secondary";
 
 const sectionTitleClass =
-  "font-roboto mb-4 text-[20px] font-medium leading-tight text-[#212121]";
+  "font-roboto mb-4 text-[20px] font-medium leading-tight text-text-primary";
 
 type FieldErrors = Partial<Record<string, string>>;
 
@@ -125,25 +125,25 @@ export default function CheckoutPageContent() {
 
   if (placedOrder) {
     return (
-      <section className="bg-[#f3f3f4] py-10 lg:py-14">
-        <div className="mx-auto max-w-[720px] rounded-lg border border-[#e0e0e0] bg-white px-6 py-10 text-center shadow-sm sm:px-10">
-          <p className="font-montserrat text-[14px] font-semibold uppercase tracking-wide text-[#61ce70]">
+      <section className="bg-bg-secondary py-10 lg:py-14">
+        <div className="mx-auto max-w-[720px] rounded-lg border border-[#e0e0e0] bg-bg-primary px-6 py-10 text-center shadow-sm sm:px-10">
+          <p className="font-montserrat text-[14px] font-semibold uppercase tracking-wide text-brand-primary">
             Order received
           </p>
-          <h1 className="font-montserrat mt-2 text-[28px] font-bold text-[#212121] sm:text-[32px]">
+          <h1 className="font-montserrat mt-2 text-[28px] font-bold text-text-primary sm:text-[32px]">
             Thank you!
           </h1>
-          <p className="font-roboto mt-3 text-[15px] leading-relaxed text-[#555]">
-            Your order <span className="font-semibold text-[#212121]">{placedOrder.id}</span> is
+          <p className="font-roboto mt-3 text-[15px] leading-relaxed text-text-secondary">
+            Your order <span className="font-semibold text-text-primary">{placedOrder.id}</span> is
             pending bank transfer. Please use this Order ID as the payment reference. We will
             process shipping once funds clear.
           </p>
-          <div className="font-roboto mt-6 rounded-md border border-[#eee] bg-[#fafafa] px-4 py-4 text-left text-[14px] text-[#333]">
-            <div className="flex justify-between gap-4 border-b border-[#eee] py-2">
+          <div className="font-roboto mt-6 rounded-md border border-text-secondary/20 bg-bg-secondary px-4 py-4 text-left text-[14px] text-text-secondary">
+            <div className="flex justify-between gap-4 border-b border-text-secondary/20 py-2">
               <span>Email</span>
               <span className="font-medium">{placedOrder.email}</span>
             </div>
-            <div className="flex justify-between gap-4 border-b border-[#eee] py-2">
+            <div className="flex justify-between gap-4 border-b border-text-secondary/20 py-2">
               <span>Total</span>
               <span className="font-bold">{formatRs(placedOrder.total)}</span>
             </div>
@@ -155,13 +155,13 @@ export default function CheckoutPageContent() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/shop"
-              className="font-roboto inline-flex h-11 items-center justify-center rounded-[3px] bg-[#61ce70] px-6 text-[15px] font-bold text-white hover:bg-[#4fbf5f]"
+              className="font-roboto inline-flex h-11 items-center justify-center rounded-[3px] bg-brand-primary px-6 text-[15px] font-bold text-text-inverse hover:bg-brand-secondary"
             >
               Continue shopping
             </Link>
             <Link
               href="/"
-              className="font-roboto inline-flex h-11 items-center justify-center rounded-[3px] border border-[#212121] px-6 text-[15px] text-[#212121] hover:bg-[#f5f5f5]"
+              className="font-roboto inline-flex h-11 items-center justify-center rounded-[3px] border border-[#212121] px-6 text-[15px] text-text-primary hover:bg-bg-secondary"
             >
               Back to home
             </Link>
@@ -173,13 +173,13 @@ export default function CheckoutPageContent() {
 
   if (items.length === 0) {
     return (
-      <section className="bg-white py-10 lg:py-14">
+      <section className="bg-bg-primary py-10 lg:py-14">
         <div className="mx-auto max-w-[1095px] px-4 sm:px-5">
-          <h1 className="font-montserrat text-[28px] font-bold text-[#212121]">Checkout</h1>
-          <p className="font-roboto mt-3 text-[15px] text-[#555]">Your cart is currently empty.</p>
+          <h1 className="font-montserrat text-[28px] font-bold text-text-primary">Checkout</h1>
+          <p className="font-roboto mt-3 text-[15px] text-text-secondary">Your cart is currently empty.</p>
           <Link
             href="/shop"
-            className="font-roboto mt-6 inline-flex h-10 items-center justify-center rounded-[3px] border border-[#d5d8dc] bg-[#ebe9f1] px-5 text-[14px] font-medium text-[#333] hover:bg-[#e0dde8]"
+            className="font-roboto mt-6 inline-flex h-10 items-center justify-center rounded-[3px] border border-text-secondary/30 bg-bg-secondary px-5 text-[14px] font-medium text-text-secondary hover:bg-bg-secondary"
           >
             Return to shop
           </Link>
@@ -189,11 +189,11 @@ export default function CheckoutPageContent() {
   }
 
   return (
-    <section className="bg-[#f3f3f4] py-6 lg:py-10">
+    <section className="bg-bg-secondary py-6 lg:py-10">
       {/* Free delivery notice */}
       <div className="mx-auto mb-5 max-w-[1040px] px-4 sm:px-5">
-        <div className="flex items-start gap-2 rounded-md bg-[#e8f8eb] px-4 py-3 text-[14px] leading-snug text-[#333] sm:items-center sm:text-[15px]">
-          <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#61ce70] sm:mt-0" strokeWidth={2.25} />
+        <div className="flex items-start gap-2 rounded-md bg-brand-primary/10 px-4 py-3 text-[14px] leading-snug text-text-secondary sm:items-center sm:text-[15px]">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-brand-primary sm:mt-0" strokeWidth={2.25} />
           <p className="font-roboto">
             Free delivery in Karachi and Hyderabad! If you&apos;re in another city, our team will
             give you a call to confirm if we can deliver there and go over the options with you.
@@ -207,7 +207,7 @@ export default function CheckoutPageContent() {
         noValidate
       >
         {/* Left: checkout fields */}
-        <div className="rounded-lg border border-[#e0e0e0] bg-white p-5 shadow-sm sm:p-7">
+        <div className="rounded-lg border border-[#e0e0e0] bg-bg-primary p-5 shadow-sm sm:p-7">
           {/* Contact */}
           <div className="mb-8">
             <h2 className={sectionTitleClass}>Contact information</h2>
@@ -224,9 +224,9 @@ export default function CheckoutPageContent() {
               className={fieldClass}
             />
             {errors.email ? (
-              <p className="font-roboto mt-1 text-[13px] text-[#e31e24]">{errors.email}</p>
+              <p className="font-roboto mt-1 text-[13px] text-brand-accent">{errors.email}</p>
             ) : null}
-            <p className="font-roboto mt-2 text-[13px] text-[#69727d]">
+            <p className="font-roboto mt-2 text-[13px] text-text-secondary">
               You are currently checking out as a guest.
             </p>
           </div>
@@ -247,7 +247,7 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.firstName"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-[#e31e24]">Required</p>
+                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
                 ) : null}
               </div>
               <div>
@@ -275,7 +275,7 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.lastName"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-[#e31e24]">Required</p>
+                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
                 ) : null}
               </div>
               <div className="sm:col-span-2">
@@ -290,13 +290,13 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.address1"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-[#e31e24]">Required</p>
+                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
                 ) : null}
                 {!showApartment ? (
                   <button
                     type="button"
                     onClick={() => setShowApartment(true)}
-                    className="font-roboto mt-2 text-[14px] text-[#61ce70] hover:underline"
+                    className="font-roboto mt-2 text-[14px] text-brand-primary hover:underline"
                   >
                     + Add apartment, suite, unit, etc.
                   </button>
@@ -322,7 +322,7 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.city"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-[#e31e24]">Required</p>
+                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
                 ) : null}
               </div>
               <div>
@@ -354,7 +354,7 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.postcode"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-[#e31e24]">Required</p>
+                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
                 ) : null}
               </div>
               <div>
@@ -370,24 +370,24 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.phone"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-[#e31e24]">Required</p>
+                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
                 ) : null}
               </div>
             </div>
 
-            <label className="font-roboto mt-4 flex cursor-pointer items-center gap-2.5 text-[14px] text-[#333]">
+            <label className="font-roboto mt-4 flex cursor-pointer items-center gap-2.5 text-[14px] text-text-secondary">
               <input
                 type="checkbox"
                 checked={billingSame}
                 onChange={(e) => setBillingSame(e.target.checked)}
-                className="h-4 w-4 accent-[#61ce70]"
+                className="h-4 w-4 accent-brand-primary"
               />
               Use same address for billing
             </label>
 
             {!billingSame ? (
-              <div className="mt-6 grid grid-cols-1 gap-4 border-t border-[#eee] pt-6 sm:grid-cols-2">
-                <p className="font-roboto sm:col-span-2 text-[16px] font-medium text-[#212121]">
+              <div className="mt-6 grid grid-cols-1 gap-4 border-t border-text-secondary/20 pt-6 sm:grid-cols-2">
+                <p className="font-roboto sm:col-span-2 text-[16px] font-medium text-text-primary">
                   Billing address
                 </p>
                 {(
@@ -437,16 +437,16 @@ export default function CheckoutPageContent() {
           <div className="mb-8">
             <h2 className={sectionTitleClass}>Shipping options</h2>
             <label className="flex cursor-pointer items-center justify-between rounded border border-[#212121] px-4 py-3.5">
-              <span className="font-roboto flex items-center gap-3 text-[14px] text-[#212121]">
+              <span className="font-roboto flex items-center gap-3 text-[14px] text-text-primary">
                 <input
                   type="radio"
                   name="shipping_method"
                   defaultChecked
-                  className="h-4 w-4 accent-[#61ce70]"
+                  className="h-4 w-4 accent-brand-primary"
                 />
                 Free shipping
               </span>
-              <span className="font-roboto text-[13px] font-bold uppercase tracking-wide text-[#212121]">
+              <span className="font-roboto text-[13px] font-bold uppercase tracking-wide text-text-primary">
                 FREE
               </span>
             </label>
@@ -461,12 +461,12 @@ export default function CheckoutPageContent() {
                   type="radio"
                   name="payment_method"
                   defaultChecked
-                  className="h-4 w-4 accent-[#61ce70]"
+                  className="h-4 w-4 accent-brand-primary"
                 />
-                <span className="font-roboto text-[14px] text-[#212121]">Direct bank transfer</span>
+                <span className="font-roboto text-[14px] text-text-primary">Direct bank transfer</span>
               </label>
-              <div className="border-t border-[#e8e8e8] bg-[#fafafa] px-4 py-3">
-                <p className="font-roboto text-[13px] leading-relaxed text-[#555]">
+              <div className="border-t border-text-secondary/20 bg-bg-secondary px-4 py-3">
+                <p className="font-roboto text-[13px] leading-relaxed text-text-secondary">
                   Make your payment directly into our bank account. Please use your Order ID as the
                   payment reference. Your order will not be shipped until the funds have cleared in
                   our account.
@@ -476,12 +476,12 @@ export default function CheckoutPageContent() {
           </div>
 
           {/* Note */}
-          <label className="font-roboto mb-4 flex cursor-pointer items-center gap-2.5 text-[14px] text-[#333]">
+          <label className="font-roboto mb-4 flex cursor-pointer items-center gap-2.5 text-[14px] text-text-secondary">
             <input
               type="checkbox"
               checked={addNote}
               onChange={(e) => setAddNote(e.target.checked)}
-              className="h-4 w-4 accent-[#61ce70]"
+              className="h-4 w-4 accent-brand-primary"
             />
             Add a note to your order
           </label>
@@ -491,17 +491,17 @@ export default function CheckoutPageContent() {
               onChange={(e) => setNote(e.target.value)}
               rows={3}
               placeholder="Notes about your order, e.g. special notes for delivery."
-              className="font-roboto mb-4 w-full rounded border border-[rgba(43,45,47,0.8)] bg-white px-3 py-2.5 text-[15px] text-[#212121] outline-none focus:border-[#61ce70]"
+              className="font-roboto mb-4 w-full rounded border border-[rgba(43,45,47,0.8)] bg-bg-primary px-3 py-2.5 text-[15px] text-text-primary outline-none focus:border-brand-primary"
             />
           ) : null}
 
-          <p className="font-roboto mb-5 text-[13px] leading-relaxed text-[#555]">
+          <p className="font-roboto mb-5 text-[13px] leading-relaxed text-text-secondary">
             By proceeding with your purchase you agree to our{" "}
-            <Link href="/consent-policy" className="text-[#e31e24] hover:underline">
+            <Link href="/consent-policy" className="text-brand-accent hover:underline">
               Terms and Conditions
             </Link>{" "}
             and{" "}
-            <Link href="/privacy-policy" className="text-[#e31e24] hover:underline">
+            <Link href="/privacy-policy" className="text-brand-accent hover:underline">
               Privacy Policy
             </Link>
           </p>
@@ -509,29 +509,29 @@ export default function CheckoutPageContent() {
           <button
             type="submit"
             disabled={submitting}
-            className="font-roboto flex w-full items-center justify-center rounded-[3px] border border-[#212121] bg-transparent px-[30px] py-[18px] text-[16px] text-[#212121] transition-colors hover:bg-[#212121] hover:text-white disabled:opacity-60"
+            className="font-roboto flex w-full items-center justify-center rounded-[3px] border border-[#212121] bg-transparent px-[30px] py-[18px] text-[16px] text-text-primary transition-colors hover:bg-bg-inverse hover:text-text-inverse disabled:opacity-60"
           >
             {submitting ? "Placing order…" : "Place Order"}
           </button>
         </div>
 
         {/* Right: order summary */}
-        <aside className="h-fit rounded-lg border border-[#e0e0e0] bg-white p-5 shadow-sm lg:sticky lg:top-24">
-          <h2 className="font-roboto mb-4 text-[20px] font-medium text-[#212121]">Order summary</h2>
+        <aside className="h-fit rounded-lg border border-[#e0e0e0] bg-bg-primary p-5 shadow-sm lg:sticky lg:top-24">
+          <h2 className="font-roboto mb-4 text-[20px] font-medium text-text-primary">Order summary</h2>
 
           <ul className="mb-4 space-y-4">
             {items.map((item) => (
               <li key={item.id} className="flex gap-3">
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded border border-[#eee] bg-[#fafafa]">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded border border-text-secondary/20 bg-bg-secondary">
                   <Image src={item.image} alt="" fill className="object-contain p-1" sizes="64px" />
-                  <span className="font-roboto absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#212121] px-1 text-[11px] font-semibold text-white">
+                  <span className="font-roboto absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-bg-inverse px-1 text-[11px] font-semibold text-text-inverse">
                     {item.qty}
                   </span>
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="font-roboto text-[14px] font-medium text-[#212121]">{item.name}</p>
-                  <p className="font-roboto text-[12px] text-[#69727d]">Color: {item.variantLabel}</p>
-                  <p className="font-roboto mt-0.5 text-[14px] font-semibold text-[#61ce70]">
+                  <p className="font-roboto text-[14px] font-medium text-text-primary">{item.name}</p>
+                  <p className="font-roboto text-[12px] text-text-secondary">Color: {item.variantLabel}</p>
+                  <p className="font-roboto mt-0.5 text-[14px] font-semibold text-brand-primary">
                     {formatRs(item.price * item.qty)}
                   </p>
                 </div>
@@ -539,7 +539,7 @@ export default function CheckoutPageContent() {
             ))}
           </ul>
 
-          <p className="font-roboto mb-3 text-[13px] text-[#69727d]">
+          <p className="font-roboto mb-3 text-[13px] text-text-secondary">
             {itemCount} {itemCount === 1 ? "item" : "items"}
           </p>
 
@@ -547,7 +547,7 @@ export default function CheckoutPageContent() {
           <button
             type="button"
             onClick={() => setCouponOpen((o) => !o)}
-            className="font-roboto mb-3 flex w-full items-center justify-between border-y border-[#eee] py-3 text-left text-[14px] text-[#333]"
+            className="font-roboto mb-3 flex w-full items-center justify-between border-y border-text-secondary/20 py-3 text-left text-[14px] text-text-secondary"
           >
             Add coupons
             <ChevronDown
@@ -560,12 +560,12 @@ export default function CheckoutPageContent() {
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value)}
                 placeholder="Enter code"
-                className="font-roboto h-10 flex-1 rounded border border-[#ccc] px-3 text-[14px] outline-none focus:border-[#61ce70]"
+                className="font-roboto h-10 flex-1 rounded border border-[#ccc] px-3 text-[14px] outline-none focus:border-brand-primary"
               />
               <button
                 type="button"
                 onClick={() => applyCoupon(couponCode)}
-                className="font-roboto h-10 shrink-0 rounded bg-[#61ce70] px-4 text-[13px] font-bold text-white hover:bg-[#4fbf5f]"
+                className="font-roboto h-10 shrink-0 rounded bg-brand-primary px-4 text-[13px] font-bold text-text-inverse hover:bg-brand-secondary"
               >
                 Apply
               </button>
@@ -575,19 +575,19 @@ export default function CheckoutPageContent() {
             <button
               type="button"
               onClick={removeCoupon}
-              className="font-roboto mb-3 text-[13px] text-[#e31e24] hover:underline"
+              className="font-roboto mb-3 text-[13px] text-brand-accent hover:underline"
             >
               Remove {coupon.code}
             </button>
           ) : null}
 
-          <div className="font-roboto space-y-2.5 text-[14px] text-[#333]">
+          <div className="font-roboto space-y-2.5 text-[14px] text-text-secondary">
             <div className="flex justify-between gap-3">
               <span>Subtotal</span>
               <span>{formatRs(subtotal)}</span>
             </div>
             {discount > 0 ? (
-              <div className="flex justify-between gap-3 text-[#61ce70]">
+              <div className="flex justify-between gap-3 text-brand-primary">
                 <span>Coupon ({coupon?.code})</span>
                 <span>−{formatRs(discount)}</span>
               </div>
@@ -600,7 +600,7 @@ export default function CheckoutPageContent() {
               <span>Taxes</span>
               <span>{formatRs(taxTotal)}</span>
             </div>
-            <div className="flex justify-between gap-3 border-t border-[#212121] pt-3 text-[18px] font-bold text-[#212121]">
+            <div className="flex justify-between gap-3 border-t border-[#212121] pt-3 text-[18px] font-bold text-text-primary">
               <span>Total</span>
               <span>{formatRs(total)}</span>
             </div>

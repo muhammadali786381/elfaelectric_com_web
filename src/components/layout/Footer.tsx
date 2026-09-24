@@ -72,9 +72,10 @@ function WhatsAppIcon({ className }: { className?: string }) {
 export default function Footer() {
   return (
     <footer
-      className="text-white"
+      className="text-text-inverse"
       style={{
-        backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)",
+        backgroundColor: "#050505",
+        backgroundImage: "linear-gradient(to top right, rgba(0,229,115,0.06) 0%, transparent 40%)"
       }}
     >
       {/* Main columns */}
@@ -89,7 +90,7 @@ export default function Footer() {
               height={60}
               className="mb-5 h-14 w-auto object-contain"
             />
-            <p className="font-poppins mb-6 max-w-[320px] text-[14px] font-normal leading-relaxed text-[#fcfcfc]">
+            <p className="font-poppins mb-6 max-w-[320px] text-[14px] font-normal leading-relaxed text-text-inverse">
               Transforming perceptions of motorbikes and their environmental impact, for a greener
               tomorrow.
             </p>
@@ -101,7 +102,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="text-white transition-colors hover:text-[#61ce70]"
+                  className="text-text-inverse transition-colors hover:text-brand-primary"
                 >
                   {s.icon}
                 </a>
@@ -111,7 +112,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-poppins mb-5 text-[24px] font-medium leading-none text-[#fcfcfc] sm:text-[28px]">
+            <h3 className="font-poppins mb-5 text-[24px] font-medium leading-none text-text-inverse sm:text-[28px]">
               Quick Links
             </h3>
             <ul className="space-y-2.5">
@@ -119,9 +120,9 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="font-poppins inline-flex items-center gap-2 text-[15px] leading-[1.5] text-[#fcfcfc] no-underline transition-colors hover:text-[#61ce70]"
+                    className="font-poppins inline-flex items-center gap-2 text-[15px] leading-[1.5] text-text-inverse no-underline transition-colors hover:text-brand-primary"
                   >
-                    <ChevronRight className="h-[15px] w-[15px] shrink-0 text-[#61ce70]" strokeWidth={3} />
+                    <ChevronRight className="h-[15px] w-[15px] shrink-0 text-brand-primary" strokeWidth={3} />
                     {link.label}
                   </Link>
                 </li>
@@ -131,17 +132,17 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-poppins mb-5 text-[24px] font-medium leading-none text-[#fcfcfc] sm:text-[28px]">
+            <h3 className="font-poppins mb-5 text-[24px] font-medium leading-none text-text-inverse sm:text-[28px]">
               Contact
             </h3>
             <ul className="space-y-5">
               <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-5 w-5 shrink-0 fill-[#61ce70] stroke-[#61ce70]" strokeWidth={1} />
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 fill-brand-primary stroke-[var(--color-brand-primary)]" strokeWidth={1} />
                 <div>
-                  <p className="font-poppins text-[14px] font-medium leading-5 text-[#fcfcfc]">
+                  <p className="font-poppins text-[14px] font-medium leading-5 text-text-inverse">
                     Office Location
                   </p>
-                  <p className="font-poppins mt-1 text-[14px] font-normal leading-relaxed text-[#fcfcfc]/90]">
+                  <p className="font-poppins mt-1 text-[14px] font-normal leading-relaxed text-text-primary/90">
                     C3i GA-70-A3, Korangi Creek Industrial Park
                     <br />
                     Korangi, Karachi, Sindh
@@ -150,16 +151,16 @@ export default function Footer() {
               </li>
 
               <li className="flex items-start gap-3">
-                <WhatsAppIcon className="mt-0.5 h-5 w-5 shrink-0 text-[#61ce70]" />
+                <WhatsAppIcon className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
                 <div>
-                  <p className="font-poppins text-[14px] font-medium leading-5 text-[#fcfcfc]">
+                  <p className="font-poppins text-[14px] font-medium leading-5 text-text-inverse">
                     WhatsApp Support
                   </p>
                   <a
                     href="https://wa.me/923114863532"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-poppins mt-1 inline-block text-[14px] font-normal leading-5 text-[#fcfcfc] underline decoration-white/70 decoration-1 underline-offset-4 transition-all hover:text-[#61ce70] hover:no-underline"
+                    className="font-poppins mt-1 inline-block text-[14px] font-normal leading-5 text-text-inverse underline decoration-text-inverse/70 decoration-1 underline-offset-4 transition-all hover:text-brand-primary hover:no-underline"
                   >
                     +(92) 311-486-3532
                   </a>
@@ -167,12 +168,12 @@ export default function Footer() {
               </li>
 
               <li className="flex items-start gap-3">
-                <Headset className="mt-0.5 h-5 w-5 shrink-0 fill-[#61ce70] stroke-[#61ce70]" strokeWidth={1} />
+                <Headset className="mt-0.5 h-5 w-5 shrink-0 fill-brand-primary stroke-[var(--color-brand-primary)]" strokeWidth={1} />
                 <div>
-                  <p className="font-poppins text-[14px] font-medium leading-5 text-[#fcfcfc]">Call Us</p>
+                  <p className="font-poppins text-[14px] font-medium leading-5 text-text-inverse">Call Us</p>
                   <a
                     href="tel:02137173532"
-                    className="font-poppins mt-1 inline-block text-[14px] font-normal leading-5 text-[#fcfcfc] underline decoration-white/70 decoration-1 underline-offset-4 transition-all hover:text-[#61ce70] hover:no-underline"
+                    className="font-poppins mt-1 inline-block text-[14px] font-normal leading-5 text-text-inverse underline decoration-text-inverse/70 decoration-1 underline-offset-4 transition-all hover:text-brand-primary hover:no-underline"
                   >
                     021-37173532
                   </a>
@@ -180,12 +181,12 @@ export default function Footer() {
               </li>
 
               <li className="flex items-start gap-3">
-                <Mail className="mt-0.5 h-5 w-5 shrink-0 fill-[#61ce70] stroke-[#61ce70]" strokeWidth={1} />
+                <Mail className="mt-0.5 h-5 w-5 shrink-0 fill-brand-primary stroke-[var(--color-brand-primary)]" strokeWidth={1} />
                 <div>
-                  <p className="font-poppins text-[14px] font-medium leading-5 text-[#fcfcfc]">Email Us</p>
+                  <p className="font-poppins text-[14px] font-medium leading-5 text-text-inverse">Email Us</p>
                   <a
                     href="mailto:info@elfaelectric.com"
-                    className="font-poppins mt-1 inline-block text-[14px] font-normal leading-5 text-[#fcfcfc] underline decoration-white/70 decoration-1 underline-offset-4 transition-all hover:text-[#61ce70] hover:no-underline"
+                    className="font-poppins mt-1 inline-block text-[14px] font-normal leading-5 text-text-inverse underline decoration-text-inverse/70 decoration-1 underline-offset-4 transition-all hover:text-brand-primary hover:no-underline"
                   >
                     info@elfaelectric.com
                   </a>
@@ -197,21 +198,21 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="mx-auto w-full border-t border-white min-w-[100px] max-w-container px-4 sm:px-6">
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-white/15 py-5 sm:flex-row">
-          <p className="font-poppins text-[14px] font-normal text-[#fcfcfc] sm:text-[16px]">
+      <div className="mx-auto w-full border-t border-bg-primary min-w-[100px] max-w-container px-4 sm:px-6">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-bg-primary/15 py-5 sm:flex-row">
+          <p className="font-poppins text-[14px] font-normal text-text-inverse sm:text-[16px]">
             Copyright © {new Date().getFullYear()} ELFA. All rights reserved.
           </p>
           <div className="font-poppins flex flex-wrap justify-center gap-5 text-[14px] font-medium sm:text-[15px]">
             <Link
               href="/consent-policy"
-              className="text-[#fcfcfc]  decoration-white/70 decoration-1 underline-offset-4 transition-all hover:text-[#61ce70] hover:no-underline"
+              className="text-text-inverse  decoration-text-inverse/70 decoration-1 underline-offset-4 transition-all hover:text-brand-primary hover:no-underline"
             >
               Consent &amp; Policy Acknowledgement
             </Link>
             <Link
               href="/privacy-policy"
-              className="text-[#fcfcfc]  decoration-white/70 decoration-1 underline-offset-4 transition-all hover:text-[#61ce70] hover:no-underline"
+              className="text-text-inverse  decoration-text-inverse/70 decoration-1 underline-offset-4 transition-all hover:text-brand-primary hover:no-underline"
             >
               Privacy Policy
             </Link>

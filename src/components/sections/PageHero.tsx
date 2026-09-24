@@ -18,7 +18,7 @@ type PageHeroProps = {
   /** Body-paragraph subtitle (14px) instead of short tagline — used on Referral */
   bodySubtitle?: boolean;
   /**
-   * Contact Us hero: base title color #61ce70, tagline subtitle (30px capitalize),
+   * Contact Us hero: base title color var(--color-brand-primary), tagline subtitle (30px capitalize),
    * taller hero. Pass white <span>s inside title for mixed coloring.
    */
   greenTitle?: boolean;
@@ -66,7 +66,7 @@ export default function PageHero({
         className="object-cover object-center"
         sizes="100vw"
       />
-      <div className="absolute inset-0 bg-black/20" />
+      <div className="absolute inset-0 bg-bg-inverse/20" />
 
       <div
         className={`relative z-10 mx-auto w-full max-w-container px-4 sm:px-6 ${
@@ -95,18 +95,18 @@ export default function PageHero({
               <h1
                 className={
                   compact
-                    ? "font-montserrat text-center text-[26px] font-bold uppercase leading-[38px] text-white sm:text-[32px] sm:leading-[46px] lg:text-left lg:text-[36px] lg:leading-[48px]"
+                    ? "font-montserrat text-center text-[26px] font-bold uppercase leading-[38px] text-text-inverse sm:text-[32px] sm:leading-[46px] lg:text-left lg:text-[36px] lg:leading-[48px]"
                     : xlTitle
-                      ? "font-montserrat text-center text-[36px] font-bold uppercase leading-[1.05] text-white sm:text-[56px] sm:leading-[1] lg:text-left lg:text-[86px] lg:leading-[81px]"
+                      ? "font-montserrat text-center text-[36px] font-bold uppercase leading-[1.05] text-text-inverse sm:text-[56px] sm:leading-[1] lg:text-left lg:text-[86px] lg:leading-[81px]"
                       : bigTitle
-                        ? "font-montserrat text-center text-[36px] font-bold uppercase leading-[1.05] text-white sm:text-[52px] sm:leading-[1] lg:text-left lg:text-[70px] lg:leading-[70px]"
+                        ? "font-montserrat text-center text-[36px] font-bold uppercase leading-[1.05] text-text-inverse sm:text-[52px] sm:leading-[1] lg:text-left lg:text-[70px] lg:leading-[70px]"
                       : largeTitle
-                        ? "font-montserrat text-center text-[32px] font-bold uppercase leading-tight text-white sm:text-[46px] lg:text-left lg:text-[60px] lg:leading-[60px]"
+                        ? "font-montserrat text-center text-[32px] font-bold uppercase leading-tight text-text-inverse sm:text-[46px] lg:text-left lg:text-[60px] lg:leading-[60px]"
                         : greenTitle
-                          ? "font-montserrat text-center text-[28px] font-bold uppercase leading-[36px] text-[#61ce70] sm:text-[34px] sm:leading-[44px] lg:text-left lg:text-[40px] lg:leading-[52px]"
+                          ? "font-montserrat text-center text-[28px] font-bold uppercase leading-[36px] text-brand-primary sm:text-[34px] sm:leading-[44px] lg:text-left lg:text-[40px] lg:leading-[52px]"
                           : bodySubtitle
-                            ? "font-montserrat text-center text-[24px] font-bold uppercase leading-[32px] text-white sm:text-[28px] sm:leading-[36px] lg:text-left lg:text-[32px] lg:leading-[42px]"
-                            : "font-montserrat text-center text-[28px] font-bold uppercase leading-[1.15] text-white sm:text-[36px] lg:text-left lg:text-[45px] lg:leading-[57px]"
+                            ? "font-montserrat text-center text-[24px] font-bold uppercase leading-[32px] text-text-inverse sm:text-[28px] sm:leading-[36px] lg:text-left lg:text-[32px] lg:leading-[42px]"
+                            : "font-montserrat text-center text-[28px] font-bold uppercase leading-[1.15] text-text-inverse sm:text-[36px] lg:text-left lg:text-[45px] lg:leading-[57px]"
                 }
               >
                 {title}
@@ -115,17 +115,17 @@ export default function PageHero({
                 <p
                   className={
                     greenTitle
-                      ? "font-roboto mt-3 text-center text-[22px] font-medium capitalize leading-[28px] text-[#fcfcfc] sm:mt-4 sm:text-[30px] sm:leading-[30px] lg:text-left"
+                      ? "font-roboto mt-3 text-center text-[22px] font-medium capitalize leading-[28px] text-text-inverse sm:mt-4 sm:text-[30px] sm:leading-[30px] lg:text-left"
                       : bodySubtitle
-                        ? "font-roboto mx-auto mt-3 max-w-[536px] text-center text-[14px] font-normal leading-[22px] text-white sm:mt-4 sm:text-[16px] sm:leading-[25px] lg:mx-0 lg:text-left"
-                        : "font-roboto mt-4 text-center text-[18px] font-medium leading-[25px] text-[#fcfcfc] sm:text-[23px] lg:text-left"
+                        ? "font-roboto mx-auto mt-3 max-w-[536px] text-center text-[14px] font-normal leading-[22px] text-text-inverse sm:mt-4 sm:text-[16px] sm:leading-[25px] lg:mx-0 lg:text-left"
+                        : "font-roboto mt-4 text-center text-[18px] font-medium leading-[25px] text-text-inverse sm:text-[23px] lg:text-left"
                   }
                 >
                   {subtitle}
                 </p>
               )}
               <div
-                className={`font-roboto flex items-center justify-center gap-2 text-white lg:justify-start ${
+                className={`font-roboto flex items-center justify-center gap-2 text-text-inverse lg:justify-start ${
                   compact
                     ? "mt-3 text-[18px] sm:text-[22px] lg:mt-[20px] lg:text-[27px]"
                     : xlTitle || largeTitle || bigTitle
@@ -135,10 +135,10 @@ export default function PageHero({
                         : "mt-4 text-[18px] sm:text-[21px]"
                 }`}
               >
-                <Link href="/" className="transition-colors hover:text-[#61ce70]">
+                <Link href="/" className="transition-colors hover:text-brand-primary">
                   Home
                 </Link>
-                <span className="text-white/70">|</span>
+                <span className="text-text-inverse/70">|</span>
                 <span>{breadcrumb}</span>
               </div>
             </div>
@@ -207,19 +207,19 @@ export default function PageHero({
           </div>
         ) : (
           <>
-            <h1 className="font-montserrat mx-auto max-w-[820px] text-center text-[32px] font-bold uppercase leading-tight text-white sm:text-[46px] lg:mx-0 lg:text-left lg:text-[60px]">
+            <h1 className="font-montserrat mx-auto max-w-[820px] text-center text-[32px] font-bold uppercase leading-tight text-text-inverse sm:text-[46px] lg:mx-0 lg:text-left lg:text-[60px]">
               {title}
             </h1>
             {subtitle && (
-              <p className="font-roboto mx-auto mt-4 max-w-[640px] text-center text-[16px] leading-relaxed text-white/85 lg:mx-0 lg:text-left">
+              <p className="font-roboto mx-auto mt-4 max-w-[640px] text-center text-[16px] leading-relaxed text-text-inverse/85 lg:mx-0 lg:text-left">
                 {subtitle}
               </p>
             )}
-            <div className="mt-5 flex items-center justify-center gap-2 text-[16px] text-white lg:justify-start">
-              <Link href="/" className="transition-colors hover:text-[#61ce70]">
+            <div className="mt-5 flex items-center justify-center gap-2 text-[16px] text-text-inverse lg:justify-start">
+              <Link href="/" className="transition-colors hover:text-brand-primary">
                 Home
               </Link>
-              <span className="text-white/70">|</span>
+              <span className="text-text-inverse/70">|</span>
               <span>{breadcrumb}</span>
             </div>
           </>

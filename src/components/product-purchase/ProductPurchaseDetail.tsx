@@ -6,6 +6,7 @@ import { useCallback, useRef, useState, type MouseEvent } from "react";
 import { Calendar, Check, ShoppingCart } from "lucide-react";
 import type { ProductPurchase } from "@/data/products/purchase-types";
 import { moneyFromPurchase, useCart } from "@/components/cart/CartContext";
+import FlipButton from "@/components/ui/FlipButton";
 
 type ZoomPos = { left: number; top: number; w: number; h: number };
 
@@ -58,12 +59,12 @@ export default function ProductPurchaseDetail({ product }: { product: ProductPur
   }, []);
 
   return (
-    <section className="bg-white py-10 lg:py-14">
+    <section className="bg-bg-primary py-10 lg:py-14">
       <div className="mx-auto grid w-full max-w-[1150px] grid-cols-1 items-start gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12">
         {/* Product image */}
         <div
           ref={imgRef}
-          className="relative mx-auto aspect-square w-full max-w-[500px] cursor-crosshair overflow-hidden rounded-[8px] border border-[#e5e5e5] bg-[#f7f7f7]"
+          className="relative mx-auto aspect-square w-full max-w-[500px] cursor-crosshair overflow-hidden rounded-[8px] border border-text-secondary/20 bg-bg-secondary"
           onMouseEnter={(e) => {
             setZooming(true);
             onMove(e);
@@ -115,36 +116,36 @@ export default function ProductPurchaseDetail({ product }: { product: ProductPur
             </div>
           ) : null}
 
-          <h1 className="font-poppins text-[36px] font-semibold leading-none text-[#212121] sm:text-[48px] lg:text-[58px] lg:leading-[58px]">
+          <h1 className="font-poppins text-[36px] font-semibold leading-none text-text-primary sm:text-[48px] lg:text-[58px] lg:leading-[58px]">
             {product.title}
           </h1>
 
           {product.priceOriginal ? (
-            <p className="cutprice font-montserrat mt-4 text-[18px] font-medium leading-[18px] text-[#212121]">
+            <p className="cutprice font-montserrat mt-4 text-[18px] font-medium leading-[18px] text-text-primary">
               {product.priceOriginal}
             </p>
           ) : null}
 
-          <p className="font-poppins mt-2 text-[24px] font-semibold leading-tight text-[#212121] sm:text-[31px] sm:leading-[31px]">
-            Only in <span className="text-[#61ce70]">{product.priceCurrent}</span>
+          <p className="font-poppins mt-2 text-[24px] font-semibold leading-tight text-text-primary sm:text-[31px] sm:leading-[31px]">
+            Only in <span className="text-brand-primary">{product.priceCurrent}</span>
             {product.priceTaxNote ? (
-              <span className="ml-1.5 text-[14px] font-medium text-[#555]">
+              <span className="ml-1.5 text-[14px] font-medium text-text-secondary">
                 {product.priceTaxNote}
               </span>
             ) : null}
           </p>
 
-          <p className="font-roboto mt-4 text-[15px] font-normal leading-relaxed text-[#333] sm:text-[16px]">
+          <p className="font-roboto mt-4 text-[15px] font-normal leading-relaxed text-text-secondary sm:text-[16px]">
             {product.subtitle}
           </p>
 
           {/* Variants */}
           {product.variants.length > 0 ? (
             <div className="mt-6">
-              <p className="font-roboto text-[14px] font-medium text-[#212121]">
+              <p className="font-roboto text-[14px] font-medium text-text-primary">
                 {product.variantLabel}
                 {active ? (
-                  <span className="font-normal text-[#666]"> : {active.label}</span>
+                  <span className="font-normal text-text-secondary"> : {active.label}</span>
                 ) : null}
               </p>
               <div className="mt-3 flex flex-wrap gap-3">
@@ -165,8 +166,8 @@ export default function ProductPurchaseDetail({ product }: { product: ProductPur
                     >
                       <Image src={v.thumb} alt={v.label} fill className="object-cover" sizes="100px" />
                       {selected ? (
-                        <span className="absolute inset-0 flex items-center justify-center bg-black/25">
-                          <Check className="h-8 w-8 text-white drop-shadow" strokeWidth={3} />
+                        <span className="absolute inset-0 flex items-center justify-center bg-bg-inverse/25">
+                          <Check className="h-8 w-8 text-text-inverse drop-shadow" strokeWidth={3} />
                         </span>
                       ) : null}
                     </button>
@@ -198,22 +199,23 @@ export default function ProductPurchaseDetail({ product }: { product: ProductPur
                   if (!Number.isNaN(n)) setQty(Math.min(99, Math.max(1, n)));
                 }}
                 aria-label="Quantity"
-                className="font-roboto h-[45px] w-[56px] shrink-0 rounded-[2px] border border-[#666] bg-white text-center text-[16px] text-[#212121] outline-none"
+                className="font-roboto h-[45px] w-[56px] shrink-0 rounded-[2px] border border-[#666] bg-bg-primary text-center text-[16px] text-text-primary outline-none"
               />
 
-              <button
+              <FlipButton
                 type="button"
                 onClick={handleBuyNow}
-                className="font-poppins inline-flex h-[45px] min-w-0 flex-1 items-center justify-center gap-2.5 rounded-[6px] bg-[#212121] px-5 text-[18px] font-medium leading-none text-[#fcfcfc] transition-colors hover:bg-[#333] sm:text-[20px]"
+                variant="primary"
+                icon={<ShoppingCart className="h-5 w-5 shrink-0" strokeWidth={2} />}
+                className="flex-1 rounded-[6px] h-[45px] text-[18px] sm:text-[20px] bg-bg-inverse text-text-inverse hover:bg-[#333]"
               >
-                <ShoppingCart className="h-5 w-5 shrink-0" strokeWidth={2} />
                 Buy Now
-              </button>
+              </FlipButton>
             </div>
 
             <Link
               href={product.installmentHref}
-              className="font-poppins mt-3 inline-flex h-[46px] w-full items-center justify-center gap-2.5 rounded-[3px] bg-[#212121] px-6 text-[16px] font-medium uppercase leading-none tracking-wide text-[#fcfcfc] transition-colors hover:bg-[#333] sm:text-[18px]"
+              className="font-poppins mt-3 inline-flex h-[46px] w-full items-center justify-center gap-2.5 rounded-[3px] bg-bg-inverse px-6 text-[16px] font-medium uppercase leading-none tracking-wide text-text-inverse transition-colors hover:bg-[#333] sm:text-[18px]"
             >
               <Calendar className="h-5 w-5 shrink-0" strokeWidth={2} />
               Installment Plans

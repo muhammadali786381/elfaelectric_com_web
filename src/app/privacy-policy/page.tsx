@@ -59,7 +59,7 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 bg-white">
+      <main className="flex-1 bg-bg-primary">
         <PageHero
           title="Privacy Policy"
           breadcrumb="Privacy Policy"
@@ -71,17 +71,17 @@ export default function PrivacyPolicyPage() {
 
         <section className="mx-auto w-full max-w-container px-4 py-12 sm:px-6 lg:py-16">
           <div className="mx-auto flex max-w-container flex-col gap-8">
-            <p className="font-roboto text-[15px] font-normal leading-[22.5px] text-[#212121]">
+            <p className="font-roboto text-[15px] font-normal leading-[22.5px] text-text-primary">
               ELFA respects your privacy. This policy outlines our practices regarding the
               collection, use, and protection of personal information on our website.
             </p>
 
             {policySections.map((section) => (
               <div key={section.title} className="flex flex-col gap-[7px]">
-                <h3 className="font-montserrat text-[25px] font-semibold leading-[30px] text-[#212121]">
+                <h3 className="font-montserrat text-[25px] font-semibold leading-[30px] text-text-primary">
                   {section.title}
                 </h3>
-                <p className="font-roboto text-[15px] font-normal leading-[22.5px] text-[#212121]">
+                <p className="font-roboto text-[15px] font-normal leading-[22.5px] text-text-primary">
                   {section.content}
                 </p>
               </div>

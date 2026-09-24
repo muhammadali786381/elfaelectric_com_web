@@ -8,10 +8,10 @@ export default function ProductAdvancedFeatures({
   features: ProductAdvancedFeature[];
 }) {
   return (
-    <section className="bg-white py-[70px]">
+    <section className="bg-bg-primary py-[70px]">
       <div className="mx-auto w-full max-w-[980px] px-4 sm:px-6">
         {/* Live: Montserrat 50px / 800 */}
-        <h2 className="font-montserrat text-center text-[32px] font-extrabold leading-[1.1] text-[#212121] sm:text-[40px] sm:leading-[40px] lg:text-[50px] lg:leading-[50px]">
+        <h2 className="font-montserrat text-center text-[32px] font-extrabold leading-[1.1] text-text-primary sm:text-[40px] sm:leading-[40px] lg:text-[50px] lg:leading-[50px]">
           Advanced Features That We Offer
         </h2>
 
@@ -39,13 +39,13 @@ export default function ProductAdvancedFeatures({
 
                 <div>
                   {/* Live: Montserrat 28px / 700 / lh 34 */}
-                  <h3 className="font-montserrat text-[22px] font-bold capitalize leading-[28px] text-[#212121] sm:text-[28px] sm:leading-[34px]">
+                  <h3 className="font-montserrat text-[22px] font-bold capitalize leading-[28px] text-text-primary sm:text-[28px] sm:leading-[34px]">
                     {feat.title}
                   </h3>
 
                   {/* Live body: Roboto 20px / 400 / lh 23 / #212121 */}
                   {feat.bullets?.length ? (
-                    <div className="font-roboto mt-2 space-y-0 text-[16px] font-normal leading-[23px] text-[#212121] sm:text-[20px]">
+                    <div className="font-roboto mt-2 space-y-0 text-[16px] font-normal leading-[23px] text-text-primary sm:text-[20px]">
                       {feat.bullets.map((b) => (
                         <p key={b.label}>
                           <strong className="font-bold">{b.label}:</strong> {b.text}
@@ -55,7 +55,7 @@ export default function ProductAdvancedFeatures({
                   ) : null}
 
                   {feat.description ? (
-                    <p className="font-roboto mt-2 text-[16px] font-normal leading-[23px] text-[#212121] sm:text-[20px]">
+                    <p className="font-roboto mt-2 text-[16px] font-normal leading-[23px] text-text-primary sm:text-[20px]">
                       {feat.description}
                     </p>
                   ) : null}

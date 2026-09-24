@@ -7,10 +7,10 @@ import type { ProductSpecGroup } from "@/data/products/types";
  */
 export default function ProductSpecs({ groups }: { groups: ProductSpecGroup[] }) {
   return (
-    <section className="bg-[#fcfcfc] py-[70px]">
+    <section className="bg-bg-primary py-[70px]">
       <div className="mx-auto flex w-full max-w-[1150px] flex-col items-center px-4 sm:px-6">
         {/* Live: Montserrat 50px / 700 */}
-        <h2 className="font-montserrat text-center text-[32px] font-bold leading-[1.1] text-[#212121] sm:text-[40px] lg:text-[50px] lg:leading-[50px]">
+        <h2 className="font-montserrat text-center text-[32px] font-bold leading-[1.1] text-text-primary sm:text-[40px] lg:text-[50px] lg:leading-[50px]">
           Specifications
         </h2>
 
@@ -30,16 +30,16 @@ export default function ProductSpecs({ groups }: { groups: ProductSpecGroup[] })
               </div>
 
               {/* Live: Montserrat 20px / 700 / white */}
-              <h3 className="font-montserrat text-[20px] font-bold leading-[20px] text-white  mx-auto">
+              <h3 className="font-montserrat text-[20px] font-bold leading-[20px] text-text-inverse  mx-auto">
                 {g.title}
               </h3>
 
               {/* Live: Roboto 14px / 400 / white, green circle bullets */}
-              <ul className="font-roboto w-full space-y-0 text-[14px] font-normal leading-[21px] text-white">
+              <ul className="font-roboto w-full space-y-0 text-[14px] font-normal leading-[21px] text-text-inverse">
                 {g.items.map((item) => (
                   <li key={item} className="flex items-start gap-2">
                     <span
-                      className="mt-[5.5px] h-[10px] w-[10px] shrink-0 rounded-full bg-[#61ce70]"
+                      className="mt-[5.5px] h-[10px] w-[10px] shrink-0 rounded-full bg-brand-primary"
                       aria-hidden
                     />
                     <span>{item}</span>

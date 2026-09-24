@@ -92,7 +92,7 @@ export default function FAQsPage() {
           bikesSrc="/assets/images/blog-page.png"
         />
 
-        <section className="bg-white py-12 lg:py-16">
+        <section className="bg-bg-primary py-12 lg:py-16">
           <div className="mx-auto w-full max-w-[954px] px-4 sm:px-6">
             <FAQAccordion faqs={faqs} />
           </div>

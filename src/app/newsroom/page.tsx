@@ -157,16 +157,16 @@ export default function NewsroomPage() {
           bikesSrc="/assets/images/blog-page.png"
         />
 
-        <FadeIn variant="fadeInUp" speed="normal" className="bg-white px-4 pb-8 pt-12 text-center sm:px-6 sm:pt-14">
-          <h2 className="font-montserrat text-[24px] font-bold leading-[18px] text-[#61ce70] sm:text-[28px]">
+        <FadeIn variant="fadeInUp" speed="normal" className="bg-bg-primary px-4 pb-8 pt-12 text-center sm:px-6 sm:pt-14">
+          <h2 className="font-montserrat text-[24px] font-bold leading-[18px] text-brand-primary sm:text-[28px]">
             Our News
           </h2>
-          <h3 className="font-montserrat mt-5 text-[32px] font-bold leading-tight text-[#212121] sm:mt-6 sm:text-[44px] sm:leading-[50px] lg:text-[50px]">
+          <h3 className="font-montserrat mt-5 text-[32px] font-bold leading-tight text-text-primary sm:mt-6 sm:text-[44px] sm:leading-[50px] lg:text-[50px]">
             Latest News
           </h3>
         </FadeIn>
 
-        <section className="bg-white pb-16 pt-2 sm:pb-20">
+        <section className="bg-bg-primary pb-16 pt-2 sm:pb-20">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
             <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 lg:grid-cols-3">
               {newsItems.map((item) => (

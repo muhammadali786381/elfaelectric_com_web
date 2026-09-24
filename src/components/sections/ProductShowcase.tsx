@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
+import FlipButton from "@/components/ui/FlipButton";
 
 type Spec = { value: string; label: string; icon: string };
 
@@ -44,97 +45,108 @@ const products = [
 
 export default function ProductShowcase() {
   return (
-    <section className="bg-white py-16 lg:py-20">
+    <section className="bg-bg-primary py-16 lg:py-20">
       <FadeIn variant="fadeIn" speed="slow">
-      <h2 className="font-montserrat mb-5 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
-        Our Products
-      </h2>
+        <h2 className="font-montserrat mb-5 text-center text-[36px] font-bold text-text-primary sm:text-[42px] lg:text-[50px]">
+          Our Products
+        </h2>
 
-      <div className="mx-auto w-full max-w-[950px] px-4 sm:px-6">
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          {products.map((product) => (
-            <article key={product.id} className="overflow-hidden rounded-[20px] bg-[#010404]">
-              {/* Photo — shared gradient background + product cutout, matching the live site exactly */}
-              <div className="relative h-[260px] w-full sm:h-[300px] lg:h-[337px]">
-                <Image
-                  src="/assets/images/Bike-Background.webp"
-                  alt=""
-                  fill
-                  className="object-cover object-center"
-                  sizes="(min-width: 640px) 440px, 100vw"
-                />
-                <Image
-                  src={product.image}
-                  alt={`${product.nameHighlight}${product.nameRest}`}
-                  width={330}
-                  height={312}
-                  className="absolute inset-0 m-auto h-[85%] w-[85%] object-contain"
-                />
-              </div>
+        <div className="mx-auto w-full max-w-[950px] px-4 sm:px-6">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {products.map((product) => (
+              <article key={product.id} className="overflow-hidden rounded-[20px] bg-[#1a1a1a] border border-white/5">
+                {/* Photo — shared gradient background + product cutout, matching the live site exactly */}
+                <div className="relative h-[260px] w-full sm:h-[300px] lg:h-[337px]">
+                  <Image
+                    src="/assets/images/products-bg.jpeg"
+                    alt=""
+                    fill
+                    className="object-cover object-center "
+                    sizes="(min-width: 640px) 440px, 100vw"
+                  />
+                  <Image
+                    src={product.image}
+                    alt={`${product.nameHighlight}${product.nameRest}`}
+                    width={330}
+                    height={312}
+                    className="absolute inset-0 m-auto h-[85%] w-[85%] object-contain"
+                  />
+                </div>
 
-              <div className="px-6 pb-7 pt-6 sm:px-6 text-center ">
-                <h3 className="font-montserrat mb-4 text-[36px] font-bold leading-none sm:text-[44px] lg:text-[52px]">
-                  <span className="text-[#61ce70]">{product.nameHighlight}</span>
-                  <span className="text-[#fcfcfc]">{product.nameRest}</span>
-                </h3>
+                <div className="px-6 pb-7 pt-6 sm:px-6 text-center ">
+                  <h3 className="font-montserrat mb-4 text-[36px] font-bold leading-none sm:text-[44px] lg:text-[52px]">
+                    <span className="text-brand-primary">{product.nameHighlight}</span>
+                    <span className="text-text-primary">{product.nameRest}</span>
+                  </h3>
 
-                <div className="mb-6 grid grid-cols-4 gap-2">
-                  {product.specs.map((spec) => (
-                    <div key={spec.label} className="flex flex-col items-center gap-2 text-center">
-                      <span className="font-montserrat text-[10px] font-medium leading-tight text-white sm:text-[11px]">
-                        {spec.value}
-                      </span>
-                      <div className="relative h-7 w-7 sm:h-9 sm:w-9">
-                        <Image
-                          src={spec.icon}
-                          alt=""
-                          fill
-                          className="object-contain brightness-0 invert"
-                          sizes="36px"
-                        />
+                  <div className="mb-6 grid grid-cols-4 gap-2">
+                    {product.specs.map((spec) => (
+                      <div key={spec.label} className="flex flex-col items-center gap-2 text-center">
+                        <span className="font-montserrat text-[10px] font-medium leading-tight text-text-secondary sm:text-[11px]">
+                          {spec.value}
+                        </span>
+                        <div className="relative h-7 w-7 sm:h-9 sm:w-9">
+                          <Image
+                            src={spec.icon}
+                            alt=""
+                            fill
+                            className="object-contain brightness-0 invert opacity-70"
+                            sizes="36px"
+                          />
+                        </div>
+                        <span className="font-montserrat text-[10px] font-semibold uppercase leading-tight text-text-secondary sm:text-[11px]">
+                          {spec.label}
+                        </span>
                       </div>
-                      <span className="font-montserrat text-[10px] font-semibold uppercase leading-tight text-white sm:text-[11px]">
-                        {spec.label}
-                      </span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+
+                  <div className="relative mb-1 inline-block">
+                    <p className="font-montserrat text-[16px] font-medium text-text-secondary sm:text-[18px]">
+                      {product.oldPrice}
+                    </p>
+                    {/* Diagonal slash */}
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(to top right, transparent calc(50% - 1px), #ff4d2e calc(50% - 1px), #ff4d2e calc(50% + 1px), transparent calc(50% + 1px))",
+                      }}
+                    />
+                  </div>
+                  <p className="font-montserrat mb-4 text-[28px] font-bold text-text-primary sm:text-[34px]">
+                    {product.price}
+                  </p>
+
+                  <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#ff4d2e] px-4 py-[6px] text-[12px] font-black uppercase tracking-wide text-white sm:text-[13px]">
+                    <span className="h-[6px] w-[6px] rounded-full bg-white" />
+                    Limited time offer
+                  </span>
+
+                  <p className="font-roboto mb-5 text-[14px] font-semibold text-brand-primary">{product.savings}</p>
+
+                  <div className="flex flex-col gap-3">
+                    <FlipButton
+                      href={product.exploreHref}
+                      variant="primary"
+                      className="rounded-[3px] w-full h-10 text-[14px]"
+                    >
+                      Explore more
+                    </FlipButton>
+                    <FlipButton
+                      href={product.buyHref}
+                      variant="primary"
+                      className="rounded-[3px] w-full h-10 text-[14px]"
+                    >
+                      Buy Now
+                    </FlipButton>
+                  </div>
                 </div>
-
-                <p className="font-montserrat text-[16px] font-medium text-white/70 line-through decoration-[#ff4d2e] decoration-2 sm:text-[18px]">
-                  {product.oldPrice}
-                </p>
-                <p className="font-montserrat mb-4 text-[28px] font-bold text-white sm:text-[34px]">
-                  {product.price}
-                </p>
-
-                <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#ff4d2e] px-4 py-[6px] text-[12px] font-black uppercase tracking-wide text-white sm:text-[13px]">
-                  <span className="h-[6px] w-[6px] rounded-full bg-white" />
-                  Limited time offer
-                </span>
-
-                <p className="font-roboto mb-5 text-[14px] font-semibold text-[#61ce70]">{product.savings}</p>
-
-                <div className="flex flex-col gap-3">
-                  <Link
-                    href={product.exploreHref}
-                    className="font-roboto inline-flex h-10 w-full items-center justify-center gap-2 rounded-[3px] bg-[#61ce70] text-[16px] font-semibold uppercase tracking-[1.2px] text-[#fcfcfc] transition-colors hover:bg-[#4fbf5f]"
-                  >
-                    Explore more
-                    <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-                  </Link>
-                  <Link
-                    href={product.buyHref}
-                    className="font-roboto inline-flex h-10 w-full items-center justify-center gap-2 rounded-[3px] bg-[#61ce70] text-[16px] font-semibold uppercase tracking-[1.2px] text-[#fcfcfc] transition-colors hover:bg-[#4fbf5f]"
-                  >
-                    Buy Now
-                    <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-                  </Link>
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
       </FadeIn>
     </section>
   );

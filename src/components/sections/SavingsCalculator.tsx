@@ -1,141 +1,105 @@
 "use client";
 
 import { useState } from "react";
-import { Calculator } from "lucide-react";
-import { FadeIn } from "@/components/motion/FadeIn";
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion, type Variants } from "motion/react";
 
-type CalculatorConfig = {
+import { Badge } from "@/components/ui/badge";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText,
+} from "@/components/ui/input-group";
+import { Slider } from "@/components/ui/slider";
+import FlipButton from "@/components/ui/FlipButton";
+
+// ── Model data ──────────────────────────────────────────────────────────────
+type ModelConfig = {
   id: string;
   label: string;
+  short: string;
   kmPerLitrePetrol: number;
   kmPerUnitElfa: number;
 };
 
-// km/kWh derived from each bike's own spec sheet: battery capacity (V x Ah)
-// against its rated range — EV-125 is 72V/30Ah (2.16kWh) for 100+ km,
-// EV-1 is 64V/30Ah (1.92kWh) for 75 km.
-const calculators: CalculatorConfig[] = [
-  { id: "ev125", label: "EV-125 vs Petrol Bike", kmPerLitrePetrol: 45, kmPerUnitElfa: 46 },
-  { id: "ev1", label: "EV-1 vs Petrol Bike", kmPerLitrePetrol: 40, kmPerUnitElfa: 39 },
+const models: ModelConfig[] = [
+  { id: "ev125", label: "EV-125 BIKE", short: "EV-125", kmPerLitrePetrol: 45, kmPerUnitElfa: 46 },
+  { id: "ev1", label: "EV-1 Scooty", short: "EV-1", kmPerLitrePetrol: 40, kmPerUnitElfa: 39 },
 ];
 
-const fmt = (n: number) => `Rs. ${Math.round(n).toLocaleString("en-US")}`;
+const animVariant: Variants = {
+  hidden: { opacity: 0, y: 10, filter: "blur(4px)", scale: 0.98 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    scale: 1,
+    transition: {
+      delay: i * 0.03,
+      type: "spring",
+      damping: 22,
+      stiffness: 280,
+    },
+  }),
+  exit: {
+    opacity: 0,
+    y: -10,
+    filter: "blur(4px)",
+    scale: 0.98,
+    transition: { duration: 0.14 },
+  },
+};
 
-function CalculatorCard({ config }: { config: CalculatorConfig }) {
-  const [mileage, setMileage] = useState(50);
-  const [petrolPrice, setPetrolPrice] = useState(386);
-  const [unitCost, setUnitCost] = useState(55);
+type SliderPatternProps = {
+  value: number;
+  setValue: (val: number) => void;
+};
 
-  const annualKm = mileage * 365;
-  const petrolCost = (annualKm / config.kmPerLitrePetrol) * petrolPrice;
-  const elfaCost = (annualKm / config.kmPerUnitElfa) * unitCost;
-  const savings = petrolCost - elfaCost;
-
-  // Range progress % for green/white track split
-  const mileagePct = ((mileage - 5) / (150 - 5)) * 100;
+function SliderPattern({ value, setValue }: SliderPatternProps) {
+  const max = 200;
+  const skipInterval = 50;
+  const ticks = Array.from({ length: 5 }, (_, i) => i * 50);
 
   return (
-    <div
-      className="rounded-[12px] p-6 sm:py-8  lg:px-30 lg:py-10 "
-      style={{ backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)" }}
-    >
-      {/* Equal columns; stretch so bottoms of left inputs + Contact Us align */}
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-12">
-        {/* Left — inputs */}
-        <div className="flex min-w-0 flex-col">
-          <h3 className="font-montserrat text-[24px] font-bold text-white sm:text-[28px]">
-            Calculate Your Savings
-          </h3>
-          <p className="font-roboto mb-6 text-[14px] italic text-white/70">{config.label}</p>
-
-          <div className="mb-6">
-            <label className="font-montserrat mb-3 block text-[16px] font-semibold text-white sm:text-[18px]">
-              Daily Mileage (km)
-            </label>
-            <div className="flex items-center gap-3">
-              <input
-                type="range"
-                min={5}
-                max={150}
-                value={mileage}
-                onChange={(e) => setMileage(Number(e.target.value))}
-                className="savings-range h-2.5 w-full min-w-0 flex-1 cursor-pointer appearance-none rounded-full"
-                style={{
-                  background: `linear-gradient(to right, #61ce70 0%, #61ce70 ${mileagePct}%, #ffffff ${mileagePct}%, #ffffff 100%)`,
-                }}
-              />
-              <span className="font-montserrat shrink-0 rounded-[6px] bg-white px-3 py-1.5 text-[14px] font-semibold text-[#212121]">
-                {mileage} km
-              </span>
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <label className="font-montserrat mb-2 block text-[16px] font-semibold text-white sm:text-[18px]">
-              Petrol Price (Rs. per liter)
-            </label>
-            <input
-              type="number"
-              value={petrolPrice}
-              onChange={(e) => setPetrolPrice(Number(e.target.value))}
-              className="font-roboto h-[49px] w-full rounded-[8px] border-0 bg-white px-4 text-[16px] text-black outline-none"
-            />
-          </div>
-
-          <div>
-            <label className="font-montserrat mb-2 block text-[16px] font-semibold text-white sm:text-[18px]">
-              Electricity Unit Cost (Rs.)
-            </label>
-            <input
-              type="number"
-              value={unitCost}
-              onChange={(e) => setUnitCost(Number(e.target.value))}
-              className="font-roboto h-[49px] w-full rounded-[8px] border-0 bg-white px-4 text-[16px] text-black outline-none"
-            />
-          </div>
-        </div>
-
-        {/* Right — results; Contact Us pinned to bottom */}
-        <div className="flex min-w-0 flex-col">
-          <h3 className="font-montserrat mb-6 text-[24px] font-bold text-white sm:text-[28px]">
-            Your Annual Savings
-          </h3>
-
-          <div className="flex flex-col">
-            <div className="flex items-center justify-between border-b border-white/20 py-4">
-              <span className="font-montserrat text-[15px] font-semibold text-white sm:text-[16px]">
-                Annual Cost of Petrol
-              </span>
-              <span className="font-montserrat text-[18px] font-bold text-white sm:text-[20px]">
-                {fmt(petrolCost)}
-              </span>
-            </div>
-            <div className="flex items-center justify-between border-b border-white/20 py-4">
-              <span className="font-montserrat text-[15px] font-semibold text-white sm:text-[16px]">
-                Cost of Running ELFA {config.id === "ev125" ? "EV-125" : "EV-1"}
-              </span>
-              <span className="font-montserrat text-[18px] font-bold text-white sm:text-[20px]">
-                {fmt(elfaCost)}
-              </span>
-            </div>
-            <div className="flex items-center justify-between py-4">
-              <span className="font-montserrat text-[16px] font-bold text-white sm:text-[18px]">
-                Annual Savings
-              </span>
-              <span className="font-montserrat text-[22px] font-bold text-white sm:text-[26px]">
-                {fmt(savings)}
-              </span>
-            </div>
-          </div>
-
-          <a
-            href="/contact-us"
-            className="font-montserrat mt-auto flex h-[52px] w-full items-center justify-center rounded-[8px] bg-white text-[16px] font-semibold text-black transition-opacity hover:opacity-90"
+    <div className="mx-auto grid w-full gap-4">
+      <Slider
+        value={[value]}
+        onValueChange={(val) =>
+          setValue(Array.isArray(val) ? (val[0] ?? 0) : val)
+        }
+        max={max}
+        min={5}
+        step={5}
+        className="cursor-grab active:cursor-grabbing **:data-[slot=slider-thumb]:h-6 **:data-[slot=slider-thumb]:w-6 **:data-[slot=slider-thumb]:border-4 **:data-[slot=slider-thumb]:border-solid **:data-[slot=slider-thumb]:border-bg-primary **:data-[slot=slider-thumb]:bg-brand-primary **:data-[slot=slider-thumb]:ring-0 **:data-[slot=slider-thumb]:hover:ring-0 **:data-[slot=slider-thumb]:focus-visible:ring-0 **:data-[slot=slider-thumb]:active:ring-0 **:data-[slot=slider-track]:h-2.5 **:data-[slot=slider-track]:bg-white/10"
+      />
+      <span
+        aria-hidden="true"
+        className="flex w-full items-center justify-between gap-1 px-3 text-xs font-medium text-white/50"
+      >
+        {ticks.map((tick) => (
+          <span
+            key={tick}
+            className="flex w-0 flex-col items-center justify-center gap-2"
           >
-            Contact Us
-          </a>
-        </div>
-      </div>
+            <span
+              className={cn(
+                "w-px bg-white/30",
+                tick % skipInterval === 0 ? "h-2" : "h-1",
+              )}
+            />
+            <span
+              className={cn(
+                "text-white/70",
+                tick % skipInterval !== 0 && "opacity-0",
+              )}
+            >
+              {tick}
+              {tick === max && "+"}
+            </span>
+          </span>
+        ))}
+      </span>
     </div>
   );
 }
@@ -143,45 +107,202 @@ function CalculatorCard({ config }: { config: CalculatorConfig }) {
 export default function SavingsCalculator({
   productId,
 }: {
-  /** When set, hide the EV-125 / EV-1 toggle and lock to this calculator. */
   productId?: "ev125" | "ev1";
 }) {
   const locked = Boolean(productId);
-  const [active, setActive] = useState<string>(productId ?? calculators[0].id);
-  const activeConfig =
-    calculators.find((c) => c.id === (locked ? productId : active)) ?? calculators[0];
+  const [activeId, setActiveId] = useState<string>(productId ?? models[0].id);
+  const model = models.find((m) => m.id === (locked ? productId : activeId)) ?? models[0];
+
+  const [dailyKm, setDailyKm] = useState(50);
+  const [petrolPrice, setPetrolPrice] = useState(386);
+  const [elecCost, setElecCost] = useState(55);
+
+  const annualKm = dailyKm * 365;
+  const petrolAnnual = (annualKm / model.kmPerLitrePetrol) * petrolPrice;
+  const elfaAnnual = (annualKm / model.kmPerUnitElfa) * elecCost;
+  const savings = Math.max(0, Math.round(petrolAnnual - elfaAnnual));
+
+  const fmt = (n: number) => `Rs. ${Math.round(n).toLocaleString("en-US")}`;
+  const savingsChars = String(savings).split("");
 
   return (
-    <section className="bg-white py-16 lg:py-20 lg:px-30">
-      <FadeIn variant="fadeInUp" speed="slow">
-        <h2 className="font-montserrat mb-8 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
-          ELFA Savings Calculator
-        </h2>
-      </FadeIn>
+    <section className="relative overflow-hidden bg-bg-primary py-20 ">
+      {/* Subtle radial glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/4 rounded-full opacity-10"
+        style={{ background: "radial-gradient(ellipse, var(--color-brand-primary) 0%, transparent 70%)" }}
+      />
 
-      {!locked ? (
-        <div className="mb-8 flex flex-wrap justify-center gap-5">
-          {calculators.map((config) => (
-            <button
-              key={config.id}
-              type="button"
-              onClick={() => setActive(config.id)}
-              aria-pressed={active === config.id}
-              className={`font-roboto inline-flex h-10 items-center gap-2 rounded-[3px] px-5 text-[16px] font-normal transition-colors ${
-                active === config.id
-                  ? "bg-[#61ce70] text-white"
-                  : "bg-[#212121] text-white hover:bg-black"
-              }`}
-            >
-              <Calculator className="h-4 w-4" strokeWidth={2} />
-              {config.id === "ev125" ? "EV-125 BIKE" : "EV-1 Scooty"}
-            </button>
-          ))}
+      <div
+        aria-label="Savings Calculator"
+        className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-4 sm:px-6"
+      >
+        <div className="flex flex-col items-start gap-4">
+          <Badge variant="outline" className="h-7 px-3 text-brand-primary border-brand-primary/20 bg-brand-primary/5 uppercase tracking-wider font-roboto">
+            Calculate your savings
+          </Badge>
+          <h2 className="font-montserrat max-w-xl text-4xl font-bold tracking-tighter text-white sm:text-[44px]">
+            See what you save
+            <br />
+            <span className="text-brand-primary">With ELFA.</span>
+          </h2>
         </div>
-      ) : null}
 
-      <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-        <CalculatorCard key={activeConfig.id} config={activeConfig} />
+        {/* Model Toggle */}
+        {!locked && (
+          <div className="flex">
+            <div className="inline-flex gap-1 rounded-full border border-white/10 bg-white/5 p-1">
+              {models.map((m) => (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => setActiveId(m.id)}
+                  className={`font-roboto relative rounded-full px-5 py-2 text-[12px] font-semibold uppercase tracking-[1px] transition-all duration-300 ${activeId === m.id
+                      ? "bg-brand-primary text-bg-primary shadow-[0_0_16px_rgba(97,206,112,0.4)]"
+                      : "text-white/50 hover:text-white/80"
+                    }`}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="flex w-full flex-col gap-2 rounded-[2rem] bg-white/[0.02] p-1 shadow-lg border border-white/[0.06] lg:flex-row backdrop-blur-md">
+          <div className="flex flex-1 flex-col gap-12 p-8 lg:p-10">
+            <div className="flex flex-col gap-10">
+              <p className="font-roboto text-[16px] leading-relaxed text-white/50">
+                Adjust your daily routine to see how much you could save with an electric bike compared to petrol.
+              </p>
+
+              <div className="flex flex-col gap-8">
+                <div className="font-montserrat flex items-center justify-center gap-2 text-5xl font-bold tracking-tight text-white">
+                  <span>{dailyKm}</span>
+                  <span className="text-white/40 text-2xl">km / day</span>
+                </div>
+                <SliderPattern
+                  value={dailyKm}
+                  setValue={setDailyKm}
+                />
+              </div>
+            </div>
+
+            <div className="h-px w-full bg-white/[0.06]" />
+
+            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <p className="font-roboto text-[14px] font-medium text-white/80">
+                Average petrol price per litre?
+              </p>
+              <InputGroup className="h-11 w-fit border-white/10 bg-white/5 text-white shadow-none">
+                <InputGroupAddon>
+                  <InputGroupText className="font-medium text-white/40">
+                    Rs
+                  </InputGroupText>
+                </InputGroupAddon>
+                <InputGroupInput
+                  type="number"
+                  value={petrolPrice}
+                  onChange={(e) => setPetrolPrice(Number(e.target.value) || 0)}
+                  min={0}
+                  aria-label="Petrol Price"
+                  className="w-16 text-[16px] font-montserrat font-bold tracking-tight focus-visible:ring-brand-primary/50"
+                />
+                <InputGroupAddon align="inline-end">
+                  <InputGroupText className="text-[13px] font-medium text-white/40">
+                    / Ltr
+                  </InputGroupText>
+                </InputGroupAddon>
+              </InputGroup>
+            </div>
+
+            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <p className="font-roboto text-[14px] font-medium text-white/80">
+                Average electricity cost per unit?
+              </p>
+              <InputGroup className="h-11 w-fit border-white/10 bg-white/5 text-white shadow-none">
+                <InputGroupAddon>
+                  <InputGroupText className="font-medium text-white/40">
+                    Rs
+                  </InputGroupText>
+                </InputGroupAddon>
+                <InputGroupInput
+                  type="number"
+                  value={elecCost}
+                  onChange={(e) => setElecCost(Number(e.target.value) || 0)}
+                  min={0}
+                  aria-label="Electricity Cost"
+                  className="w-16 text-[16px] font-montserrat font-bold tracking-tight focus-visible:ring-brand-primary/50"
+                />
+                <InputGroupAddon align="inline-end">
+                  <InputGroupText className="text-[13px] font-medium text-white/40">
+                    / Unit
+                  </InputGroupText>
+                </InputGroupAddon>
+              </InputGroup>
+            </div>
+          </div>
+
+          <div className="flex w-full flex-col items-center justify-between gap-8 rounded-[1.8rem] bg-[#050505] border border-white/5 p-8 lg:w-[28rem] lg:p-10">
+            <div className="flex w-full flex-col items-center gap-2 text-center">
+              <h3 className="font-roboto font-medium tracking-wide text-white/80">
+                Annual Cost Savings
+              </h3>
+              <div className="font-montserrat mt-2 flex items-baseline gap-1 text-[56px] leading-none font-bold tracking-tighter text-brand-primary">
+                <span className="text-3xl text-brand-primary/80 mr-1">Rs</span>
+                <AnimatePresence mode="popLayout">
+                  {savingsChars.map((char, idx) => (
+                    <motion.span
+                      key={`${savings}-${idx}`}
+                      variants={animVariant}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      custom={idx}
+                      className="inline-block"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </AnimatePresence>
+              </div>
+              <p className="mt-4 font-roboto text-[13px] text-white/40">
+                Net savings with {model.label} over 1 year
+              </p>
+              <FlipButton
+                href="/products"
+                variant="primary"
+                className="mt-8 w-full rounded-md h-12 text-[14px]"
+              >
+                Buy Now
+              </FlipButton>
+            </div>
+
+            <div className="flex w-full flex-col gap-4 font-roboto text-[14px]">
+              <p className="text-[11px] font-semibold tracking-widest text-white/30 uppercase">
+                Breakdown
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-white/60">Annual Kilometers</span>
+                <span className="font-medium text-white">{Math.round(annualKm).toLocaleString()} km</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-white/60">Petrol Cost (1 Year)</span>
+                <span className="font-medium text-white">{fmt(petrolAnnual)}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-white/60">ELFA Cost (1 Year)</span>
+                <span className="font-medium text-brand-primary">{fmt(elfaAnnual)}</span>
+              </div>
+              <div className="-mx-2 my-1 h-px bg-white/10" />
+              <div className="flex items-center justify-between font-bold">
+                <span className="text-white/90">Total Annual Savings</span>
+                <span className="text-brand-primary">{fmt(savings)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

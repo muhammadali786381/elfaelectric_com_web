@@ -7,7 +7,7 @@ import { formatRs, useCart } from "@/components/cart/CartContext";
 import CartNotices from "@/components/cart/CartNotices";
 
 const sectionClass =
-  "rounded-[7px] border border-[rgba(122,122,122,0.3)] bg-white p-5";
+  "rounded-[7px] border border-[rgba(122,122,122,0.3)] bg-bg-primary p-5";
 
 export default function CartPageContent() {
   const {
@@ -28,12 +28,12 @@ export default function CartPageContent() {
 
   if (items.length === 0) {
     return (
-      <section className="bg-white py-10 lg:py-14">
+      <section className="bg-bg-primary py-10 lg:py-14">
         <CartNotices />
         <div className="mx-auto max-w-[1095px] px-4 sm:px-5">
           <Link
             href="/shop"
-            className="font-roboto inline-flex h-10 items-center justify-center rounded-[3px] border border-[#d5d8dc] bg-[#ebe9f1] px-5 text-[14px] font-medium text-[#333] hover:bg-[#e0dde8]"
+            className="font-roboto inline-flex h-10 items-center justify-center rounded-[3px] border border-text-secondary/30 bg-bg-secondary px-5 text-[14px] font-medium text-text-secondary hover:bg-bg-secondary"
           >
             Return to shop
           </Link>
@@ -43,7 +43,7 @@ export default function CartPageContent() {
   }
 
   return (
-    <section className="bg-white py-8 lg:py-10">
+    <section className="bg-bg-primary py-8 lg:py-10">
       <CartNotices />
       <div className="mx-auto grid w-full max-w-[1095px] grid-cols-1 gap-[5px] px-4 sm:px-5 lg:grid-cols-[minmax(0,59%)_minmax(0,1fr)]">
         {/* Left column: products + coupon */}
@@ -51,25 +51,25 @@ export default function CartPageContent() {
           {/* Products table section */}
           <div className={`${sectionClass} m-[5px]`}>
             <div className="overflow-x-auto">
-              <table className="font-roboto w-full min-w-[520px] border-collapse text-left text-[14.4px] leading-[1.5] text-[#333]">
+              <table className="font-roboto w-full min-w-[520px] border-collapse text-left text-[14.4px] leading-[1.5] text-text-secondary">
                 <thead>
                   <tr>
-                    <th className="w-5 pb-2 pr-0 text-[14px] font-bold text-black" scope="col">
+                    <th className="w-5 pb-2 pr-0 text-[14px] font-bold text-text-primary" scope="col">
                       <span className="sr-only">Remove item</span>
                     </th>
-                    <th className="w-[76px] pb-2 pr-5 text-[14px] font-bold text-black" scope="col">
+                    <th className="w-[76px] pb-2 pr-5 text-[14px] font-bold text-text-primary" scope="col">
                       <span className="sr-only">Thumbnail</span>
                     </th>
-                    <th className="pb-2 pr-5 text-[14px] font-bold text-black" scope="col">
+                    <th className="pb-2 pr-5 text-[14px] font-bold text-text-primary" scope="col">
                       Product
                     </th>
-                    <th className="pb-2 pr-5 text-[14px] font-bold text-black" scope="col">
+                    <th className="pb-2 pr-5 text-[14px] font-bold text-text-primary" scope="col">
                       Price
                     </th>
-                    <th className="pb-2 pr-5 text-[14px] font-bold text-black" scope="col">
+                    <th className="pb-2 pr-5 text-[14px] font-bold text-text-primary" scope="col">
                       Quantity
                     </th>
-                    <th className="pb-2 pr-5 text-[14px] font-bold text-black" scope="col">
+                    <th className="pb-2 pr-5 text-[14px] font-bold text-text-primary" scope="col">
                       Subtotal
                     </th>
                   </tr>
@@ -82,7 +82,7 @@ export default function CartPageContent() {
                           type="button"
                           aria-label={`Remove ${item.name} from cart`}
                           onClick={() => removeItem(item.id)}
-                          className="font-roboto block text-[22px] font-bold leading-none text-black hover:text-[#e31e24]"
+                          className="font-roboto block text-[22px] font-bold leading-none text-text-primary hover:text-[#e31e24]"
                         >
                           ×
                         </button>
@@ -105,12 +105,12 @@ export default function CartPageContent() {
                               ? "/product/elfaev125"
                               : "/product/ev1-scooty"
                           }
-                          className="font-roboto text-[14.4px] font-normal text-[#61ce70] hover:underline"
+                          className="font-roboto text-[14.4px] font-normal text-brand-primary hover:underline"
                         >
                           {item.name} - {item.variantLabel}
                         </Link>
                       </td>
-                      <td className="py-5 pr-5 align-middle whitespace-nowrap text-[#333]">
+                      <td className="py-5 pr-5 align-middle whitespace-nowrap text-text-secondary">
                         {formatRs(item.price)}
                       </td>
                       <td className="py-5 pr-5 align-middle">
@@ -124,10 +124,10 @@ export default function CartPageContent() {
                             const n = Number(e.target.value);
                             if (!Number.isNaN(n)) updateQty(item.id, Math.max(1, n));
                           }}
-                          className="font-roboto h-7 w-[51px] rounded-[3px] border border-[#d5d8dc] bg-transparent px-0.5 text-center text-[14px] text-black outline-none focus:border-[#61ce70]"
+                          className="font-roboto h-7 w-[51px] rounded-[3px] border border-text-secondary/30 bg-transparent px-0.5 text-center text-[14px] text-text-primary outline-none focus:border-brand-primary"
                         />
                       </td>
-                      <td className="py-5 pr-5 align-middle whitespace-nowrap text-[#333]">
+                      <td className="py-5 pr-5 align-middle whitespace-nowrap text-text-secondary">
                         {formatRs(item.price * item.qty)}
                       </td>
                     </tr>
@@ -149,12 +149,12 @@ export default function CartPageContent() {
                   if (e.key === "Enter") applyCoupon(code);
                 }}
                 placeholder="Coupon code"
-                className="font-roboto h-8 min-w-[180px] flex-1 rounded border border-[rgba(32,7,7,0.8)] bg-white px-[7px] text-[14px] text-black outline-none placeholder:text-[#666] focus:border-[#61ce70] sm:max-w-[368px]"
+                className="font-roboto h-8 min-w-[180px] flex-1 rounded border border-[rgba(32,7,7,0.8)] bg-bg-primary px-[7px] text-[14px] text-text-primary outline-none placeholder:text-text-secondary focus:border-brand-primary sm:max-w-[368px]"
               />
               <button
                 type="button"
                 onClick={() => applyCoupon(code)}
-                className="font-roboto h-[34px] shrink-0 rounded-[3px] bg-[#61ce70] px-[19px] text-[14px] font-bold leading-none text-white hover:bg-[#4fbf5f]"
+                className="font-roboto h-[34px] shrink-0 rounded-[3px] bg-brand-primary px-[19px] text-[14px] font-bold leading-none text-text-inverse hover:bg-brand-secondary"
               >
                 Apply coupon
               </button>
@@ -162,7 +162,7 @@ export default function CartPageContent() {
                 <button
                   type="button"
                   onClick={removeCoupon}
-                  className="font-roboto text-[13px] font-medium text-[#e31e24] underline-offset-2 hover:underline"
+                  className="font-roboto text-[13px] font-medium text-brand-accent underline-offset-2 hover:underline"
                 >
                   Remove {coupon.code}
                 </button>
@@ -171,7 +171,7 @@ export default function CartPageContent() {
             {couponMessage ? (
               <p
                 className={`font-roboto mt-2 text-[13px] ${
-                  couponMessage.includes("successfully") ? "text-[#1a5e45]" : "text-[#e31e24]"
+                  couponMessage.includes("successfully") ? "text-[#1a5e45]" : "text-brand-accent"
                 }`}
               >
                 {couponMessage}
@@ -182,11 +182,11 @@ export default function CartPageContent() {
 
         {/* Right: Cart Totals */}
         <aside className={`${sectionClass} m-[5px] h-fit`}>
-          <h2 className="font-montserrat pb-2 text-[20px] font-bold leading-6 text-black">
+          <h2 className="font-montserrat pb-2 text-[20px] font-bold leading-6 text-text-primary">
             Cart Totals
           </h2>
 
-          <table className="font-roboto mt-1 w-full border-collapse text-[14.4px] leading-[1.5] text-[#333]">
+          <table className="font-roboto mt-1 w-full border-collapse text-[14.4px] leading-[1.5] text-text-secondary">
             <tbody>
               <tr>
                 <th className="py-[9px] pr-3 text-left font-bold" scope="row">
@@ -199,7 +199,7 @@ export default function CartPageContent() {
                   <th className="py-[9px] pr-3 text-left font-bold" scope="row">
                     Coupon ({coupon?.code})
                   </th>
-                  <td className="py-3 pr-0 text-right text-[#61ce70]">−{formatRs(discount)}</td>
+                  <td className="py-3 pr-0 text-right text-brand-primary">−{formatRs(discount)}</td>
                 </tr>
               ) : null}
               <tr>
@@ -207,15 +207,15 @@ export default function CartPageContent() {
                   Shipment
                 </th>
                 <td className="py-3 pr-0 text-right">
-                  <span className="block text-[15px] leading-[15px] text-[#61ce70]">
+                  <span className="block text-[15px] leading-[15px] text-brand-primary">
                     Free shipping
                   </span>
-                  <span className="mt-1 block text-[14px] text-[#69727d]">
+                  <span className="mt-1 block text-[14px] text-text-secondary">
                     Shipping to Punjab.
                   </span>
                   <button
                     type="button"
-                    className="mt-[7px] text-[14px] text-[#61ce70] hover:underline"
+                    className="mt-[7px] text-[14px] text-brand-primary hover:underline"
                   >
                     Change address
                   </button>
@@ -238,7 +238,7 @@ export default function CartPageContent() {
 
           <Link
             href="/checkout"
-            className="font-roboto mt-4 flex w-full items-center justify-center rounded-[3px] bg-[#61ce70] px-[15px] py-[15px] text-[15px] font-bold leading-none text-white hover:bg-[#4fbf5f]"
+            className="font-roboto mt-4 flex w-full items-center justify-center rounded-[3px] bg-brand-primary px-[15px] py-[15px] text-[15px] font-bold leading-none text-text-inverse hover:bg-brand-secondary"
           >
             Proceed to Checkout
           </Link>

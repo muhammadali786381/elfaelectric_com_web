@@ -184,34 +184,34 @@ function mapEmbedSrc(dealer: Dealer) {
 function DealerCard({ dealer }: { dealer: Dealer }) {
   return (
     <article
-      className="flex flex-col gap-4 rounded-[16px] border border-[#61ce70] p-4 shadow-[0_0_40px_-20px_rgba(0,0,0,0.5)] sm:gap-5 sm:rounded-[20px] sm:p-5 lg:flex-row lg:items-stretch lg:gap-6"
+      className="flex flex-col gap-4 rounded-[16px] border border-brand-primary p-4 shadow-[0_0_40px_-20px_rgba(0,0,0,0.5)] sm:gap-5 sm:rounded-[20px] sm:p-5 lg:flex-row lg:items-stretch lg:gap-6"
       style={{ backgroundImage: SPARK }}
     >
       <div className="flex min-w-0 flex-1 flex-col justify-center">
-        <h3 className="font-montserrat mb-4 text-[20px] font-bold leading-tight text-white sm:text-[26px] lg:text-[30px] lg:leading-[1.2]">
+        <h3 className="font-montserrat mb-4 text-[20px] font-bold leading-tight text-text-inverse sm:text-[26px] lg:text-[30px] lg:leading-[1.2]">
           {dealer.name}
         </h3>
 
         <div className="mb-4 flex items-start gap-3">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#61ce70] text-white">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-primary text-text-inverse">
             <Building2 className="h-5 w-5" strokeWidth={2} />
           </span>
           <div>
-            <p className="font-montserrat mb-1 text-[16px] font-semibold text-white sm:text-[18px]">
+            <p className="font-montserrat mb-1 text-[16px] font-semibold text-text-inverse sm:text-[18px]">
               Address
             </p>
-            <p className="font-roboto text-[14px] leading-relaxed text-white/90 sm:text-[15px]">
+            <p className="font-roboto text-[14px] leading-relaxed text-text-inverse/90 sm:text-[15px]">
               {dealer.address}
             </p>
           </div>
         </div>
 
         <div className="mb-3 flex items-start gap-3">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#61ce70] text-white">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-primary text-text-inverse">
             <Phone className="h-5 w-5" strokeWidth={2} />
           </span>
           <div>
-            <p className="font-montserrat mb-1 text-[16px] font-semibold text-white sm:text-[18px]">
+            <p className="font-montserrat mb-1 text-[16px] font-semibold text-text-inverse sm:text-[18px]">
               Call Us
             </p>
             <div className="flex flex-col gap-0.5">
@@ -219,7 +219,7 @@ function DealerCard({ dealer }: { dealer: Dealer }) {
                 <a
                   key={p}
                   href={`tel:${p.replace(/[\s-]/g, "")}`}
-                  className="font-roboto text-[14px] text-white/90 transition-colors hover:text-[#61ce70] sm:text-[15px]"
+                  className="font-roboto text-[14px] text-text-inverse/90 transition-colors hover:text-brand-primary sm:text-[15px]"
                 >
                   {p}
                 </a>
@@ -230,16 +230,16 @@ function DealerCard({ dealer }: { dealer: Dealer }) {
 
         {dealer.email && (
           <div className="flex items-start gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#61ce70] text-white">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-primary text-text-inverse">
               <Mail className="h-5 w-5" strokeWidth={2} />
             </span>
             <div>
-              <p className="font-montserrat mb-1 text-[16px] font-semibold text-white sm:text-[18px]">
+              <p className="font-montserrat mb-1 text-[16px] font-semibold text-text-inverse sm:text-[18px]">
                 Mail Now
               </p>
               <a
                 href={`mailto:${dealer.email}`}
-                className="font-roboto text-[14px] text-white/90 transition-colors hover:text-[#61ce70] sm:text-[15px]"
+                className="font-roboto text-[14px] text-text-inverse/90 transition-colors hover:text-brand-primary sm:text-[15px]"
               >
                 {dealer.email}
               </a>
@@ -273,12 +273,12 @@ export default function DealersDirectory() {
   }, [city]);
 
   return (
-    <section className="bg-white pb-14 pt-4 lg:pb-20">
+    <section className="bg-bg-primary pb-14 pt-4 lg:pb-20">
       <div className="mx-auto w-full max-w-container px-4 sm:px-6">
         <div className="mb-10 flex w-full flex-col gap-3">
           <label
             htmlFor="dealer-city-filter"
-            className="font-roboto text-[15px] font-medium text-[#212121] sm:text-[16px]"
+            className="font-roboto text-[15px] font-medium text-text-primary sm:text-[16px]"
           >
             Filter by City:
           </label>
@@ -286,7 +286,7 @@ export default function DealersDirectory() {
             id="dealer-city-filter"
             value={city}
             onChange={(e) => setCity(e.target.value as City | "all")}
-            className="font-roboto h-11 w-full rounded-[6px] border border-[#61ce70] bg-white px-3 text-[15px] text-[#212121] outline-none focus:ring-1 focus:ring-[#61ce70]"
+            className="font-roboto h-11 w-full rounded-[6px] border border-brand-primary bg-bg-primary px-3 text-[15px] text-text-primary outline-none focus:ring-1 focus:ring-brand-primary"
           >
             <option value="all">All Cities</option>
             {CITIES.map((c) => (
@@ -299,10 +299,10 @@ export default function DealersDirectory() {
 
         {sections.map(({ city: c, dealers }) => (
           <div key={c} className="mb-14 last:mb-0">
-            <h2 className="font-montserrat mb-3 text-start text-[22px] font-bold leading-snug text-[#212121] sm:text-[34px] lg:text-[40px] lg:leading-[1.2]">
+            <h2 className="font-montserrat mb-3 text-start text-[22px] font-bold leading-snug text-text-primary sm:text-[34px] lg:text-[40px] lg:leading-[1.2]">
               Find ELFA Electric Motorcycles Dealers in {c}
             </h2>
-            {/* <p className="font-roboto mb-6 text-start text-[14px] leading-relaxed text-[#333] sm:mb-8 sm:text-[16px]">
+            {/* <p className="font-roboto mb-6 text-start text-[14px] leading-relaxed text-text-secondary sm:mb-8 sm:text-[16px]">
               {CITY_INTROS[c]}
             </p> */}
             <div className="flex flex-col gap-5">

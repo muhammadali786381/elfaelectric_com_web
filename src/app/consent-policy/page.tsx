@@ -21,7 +21,7 @@ export default function ConsentPolicyPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 bg-white">
+      <main className="flex-1 bg-bg-primary">
         <PageHero
           title="Consent & Policy Acknowledgement"
           breadcrumb="Consent & Policy Acknowledgement"
@@ -34,10 +34,10 @@ export default function ConsentPolicyPage() {
           <div className="mx-auto flex max-w-container flex-col gap-8">
             {terms.map((text, i) => (
               <div key={i} className="flex  gap-4">
-                <h4 className="font-montserrat text-[16px] font-bold leading-normal text-[#212121]">
+                <h4 className="font-montserrat text-[16px] font-bold leading-normal text-text-primary">
                   {i + 1}.
                 </h4>
-                <p className="font-roboto text-[15px] font-normal leading-[25px] text-[#212121]">
+                <p className="font-roboto text-[15px] font-normal leading-[25px] text-text-primary">
                   {text}
                 </p>
               </div>

@@ -1,278 +1,196 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import Link from "next/link";
+import { Star, Play } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 import { FadeIn } from "@/components/motion/FadeIn";
 
 const testimonials = [
   {
+    name: "Umer Farooq",
+    city: "Karachi",
+    model: "EV-125 BIKE",
+    ownership: "3 months",
+    img: "/assets/images/customer-1a.jpg",
+    rating: 5,
+    text: "ELFA bike teen maheene se chala raha hoon. Excellent fuel savings — hisaab lagaya to PKR 10,000 per month bach rahe hain. Ye bike apna paisa khud wasool kar leti hai!",
+  },
+  {
     name: "Muhammad Nawab",
+    city: "Lahore",
+    model: "EV-125 BIKE",
+    ownership: "3 months",
     img: "/assets/images/customer-1-1.jpg",
     rating: 5,
     text: "ELFA EV bike teen maheene se use kar raha hoon, bohot achi performance hai aur petrol ka kharcha bilkul khatam ho gaya hai. Maintenance bhi na ke barabar hai.",
   },
   {
-    name: "Zia",
-    img: "/assets/images/customer-2-1.jpg",
-    rating: 5,
-    text: "ELFA EV-125 ka rider hoon aur bohot mutma'in hoon. Charging asaan hai aur range roz ki zaroorat ke liye kaafi hai. Sab ko recommend karta hoon.",
-  },
-  {
-    name: "Ghulam Sabbir",
-    img: "/assets/images/customer-3-1.jpg",
-    rating: 5,
-    text: "ELFA bike teen maheene se chala raha hoon, build quality bohot mazboot hai aur ride bohot smooth hai. Best decision tha electric par switch karna.",
-  },
-  {
     name: "Muhammad Hussain",
+    city: "Islamabad",
+    model: "EV-125 BIKE",
+    ownership: "10 months",
     img: "/assets/images/customer-4-1.jpg",
     rating: 5,
-    text: "ELFA bike January 2025 mein khareedi thi ab 10 maheene ho gaye hain. Aaj tak koi complaint nahi aayi, baarish aur paani mein bhi perfect chalti hai. Main is se bohot mutma'in aur khush hoon, aur apne doston ko bhi recommend karta hoon. Meri dua hai ke poora Pakistan EV par shift ho taake hum sab green city ka hissa ban sakein!",
-  },
-  {
-    name: "Adeel Ahmed",
-    img: "/assets/images/customer-5-1.jpg",
-    rating: 5,
-    text: "ELFA chala raha hoon aur ye Karachi ki number one electric bike lagti hai mujhe. Power aur range dono acha hai.",
-  },
-  {
-    name: "Alamgir",
-    img: "/assets/images/customer-6.jpg",
-    rating: 5,
-    text: "EV Technology mere liye faidemand hai — fuel ka masla khatam, aur ride bhi comfortable hai. Family ke liye bhi safe hai.",
-  },
-  {
-    name: "Danial Baig",
-    img: "/assets/images/customer-7.jpg",
-    rating: 5,
-    text: "ELFA teen chaar maheenon se use kar raha hoon, koi dikkat nahi aayi. Digital meter aur design dono pasand aaye.",
+    text: "ELFA bike January 2025 mein khareedi thi ab 10 maheene ho gaye hain. Aaj tak koi complaint nahi aayi, baarish aur paani mein bhi perfect chalti hai. Main is se bohot mutma'in aur khush hoon!",
   },
   {
     name: "Farzan Raza",
+    city: "Karachi",
+    model: "EV-125 BIKE",
+    ownership: "6 months",
     img: "/assets/images/customer-8.jpg",
     rating: 5,
-    text: "ELFA EV-125 6 maheenon se chala raha hoon. Pehle petrol wali 125 par roz ka 500-1000 rupay lagta tha, ab petrol ka kharcha zero hai. Maintenance bhi zero ke barabar hai na oil, na chain ka masla. Ride bohot comfort-able hai, main ELFA sab ko recommend karta hoon!",
-  },
-  {
-    name: "Ghareebo Khan Baloch",
-    img: "/assets/images/customer-9.jpg",
-    rating: 5,
-    text: "ELFA EV-125 use karte hue 9 maheene ho gaye hain. Har mahine paise bachte hain na petrol ka kharcha, bohot aramdeh aur support bhi zabardast raha hai, lekin ELFA ko sabse zyada dosto ko diya hai!",
+    text: "ELFA EV-125 6 maheenon se chala raha hoon. Pehle petrol wali 125 par roz ka 500-1000 rupay lagta tha, ab petrol ka kharcha zero hai. Maintenance bhi zero ke barabar hai.",
   },
   {
     name: "Haji Zareen",
+    city: "Quetta",
+    model: "EV-1 Scooty",
+    ownership: "7–8 months",
     img: "/assets/images/customer-10.jpg",
     rating: 5,
-    text: "ELFA Scooty 7-8 maheene se use kar raha hoon. Do dafa ise Quetta bus ke zariye le gaya hoon mashallah bohot kaamyab aur aaraam deh ride hai. Ab tak koi badi dikkat nahi aayi, aur 70-80 km tak chal jaati hai, bohot faidemand hai. Yeh buzurg aur bari umar walon ke liye perfect ride hai hum bohot khush aur mutma'in hain!",
+    text: "ELFA Scooty 7-8 maheene se use kar raha hoon. Do dafa ise Quetta bus ke zariye le gaya hoon, bohot kaamyab aur aaraam deh ride hai. Yeh buzurg aur bari umar walon ke liye perfect ride hai!",
   },
   {
-    name: "Muhammad Ilyas",
-    img: "/assets/images/customer-11-1.jpg",
+    name: "Ghareebo Khan Baloch",
+    city: "Karachi",
+    model: "EV-125 BIKE",
+    ownership: "9 months",
+    img: "/assets/images/customer-9.jpg",
     rating: 5,
-    text: "ELFA 125 teen maheene se use kar raha hoon. App tracking feature bohot useful hai, ghar se nikalne se pehle battery level check kar leta hoon. Smart innovation hai.",
-  },
-  {
-    name: "Nazir Khatak",
-    img: "/assets/images/customer-1aa.jpg",
-    rating: 5,
-    text: "ELFA 125 ek maheene se use kar raha hoon, ab tak performance se bohot khush hoon. Charging fast hai aur range bhi expectation se zyada mili.",
-  },
-  {
-    name: "Umer Farooq",
-    img: "/assets/images/customer-1a.jpg",
-    rating: 5,
-    text: "ELFA bike teen maheene se chala raha hoon. Excellent fuel savings — hisaab lagaya to PKR 10,000 per month bach rahe hain. Ye bike apna paisa khud wasool kar leti hai!",
+    text: "ELFA EV-125 use karte hue 9 maheene ho gaye hain. Har mahine paise bachte hain — na petrol ka kharcha, bohot aramdeh aur support bhi zabardast raha hai. Sab se zyada doston ko recommend kiya hai!",
   },
 ];
 
-const COUNT = testimonials.length;
-// Triple the list so we can jump between copies for seamless infinite loop
-const LOOP = [...testimonials, ...testimonials, ...testimonials];
-
 function StarRating({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-1" role="img" aria-label={`Rated ${rating} out of 5`}>
-      {[1, 2, 3, 4, 5].map((star) => (
+    <div className="flex gap-1" aria-label={`${rating} out of 5 stars`}>
+      {[1, 2, 3, 4, 5].map((s) => (
         <Star
-          key={star}
-          className={`h-5 w-5 ${star <= rating ? "fill-[#ffc107] text-[#ffc107]" : "fill-transparent text-white/30"}`}
+          key={s}
+          className={`h-4 w-4 ${s <= rating ? "fill-[#ffc107] text-[#ffc107]" : "fill-transparent text-white/20"}`}
+          strokeWidth={1.5}
         />
       ))}
     </div>
   );
 }
 
-function Card({
-  t,
-  active,
-}: {
-  t: (typeof testimonials)[0];
-  active: boolean;
-}) {
-  return (
-    <article
-      className="flex h-full w-full flex-row items-center gap-5 rounded-[20px] px-6 py-6 sm:gap-6 sm:px-10 sm:py-7 lg:gap-10 lg:px-12 lg:py-8"
-      style={{
-        backgroundImage: "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)",
-      }}
-      aria-hidden={!active}
-    >
-      <div className="flex min-w-0 flex-1 flex-col justify-center gap-3 sm:gap-4">
-        <h3 className="font-montserrat text-[22px] font-bold leading-none text-white sm:text-[28px] lg:text-[30px]">
-          {t.name}
-        </h3>
-        <StarRating rating={t.rating} />
-        <p className="font-roboto text-[14px] leading-relaxed text-white sm:text-[16px] lg:text-[17px]">
-          &ldquo;{t.text}&rdquo;
-        </p>
-      </div>
-
-      {/* Smaller portrait — leaves more room for text / wider card feel */}
-      <div className="relative hidden aspect-square w-[100px] shrink-0 overflow-hidden rounded-[10px] border-2 border-white sm:block sm:w-[140px] lg:w-[180px] xl:w-[200px]">
-        <Image
-          src={t.img}
-          alt={t.name}
-          fill
-          className="object-cover object-top"
-          sizes="(min-width: 1280px) 200px, (min-width: 1024px) 180px, 140px"
-        />
-      </div>
-    </article>
-  );
-}
-
 export default function Testimonials() {
-  // Start in the middle copy so we can go either direction infinitely
-  const [index, setIndex] = useState(COUNT);
-  const [animate, setAnimate] = useState(true);
-  const [paused, setPaused] = useState(false);
-  const [offset, setOffset] = useState(0);
-
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  const measure = useCallback(() => {
-    const viewport = viewportRef.current;
-    const track = trackRef.current;
-    if (!viewport || !track) return;
-    const slide = track.children[index] as HTMLElement | undefined;
-    if (!slide) return;
-    // Center the active slide in the viewport → half cards peek left & right
-    const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
-    setOffset(viewport.clientWidth / 2 - slideCenter);
-  }, [index]);
-
-  useLayoutEffect(() => {
-    measure();
-  }, [measure]);
-
-  useEffect(() => {
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, [measure]);
-
-  // Seamless infinite: when we drift into a clone zone, snap back to the middle copy
-  useEffect(() => {
-    if (index >= COUNT * 2) {
-      const t = window.setTimeout(() => {
-        setAnimate(false);
-        setIndex((i) => i - COUNT);
-      }, 700);
-      return () => window.clearTimeout(t);
-    }
-    if (index < COUNT) {
-      const t = window.setTimeout(() => {
-        setAnimate(false);
-        setIndex((i) => i + COUNT);
-      }, 700);
-      return () => window.clearTimeout(t);
-    }
-  }, [index]);
-
-  // Re-enable transition after a silent snap
-  useEffect(() => {
-    if (!animate) {
-      const id = requestAnimationFrame(() => {
-        requestAnimationFrame(() => setAnimate(true));
-      });
-      return () => cancelAnimationFrame(id);
-    }
-  }, [animate, index]);
-
-  const prev = () => {
-    setAnimate(true);
-    setIndex((i) => i - 1);
-  };
-  const next = () => {
-    setAnimate(true);
-    setIndex((i) => i + 1);
-  };
-
-  // Autoplay
-  useEffect(() => {
-    if (paused) return;
-    const id = window.setInterval(() => {
-      setAnimate(true);
-      setIndex((i) => i + 1);
-    }, 4000);
-    return () => window.clearInterval(id);
-  }, [paused]);
-
   return (
-    <section className="bg-white py-16 lg:py-20">
+    <section className="bg-bg-primary py-16 lg:py-24">
+      <style>{`
+        .testimonials-swiper .swiper-pagination {
+          position: static;
+          margin-top: 2rem;
+        }
+        .testimonials-swiper .swiper-pagination-bullet {
+          width: 6px;
+          height: 6px;
+          background: rgba(255,255,255,0.2);
+          opacity: 1;
+          border-radius: 9999px;
+          transition: all 0.3s ease;
+        }
+        .testimonials-swiper .swiper-pagination-bullet-active {
+          width: 32px;
+          background: var(--color-brand-primary);
+          border-radius: 9999px;
+        }
+      `}</style>
+
       <FadeIn variant="fadeIn" speed="slow">
-      <div className="mx-auto w-full min-w-[100px] max-w-container">
-        <h2 className="font-montserrat mb-10 px-4 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
-          Our Happy Customers
-        </h2>
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6">
 
-        {/*
-          Card width = ~50% of container.
-          Centered active slide → left & right neighbors are cut exactly in half.
-        */}
-        <div
-          ref={viewportRef}
-          className="relative w-full overflow-hidden"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-        >
-          <div
-            ref={trackRef}
-            className={`flex items-stretch gap-3 ${animate ? "transition-transform duration-700 ease-out" : ""}`}
-            style={{ transform: `translateX(${offset}px)` }}
-          >
-            {LOOP.map((t, i) => (
-              <div
-                key={`${t.name}-${i}`}
-                /* Wider cards (~70%) — still peeks half-ish neighbors on both sides */
-                className="w-[calc(70%-8px)] shrink-0 sm:w-[calc(70%-100px)]"
-              >
-                <Card t={t} active={i === index} />
-              </div>
-            ))}
+          {/* Heading */}
+          <div className="mb-12 text-center">
+            <p className="font-roboto mb-3 text-[12px] font-semibold uppercase tracking-[2px] text-brand-primary">
+              Real riders, real results
+            </p>
+            <h2 className="font-montserrat text-[32px] font-bold text-text-primary sm:text-[40px] lg:text-[48px]">
+              Our Happy Customers
+            </h2>
           </div>
-        </div>
 
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={prev}
-            aria-label="Previous"
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-[#61ce70] text-white transition-colors hover:bg-[#4fbf5f]"
-          >
-            <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
-          </button>
-          <button
-            type="button"
-            onClick={next}
-            aria-label="Next"
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-[#61ce70] text-white transition-colors hover:bg-[#4fbf5f]"
-          >
-            <ChevronRight className="h-5 w-5" strokeWidth={2.5} />
-          </button>
+          {/* Swiper */}
+          <div className="mx-auto max-w-[900px]">
+            <Swiper
+              modules={[Pagination, Autoplay]}
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+              loop
+              speed={600}
+              className="testimonials-swiper"
+            >
+              {testimonials.map((t) => (
+                <SwiperSlide key={t.name}>
+                  <div className="grid h-[600px] grid-cols-1 overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] sm:h-[340px] sm:grid-cols-[260px_1fr] lg:h-[360px] lg:grid-cols-[320px_1fr]">
+
+                    {/* Photo panel */}
+                    <div className="relative h-[260px] w-full sm:h-full">
+                      <Image
+                        src={t.img}
+                        alt={t.name}
+                        fill
+                        className="object-cover object-top"
+                        sizes="(max-width: 640px) 100vw, 320px"
+                      />
+                      {/* Gradient fade right on desktop */}
+                      <div className="absolute inset-0 hidden sm:block" style={{ background: "linear-gradient(to right, transparent 60%, #0a0a0c)" }} />
+                      {/* Bottom fade on mobile */}
+                      <div className="absolute inset-0 sm:hidden" style={{ background: "linear-gradient(to top, #0a0a0c 10%, transparent)" }} />
+                    </div>
+
+                    {/* Content panel */}
+                    <div className="flex flex-col justify-center gap-5 px-6 py-8 sm:px-10 lg:px-12 lg:py-12">
+                      <StarRating rating={t.rating} />
+
+                      <blockquote className="font-roboto text-[15px] leading-relaxed text-white/80 sm:text-[16px] lg:text-[17px]">
+                        "{t.text}"
+                      </blockquote>
+
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <p className="font-montserrat text-[17px] font-bold text-text-primary">
+                          {t.name}
+                        </p>
+                        <span className="h-1 w-1 rounded-full bg-white/20" />
+                        <p className="font-roboto text-[13px] text-white/40">{t.city}</p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        <span className="font-roboto rounded-full border border-brand-primary/30 bg-brand-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[1px] text-brand-primary">
+                          {t.model}
+                        </span>
+                        <span className="font-roboto rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/40">
+                          Owner · {t.ownership}
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          {/* Video Testimonials CTA */}
+          <div className="mt-10 text-center">
+            <Link
+              href="/video-testimonials"
+              className="group font-roboto inline-flex h-12 items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-7 text-[13px] font-semibold uppercase tracking-[1.5px] text-white/70 transition-all hover:border-brand-primary/40 hover:bg-brand-primary/10 hover:text-brand-primary"
+            >
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-primary/20 transition-all group-hover:bg-brand-primary/30">
+                <Play className="h-3 w-3 fill-brand-primary text-brand-primary" />
+              </span>
+              Watch Video Testimonials
+            </Link>
+          </div>
+
         </div>
-      </div>
       </FadeIn>
     </section>
   );

@@ -34,15 +34,15 @@ export default function ShopCatalog({ products }: { products: ShopProduct[] }) {
   });
 
   return (
-    <section className="bg-white pb-16 pt-10 lg:pb-20 lg:pt-12">
+    <section className="bg-bg-primary pb-16 pt-10 lg:pb-20 lg:pt-12">
       <div className="mx-auto w-full max-w-[800px] px-4 sm:px-6">
-        <div className="font-roboto mb-8 flex flex-wrap items-center justify-between gap-3 text-[16px] text-[#333]">
+        <div className="font-roboto mb-8 flex flex-wrap items-center justify-between gap-3 text-[16px] text-text-secondary">
           <p>Showing all {sorted.length} results</p>
           <select
             aria-label="Shop order"
             value={sort}
             onChange={(e) => setSort(e.target.value as SortKey)}
-            className="h-10 rounded border border-[#d5d8dc] bg-white px-3 text-[14px] outline-none focus:border-[#61ce70]"
+            className="h-10 rounded border border-text-secondary/30 bg-bg-primary px-3 text-[14px] outline-none focus:border-brand-primary"
           >
             <option value="menu_order">Default sorting</option>
             <option value="popularity">Sort by popularity</option>
@@ -121,7 +121,7 @@ function ShopProductCard({
   };
 
   return (
-    <article className="relative flex flex-col items-center rounded-[39px] border border-[rgba(122,122,122,0.14)] bg-white px-3 pb-5 pt-2.5 text-center">
+    <article className="relative flex flex-col items-center rounded-[39px] border border-[rgba(122,122,122,0.14)] bg-bg-primary px-3 pb-5 pt-2.5 text-center">
       <Link href={href} className="group block w-full">
         <span className="relative mx-auto mb-3 block aspect-square w-full max-w-[280px]">
           <Image
@@ -132,30 +132,30 @@ function ShopProductCard({
             sizes="280px"
           />
         </span>
-        <h2 className="font-montserrat text-[20px] font-bold text-[#212121]">{product.title}</h2>
-        <p className="font-roboto mt-1 text-[15px] text-[#333]">{formatRs(price)}</p>
+        <h2 className="font-montserrat text-[20px] font-bold text-text-primary">{product.title}</h2>
+        <p className="font-roboto mt-1 text-[15px] text-text-secondary">{formatRs(price)}</p>
       </Link>
 
       <div className="relative mt-4 w-full" ref={panelRef}>
         <button
           type="button"
           onClick={onToggle}
-          className="font-roboto mx-auto flex h-10 min-w-[140px] items-center justify-center rounded-[3px] bg-[#212121] px-5 text-[14px] font-semibold text-white hover:bg-black"
+          className="font-roboto mx-auto flex h-10 min-w-[140px] items-center justify-center rounded-[3px] bg-bg-inverse px-5 text-[14px] font-semibold text-text-inverse hover:bg-bg-inverse"
         >
           Select options
         </button>
 
         {open && active ? (
-          <div className="absolute left-1/2 top-[calc(100%+8px)] z-20 w-[min(100%,280px)] -translate-x-1/2 rounded border border-[#e0e0e0] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
-            <div className="flex items-center justify-between border-b border-[#eee] bg-[#f5f5f5] px-3 py-2">
-              <p className="font-roboto truncate text-[13px] text-[#333]">
+          <div className="absolute left-1/2 top-[calc(100%+8px)] z-20 w-[min(100%,280px)] -translate-x-1/2 rounded border border-[#e0e0e0] bg-bg-primary shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+            <div className="flex items-center justify-between border-b border-text-secondary/20 bg-bg-secondary px-3 py-2">
+              <p className="font-roboto truncate text-[13px] text-text-secondary">
                 {product.variantLabel} : {active.label}
               </p>
               <button
                 type="button"
                 aria-label="Close"
                 onClick={onClose}
-                className="shrink-0 p-0.5 text-[#666] hover:text-black"
+                className="shrink-0 p-0.5 text-text-secondary hover:text-text-primary"
               >
                 <X className="h-4 w-4" strokeWidth={2.5} />
               </button>
@@ -169,7 +169,7 @@ function ShopProductCard({
                   aria-label={v.label}
                   aria-pressed={v.id === active.id}
                   onClick={() => setVariantId(v.id)}
-                  className={`relative h-12 w-12 overflow-hidden rounded border-2 bg-[#f7f7f7] ${
+                  className={`relative h-12 w-12 overflow-hidden rounded border-2 bg-bg-secondary ${
                     v.id === active.id ? "border-[#212121]" : "border-transparent"
                   }`}
                 >
@@ -188,12 +188,12 @@ function ShopProductCard({
                   const n = Number(e.target.value);
                   if (!Number.isNaN(n)) setQty(Math.max(1, n));
                 }}
-                className="font-roboto h-9 w-12 rounded border border-[rgba(32,7,7,0.8)] text-center text-[14px] outline-none focus:border-[#61ce70]"
+                className="font-roboto h-9 w-12 rounded border border-[rgba(32,7,7,0.8)] text-center text-[14px] outline-none focus:border-brand-primary"
               />
               <button
                 type="button"
                 onClick={handleAdd}
-                className="font-roboto h-9 rounded-[3px] bg-[#212121] px-4 text-[13px] font-semibold text-white hover:bg-black"
+                className="font-roboto h-9 rounded-[3px] bg-bg-inverse px-4 text-[13px] font-semibold text-text-inverse hover:bg-bg-inverse"
               >
                 Add to cart
               </button>

@@ -64,7 +64,7 @@ export default function CustomerFeedback() {
               type="button"
               onClick={() => swiperRef.current?.slidePrev()}
               aria-label="Previous"
-              className="absolute left-0 z-20 -translate-x-1/2 text-white transition-opacity hover:opacity-80"
+              className="absolute left-0 z-20 -translate-x-1/2 text-text-inverse transition-opacity hover:opacity-80"
             >
               <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2.5} />
             </button>
@@ -97,13 +97,13 @@ export default function CustomerFeedback() {
                     type="button"
                     onClick={() => setOpenVideo(v.youtubeId)}
                     aria-label={`Play video: ${v.title}`}
-                    className="relative block aspect-[2/3] w-full overflow-hidden rounded-[10px] border-2 border-[#61ce70] bg-black shadow-xl"
+                    className="relative block aspect-[2/3] w-full overflow-hidden rounded-[10px] border-2 border-brand-primary bg-bg-inverse shadow-xl"
                   >
                     <Image src={v.thumb} alt={v.title} fill className="object-cover" sizes="130px" />
-                    <div className="absolute inset-0 bg-black/25" />
+                    <div className="absolute inset-0 bg-bg-inverse/25" />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-black/30">
-                        <Play className="h-3.5 w-3.5 fill-white text-white" />
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-bg-primary bg-bg-inverse/30">
+                        <Play className="h-3.5 w-3.5 fill-bg-primary text-text-inverse" />
                       </div>
                     </div>
                   </button>
@@ -115,14 +115,14 @@ export default function CustomerFeedback() {
               type="button"
               onClick={() => swiperRef.current?.slideNext()}
               aria-label="Next"
-              className="absolute right-0 z-20 translate-x-1/2 text-white transition-opacity hover:opacity-80"
+              className="absolute right-0 z-20 translate-x-1/2 text-text-inverse transition-opacity hover:opacity-80"
             >
               <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2.5} />
             </button>
           </div>
 
           <FadeIn variant="fadeIn" speed="slow">
-            <h2 className="font-anton mt-4 text-center text-[40px] italic uppercase leading-[0.95] text-white sm:text-[64px] lg:text-[95px]">
+            <h2 className="font-anton mt-4 text-center text-[40px] italic uppercase leading-[0.95] text-text-inverse sm:text-[64px] lg:text-[95px]">
               CUSTOMER
               <br />
               FEEDBACK
@@ -133,19 +133,19 @@ export default function CustomerFeedback() {
 
       {openVideo && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-bg-inverse/85 p-4"
           onClick={() => setOpenVideo(null)}
         >
           <button
             type="button"
             onClick={() => setOpenVideo(null)}
             aria-label="Close video"
-            className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+            className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-bg-primary/10 text-text-inverse transition-colors hover:bg-bg-primary/20"
           >
             <X className="h-6 w-6" />
           </button>
           <div
-            className="aspect-video w-full max-w-3xl overflow-hidden rounded-[12px] bg-black"
+            className="aspect-video w-full max-w-3xl overflow-hidden rounded-[12px] bg-bg-inverse"
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
