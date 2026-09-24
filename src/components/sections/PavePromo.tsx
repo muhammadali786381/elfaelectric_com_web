@@ -11,29 +11,29 @@ const products = [
 
 export default function PavePromo() {
   return (
-    <section className="bg-white py-10 lg:py-14">
+    <section className="bg-bg-primary py-10 lg:py-14">
       <div className="mx-auto w-full max-w-container px-4 sm:px-6">
         <div className="grid grid-cols-1 overflow-hidden rounded-[16px] shadow-xl md:grid-cols-2">
           {/* Left — dark panel */}
-          <div className="flex flex-col justify-center bg-[#212121] p-8 sm:p-10 lg:p-12">
+          <div className="flex flex-col justify-center bg-bg-inverse p-8 sm:p-10 lg:p-12">
             <div className="mb-4 flex items-center gap-2">
-              <span className="text-[13px] font-bold uppercase tracking-[1.5px] text-white/70">
+              <span className="text-[13px] font-bold uppercase tracking-[1.5px] text-text-inverse/70">
                 PAVE Pre-Booking
               </span>
             </div>
-            <div className="mb-4 h-[2px] w-12 bg-[#61ce70]" />
-            <p className="font-montserrat text-[16px] font-semibold uppercase text-white">Get</p>
-            <p className="font-montserrat text-[38px] font-extrabold leading-tight text-[#61ce70] sm:text-[44px]">
+            <div className="mb-4 h-[2px] w-12 bg-brand-primary" />
+            <p className="font-montserrat text-[16px] font-semibold uppercase text-text-inverse">Get</p>
+            <p className="font-montserrat text-[38px] font-extrabold leading-tight text-brand-primary sm:text-[44px]">
               Rs. 80,000
             </p>
-            <p className="font-montserrat text-[22px] font-bold uppercase leading-tight text-white sm:text-[26px]">
+            <p className="font-montserrat text-[22px] font-bold uppercase leading-tight text-text-inverse sm:text-[26px]">
               Government Subsidy
             </p>
           </div>
 
           {/* Right — product picker */}
-          <div className="flex flex-col justify-center bg-white p-8 sm:p-10 lg:p-12">
-            <h3 className="font-montserrat mb-5 text-[24px] font-bold text-[#212121] sm:text-[28px]">
+          <div className="flex flex-col justify-center bg-bg-primary p-8 sm:p-10 lg:p-12">
+            <h3 className="font-montserrat mb-5 text-[24px] font-bold text-text-primary sm:text-[28px]">
               Choose your ELFA
             </h3>
             <div className="mb-5 flex flex-col gap-3">
@@ -43,15 +43,15 @@ export default function PavePromo() {
                   href={PAVE_FORM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between rounded-[8px] border border-gray-200 px-4 py-3 transition-colors hover:border-[#61ce70]"
+                  className="flex items-center justify-between rounded-[8px] border border-gray-200 px-4 py-3 transition-colors hover:border-brand-primary"
                 >
                   <div className="flex items-center gap-3">
                     <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[6px] bg-gray-50">
                       <Image src={p.image} alt="" fill className="object-cover" sizes="40px" />
                     </div>
                     <div>
-                      <p className="font-montserrat text-[15px] font-bold text-[#212121]">{p.label}</p>
-                      <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-[#61ce70] px-2 py-0.5 text-[10px] font-bold uppercase text-white">
+                      <p className="font-montserrat text-[15px] font-bold text-text-primary">{p.label}</p>
+                      <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-brand-primary px-2 py-0.5 text-[10px] font-bold uppercase text-text-inverse">
                         <Bike className="h-3 w-3" /> Pave Eligible
                       </span>
                     </div>
@@ -71,7 +71,7 @@ export default function PavePromo() {
               href={PAVE_FORM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-roboto inline-flex h-[48px] items-center justify-center gap-2 rounded-[6px] bg-[#212121] text-[14px] font-semibold uppercase tracking-[1px] text-white transition-colors hover:bg-black"
+              className="font-roboto inline-flex h-[48px] items-center justify-center gap-2 rounded-[6px] bg-bg-inverse text-[14px] font-semibold uppercase tracking-[1px] text-text-inverse transition-colors hover:bg-bg-inverse"
             >
               Pre-book now
               <ArrowRight className="h-4 w-4" strokeWidth={2.5} />

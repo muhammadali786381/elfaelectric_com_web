@@ -24,10 +24,10 @@ function FeatureRow({
         <Image src={feature.icon} alt="" fill className="object-contain" sizes="60px" />
       </div>
       <div className="min-w-0">
-        <h3 className="font-montserrat text-[18px] font-bold leading-tight text-[#212121] sm:text-[22px]">
+        <h3 className="font-montserrat text-[18px] font-bold leading-tight text-text-primary sm:text-[22px]">
           {feature.title}
         </h3>
-        <p className="font-roboto mt-0.5 text-[14px] font-normal leading-snug text-[#212121] sm:text-[16px]">
+        <p className="font-roboto mt-0.5 text-[14px] font-normal leading-snug text-text-primary sm:text-[16px]">
           {feature.description}
         </p>
       </div>
@@ -42,10 +42,10 @@ function FeatureCell({ feature }: { feature: ProductCoreFeature }) {
       <div className="relative mb-2 h-[44px] w-[44px] sm:h-[52px] sm:w-[52px]">
         <Image src={feature.icon} alt="" fill className="object-contain" sizes="52px" />
       </div>
-      <h3 className="font-montserrat text-[14px] font-bold leading-tight text-[#212121] sm:text-[15px]">
+      <h3 className="font-montserrat text-[14px] font-bold leading-tight text-text-primary sm:text-[15px]">
         {feature.title}
       </h3>
-      <p className="font-roboto mt-1 text-[11px] font-normal leading-snug text-[#212121] sm:text-[12px]">
+      <p className="font-roboto mt-1 text-[11px] font-normal leading-snug text-text-primary sm:text-[12px]">
         {feature.description}
       </p>
     </div>
@@ -64,9 +64,9 @@ export default function ProductCoreFeatures({ features, centerImage, productName
   const mobileRows = left.map((l, i) => [l, right[i]] as const).filter(([, r]) => r);
 
   return (
-    <section className="bg-[#eeeeee] py-10 lg:py-16">
+    <section className="bg-bg-secondary py-10 lg:py-16">
       <div className="mx-auto w-full max-w-[1150px] px-3 sm:px-6">
-        <h2 className="font-montserrat text-center text-[28px] font-bold leading-none text-black sm:text-[36px] lg:text-[51px]">
+        <h2 className="font-montserrat text-center text-[28px] font-bold leading-none text-text-primary sm:text-[36px] lg:text-[51px]">
           Core Features
         </h2>
 

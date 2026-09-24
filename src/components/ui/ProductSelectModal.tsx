@@ -42,28 +42,28 @@ export default function ProductSelectModal({ open, onClose }: ProductSelectModal
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-bg-inverse/60 p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="product-select-title"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-[704px] rounded-[16px] border-2 border-[rgba(128,128,128,0.51)] bg-[#212121] px-4 py-8 sm:px-8 sm:py-10"
+        className="relative w-full max-w-[704px] rounded-[16px] border-2 border-[rgba(128,128,128,0.51)] bg-bg-inverse px-4 py-8 sm:px-8 sm:py-10"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-3 top-3 cursor-pointer p-1 text-[#61ce70] transition-opacity hover:opacity-80 sm:right-4 sm:top-4"
+          className="absolute right-3 top-3 cursor-pointer p-1 text-brand-primary transition-opacity hover:opacity-80 sm:right-4 sm:top-4"
         >
           <X className="h-6 w-6" strokeWidth={2.5} />
         </button>
 
         <h2
           id="product-select-title"
-          className="font-montserrat mb-8 text-center text-[24px] font-bold uppercase leading-tight text-[#fcfcfc] sm:text-[35px]"
+          className="font-montserrat mb-8 text-center text-[24px] font-bold uppercase leading-tight text-text-inverse sm:text-[35px]"
         >
           Select Your Favorite Item
         </h2>
@@ -80,7 +80,7 @@ export default function ProductSelectModal({ open, onClose }: ProductSelectModal
               <span className="relative mb-4 block h-[180px]   object-cover w-full max-w-[280px] sm:h-[200px]">
                 <Image src={p.image} alt={p.label} fill className="object-cover transition-transform duration-200 group-hover:scale-105" sizes="280px" />
               </span>
-              <span className="font-montserrat text-[20px] font-bold uppercase text-[#fcfcfc] sm:text-[25px]">
+              <span className="font-montserrat text-[20px] font-bold uppercase text-text-inverse sm:text-[25px]">
                 {p.label}
               </span>
             </Link>

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { MapPin, Phone, Headphones, Mail } from "lucide-react";
+import FlipButton from "@/components/ui/FlipButton";
 
 const SPARK =
   "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
@@ -306,15 +307,15 @@ function PlanCard({
       type="button"
       onClick={onSelect}
       className={`flex flex-col rounded-[10px] border p-[25px] text-left transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_8px_15px_rgba(0,0,0,0.1)] ${
-        selected ? "border-2 border-[#61ce70]" : "border border-[#e0e0e0]"
+        selected ? "border-2 border-brand-primary" : "border border-[#e0e0e0]"
       }`}
       style={{ backgroundImage: SPARK }}
     >
       <div className="mb-4 flex items-start justify-between gap-3">
-        <h3 className="font-montserrat mt-2 mb-0 text-[20.8px] font-bold leading-tight text-white">
+        <h3 className="font-montserrat mt-2 mb-0 text-[20.8px] font-bold leading-tight text-text-inverse">
           {plan.title}
         </h3>
-        <span className="shrink-0 rounded-[20px] bg-[#61ce70] px-3 py-1 text-[13.6px] font-medium leading-[1.6] text-white">
+        <span className="shrink-0 rounded-[20px] bg-brand-primary px-3 py-1 text-[13.6px] font-medium leading-[1.6] text-text-inverse">
           {plan.badge ?? `${plan.months} Months`}
         </span>
       </div>
@@ -323,7 +324,7 @@ function PlanCard({
         {plan.details.map((d) => (
           <div
             key={d.label}
-            className="font-roboto mb-2.5 flex items-center justify-between gap-3 py-2 text-[16px] leading-[1.6] text-white last:mb-0"
+            className="font-roboto mb-2.5 flex items-center justify-between gap-3 py-2 text-[16px] leading-[1.6] text-text-inverse last:mb-0"
           >
             <span>{d.label}</span>
             <span className="font-medium">{d.value}</span>
@@ -331,7 +332,7 @@ function PlanCard({
         ))}
       </div>
 
-      <div className="font-roboto mt-[15px] w-full rounded-[10px] bg-[#61ce70] px-3 py-3 text-center text-[16px] font-medium text-white">
+      <div className="font-roboto mt-[15px] w-full rounded-[10px] bg-brand-primary px-3 py-3 text-center text-[16px] font-medium text-text-inverse">
         {formatRs(plan.perMonth)} Per Month
       </div>
     </button>
@@ -341,10 +342,10 @@ function PlanCard({
 function OptionHeading({ children }: { children: string }) {
   return (
     <div className="mb-8">
-      <h3 className="font-montserrat mb-3 text-center text-[22px] font-semibold text-[#212121] sm:text-[26px]">
+      <h3 className="font-montserrat mb-3 text-center text-[22px] font-semibold text-text-primary sm:text-[26px]">
         {children}
       </h3>
-      <div className="mx-auto h-px w-full bg-[#61ce70]" />
+      <div className="mx-auto h-px w-full bg-brand-primary" />
     </div>
   );
 }
@@ -376,11 +377,11 @@ export default function FinancingPlans() {
   };
 
   const inputClass =
-    "font-roboto h-[48px] w-full rounded-[6px] border border-[#d0d0d0] bg-white px-4 text-[15px] text-[#333] outline-none focus:border-[#61ce70] focus:ring-1 focus:ring-[#61ce70]";
+    "font-roboto h-[48px] w-full rounded-[6px] border border-[#d0d0d0] bg-bg-primary px-4 text-[15px] text-text-secondary outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary";
 
   return (
     <>
-      <section className="bg-white py-10 lg:py-14">
+      <section className="bg-bg-primary py-10 lg:py-14">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
           <div className="mb-10 flex flex-wrap justify-center gap-3">
             {PROVIDERS.map((p) => (
@@ -388,10 +389,10 @@ export default function FinancingPlans() {
                 key={p.id}
                 type="button"
                 onClick={() => switchProvider(p.id)}
-                className={`font-roboto rounded-[10px] border-2 border-[#61ce70] px-[30px] py-3 text-[16px] font-medium transition-colors sm:text-[18px] ${
+                className={`font-roboto rounded-[10px] border-2 border-brand-primary px-[30px] py-3 text-[16px] font-medium transition-colors sm:text-[18px] ${
                   provider === p.id
-                    ? "bg-[#61ce70] text-white"
-                    : "bg-white text-[#212121] hover:bg-[#61ce70] hover:text-white"
+                    ? "bg-brand-primary text-text-inverse"
+                    : "bg-bg-primary text-text-primary hover:bg-brand-primary hover:text-text-inverse"
                 }`}
               >
                 {p.label}
@@ -446,16 +447,16 @@ export default function FinancingPlans() {
               className="mt-12 rounded-[10px] border border-[#e0e0e0] p-6 sm:p-8"
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-6 text-center text-[28px] font-semibold text-[#61ce70] sm:text-[32px]">
+              <h2 className="font-montserrat mb-6 text-center text-[28px] font-semibold text-brand-primary sm:text-[32px]">
                 Payment Calculator
               </h2>
               <div className="mx-auto grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <label className="flex flex-col gap-2">
-                  <span className="font-roboto text-[14px] text-white">Select Provider</span>
+                  <span className="font-roboto text-[14px] text-text-inverse">Select Provider</span>
                   <select
                     value={provider}
                     onChange={(e) => switchProvider(e.target.value as ProviderId)}
-                    className="font-roboto h-11 rounded-[4px] border border-black/20 bg-white px-3 text-[15px] text-[#212121] outline-none"
+                    className="font-roboto h-11 rounded-[4px] border border-bg-inverse/20 bg-bg-primary px-3 text-[15px] text-text-primary outline-none"
                   >
                     {PROVIDERS.map((p) => (
                       <option key={p.id} value={p.id}>
@@ -465,7 +466,7 @@ export default function FinancingPlans() {
                   </select>
                 </label>
                 <label className="flex flex-col gap-2">
-                  <span className="font-roboto text-[14px] text-white">Select Plan</span>
+                  <span className="font-roboto text-[14px] text-text-inverse">Select Plan</span>
                   <select
                     value={
                       provider === "tmf" ? `${tmfOption}-${selectedPlanId}` : selectedPlanId
@@ -479,7 +480,7 @@ export default function FinancingPlans() {
                         setSelectedPlanId(val);
                       }
                     }}
-                    className="font-roboto h-11 rounded-[4px] border border-black/20 bg-white px-3 text-[15px] text-[#212121] outline-none"
+                    className="font-roboto h-11 rounded-[4px] border border-bg-inverse/20 bg-bg-primary px-3 text-[15px] text-text-primary outline-none"
                   >
                     {provider === "tmf" ? (
                       <>
@@ -506,7 +507,7 @@ export default function FinancingPlans() {
               </div>
 
               <div className="mt-8">
-                <h3 className="font-montserrat mb-5 text-center text-[24px] font-semibold text-white sm:text-[28px]">
+                <h3 className="font-montserrat mb-5 text-center text-[24px] font-semibold text-text-inverse sm:text-[28px]">
                   Payment Summary
                 </h3>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
@@ -518,12 +519,12 @@ export default function FinancingPlans() {
                   ].map((item) => (
                     <div
                       key={item.label}
-                      className="rounded-[8px] bg-white px-3 py-4 text-center shadow-sm sm:px-4"
+                      className="rounded-[8px] bg-bg-primary px-3 py-4 text-center shadow-sm sm:px-4"
                     >
-                      <p className="font-montserrat text-[18px] font-bold text-[#61ce70] sm:text-[22px]">
+                      <p className="font-montserrat text-[18px] font-bold text-brand-primary sm:text-[22px]">
                         {item.value}
                       </p>
-                      <p className="font-roboto mt-1 text-[12px] text-[#555] sm:text-[13px]">
+                      <p className="font-roboto mt-1 text-[12px] text-text-secondary sm:text-[13px]">
                         {item.label}
                       </p>
                     </div>
@@ -535,18 +536,18 @@ export default function FinancingPlans() {
         </div>
       </section>
 
-      <section className="bg-[#f4f4f4] pb-14 pt-4 lg:pb-20 lg:pt-6">
+      <section className="bg-bg-secondary pb-14 pt-4 lg:pb-20 lg:pt-6">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-          <h2 className="font-montserrat mb-3 text-center text-[32px] font-bold text-[#61ce70] sm:text-[44px] lg:text-[55px]">
+          <h2 className="font-montserrat mb-3 text-center text-[32px] font-bold text-brand-primary sm:text-[44px] lg:text-[55px]">
             Get Started with ELFA
           </h2>
-          <p className="font-roboto mx-auto mb-8 max-w-[720px] text-center text-[15px] leading-relaxed text-[#212121]">
+          <p className="font-roboto mx-auto mb-8 max-w-[720px] text-center text-[15px] leading-relaxed text-text-primary">
             Ready to take the first step towards owning your EV bike? Fill out the form below, and
             let’s make it happen!
           </p>
 
           <div
-            className="grid grid-cols-1 gap-8 rounded-[15px] border-2 border-[#61ce70] p-5 sm:p-8 lg:grid-cols-[1.45fr_1fr] lg:gap-10"
+            className="grid grid-cols-1 gap-8 rounded-[15px] border-2 border-brand-primary p-5 sm:p-8 lg:grid-cols-[1.45fr_1fr] lg:gap-10"
             style={{ backgroundImage: SPARK }}
           >
             <form
@@ -576,7 +577,7 @@ export default function FinancingPlans() {
                 />
               </div>
               <div className="relative">
-                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#888]" />
+                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-secondary" />
                 <input
                   type="email"
                   name="email"
@@ -609,40 +610,41 @@ export default function FinancingPlans() {
                   </option>
                 ))}
               </select>
-              <button
+              <FlipButton
                 type="submit"
-                className="font-roboto mt-1 inline-flex h-[48px] items-center justify-center rounded-[6px] bg-[#61ce70] text-[15px] font-semibold text-white transition-colors hover:bg-[#4fbf5f]"
+                variant="primary"
+                className="w-full mt-1 rounded-[6px] h-[48px] text-[15px]"
               >
                 Submit Now
-              </button>
+              </FlipButton>
             </form>
 
             <div className="flex flex-col justify-center">
-              <h3 className="font-montserrat mb-5 text-[22px] font-medium text-white sm:text-[28px]">
+              <h3 className="font-montserrat mb-5 text-[22px] font-medium text-text-inverse sm:text-[28px]">
                 Contact Information
               </h3>
-              <ul className="flex flex-col gap-4 text-[15px] text-white">
+              <ul className="flex flex-col gap-4 text-[15px] text-text-inverse">
                 <li className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#61ce70]" />
+                  <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
                   <span className="font-roboto">
                     C3i GA-70-A3, Korangi Creek Industrial Park Korangi, Karachi, Sindh
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#61ce70]" />
-                  <a href="https://wa.me/923114863532" className="font-roboto hover:text-[#61ce70]">
+                  <Phone className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
+                  <a href="https://wa.me/923114863532" className="font-roboto hover:text-brand-primary">
                     +(92) 311-486-3532
                   </a>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Headphones className="mt-0.5 h-5 w-5 shrink-0 text-[#61ce70]" />
-                  <a href="tel:02137173532" className="font-roboto hover:text-[#61ce70]">
+                  <Headphones className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
+                  <a href="tel:02137173532" className="font-roboto hover:text-brand-primary">
                     021-37173532
                   </a>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#61ce70]" />
-                  <a href="mailto:info@elfaelectric.com" className="font-roboto hover:text-[#61ce70]">
+                  <Mail className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
+                  <a href="mailto:info@elfaelectric.com" className="font-roboto hover:text-brand-primary">
                     info@elfaelectric.com
                   </a>
                 </li>
@@ -655,7 +657,7 @@ export default function FinancingPlans() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="flex h-10 w-10 items-center justify-center rounded-full text-[#61ce70] transition-colors hover:bg-[#61ce70] hover:text-white"
+                    className="flex h-10 w-10 items-center justify-center rounded-full text-brand-primary transition-colors hover:bg-brand-primary hover:text-text-inverse"
                   >
                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d={s.path} />

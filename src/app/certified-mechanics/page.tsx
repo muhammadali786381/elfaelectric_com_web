@@ -72,9 +72,9 @@ export default function CertifiedMechanicsPage() {
           bikesSrc="/assets/images/blog-page.png"
         />
 
-        <section className="bg-white py-16 lg:py-[70px]">
+        <section className="bg-bg-primary py-16 lg:py-[70px]">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <h2 className="font-montserrat mb-8 text-center text-[26px] font-bold text-[#212121] sm:text-[30px] lg:text-left">
+            <h2 className="font-montserrat mb-8 text-center text-[26px] font-bold text-text-primary sm:text-[30px] lg:text-left">
               ELFA certified Mechanics
             </h2>
             <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -84,23 +84,23 @@ export default function CertifiedMechanicsPage() {
                   variant="fadeInUp"
                   speed="normal"
                   delay={Math.floor(i / 3) * 0.1}
-                  className="h-full rounded-[20px] border-b-[3px] border-[#61ce70] px-5 py-3 transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_12px_24px_rgba(0,0,0,0.12)]"
+                  className="h-full rounded-[20px] border-b-[3px] border-brand-primary px-5 py-3 transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_12px_24px_rgba(0,0,0,0.12)]"
                   style={{ backgroundImage: SPARK }}
                 >
-                  <h3 className="font-montserrat mb-2 text-[24px] font-bold leading-tight text-white sm:text-[30px]">
+                  <h3 className="font-montserrat mb-2 text-[24px] font-bold leading-tight text-text-inverse sm:text-[30px]">
                     {m.name}
                   </h3>
                   <div className="flex flex-col gap-2.5">
                     <div className="flex items-start gap-2.5">
-                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#61ce70]/20">
-                        <Phone className="h-3.5 w-3.5 text-[#61ce70]" strokeWidth={2} />
+                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-primary/20">
+                        <Phone className="h-3.5 w-3.5 text-brand-primary" strokeWidth={2} />
                       </span>
-                      <div className="font-roboto flex flex-wrap gap-x-1 text-[15px] leading-relaxed text-white">
+                      <div className="font-roboto flex flex-wrap gap-x-1 text-[15px] leading-relaxed text-text-inverse">
                         {m.phones.map((p, pi) => (
                           <span key={p}>
                             <a
                               href={`tel:${p.replace(/\s/g, "")}`}
-                              className="transition-colors hover:text-[#61ce70]"
+                              className="transition-colors hover:text-brand-primary"
                             >
                               {p}
                             </a>
@@ -110,10 +110,10 @@ export default function CertifiedMechanicsPage() {
                       </div>
                     </div>
                     <div className="flex items-start gap-2.5">
-                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#61ce70]/20">
-                        <MapPin className="h-3.5 w-3.5 text-[#61ce70]" strokeWidth={2} />
+                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-primary/20">
+                        <MapPin className="h-3.5 w-3.5 text-brand-primary" strokeWidth={2} />
                       </span>
-                      <p className="font-roboto text-[15px] leading-relaxed text-white">{m.location}</p>
+                      <p className="font-roboto text-[15px] leading-relaxed text-text-inverse">{m.location}</p>
                     </div>
                   </div>
                 </FadeIn>

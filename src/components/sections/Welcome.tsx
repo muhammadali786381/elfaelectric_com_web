@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/ui/Container";
 import { FadeIn } from "@/components/motion/FadeIn";
 
@@ -30,7 +31,7 @@ const features = [
  */
 export default function Welcome() {
   return (
-    <section className="bg-white py-16 lg:py-20">
+    <section className="bg-bg-primary py-16 lg:py-20">
       <Container>
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex justify-center">
@@ -45,13 +46,13 @@ export default function Welcome() {
 
           <div>
             <FadeIn variant="fadeInRight" speed="slow" delay={0}>
-              <span className="font-montserrat block text-[24px] font-bold text-[#61ce70] sm:text-[30px]">
+              <span className="font-montserrat block text-[24px] font-bold text-brand-primary sm:text-[30px]">
                 Welcome
               </span>
             </FadeIn>
 
             <FadeIn variant="fadeInRight" speed="slow" delay={0.35}>
-              <h2 className="font-montserrat mb-8 max-w-[565px] text-[32px] font-bold leading-tight text-[#212121] sm:text-[38px] lg:text-[44px]">
+              <h2 className="font-montserrat mb-8 max-w-[565px] text-[32px] font-bold leading-tight text-text-primary sm:text-[38px] lg:text-[44px]">
                 Explore, Experience, And Connect With Us
               </h2>
             </FadeIn>
@@ -65,13 +66,22 @@ export default function Welcome() {
                   delay={f.wave === 1 ? 0 : 0.35}
                   className="max-w-[273px]"
                 >
-                  <h3 className="font-montserrat mb-2 text-[18px] font-bold text-[#61ce70] sm:text-[20px]">
+                  <h3 className="font-montserrat mb-2 text-[18px] font-bold text-brand-primary sm:text-[20px]">
                     {f.title}
                   </h3>
-                  <p className="font-roboto text-[14px] leading-relaxed text-[#212121]">{f.body}</p>
+                  <p className="font-roboto text-[14px] leading-relaxed text-text-primary">{f.body}</p>
                 </FadeIn>
               ))}
             </div>
+            
+            <FadeIn variant="fadeInRight" speed="slow" delay={0.5} className="mt-8">
+              <Link
+                href="/ev-education"
+                className="font-roboto inline-flex h-12 items-center justify-center gap-2 rounded-[4px] bg-brand-primary px-8 text-[15px] font-semibold uppercase tracking-[1px] text-text-inverse transition-colors hover:bg-brand-secondary"
+              >
+                EV Education
+              </Link>
+            </FadeIn>
           </div>
         </div>
       </Container>

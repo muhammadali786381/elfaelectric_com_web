@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calendar, ChevronRight } from "lucide-react";
 import type { Product } from "@/data/products/types";
+import FlipButton from "@/components/ui/FlipButton";
 
 export default function ProductHero({ product }: { product: Product }) {
   return (
@@ -14,7 +15,7 @@ export default function ProductHero({ product }: { product: Product }) {
       }}
     >
       {/* Live Elementor ::before — black @ 0.4 opacity */}
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-black/40" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-bg-inverse/40" aria-hidden />
 
       {/* ─── Mobile (< lg): bike → circular specs → centered copy ─── */}
       <div className="relative z-10 mx-auto flex w-full max-w-[480px] flex-col items-center px-3 py-8 lg:hidden">
@@ -34,15 +35,15 @@ export default function ProductHero({ product }: { product: Product }) {
           {product.heroSpecs.map((spec) => (
             <div
               key={spec.label}
-              className="flex min-h-[93px] flex-1 flex-col items-center justify-center rounded-full border border-white/33 bg-[rgba(33,33,33,0.41)] px-1.5 py-2 text-center"
+              className="flex min-h-[93px] flex-1 flex-col items-center justify-center rounded-full border border-bg-primary/33 bg-[rgba(33,33,33,0.41)] px-1.5 py-2 text-center"
             >
               <div className="relative mb-1 h-7 w-7 shrink-0">
                 <Image src={spec.icon} alt="" fill className="object-contain" sizes="28px" />
               </div>
-              <p className="font-montserrat text-[11px] font-bold leading-tight text-[#fcfcfc] sm:text-[12px]">
+              <p className="font-montserrat text-[11px] font-bold leading-tight text-text-inverse sm:text-[12px]">
                 {spec.label}
               </p>
-              <p className="font-roboto mt-0.5 text-[9px] font-normal leading-tight text-[#fcfcfc] sm:text-[10px]">
+              <p className="font-roboto mt-0.5 text-[9px] font-normal leading-tight text-text-inverse sm:text-[10px]">
                 {spec.value}
               </p>
             </div>
@@ -57,47 +58,48 @@ export default function ProductHero({ product }: { product: Product }) {
             </div>
           ) : null}
 
-          <h1 className="font-montserrat text-[32px] font-extrabold italic uppercase leading-[1.05] text-white sm:text-[35px]">
+          <h1 className="font-montserrat text-[32px] font-extrabold italic uppercase leading-[1.05] text-text-inverse sm:text-[35px]">
             {product.title}
           </h1>
 
-          <p className="font-roboto mt-2 max-w-[340px] whitespace-pre-line text-[14px] font-normal leading-[20px] text-[#fcfcfc] sm:text-[15px]">
+          <p className="font-roboto mt-2 max-w-[340px] whitespace-pre-line text-[14px] font-normal leading-[20px] text-text-inverse sm:text-[15px]">
             {product.subtitle}
           </p>
 
           {/* Side-by-side CTAs */}
           <div className="mt-4 flex w-full items-center justify-center gap-2 sm:gap-3">
-            <Link
+            <FlipButton
               href={product.bookHref}
-              className="font-roboto inline-flex h-[36px] flex-1 items-center justify-center gap-1.5 rounded-[8px] bg-[#61ce70] px-2 text-[12px] font-normal leading-none text-white sm:text-[13px]"
+              variant="primary"
+              icon={<Calendar className="h-4 w-4 shrink-0" strokeWidth={2} />}
+              className="rounded-[8px] h-[36px] flex-1 px-2 text-[12px] sm:text-[13px] tracking-normal px-2"
             >
-              <Calendar className="h-4 w-4 shrink-0" strokeWidth={2} />
               Book a test ride
-            </Link>
-            <Link
+            </FlipButton>
+            <FlipButton
               href={product.buyHref}
-              className="font-roboto inline-flex h-[36px] flex-1 items-center justify-center gap-1 rounded-[8px] bg-[#61ce70] px-2 text-[12px] font-normal leading-none text-white sm:text-[13px]"
+              variant="primary"
+              className="rounded-[8px] h-[36px] flex-1 px-2 text-[12px] sm:text-[13px] tracking-normal px-2"
             >
               Buy now
-              <ChevronRight className="h-4 w-4 shrink-0" strokeWidth={2.5} />
-            </Link>
+            </FlipButton>
           </div>
 
           {product.priceTagline ? (
-            <p className="font-roboto mt-5 text-[15px] font-normal leading-tight text-[#fcfcfc] sm:text-[16px]">
+            <p className="font-roboto mt-5 text-[15px] font-normal leading-tight text-text-inverse sm:text-[16px]">
               {product.priceTagline}
             </p>
           ) : null}
 
           <div className="mt-2">
             {product.priceOriginal ? (
-              <p className="cutprice font-montserrat text-[14px] font-medium leading-[18px] text-[#fcfcfc]">
+              <p className="cutprice font-montserrat text-[14px] font-medium leading-[18px] text-text-inverse">
                 {product.priceOriginal}
               </p>
             ) : null}
-            <p className="font-montserrat mt-1 text-[22px] font-semibold leading-[28px] text-[#fcfcfc] sm:text-[24px]">
+            <p className="font-montserrat mt-1 text-[22px] font-semibold leading-[28px] text-text-inverse sm:text-[24px]">
               Only in{" "}
-              <span className="text-[#61ce70]">{product.priceCurrent}</span>
+              <span className="text-brand-primary">{product.priceCurrent}</span>
               {product.priceTaxNote ? (
                 <span className="ml-1 text-[12px] font-medium text-[#DCF8C6]">
                   {product.priceTaxNote}
@@ -118,47 +120,48 @@ export default function ProductHero({ product }: { product: Product }) {
             </div>
           ) : null}
 
-          <h1 className="font-montserrat text-[65px] font-extrabold italic uppercase leading-[68px] text-white">
+          <h1 className="font-montserrat text-[65px] font-extrabold italic uppercase leading-[68px] text-text-inverse">
             {product.title}
           </h1>
 
-          <p className="font-roboto mt-3 whitespace-pre-line text-[18px] font-normal leading-[23px] text-[#fcfcfc]">
+          <p className="font-roboto mt-3 whitespace-pre-line text-[18px] font-normal leading-[23px] text-text-inverse">
             {product.subtitle}
           </p>
 
           <div className="mt-5 flex w-full max-w-[230px] flex-col gap-[13px]">
-            <Link
+            <FlipButton
               href={product.bookHref}
-              className="font-roboto inline-flex h-10 w-full items-center justify-center gap-2 rounded-[8px] bg-[#61ce70] px-6 text-[16px] font-normal leading-none text-white transition-colors hover:bg-[#4fbf5f]"
+              variant="primary"
+              icon={<Calendar className="h-[18px] w-[18px]" strokeWidth={2} />}
+              className="rounded-[8px] h-10 w-full px-6 text-[16px] tracking-normal"
             >
-              <Calendar className="h-[18px] w-[18px]" strokeWidth={2} />
               Book a test ride
-            </Link>
-            <Link
+            </FlipButton>
+            <FlipButton
               href={product.buyHref}
-              className="font-roboto inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-[8px] bg-[#61ce70] px-6 text-[16px] font-normal leading-none text-white transition-colors hover:bg-[#4fbf5f]"
+              variant="primary"
+              className="rounded-[8px] h-10 w-full px-6 text-[16px] tracking-normal"
             >
               Buy now
-              <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
-            </Link>
+            </FlipButton>
           </div>
 
           {product.priceTagline ? (
-            <p className="font-roboto mt-6 text-[19px] font-normal leading-[19px] text-[#fcfcfc]">
+            <p className="font-roboto mt-6 text-[19px] font-normal leading-[19px] text-text-inverse">
               {product.priceTagline}
             </p>
           ) : null}
 
           <div className="mt-3">
             {product.priceOriginal ? (
-              <p className="cutprice font-montserrat text-[18px] font-medium leading-[18px] text-[#fcfcfc]">
+              <p className="cutprice font-montserrat text-[18px] font-medium leading-[18px] text-text-inverse">
                 {product.priceOriginal}
               </p>
             ) : null}
-            <p className="font-montserrat mt-2 text-[28px] font-semibold leading-[31px] text-[#fcfcfc]">
+            <p className="font-montserrat mt-2 text-[28px] font-semibold leading-[31px] text-text-inverse">
               Only in
               <br />
-              <span className="text-[#61ce70]">{product.priceCurrent}</span>
+              <span className="text-brand-primary">{product.priceCurrent}</span>
               {product.priceTaxNote ? (
                 <span className="ml-1.5 text-[13px] font-medium text-[#DCF8C6]">
                   {product.priceTaxNote}
@@ -183,17 +186,17 @@ export default function ProductHero({ product }: { product: Product }) {
           {product.heroSpecs.map((spec, i) => (
             <div
               key={spec.label}
-              className="flex w-[230px] items-center gap-[10px] rounded-full border border-white/33 bg-[rgba(33,33,33,0.41)] p-[10px]"
+              className="flex w-[230px] items-center gap-[10px] rounded-full border border-bg-primary/33 bg-[rgba(33,33,33,0.41)] p-[10px]"
               style={{ transform: `translateX(${i * 28}px)` }}
             >
               <div className="relative h-[44px] w-[44px] shrink-0 overflow-hidden rounded-full">
                 <Image src={spec.icon} alt="" fill className="object-contain" sizes="44px" />
               </div>
               <div className="min-w-0">
-                <p className="font-montserrat text-[18px] font-bold leading-[1.2] text-[#fcfcfc]">
+                <p className="font-montserrat text-[18px] font-bold leading-[1.2] text-text-inverse">
                   {spec.label}
                 </p>
-                <p className="font-roboto text-[14px] font-normal leading-[21px] text-[#fcfcfc]">
+                <p className="font-roboto text-[14px] font-normal leading-[21px] text-text-inverse">
                   {spec.value}
                 </p>
               </div>

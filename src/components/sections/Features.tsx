@@ -53,7 +53,7 @@ export default function Features() {
           {/* Text block ~70% width, vertically centered via section flex */}
           <div className="w-full lg:max-w-[70%]">
             <FadeIn variant="fadeInUp" speed="slow">
-              <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-white sm:text-[41px]">
+              <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-text-inverse sm:text-[41px]">
                 Solutions that we offer
               </h2>
             </FadeIn>
@@ -61,10 +61,10 @@ export default function Features() {
             <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
               {solutions.map((s) => (
                 <div key={s.title}>
-                  <h3 className="font-montserrat mb-2 text-[19px] font-bold text-white sm:text-[20px]">
+                  <h3 className="font-montserrat mb-2 text-[19px] font-bold text-text-inverse sm:text-[20px]">
                     {s.title}
                   </h3>
-                  <p className="font-roboto text-[15px] leading-relaxed text-white/75">{s.desc}</p>
+                  <p className="font-roboto text-[15px] leading-relaxed text-text-inverse/75">{s.desc}</p>
                 </div>
               ))}
             </div>
@@ -73,10 +73,10 @@ export default function Features() {
       </section>
 
       {/* About ELFA Electric Motorcycle */}
-      <section className="bg-white py-16 lg:pb-20">
+      <section className="bg-bg-primary py-16 lg:pb-20">
         <FadeIn variant="fadeIn" speed="slow">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-          <div className="relative overflow-hidden rounded-[19px] border border-[#61ce70] bg-black px-6 py-12 text-center sm:px-12 lg:px-16 lg:py-16">
+          <div className="relative overflow-hidden rounded-[19px] border border-brand-primary bg-bg-inverse px-6 py-12 text-center sm:px-12 lg:px-16 lg:py-16">
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.15]"
               style={{
@@ -87,24 +87,24 @@ export default function Features() {
               }}
             />
             <div className="relative z-10">
-              <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-white sm:text-[38px] lg:text-[45px]">
+              <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-text-inverse sm:text-[38px] lg:text-[45px]">
                 About
                 <br />
                 ELFA Electric Motorcycle
               </h2>
-              <p className="font-roboto mx-auto mb-4 max-w-[820px] text-[15px] leading-relaxed text-white sm:text-[16px]">
+              <p className="font-roboto mx-auto mb-4 max-w-[820px] text-[15px] leading-relaxed text-text-inverse sm:text-[16px]">
                 ELFA Electric, born under EV Technologies at Wavetec, is driven by a passion for building
                 an electric future with sustainable, affordable, and innovative solutions powered by clean
                 technology.
               </p>
-              <p className="font-roboto mx-auto mb-8 max-w-[820px] text-[15px] leading-relaxed text-white sm:text-[16px]">
+              <p className="font-roboto mx-auto mb-8 max-w-[820px] text-[15px] leading-relaxed text-text-inverse sm:text-[16px]">
                 At ELFA Electric, we believe that every person and every detail matters. Our electric
                 motorcycles are meticulously designed, engineered, and rigorously tested for the local
                 rider, using top-quality components.
               </p>
               <Link
                 href="/about-us"
-                className="font-roboto inline-flex h-[41px] items-center gap-2 rounded-[3px] bg-[#61ce70] px-6 text-[17px] font-semibold uppercase tracking-[1px] text-white transition-colors hover:bg-[#4fbf5f]"
+                className="font-roboto inline-flex h-[41px] items-center gap-2 rounded-[3px] bg-brand-primary px-6 text-[17px] font-semibold uppercase tracking-[1px] text-text-inverse transition-colors hover:bg-brand-secondary"
               >
                 About us
                 <ArrowRight className="h-4 w-4" strokeWidth={2.5} />

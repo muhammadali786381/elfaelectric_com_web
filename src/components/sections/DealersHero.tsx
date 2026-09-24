@@ -64,27 +64,27 @@ export default function DealersHero() {
         className="object-cover object-center"
         sizes="100vw"
       />
-      <div className="absolute inset-0 bg-black/25" />
+      <div className="absolute inset-0 bg-bg-inverse/25" />
 
       <div className="relative z-10 mx-auto w-full max-w-container px-4 py-8 sm:px-6 lg:py-0 lg:pt-[30px] lg:pb-4">
         {/* Mobile: text → bike → features. Desktop: text left | features + bike right */}
         <div className="flex flex-col items-center gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
           <div className="w-full max-w-[560px] text-center lg:max-w-[575px] lg:text-left">
-            <h1 className="font-montserrat text-[22px] font-bold uppercase leading-[30px] text-white sm:text-[32px] sm:leading-[42px] lg:text-[35px] lg:leading-[46px]">
+            <h1 className="font-montserrat text-[22px] font-bold uppercase leading-[30px] text-text-inverse sm:text-[32px] sm:leading-[42px] lg:text-[35px] lg:leading-[46px]">
               Authorized
               <br />
-              <span className="text-[#61ce70]">ELFA Electric Motorcycle</span>
+              <span className="text-brand-primary">ELFA Electric Motorcycle</span>
               <br />
               Dealers Across Pakistan
             </h1>
-            <p className="font-roboto mt-3 text-[16px] font-medium capitalize leading-[24px] text-white sm:mt-4 sm:text-[24px] sm:leading-[30px]">
+            <p className="font-roboto mt-3 text-[16px] font-medium capitalize leading-[24px] text-text-inverse sm:mt-4 sm:text-[24px] sm:leading-[30px]">
               Find Your Nearest Showroom
             </p>
-            <div className="font-roboto mt-3 flex items-center justify-center gap-2 text-[16px] text-white sm:mt-4 sm:text-[21px] lg:justify-start">
-              <Link href="/" className="transition-colors hover:text-[#61ce70]">
+            <div className="font-roboto mt-3 flex items-center justify-center gap-2 text-[16px] text-text-inverse sm:mt-4 sm:text-[21px] lg:justify-start">
+              <Link href="/" className="transition-colors hover:text-brand-primary">
                 Home
               </Link>
-              <span className="text-white/70">|</span>
+              <span className="text-text-inverse/70">|</span>
               <span>Our Dealers</span>
             </div>
           </div>
@@ -109,10 +109,10 @@ export default function DealersHero() {
             <div className="order-2 grid w-full grid-cols-4 gap-1.5 sm:gap-2.5 lg:order-1 lg:gap-2.5">
               {FEATURES.map((f) => (
                 <div key={f.alt} className="flex flex-col gap-1 text-center sm:gap-1.5">
-                  <h2 className="font-montserrat text-[8px] font-bold uppercase leading-[1] text-white sm:text-[12px] lg:text-[18px] lg:leading-[18px]">
+                  <h2 className="font-montserrat text-[8px] font-bold uppercase leading-[1] text-text-inverse sm:text-[12px] lg:text-[18px] lg:leading-[18px]">
                     {f.label}
                   </h2>
-                  <div className="relative mx-auto aspect-[136/73] w-full overflow-hidden rounded-[10px] border border-white/80">
+                  <div className="relative mx-auto aspect-[136/73] w-full overflow-hidden rounded-[10px] border border-bg-primary/80">
                     <Image
                       src={f.src}
                       alt={f.alt}

@@ -23,9 +23,9 @@ export default function ProductColorCarousel({ title, images }: Props) {
   const canSlide = images.length > 2;
 
   return (
-    <section className="bg-white py-[60px]">
+    <section className="bg-bg-primary py-[60px]">
       <div className="mx-auto w-full max-w-[1150px] px-4 sm:px-6">
-        <h2 className="font-montserrat text-center text-[28px] font-bold leading-[1.2] text-[#212121] sm:text-[36px] lg:text-[42px] lg:leading-[51px]">
+        <h2 className="font-montserrat text-center text-[28px] font-bold leading-[1.2] text-text-primary sm:text-[36px] lg:text-[42px] lg:leading-[51px]">
           {title}
         </h2>
 
@@ -77,7 +77,7 @@ export default function ProductColorCarousel({ title, images }: Props) {
               type="button"
               aria-label="Previous color"
               onClick={() => swiperRef.current?.slidePrev()}
-              className="absolute top-[55%] left-0 z-10 flex h-[46px] w-[46px] -translate-y-1/2 items-center justify-center text-[#212121]"
+              className="absolute top-[55%] left-0 z-10 flex h-[46px] w-[46px] -translate-y-1/2 items-center justify-center text-text-primary"
             >
               <ChevronLeft className="h-[46px] w-[46px]" strokeWidth={1.25} />
             </button>
@@ -85,7 +85,7 @@ export default function ProductColorCarousel({ title, images }: Props) {
               type="button"
               aria-label="Next color"
               onClick={() => swiperRef.current?.slideNext()}
-              className="absolute top-[55%] right-0 z-10 flex h-[46px] w-[46px] -translate-y-1/2 items-center justify-center text-[#212121]"
+              className="absolute top-[55%] right-0 z-10 flex h-[46px] w-[46px] -translate-y-1/2 items-center justify-center text-text-primary"
             >
               <ChevronRight className="h-[46px] w-[46px]" strokeWidth={1.25} />
             </button>

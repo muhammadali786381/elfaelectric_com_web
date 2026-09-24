@@ -164,7 +164,7 @@ function ThreeDPhotoCarousel({ images }: ThreeDPhotoCarouselProps) {
             layoutId={`img-container-${activeImg}`}
             layout="position"
             onClick={handleClose}
-            className="fixed inset-0 z-50 m-5 flex items-center justify-center rounded-3xl bg-black/40 md:m-36 lg:mx-[19rem]"
+            className="fixed inset-0 z-50 m-5 flex items-center justify-center rounded-3xl bg-bg-inverse/40 md:m-36 lg:mx-[19rem]"
             style={{ willChange: "opacity" }}
             transition={transitionOverlay}
           >

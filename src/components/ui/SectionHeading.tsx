@@ -14,13 +14,13 @@ export default function SectionHeading({
   light = false,
 }: SectionHeadingProps) {
   const alignClass = align === "center" ? "text-center items-center mx-auto" : "text-left items-start";
-  const titleColor = light ? "text-white" : "text-[#212121]";
-  const subtitleColor = light ? "text-white/70" : "text-gray-500";
+  const titleColor = light ? "text-text-inverse" : "text-text-primary";
+  const subtitleColor = light ? "text-text-inverse/70" : "text-gray-500";
 
   return (
     <div className={`flex max-w-2xl flex-col gap-3 ${alignClass}`}>
       {eyebrow && (
-        <span className="font-roboto text-[13px] font-semibold uppercase tracking-[1.5px] text-[#61ce70]">
+        <span className="font-roboto text-[13px] font-semibold uppercase tracking-[1.5px] text-brand-primary">
           {eyebrow}
         </span>
       )}

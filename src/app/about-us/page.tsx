@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 import Marquee from "@/components/sections/Marquee";
 import { FadeIn } from "@/components/motion/FadeIn";
+import FlipButton from "@/components/ui/FlipButton";
 
 export const metadata: Metadata = {
   title: "About ELFA Electric – Leading Electric Bike Pakistan",
@@ -82,7 +83,7 @@ export default function AboutUsPage() {
           title={
             <>
               About{" "}
-              <span className="text-[#61CE70]">ELFA Electric Motorcycle</span> Pakistan
+              <span className="text-brand-primary">ELFA Electric Motorcycle</span> Pakistan
               Leading Electric
               <br />
               Bike &amp; Scooty Brand
@@ -95,26 +96,26 @@ export default function AboutUsPage() {
           bikesSrc="/assets/images/blog-page.png"
         />
 
-        <section className="bg-white py-12 lg:py-[70px]">
+        <section className="bg-bg-primary py-12 lg:py-[70px]">
           <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
             <FadeIn
               variant="fadeIn"
               speed="slow"
-              className="flex flex-col gap-5 rounded-[10px] border-2 border-[#61ce70] px-5 py-[30px] shadow-[0_0_40px_-20px_rgba(0,0,0,0.5)] sm:px-10 sm:py-[30px] sm:pl-5"
+              className="flex flex-col gap-5 rounded-[10px] border-2 border-brand-primary px-5 py-[30px] shadow-[0_0_40px_-20px_rgba(0,0,0,0.5)] sm:px-10 sm:py-[30px] sm:pl-5"
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat text-[28px] font-bold leading-[30px] text-white sm:text-[32px]">
+              <h2 className="font-montserrat text-[28px] font-bold leading-[30px] text-text-inverse sm:text-[32px]">
                 Who We Are
               </h2>
-              <h3 className="font-montserrat text-[28px] font-bold leading-[35px] text-[#61ce70] sm:text-[32px]">
+              <h3 className="font-montserrat text-[28px] font-bold leading-[35px] text-brand-primary sm:text-[32px]">
                 Welcome to ELFA
               </h3>
-              <p className="font-roboto text-[14px] leading-relaxed text-white">
+              <p className="font-roboto text-[14px] leading-relaxed text-text-inverse">
                 ELFA Electric, born under EV Technologies at Wavetec, is driven by a passion for
                 building an electric future with sustainable, affordable, and innovative solutions
                 powered by clean technology.
               </p>
-              <p className="font-roboto text-[14px] leading-relaxed text-white">
+              <p className="font-roboto text-[14px] leading-relaxed text-text-inverse">
                 At ELFA Electric, we believe that every person and every detail matters. Our electric
                 motorcycles are meticulously designed, engineered, and rigorously tested for the local
                 rider, using top-quality components. We have studied driving patterns, road
@@ -143,12 +144,12 @@ export default function AboutUsPage() {
           </div>
         </section>
 
-        <section className="bg-white py-[50px]">
+        <section className="bg-bg-primary py-[50px]">
           <FadeIn variant="fadeIn" speed="slow" className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <h2 className="font-montserrat text-center text-[32px] font-bold leading-none text-[#61ce70] sm:text-[44px]">
+            <h2 className="font-montserrat text-center text-[32px] font-bold leading-none text-brand-primary sm:text-[44px]">
               Vision &amp; Mission
             </h2>
-            <p className="font-montserrat mt-4 text-center text-[24px] font-bold leading-tight text-black sm:mt-5 sm:text-[32px]">
+            <p className="font-montserrat mt-4 text-center text-[24px] font-bold leading-tight text-text-primary sm:mt-5 sm:text-[32px]">
               For a Cleaner, and Brighter Future
             </p>
 
@@ -157,13 +158,13 @@ export default function AboutUsPage() {
                 variant="fadeIn"
                 speed="slow"
                 delay={0.08}
-                className="h-full rounded-[20px] border-2 border-[#61ce70] p-[30px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
+                className="h-full rounded-[20px] border-2 border-brand-primary p-[30px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
                 style={{ backgroundImage: SPARK }}
               >
-                <h3 className="font-montserrat mb-4 text-[28px] font-bold leading-[35px] text-[#61ce70] sm:text-[35px]">
+                <h3 className="font-montserrat mb-4 text-[28px] font-bold leading-[35px] text-brand-primary sm:text-[35px]">
                   Our Vision
                 </h3>
-                <p className="font-roboto text-[14px] leading-relaxed text-white">
+                <p className="font-roboto text-[14px] leading-relaxed text-text-inverse">
                   Enable equitable progress through sustainable mobility.
                 </p>
               </FadeIn>
@@ -171,13 +172,13 @@ export default function AboutUsPage() {
                 variant="fadeIn"
                 speed="slow"
                 delay={0.16}
-                className="h-full rounded-[20px] border-2 border-[#61ce70] p-[30px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
+                className="h-full rounded-[20px] border-2 border-brand-primary p-[30px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
                 style={{ backgroundImage: SPARK }}
               >
-                <h3 className="font-montserrat mb-4 text-[28px] font-bold leading-[35px] text-[#61ce70] sm:text-[35px]">
+                <h3 className="font-montserrat mb-4 text-[28px] font-bold leading-[35px] text-brand-primary sm:text-[35px]">
                   Our Mission
                 </h3>
-                <p className="font-roboto text-[14px] leading-relaxed text-white">
+                <p className="font-roboto text-[14px] leading-relaxed text-text-inverse">
                   Deliver accessible, smart, and reliable electric solutions that fuel everyday
                   productivity and progress for everyone.
                 </p>
@@ -186,7 +187,7 @@ export default function AboutUsPage() {
           </FadeIn>
         </section>
 
-        <section className="bg-white pb-12 pt-4 lg:pb-16">
+        <section className="bg-bg-primary pb-12 pt-4 lg:pb-16">
           <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
             <FadeIn
               variant="fadeIn"
@@ -204,19 +205,19 @@ export default function AboutUsPage() {
             <FadeIn
               variant="fadeIn"
               speed="slow"
-              className="rounded-[10px] border-2 border-[#61ce70] px-5 py-[30px] pb-10 shadow-[0_0_40px_-20px_rgba(0,0,0,0.5)] sm:px-5"
+              className="rounded-[10px] border-2 border-brand-primary px-5 py-[30px] pb-10 shadow-[0_0_40px_-20px_rgba(0,0,0,0.5)] sm:px-5"
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-6 text-[26px] font-bold leading-tight text-[#61ce70] sm:text-[32px]">
+              <h2 className="font-montserrat mb-6 text-[26px] font-bold leading-tight text-brand-primary sm:text-[32px]">
                 Why Choose ELFA Electric Bikes &amp; Scooty?
               </h2>
               <ul className="flex flex-col gap-3">
                 {whyChoose.map((item) => (
                   <li
                     key={item}
-                    className="font-roboto flex items-start gap-3 text-[14px] leading-relaxed text-white"
+                    className="font-roboto flex items-start gap-3 text-[14px] leading-relaxed text-text-inverse"
                   >
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#61ce70]" />
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-primary" />
                     {item}
                   </li>
                 ))}
@@ -225,9 +226,9 @@ export default function AboutUsPage() {
           </div>
         </section>
 
-        <section className="bg-white py-12 lg:py-16">
+        <section className="bg-bg-primary py-12 lg:py-16">
           <FadeIn variant="fadeIn" speed="slow" className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <h2 className="font-montserrat mb-10 text-center text-[28px] font-bold text-black sm:text-[32px]">
+            <h2 className="font-montserrat mb-10 text-center text-[28px] font-bold text-text-primary sm:text-[32px]">
               Core Values
             </h2>
             <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -237,20 +238,20 @@ export default function AboutUsPage() {
                   variant="fadeIn"
                   speed="slow"
                   delay={i * 0.08}
-                  className="h-full rounded-[20px] border-2 border-[#61ce70] p-[15px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
+                  className="h-full rounded-[20px] border-2 border-brand-primary p-[15px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
                   style={{ backgroundImage: SPARK }}
                 >
-                  <h3 className="font-montserrat mb-3 text-[15px] font-bold uppercase leading-[15px] text-white">
+                  <h3 className="font-montserrat mb-3 text-[15px] font-bold uppercase leading-[15px] text-text-inverse">
                     {title}
                   </h3>
-                  <p className="font-roboto text-[13px] leading-relaxed text-white/85">{desc}</p>
+                  <p className="font-roboto text-[13px] leading-relaxed text-text-inverse/85">{desc}</p>
                 </FadeIn>
               ))}
             </div>
           </FadeIn>
         </section>
 
-        <section className="bg-white py-8 lg:py-12">
+        <section className="bg-bg-primary py-8 lg:py-12">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
             <FadeIn
               variant="fadeIn"
@@ -258,28 +259,30 @@ export default function AboutUsPage() {
               className="rounded-[15px] px-6 py-10 text-center sm:px-10 sm:py-[40px]"
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-tight text-[#fcfcfc] sm:text-[36px] lg:text-[42px] lg:leading-[42px]">
+              <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-tight text-text-inverse sm:text-[36px] lg:text-[42px] lg:leading-[42px]">
                 Join Pakistan&apos;s Electric Bike Revolution Today
               </h2>
-              <p className="font-roboto mx-auto mb-8 max-w-[720px] text-[14px] leading-relaxed text-white/90 sm:text-[15px]">
+              <p className="font-roboto mx-auto mb-8 max-w-[720px] text-[14px] leading-relaxed text-text-inverse/90 sm:text-[15px]">
                 Boost-up your adventure with an E-Vehicle! Enjoy every ride like never before. Our
                 powerful, eco-friendly E-Vehicles offer smooth, exciting drives—perfect for city trips
                 or outdoor adventures. Take your journey to the next level with ELFA Electric—the best
                 electric bike company in Pakistan.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Link
+                <FlipButton
                   href="/book-a-test-ride"
-                  className="font-roboto inline-flex items-center rounded-[3px] bg-[#61ce70] px-6 py-3 text-[14px] font-semibold uppercase tracking-[1px] text-white transition-colors hover:bg-[#4fbf5f]"
+                  variant="primary"
+                  className="rounded-[3px] h-12 px-6"
                 >
                   Book a Test Ride
-                </Link>
-                <Link
+                </FlipButton>
+                <FlipButton
                   href="/ev-125"
-                  className="font-roboto inline-flex items-center rounded-[3px] bg-[#61ce70] px-6 py-3 text-[14px] font-semibold uppercase tracking-[1px] text-white transition-colors hover:bg-[#4fbf5f]"
+                  variant="primary"
+                  className="rounded-[3px] h-12 px-6"
                 >
                   Buy Now
-                </Link>
+                </FlipButton>
               </div>
             </FadeIn>
           </div>

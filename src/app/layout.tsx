@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Anton, Montserrat, Poppins, Roboto } from "next/font/google";
+import { Anton, Montserrat, Poppins, Roboto, Geist } from "next/font/google";
 import CartShell from "@/components/cart/CartShell";
 import Click2Connect from "@/components/layout/Click2Connect";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -55,7 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${montserrat.variable} ${roboto.variable} ${poppins.variable} ${anton.variable}`}
+      className={cn(montserrat.variable, roboto.variable, poppins.variable, anton.variable, "font-sans", geist.variable)}
     >
       <body className="min-h-screen flex flex-col antialiased">
         <CartShell>

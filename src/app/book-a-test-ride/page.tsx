@@ -79,18 +79,18 @@ function SparkCard({
       className="flex h-full flex-col rounded-[19px] p-[30px]"
       style={{ backgroundImage: SPARK }}
     >
-      <h2 className="font-montserrat mb-3 text-[24px] font-bold leading-[1.2] text-[#61ce70] sm:text-[28px] sm:leading-[33px]">
+      <h2 className="font-montserrat mb-3 text-[24px] font-bold leading-[1.2] text-brand-primary sm:text-[28px] sm:leading-[33px]">
         {title}
       </h2>
       {intro && (
-        <p className="font-roboto mb-4 text-[17px] font-normal leading-relaxed text-white">
+        <p className="font-roboto mb-4 text-[17px] font-normal leading-relaxed text-text-inverse">
           {intro}
         </p>
       )}
-      <ul className="font-roboto flex flex-col gap-2.5 text-[15px] font-normal leading-snug text-white">
+      <ul className="font-roboto flex flex-col gap-2.5 text-[15px] font-normal leading-snug text-text-inverse">
         {items.map((item) => (
           <li key={item} className="flex items-start gap-2.5">
-            <span className="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-[#61ce70]" />
+            <span className="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-brand-primary" />
             <span>{item}</span>
           </li>
         ))}
@@ -121,7 +121,7 @@ export default function BookTestRidePage() {
         />
 
         {/* Why + How — left / right */}
-        <section className="bg-[#fcfcfc] py-[50px]">
+        <section className="bg-bg-primary py-[50px]">
           <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-[22px] px-4 sm:px-6 lg:grid-cols-2">
             <SparkCard
               from="left"
@@ -139,7 +139,7 @@ export default function BookTestRidePage() {
         </section>
 
         {/* Intro band — fade up */}
-        <section className="bg-white py-[50px]">
+        <section className="bg-bg-primary py-[50px]">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
             <FadeIn
               variant="fadeInUp"
@@ -147,10 +147,10 @@ export default function BookTestRidePage() {
               className="rounded-[15px] px-6 py-[30px] text-center sm:px-10"
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-5 text-[28px] font-bold leading-tight text-[#61ce70] sm:text-[36px] lg:text-[45px] lg:leading-[45px]">
+              <h2 className="font-montserrat mb-5 text-[28px] font-bold leading-tight text-brand-primary sm:text-[36px] lg:text-[45px] lg:leading-[45px]">
                 Book a test ride with an electric bike
               </h2>
-              <div className="font-roboto mx-auto flex max-w-[1000px] flex-col gap-3 text-[18px] font-normal leading-relaxed text-[#fcfcfc]">
+              <div className="font-roboto mx-auto flex max-w-[1000px] flex-col gap-3 text-[18px] font-normal leading-relaxed text-text-inverse">
                 <p>
                   Book a test ride with an electric bike brand proudly made in Pakistan and
                   experience the future of mobility with ELFA Electric!
@@ -170,7 +170,7 @@ export default function BookTestRidePage() {
         </section>
 
         {/* Models + Locations — left / right */}
-        <section className="bg-[#fcfcfc] py-[50px]">
+        <section className="bg-bg-primary py-[50px]">
           <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-[22px] px-4 sm:px-6 lg:grid-cols-2">
             <SparkCard
               from="left"
@@ -187,13 +187,13 @@ export default function BookTestRidePage() {
         </section>
 
         {/* Reach title from right (stay centered) + booking iframe */}
-        <section id="booking" className="bg-white py-[60px]">
+        <section id="booking" className="bg-bg-primary py-[60px]">
           <div className="mx-auto w-full max-w-container px-4 text-center sm:px-6">
             <FadeIn variant="fadeInRight" speed="normal" className="text-center">
-              <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-none text-[#61ce70] sm:text-[36px] lg:text-[42px]">
+              <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-none text-brand-primary sm:text-[36px] lg:text-[42px]">
                 Reach Our Experts For Support
               </h2>
-              <p className="font-roboto mb-12 text-[16px] font-normal leading-6 text-[#212121]">
+              <p className="font-roboto mb-12 text-[16px] font-normal leading-6 text-text-primary">
                 Experience the thrill of riding our electric bikes firsthand. Book your test ride
                 today and feel the power and innovation in every journey!
               </p>
@@ -211,7 +211,7 @@ export default function BookTestRidePage() {
         </section>
 
         {/* Expect + 5 Reasons — left / right */}
-        <section className="bg-[#fcfcfc] py-[50px]">
+        <section className="bg-bg-primary py-[50px]">
           <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-[22px] px-4 sm:px-6 lg:grid-cols-2">
             <SparkCard
               from="left"
@@ -219,7 +219,7 @@ export default function BookTestRidePage() {
               intro="During your ELFA test ride, you’ll:"
               items={expectItems}
               footer={
-                <p className="font-roboto mt-4 text-[15px] font-bold text-white">
+                <p className="font-roboto mt-4 text-[15px] font-bold text-text-inverse">
                   Book test ride electric bike Pakistan for a complete experience!
                 </p>
               }

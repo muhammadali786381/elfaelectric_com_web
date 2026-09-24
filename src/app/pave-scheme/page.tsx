@@ -52,7 +52,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 function Inset({ children }: { children: ReactNode }) {
   return (
-    <div className="rounded-[10px] border-l-[3px] border-[#61ce70] bg-black/25 px-4 py-4">
+    <div className="rounded-[10px] border-l-[3px] border-brand-primary bg-bg-inverse/25 px-4 py-4">
       {children}
     </div>
   );
@@ -74,16 +74,16 @@ function ContactPill({
       href={href}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-      className="flex min-w-0 flex-1 items-center gap-3 rounded-[12px] border border-white/20 bg-black/20 px-4 py-3 transition-colors hover:border-[#61ce70]"
+      className="flex min-w-0 flex-1 items-center gap-3 rounded-[12px] border border-bg-primary/20 bg-bg-inverse/20 px-4 py-3 transition-colors hover:border-brand-primary"
     >
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#61ce70] text-white">
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-primary text-text-inverse">
         {icon}
       </span>
       <span className="min-w-0 text-left">
-        <span className="font-montserrat block text-[15px] font-semibold text-white sm:text-[16px]">
+        <span className="font-montserrat block text-[15px] font-semibold text-text-inverse sm:text-[16px]">
           {title}
         </span>
-        <span className="font-roboto block text-[13px] leading-snug text-white/90 sm:text-[14px]">
+        <span className="font-roboto block text-[13px] leading-snug text-text-inverse/90 sm:text-[14px]">
           {detail}
         </span>
       </span>
@@ -104,26 +104,26 @@ export default function PaveSchemePage() {
           bikesSrc="/assets/images/blog-page.png"
         />
 
-        {/* Information for Selected Applicants — live: border 1px #61ce70, radius 15px, -40px overlap */}
+        {/* Information for Selected Applicants — live: border 1px var(--color-brand-primary), radius 15px, -40px overlap */}
         <section className="relative z-10 -mt-10 bg-transparent pb-0 pt-0">
           <div className="mx-auto w-full max-w-[920px] px-4 sm:px-6">
             <FadeIn
               variant="fadeInUp"
               speed="normal"
-              className="rounded-[15px] border border-[#61ce70] px-5 py-[30px] text-center sm:px-10"
+              className="rounded-[15px] border border-brand-primary px-5 py-[30px] text-center sm:px-10"
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-[1] text-[#61ce70] sm:text-[36px] lg:text-[45px]">
+              <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-[1] text-brand-primary sm:text-[36px] lg:text-[45px]">
                 Information for Selected Applicants
               </h2>
-              <p className="font-roboto mx-auto mb-3 max-w-[720px] text-[14px] text-white sm:text-[15px]">
+              <p className="font-roboto mx-auto mb-3 max-w-[720px] text-[14px] text-text-inverse sm:text-[15px]">
                 For assistance, please reach out to:
               </p>
-              <p className="font-roboto mx-auto mb-5 max-w-[720px] text-[14px] leading-relaxed text-white sm:text-[15px]">
+              <p className="font-roboto mx-auto mb-5 max-w-[720px] text-[14px] leading-relaxed text-text-inverse sm:text-[15px]">
                 This page contains all the details for applicants selected under the PAVE Scheme
                 (Self-Finance) on how to receive their ELFA Electric Bike.
               </p>
-              <div className="font-roboto mx-auto flex max-w-[640px] flex-col gap-2 text-[14px] text-white">
+              <div className="font-roboto mx-auto flex max-w-[640px] flex-col gap-2 text-[14px] text-text-inverse">
                 <p>
                   For further information for Self Finance applicants,{" "}
                   <a
@@ -150,18 +150,18 @@ export default function PaveSchemePage() {
               <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
                 <a
                   href="mailto:info@elfaelectric.com"
-                  className="font-roboto inline-flex items-center gap-2 text-[14px] text-white transition-colors hover:text-[#61ce70]"
+                  className="font-roboto inline-flex items-center gap-2 text-[14px] text-text-inverse transition-colors hover:text-brand-primary"
                 >
-                  <Mail className="h-5 w-5 fill-[#61ce70] text-[#61ce70]" strokeWidth={0} />
+                  <Mail className="h-5 w-5 fill-brand-primary text-brand-primary" strokeWidth={0} />
                   info@elfaelectric.com
                 </a>
                 <a
                   href="https://wa.me/923114863532"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-roboto inline-flex items-center gap-2 text-[14px] text-white transition-colors hover:text-[#61ce70]"
+                  className="font-roboto inline-flex items-center gap-2 text-[14px] text-text-inverse transition-colors hover:text-brand-primary"
                 >
-                  <WhatsAppIcon className="h-5 w-5 text-[#61ce70]" />
+                  <WhatsAppIcon className="h-5 w-5 text-brand-primary" />
                   +(92) 311-486-3532
                 </a>
               </div>
@@ -170,36 +170,36 @@ export default function PaveSchemePage() {
         </section>
 
         {/* How to Receive — live: padding 100px 0, gap 20px, 60px filled circles, 35px arrows */}
-        <section className="bg-white py-[60px] lg:py-[100px]">
+        <section className="bg-bg-primary py-[60px] lg:py-[100px]">
           <FadeIn
             variant="fadeInUp"
             speed="normal"
             className="mx-auto flex w-full max-w-container flex-col items-center gap-5 px-4 sm:px-6"
           >
-            <h2 className="font-montserrat text-center text-[28px] font-bold leading-[1] text-[#61ce70] sm:text-[36px] lg:text-[45px]">
+            <h2 className="font-montserrat text-center text-[28px] font-bold leading-[1] text-brand-primary sm:text-[36px] lg:text-[45px]">
               How to Receive Your ELFA Bike
             </h2>
-            <p className="font-roboto mx-auto max-w-[720px] text-center text-[14px] leading-relaxed text-[#212121]">
+            <p className="font-roboto mx-auto max-w-[720px] text-center text-[14px] leading-relaxed text-text-primary">
               To confirm your selection and approval for the ELFA electric bike, you can check the
               PAVE portal or wait for a confirmation call from ELFA. Once you receive confirmation,
               please follow the instructions to receive your bike.
             </p>
-            <div className="h-[2px] w-[128px] bg-[#61ce70] sm:w-[182px]" />
+            <div className="h-[2px] w-[128px] bg-brand-primary sm:w-[182px]" />
 
             <div className="mt-2 flex w-full flex-wrap items-start justify-center gap-x-2 gap-y-8 lg:mt-4 lg:flex-nowrap lg:justify-between lg:gap-x-0">
               {overviewSteps.map((s, i) => (
                 <div key={s.n} className="contents">
                   <div className="flex w-[117px] flex-col items-center text-center sm:w-[140px] lg:w-[160px]">
-                    <span className="font-montserrat flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-[55px] bg-[#212121] text-[45px] font-bold leading-none text-[#fcfcfc]">
+                    <span className="font-montserrat flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-[55px] bg-bg-inverse text-[45px] font-bold leading-none text-text-inverse">
                       {s.n}
                     </span>
-                    <span className="font-roboto mt-3 text-[15px] leading-snug text-[#212121]">
+                    <span className="font-roboto mt-3 text-[15px] leading-snug text-text-primary">
                       {s.label}
                     </span>
                   </div>
                   {i < overviewSteps.length - 1 && (
                     <ArrowRight
-                      className="mt-[12px] hidden h-[35px] w-[35px] shrink-0 text-[#212121] lg:block"
+                      className="mt-[12px] hidden h-[35px] w-[35px] shrink-0 text-text-primary lg:block"
                       strokeWidth={2}
                       aria-hidden
                     />
@@ -211,7 +211,7 @@ export default function PaveSchemePage() {
         </section>
 
         {/* 1 — Pay Order — live: mt 70px after how-to */}
-        <section className="bg-white pt-[70px] pb-0">
+        <section className="bg-bg-primary pt-[70px] pb-0">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
             <FadeIn
               variant="fadeInUp"
@@ -219,20 +219,20 @@ export default function PaveSchemePage() {
               className={cardClass}
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-white sm:text-[28px]">
+              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-text-inverse sm:text-[28px]">
                 Pay Order Instructions – PAVE Program
               </h2>
-              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
+              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
                 Please prepare a Pay Order for the amount of the ELFA Electric Bike you are receiving
                 through the PAVE program.
               </p>
 
               <Inset>
-                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-[#61ce70] sm:text-[16px]">
+                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-brand-primary sm:text-[16px]">
                   <Info className="h-4 w-4" />
                   Important Payment Details
                 </p>
-                <p className="font-roboto text-[14px] leading-relaxed text-white sm:text-[15px]">
+                <p className="font-roboto text-[14px] leading-relaxed text-text-inverse sm:text-[15px]">
                   The Pay Order should be made in the name of{" "}
                   <strong>EV Technologies Private Limited</strong> and can be issued at any branch of
                   the <strong>UBL bank</strong>.
@@ -240,11 +240,11 @@ export default function PaveSchemePage() {
               </Inset>
 
               <div className="my-6 overflow-hidden rounded-[8px]">
-                <div className="grid grid-cols-2 bg-[#61ce70]">
-                  <div className="font-montserrat px-4 py-3 text-[16px] font-bold text-white sm:text-[18px]">
+                <div className="grid grid-cols-2 bg-brand-primary">
+                  <div className="font-montserrat px-4 py-3 text-[16px] font-bold text-text-inverse sm:text-[18px]">
                     Model
                   </div>
-                  <div className="font-montserrat px-4 py-3 text-[16px] font-bold text-white sm:text-[18px]">
+                  <div className="font-montserrat px-4 py-3 text-[16px] font-bold text-text-inverse sm:text-[18px]">
                     Price (PKR)
                   </div>
                 </div>
@@ -253,7 +253,7 @@ export default function PaveSchemePage() {
                   return (
                     <div
                       key={row.model}
-                      className={`grid grid-cols-2 ${light ? "bg-white text-[#212121]" : "bg-black/35 text-white"}`}
+                      className={`grid grid-cols-2 ${light ? "bg-bg-primary text-text-primary" : "bg-bg-inverse/35 text-text-inverse"}`}
                     >
                       <div className="font-roboto px-4 py-3 text-[14px] sm:text-[16px]">{row.model}</div>
                       <div className="font-roboto px-4 py-3 text-right text-[14px] font-bold sm:text-[16px]">
@@ -264,18 +264,18 @@ export default function PaveSchemePage() {
                 })}
               </div>
 
-              <h3 className="font-montserrat mb-3 text-[18px] font-bold text-white sm:text-[22px]">
+              <h3 className="font-montserrat mb-3 text-[18px] font-bold text-text-inverse sm:text-[22px]">
                 Bank Details (For Account Title Verification Only)
               </h3>
               <Inset>
-                <ul className="font-roboto space-y-2 text-[14px] text-white sm:text-[15px]">
+                <ul className="font-roboto space-y-2 text-[14px] text-text-inverse sm:text-[15px]">
                   {[
                     ["Bank:", "United Bank Limited"],
                     ["Account Title:", "EV Technologies Private Limited"],
                     ["IBAN #:", "PK11 UNIL 0109 0003 1662 3238"],
                   ].map(([label, value]) => (
                     <li key={label} className="flex items-start gap-2">
-                      <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-[#61ce70]" strokeWidth={2.5} />
+                      <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-brand-primary" strokeWidth={2.5} />
                       <span>
                         <strong>{label}</strong> {value}
                       </span>
@@ -288,7 +288,7 @@ export default function PaveSchemePage() {
         </section>
 
         {/* 2 — Courier — live: mt 40px between spark cards */}
-        <section className="bg-white pt-10 pb-0">
+        <section className="bg-bg-primary pt-10 pb-0">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
             <FadeIn
               variant="fadeInUp"
@@ -296,25 +296,25 @@ export default function PaveSchemePage() {
               className={cardClass}
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-white sm:text-[28px]">
+              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-text-inverse sm:text-[28px]">
                 Courier your Pay order
               </h2>
-              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
+              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
                 Please send your pay order via courier to the address mentioned below:
               </p>
               <Inset>
-                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-[#61ce70] sm:text-[16px]">
+                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-brand-primary sm:text-[16px]">
                   <MapPin className="h-4 w-4" />
                   Address mentioned
                 </p>
-                <p className="font-roboto text-[14px] leading-relaxed text-white sm:text-[15px]">
+                <p className="font-roboto text-[14px] leading-relaxed text-text-inverse sm:text-[15px]">
                   Wavetec C3i, GA-70-A3, Korangi Creek Industrial Park, Korangi, Karachi, Sindh.
                 </p>
               </Inset>
-              <p className="font-roboto mt-5 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
+              <p className="font-roboto mt-5 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
                 Once we receive the payment, we will immediately share the receipt with you.
               </p>
-              <p className="font-roboto mt-3 text-[14px] text-white/95 sm:text-[15px]">
+              <p className="font-roboto mt-3 text-[14px] text-text-inverse/95 sm:text-[15px]">
                 In case of any query, please feel free to reach out to us:
               </p>
               <div className="mt-4 max-w-[360px]">
@@ -330,7 +330,7 @@ export default function PaveSchemePage() {
         </section>
 
         {/* Delivery + subsidy — live: 40px between cards */}
-        <section className="bg-white pt-10 pb-0">
+        <section className="bg-bg-primary pt-10 pb-0">
           <div className="mx-auto flex w-full max-w-container flex-col gap-10 px-4 sm:px-6">
             <FadeIn
               variant="fadeInUp"
@@ -338,20 +338,20 @@ export default function PaveSchemePage() {
               className={cardClass}
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-4 text-[22px] font-bold text-white sm:text-[28px]">
+              <h2 className="font-montserrat mb-4 text-[22px] font-bold text-text-inverse sm:text-[28px]">
                 Delivery Information
               </h2>
-              <h3 className="font-montserrat mb-2 text-[16px] font-bold text-white sm:text-[18px]">
+              <h3 className="font-montserrat mb-2 text-[16px] font-bold text-text-inverse sm:text-[18px]">
                 Motorcycle Delivery Process
               </h3>
-              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
+              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
                 Motorcycle delivery will be facilitated by ELFA. The applicable delivery charges,
                 which depend on your location, will be communicated to you by our representative.
               </p>
-              <h3 className="font-montserrat mb-2 text-[16px] font-bold text-white sm:text-[18px]">
+              <h3 className="font-montserrat mb-2 text-[16px] font-bold text-text-inverse sm:text-[18px]">
                 Delivery Timeline
               </h3>
-              <p className="font-roboto text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
+              <p className="font-roboto text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
                 Delivery of the motorcycle is expected within 60 days after the payment is received
                 and verified by ELFA Team (EV Technologies).
               </p>
@@ -363,20 +363,20 @@ export default function PaveSchemePage() {
               className={cardClass}
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-white sm:text-[28px]">
+              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-text-inverse sm:text-[28px]">
                 Government Subsidy Transfer
               </h2>
-              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
+              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
                 After your motorcycle is delivered and all formalities are completed, the Government
                 of Pakistan (EDB) will transfer the eligible subsidy amount directly to your bank
                 account.
               </p>
               <Inset>
-                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-[#61ce70] sm:text-[16px]">
+                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-brand-primary sm:text-[16px]">
                   <Download className="h-4 w-4" />
                   For More Information
                 </p>
-                <p className="font-roboto text-[14px] text-white sm:text-[15px]">
+                <p className="font-roboto text-[14px] text-text-inverse sm:text-[15px]">
                   Visit the official PAVE website:{" "}
                   <a
                     href="https://www.pave.gov.pk"
@@ -393,7 +393,7 @@ export default function PaveSchemePage() {
         </section>
 
         {/* 6 — Deposit slip + contact — live: 40px between cards */}
-        <section className="bg-white pt-10 pb-16 lg:pb-24">
+        <section className="bg-bg-primary pt-10 pb-16 lg:pb-24">
           <div className="mx-auto flex w-full max-w-container flex-col gap-10 px-4 sm:px-6">
             <FadeIn
               variant="fadeInUp"
@@ -401,20 +401,20 @@ export default function PaveSchemePage() {
               className={cardClass}
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-white sm:text-[28px]">
+              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-text-inverse sm:text-[28px]">
                 Submission of Deposit Slip
               </h2>
-              <p className="font-roboto mb-4 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
+              <p className="font-roboto mb-4 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
                 After submitting your Pay Order, you must share a copy of your deposit slip/proof of
                 payment for verification. Include the following details:
               </p>
-              <h3 className="font-montserrat mb-3 text-[18px] font-bold text-white sm:text-[20px]">
+              <h3 className="font-montserrat mb-3 text-[18px] font-bold text-text-inverse sm:text-[20px]">
                 Required Details
               </h3>
-              <ul className="font-roboto mb-6 space-y-2 text-[14px] text-white sm:text-[15px]">
+              <ul className="font-roboto mb-6 space-y-2 text-[14px] text-text-inverse sm:text-[15px]">
                 {requiredDetails.map((d) => (
                   <li key={d} className="flex items-center gap-2">
-                    <ChevronRight className="h-4 w-4 shrink-0 text-[#61ce70]" strokeWidth={2.5} />
+                    <ChevronRight className="h-4 w-4 shrink-0 text-brand-primary" strokeWidth={2.5} />
                     {d}
                   </li>
                 ))}
@@ -441,10 +441,10 @@ export default function PaveSchemePage() {
               className={cardClass}
               style={{ backgroundImage: SPARK }}
             >
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-white sm:text-[28px]">
+              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-text-inverse sm:text-[28px]">
                 Contact Us
               </h2>
-              <p className="font-roboto mb-5 text-[14px] text-white/95 sm:text-[15px]">
+              <p className="font-roboto mb-5 text-[14px] text-text-inverse/95 sm:text-[15px]">
                 For any queries or questions, please reach out to our support team:
               </p>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
