@@ -3,6 +3,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 import ContentCard, { type ContentCardItem } from "@/components/sections/ContentCard";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 export const metadata: Metadata = {
   title: "Newsroom – ELFA Electric",
@@ -156,14 +157,14 @@ export default function NewsroomPage() {
           bikesSrc="/assets/images/blog-page.png"
         />
 
-        <div className="bg-white px-4 pb-8 pt-12 text-center sm:px-6 sm:pt-14">
+        <FadeIn variant="fadeInUp" speed="normal" className="bg-white px-4 pb-8 pt-12 text-center sm:px-6 sm:pt-14">
           <h2 className="font-montserrat text-[24px] font-bold leading-[18px] text-[#61ce70] sm:text-[28px]">
             Our News
           </h2>
           <h3 className="font-montserrat mt-5 text-[32px] font-bold leading-tight text-[#212121] sm:mt-6 sm:text-[44px] sm:leading-[50px] lg:text-[50px]">
             Latest News
           </h3>
-        </div>
+        </FadeIn>
 
         <section className="bg-white pb-16 pt-2 sm:pb-20">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">

@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 import Marquee from "@/components/sections/Marquee";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 export const metadata: Metadata = {
   title: "About ELFA Electric – Leading Electric Bike Pakistan",
@@ -68,6 +69,10 @@ const coreValues = [
   },
 ];
 
+/**
+ * Hero bikes fade via PageHero. Other sections fade in.
+ * Cards: FadeIn IS the card (same classes + h-full) — no wrapper that breaks height.
+ */
 export default function AboutUsPage() {
   return (
     <>
@@ -90,10 +95,11 @@ export default function AboutUsPage() {
           bikesSrc="/assets/images/blog-page.png"
         />
 
-        {/* Who We Are — spark gradient card + scooty */}
         <section className="bg-white py-12 lg:py-[70px]">
           <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
-            <div
+            <FadeIn
+              variant="fadeIn"
+              speed="slow"
               className="flex flex-col gap-5 rounded-[10px] border-2 border-[#61ce70] px-5 py-[30px] shadow-[0_0_40px_-20px_rgba(0,0,0,0.5)] sm:px-10 sm:py-[30px] sm:pl-5"
               style={{ backgroundImage: SPARK }}
             >
@@ -119,9 +125,13 @@ export default function AboutUsPage() {
                 R&amp;D and technology, which has successfully powered both global and local
                 companies.
               </p>
-            </div>
+            </FadeIn>
 
-            <div className="relative mx-auto aspect-square w-full max-w-[420px] lg:max-w-none">
+            <FadeIn
+              variant="fadeIn"
+              speed="slow"
+              className="relative mx-auto aspect-square w-full max-w-[420px] lg:max-w-none"
+            >
               <Image
                 src="/assets/images/about/sut.png"
                 alt="ELFA EV-1 Scooty"
@@ -129,13 +139,12 @@ export default function AboutUsPage() {
                 className="object-contain"
                 sizes="(max-width: 1024px) 420px, 520px"
               />
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* Vision & Mission */}
         <section className="bg-white py-[50px]">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
+          <FadeIn variant="fadeIn" speed="slow" className="mx-auto w-full max-w-container px-4 sm:px-6">
             <h2 className="font-montserrat text-center text-[32px] font-bold leading-none text-[#61ce70] sm:text-[44px]">
               Vision &amp; Mission
             </h2>
@@ -143,9 +152,12 @@ export default function AboutUsPage() {
               For a Cleaner, and Brighter Future
             </p>
 
-            <div className="mx-auto mt-10 grid max-w-[900px] gap-6 md:grid-cols-2 md:gap-8">
-              <div
-                className="rounded-[20px] border-2 border-[#61ce70] p-[30px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
+            <div className="mx-auto mt-10 grid max-w-[900px] items-stretch gap-6 md:grid-cols-2 md:gap-8">
+              <FadeIn
+                variant="fadeIn"
+                speed="slow"
+                delay={0.08}
+                className="h-full rounded-[20px] border-2 border-[#61ce70] p-[30px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
                 style={{ backgroundImage: SPARK }}
               >
                 <h3 className="font-montserrat mb-4 text-[28px] font-bold leading-[35px] text-[#61ce70] sm:text-[35px]">
@@ -154,9 +166,12 @@ export default function AboutUsPage() {
                 <p className="font-roboto text-[14px] leading-relaxed text-white">
                   Enable equitable progress through sustainable mobility.
                 </p>
-              </div>
-              <div
-                className="rounded-[20px] border-2 border-[#61ce70] p-[30px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
+              </FadeIn>
+              <FadeIn
+                variant="fadeIn"
+                speed="slow"
+                delay={0.16}
+                className="h-full rounded-[20px] border-2 border-[#61ce70] p-[30px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
                 style={{ backgroundImage: SPARK }}
               >
                 <h3 className="font-montserrat mb-4 text-[28px] font-bold leading-[35px] text-[#61ce70] sm:text-[35px]">
@@ -166,15 +181,18 @@ export default function AboutUsPage() {
                   Deliver accessible, smart, and reliable electric solutions that fuel everyday
                   productivity and progress for everyone.
                 </p>
-              </div>
+              </FadeIn>
             </div>
-          </div>
+          </FadeIn>
         </section>
 
-        {/* Why Choose — bordered card + bike */}
         <section className="bg-white pb-12 pt-4 lg:pb-16">
-          <div className="mx-auto grid  w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
-          <div className="relative mx-auto aspect-[380/360] w-full max-w-[420px] lg:max-w-none">
+          <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
+            <FadeIn
+              variant="fadeIn"
+              speed="slow"
+              className="relative mx-auto aspect-[380/360] w-full max-w-[420px] lg:max-w-none"
+            >
               <Image
                 src="/assets/images/contact/EV-125-BIKE-1.png"
                 alt="ELFA EV-125 Bike"
@@ -182,8 +200,10 @@ export default function AboutUsPage() {
                 className="object-contain"
                 sizes="(max-width: 1024px) 420px, 520px"
               />
-            </div>
-            <div
+            </FadeIn>
+            <FadeIn
+              variant="fadeIn"
+              speed="slow"
               className="rounded-[10px] border-2 border-[#61ce70] px-5 py-[30px] pb-10 shadow-[0_0_40px_-20px_rgba(0,0,0,0.5)] sm:px-5"
               style={{ backgroundImage: SPARK }}
             >
@@ -201,39 +221,40 @@ export default function AboutUsPage() {
                   </li>
                 ))}
               </ul>
-            </div>
-
-            
+            </FadeIn>
           </div>
         </section>
 
-        {/* Core Values */}
         <section className="bg-white py-12 lg:py-16">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
+          <FadeIn variant="fadeIn" speed="slow" className="mx-auto w-full max-w-container px-4 sm:px-6">
             <h2 className="font-montserrat mb-10 text-center text-[28px] font-bold text-black sm:text-[32px]">
               Core Values
             </h2>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {coreValues.map(({ title, desc }) => (
-                <div
+            <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {coreValues.map(({ title, desc }, i) => (
+                <FadeIn
                   key={desc.slice(0, 24)}
-                  className="rounded-[20px] border-2 border-[#61ce70] p-[15px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
+                  variant="fadeIn"
+                  speed="slow"
+                  delay={i * 0.08}
+                  className="h-full rounded-[20px] border-2 border-[#61ce70] p-[15px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
                   style={{ backgroundImage: SPARK }}
                 >
                   <h3 className="font-montserrat mb-3 text-[15px] font-bold uppercase leading-[15px] text-white">
                     {title}
                   </h3>
                   <p className="font-roboto text-[13px] leading-relaxed text-white/85">{desc}</p>
-                </div>
+                </FadeIn>
               ))}
             </div>
-          </div>
+          </FadeIn>
         </section>
 
-        {/* Join CTA — spark */}
         <section className="bg-white py-8 lg:py-12">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <div
+            <FadeIn
+              variant="fadeIn"
+              speed="slow"
               className="rounded-[15px] px-6 py-10 text-center sm:px-10 sm:py-[40px]"
               style={{ backgroundImage: SPARK }}
             >
@@ -260,7 +281,7 @@ export default function AboutUsPage() {
                   Buy Now
                 </Link>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
 

@@ -17,13 +17,11 @@ export default function Hero() {
   return (
     <section className="relative w-full overflow-hidden">
       {/*
-       * Live site's hero holds a constant ~0.3561 height/width ratio (684px
-       * tall at a 1920px viewport, 512.8px at 1440px, 911.6px at 2560px —
-       * verified directly against elfaelectric.com) rather than a fixed
-       * pixel height, so it's replicated here with aspect-ratio instead of
-       * a flat md:h-[495px].
+       * Mobile matches the PAVE art (1:2) so it fills edge to edge.
+       * Desktop keeps the live 1920/684 ratio.
        */}
-      <div className="relative h-[min(78vh,640px)] min-h-[520px] w-full md:aspect-[1920/684] md:h-auto md:min-h-0">
+      {/* Mobile/tablet: fill viewport below nav (~70px). Desktop lg+: 1920/684 aspect ratio. */}
+      <div className="relative h-[calc(100dvh-70px)] max-h-[800px] min-h-[600px] w-full lg:aspect-[1920/684] lg:h-auto lg:max-h-none lg:min-h-0">
         <Swiper
           modules={[Autoplay, Navigation]}
           onSwiper={(swiper) => {

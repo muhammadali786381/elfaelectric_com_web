@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 const testimonials = [
   {
@@ -220,6 +221,7 @@ export default function Testimonials() {
 
   return (
     <section className="bg-white py-16 lg:py-20">
+      <FadeIn variant="fadeIn" speed="slow">
       <div className="mx-auto w-full min-w-[100px] max-w-container">
         <h2 className="font-montserrat mb-10 px-4 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
           Our Happy Customers
@@ -271,6 +273,7 @@ export default function Testimonials() {
           </button>
         </div>
       </div>
+      </FadeIn>
     </section>
   );
 }

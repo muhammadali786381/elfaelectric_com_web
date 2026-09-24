@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 type Spec = { value: string; label: string; icon: string };
 
@@ -44,6 +45,7 @@ const products = [
 export default function ProductShowcase() {
   return (
     <section className="bg-white py-16 lg:py-20">
+      <FadeIn variant="fadeIn" speed="slow">
       <h2 className="font-montserrat mb-5 text-center text-[36px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px]">
         Our Products
       </h2>
@@ -133,6 +135,7 @@ export default function ProductShowcase() {
           ))}
         </div>
       </div>
+      </FadeIn>
     </section>
   );
 }

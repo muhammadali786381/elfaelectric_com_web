@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { ArrowRight, ChevronRight, Download, Info, Mail, MailIcon, MapPin, Phone, Upload } from "lucide-react";
+import { ArrowRight, ChevronRight, Download, Info, Mail, MapPin, Phone } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 import Marquee from "@/components/sections/Marquee";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 export const metadata: Metadata = {
   title: "PAVE Scheme | ELFA Electric Bike Instructions & Delivery",
@@ -39,7 +40,7 @@ const requiredDetails = [
   "CNIC Number",
 ];
 
-const cardClass = "rounded-[15px] p-[30px]";
+const cardClass = "rounded-[16px] p-5 shadow-[0_12px_40px_rgba(0,0,0,0.18)] sm:p-8 lg:p-10";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -49,10 +50,9 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-/** Live Elementor inset: green #61ce70 overlay at 10% opacity + 4px left accent */
 function Inset({ children }: { children: ReactNode }) {
   return (
-    <div className="rounded-r-[10px] border-l-4 border-[#61ce70] bg-[#61ce70]/10 py-5 pl-[30px] pr-4">
+    <div className="rounded-[10px] border-l-[3px] border-[#61ce70] bg-black/25 px-4 py-4">
       {children}
     </div>
   );
@@ -74,16 +74,16 @@ function ContactPill({
       href={href}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-      className="flex min-h-[98px] min-w-0 flex-1 items-center gap-4 rounded-[10px] border border-[#61ce70] bg-transparent px-[15px] py-[15px] transition-colors hover:bg-[#61ce70]/10"
+      className="flex min-w-0 flex-1 items-center gap-3 rounded-[12px] border border-white/20 bg-black/20 px-4 py-3 transition-colors hover:border-[#61ce70]"
     >
-      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#61ce70] text-white [&>svg]:h-8 [&>svg]:w-8">
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#61ce70] text-white">
         {icon}
       </span>
       <span className="min-w-0 text-left">
-        <span className="font-montserrat block text-[22px] font-semibold leading-tight text-white">
+        <span className="font-montserrat block text-[15px] font-semibold text-white sm:text-[16px]">
           {title}
         </span>
-        <span className="font-roboto mt-1 block text-[16px] font-normal leading-snug text-white">
+        <span className="font-roboto block text-[13px] leading-snug text-white/90 sm:text-[14px]">
           {detail}
         </span>
       </span>
@@ -104,31 +104,33 @@ export default function PaveSchemePage() {
           bikesSrc="/assets/images/blog-page.png"
         />
 
-        {/* Information for Selected Applicants — live: ~800px wide, border, 18px body */}
+        {/* Information for Selected Applicants — live: border 1px #61ce70, radius 15px, -40px overlap */}
         <section className="relative z-10 -mt-10 bg-transparent pb-0 pt-0">
-          <div className="mx-auto w-full max-w-[800px] px-4 sm:px-6">
-            <div
+          <div className="mx-auto w-full max-w-[920px] px-4 sm:px-6">
+            <FadeIn
+              variant="fadeInUp"
+              speed="normal"
               className="rounded-[15px] border border-[#61ce70] px-5 py-[30px] text-center sm:px-10"
               style={{ backgroundImage: SPARK }}
             >
               <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-[1] text-[#61ce70] sm:text-[36px] lg:text-[45px]">
                 Information for Selected Applicants
               </h2>
-              <p className="font-roboto mx-auto mb-3 max-w-[720px] text-[18px] font-normal text-white">
+              <p className="font-roboto mx-auto mb-3 max-w-[720px] text-[14px] text-white sm:text-[15px]">
                 For assistance, please reach out to:
               </p>
-              <p className="font-roboto mx-auto mb-5 max-w-[720px] text-[18px] font-normal leading-[1.5] text-white">
+              <p className="font-roboto mx-auto mb-5 max-w-[720px] text-[14px] leading-relaxed text-white sm:text-[15px]">
                 This page contains all the details for applicants selected under the PAVE Scheme
                 (Self-Finance) on how to receive their ELFA Electric Bike.
               </p>
-              <div className="font-roboto mx-auto flex max-w-[640px] flex-col gap-2 text-[18px] font-normal text-white">
+              <div className="font-roboto mx-auto flex max-w-[640px] flex-col gap-2 text-[14px] text-white">
                 <p>
                   For further information for Self Finance applicants,{" "}
                   <a
                     href={INFO_VIDEO}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-normal text-[#cc3366] underline hover:no-underline"
+                    className="font-semibold text-[#cc3366] underline hover:no-underline"
                   >
                     click here
                   </a>
@@ -139,7 +141,7 @@ export default function PaveSchemePage() {
                     href={INFO_VIDEO}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-normal text-[#cc3366] underline hover:no-underline"
+                    className="font-semibold text-[#cc3366] underline hover:no-underline"
                   >
                     click here
                   </a>
@@ -148,7 +150,7 @@ export default function PaveSchemePage() {
               <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
                 <a
                   href="mailto:info@elfaelectric.com"
-                  className="font-roboto inline-flex items-center gap-2 text-[18px] font-normal text-white transition-colors hover:text-[#61ce70]"
+                  className="font-roboto inline-flex items-center gap-2 text-[14px] text-white transition-colors hover:text-[#61ce70]"
                 >
                   <Mail className="h-5 w-5 fill-[#61ce70] text-[#61ce70]" strokeWidth={0} />
                   info@elfaelectric.com
@@ -157,19 +159,23 @@ export default function PaveSchemePage() {
                   href="https://wa.me/923114863532"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-roboto inline-flex items-center gap-2 text-[18px] font-normal text-white transition-colors hover:text-[#61ce70]"
+                  className="font-roboto inline-flex items-center gap-2 text-[14px] text-white transition-colors hover:text-[#61ce70]"
                 >
                   <WhatsAppIcon className="h-5 w-5 text-[#61ce70]" />
                   +(92) 311-486-3532
                 </a>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
         {/* How to Receive — live: padding 100px 0, gap 20px, 60px filled circles, 35px arrows */}
         <section className="bg-white py-[60px] lg:py-[100px]">
-          <div className="mx-auto flex w-full max-w-container flex-col items-center gap-5 px-4 sm:px-6">
+          <FadeIn
+            variant="fadeInUp"
+            speed="normal"
+            className="mx-auto flex w-full max-w-container flex-col items-center gap-5 px-4 sm:px-6"
+          >
             <h2 className="font-montserrat text-center text-[28px] font-bold leading-[1] text-[#61ce70] sm:text-[36px] lg:text-[45px]">
               How to Receive Your ELFA Bike
             </h2>
@@ -201,39 +207,44 @@ export default function PaveSchemePage() {
                 </div>
               ))}
             </div>
-          </div>
+          </FadeIn>
         </section>
 
-        {/* 1 — Pay Order */}
-        <section className="bg-white pb-6 pt-4 lg:pb-8">
+        {/* 1 — Pay Order — live: mt 70px after how-to */}
+        <section className="bg-white pt-[70px] pb-0">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <div className={cardClass} style={{ backgroundImage: SPARK }}>
-              <h2 className="font-montserrat mb-3 text-[28px] font-bold leading-[1.5] text-white">
+            <FadeIn
+              variant="fadeInUp"
+              speed="normal"
+              className={cardClass}
+              style={{ backgroundImage: SPARK }}
+            >
+              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-white sm:text-[28px]">
                 Pay Order Instructions – PAVE Program
               </h2>
-              <p className="font-roboto mb-5 text-[16px] font-normal leading-6 text-white">
+              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
                 Please prepare a Pay Order for the amount of the ELFA Electric Bike you are receiving
                 through the PAVE program.
               </p>
 
               <Inset>
-                <p className="font-montserrat mb-2 flex items-center gap-2 text-[16px] font-bold text-white">
-                  <Info className="h-4 w-4 fill-[#61ce70] text-[#61ce70]" />
+                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-[#61ce70] sm:text-[16px]">
+                  <Info className="h-4 w-4" />
                   Important Payment Details
                 </p>
-                <p className="font-roboto text-[16px] font-normal leading-6 text-white">
+                <p className="font-roboto text-[14px] leading-relaxed text-white sm:text-[15px]">
                   The Pay Order should be made in the name of{" "}
-                  <strong className="font-bold">EV Technologies Private Limited</strong> and can be
-                  issued at any branch of the <strong className="font-bold">UBL bank</strong>.
+                  <strong>EV Technologies Private Limited</strong> and can be issued at any branch of
+                  the <strong>UBL bank</strong>.
                 </p>
               </Inset>
 
               <div className="my-6 overflow-hidden rounded-[8px]">
                 <div className="grid grid-cols-2 bg-[#61ce70]">
-                  <div className="font-montserrat px-4 py-3 text-[23px] font-bold text-white">
+                  <div className="font-montserrat px-4 py-3 text-[16px] font-bold text-white sm:text-[18px]">
                     Model
                   </div>
-                  <div className="font-montserrat px-4 py-3 text-[23px] font-bold text-white">
+                  <div className="font-montserrat px-4 py-3 text-[16px] font-bold text-white sm:text-[18px]">
                     Price (PKR)
                   </div>
                 </div>
@@ -244,8 +255,8 @@ export default function PaveSchemePage() {
                       key={row.model}
                       className={`grid grid-cols-2 ${light ? "bg-white text-[#212121]" : "bg-black/35 text-white"}`}
                     >
-                      <div className="font-montserrat px-4 py-3 text-[20px] font-bold">{row.model}</div>
-                      <div className="font-montserrat px-4 py-3 text-right text-[20px] font-bold">
+                      <div className="font-roboto px-4 py-3 text-[14px] sm:text-[16px]">{row.model}</div>
+                      <div className="font-roboto px-4 py-3 text-right text-[14px] font-bold sm:text-[16px]">
                         {row.price}
                       </div>
                     </div>
@@ -253,134 +264,154 @@ export default function PaveSchemePage() {
                 })}
               </div>
 
-              <h3 className="font-montserrat mb-3 text-[24px] font-bold leading-none text-white">
+              <h3 className="font-montserrat mb-3 text-[18px] font-bold text-white sm:text-[22px]">
                 Bank Details (For Account Title Verification Only)
               </h3>
               <Inset>
-                <ul className="font-roboto space-y-2 text-[16px] font-normal text-white">
+                <ul className="font-roboto space-y-2 text-[14px] text-white sm:text-[15px]">
                   {[
                     ["Bank:", "United Bank Limited"],
                     ["Account Title:", "EV Technologies Private Limited"],
                     ["IBAN #:", "PK11 UNIL 0109 0003 1662 3238"],
                   ].map(([label, value]) => (
                     <li key={label} className="flex items-start gap-2">
-                      <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-[#61ce70]" strokeWidth={2.5} />
+                      <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-[#61ce70]" strokeWidth={2.5} />
                       <span>
-                        <strong className="font-bold">{label}</strong> {value}
+                        <strong>{label}</strong> {value}
                       </span>
                     </li>
                   ))}
                 </ul>
               </Inset>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* 2 — Courier */}
-        <section className="bg-white py-4 lg:py-6">
+        {/* 2 — Courier — live: mt 40px between spark cards */}
+        <section className="bg-white pt-10 pb-0">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <div className={cardClass} style={{ backgroundImage: SPARK }}>
-              <h2 className="font-montserrat mb-3 text-[28px] font-bold leading-[1.5] text-white">
+            <FadeIn
+              variant="fadeInUp"
+              speed="normal"
+              className={cardClass}
+              style={{ backgroundImage: SPARK }}
+            >
+              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-white sm:text-[28px]">
                 Courier your Pay order
               </h2>
-              <p className="font-roboto mb-5 text-[16px] font-normal leading-6 text-white">
+              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
                 Please send your pay order via courier to the address mentioned below:
               </p>
               <Inset>
-                <p className="font-montserrat mb-2 flex items-center gap-2 text-[16px] font-bold text-white">
-                  <MapPin className="h-4 w-4 fill-[#61ce70] text-[#61ce70]" />
+                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-[#61ce70] sm:text-[16px]">
+                  <MapPin className="h-4 w-4" />
                   Address mentioned
                 </p>
-                <p className="font-roboto text-[16px] font-normal leading-6 text-white">
+                <p className="font-roboto text-[14px] leading-relaxed text-white sm:text-[15px]">
                   Wavetec C3i, GA-70-A3, Korangi Creek Industrial Park, Korangi, Karachi, Sindh.
                 </p>
               </Inset>
-              <p className="font-roboto mt-5 text-[16px] font-normal leading-6 text-white">
+              <p className="font-roboto mt-5 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
                 Once we receive the payment, we will immediately share the receipt with you.
               </p>
-              <p className="font-roboto mt-3 text-[16px] font-normal text-white">
+              <p className="font-roboto mt-3 text-[14px] text-white/95 sm:text-[15px]">
                 In case of any query, please feel free to reach out to us:
               </p>
-              <div className="mt-4 max-w-[540px]">
+              <div className="mt-4 max-w-[360px]">
                 <ContactPill
                   href="https://wa.me/923114863532"
-                  icon={<Phone className="fill-white" strokeWidth={0} />}
+                  icon={<Phone className="h-5 w-5" />}
                   title="Phone / WhatsApp"
                   detail="+(92) 311-486-3532"
                 />
               </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* Delivery + subsidy */}
-        <section className="bg-white py-4 lg:py-6">
-          <div className="mx-auto flex w-full max-w-container flex-col gap-6 px-4 sm:px-6">
-            <div className={cardClass} style={{ backgroundImage: SPARK }}>
-              <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-[1.5] text-white">
+        {/* Delivery + subsidy — live: 40px between cards */}
+        <section className="bg-white pt-10 pb-0">
+          <div className="mx-auto flex w-full max-w-container flex-col gap-10 px-4 sm:px-6">
+            <FadeIn
+              variant="fadeInUp"
+              speed="normal"
+              className={cardClass}
+              style={{ backgroundImage: SPARK }}
+            >
+              <h2 className="font-montserrat mb-4 text-[22px] font-bold text-white sm:text-[28px]">
                 Delivery Information
               </h2>
-              <h3 className="font-montserrat mb-2 text-[24px] font-bold leading-none text-white">
+              <h3 className="font-montserrat mb-2 text-[16px] font-bold text-white sm:text-[18px]">
                 Motorcycle Delivery Process
               </h3>
-              <p className="font-roboto mb-5 text-[16px] font-normal leading-6 text-white">
+              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
                 Motorcycle delivery will be facilitated by ELFA. The applicable delivery charges,
                 which depend on your location, will be communicated to you by our representative.
               </p>
-              <h3 className="font-montserrat mb-2 text-[24px] font-bold leading-none text-white">
+              <h3 className="font-montserrat mb-2 text-[16px] font-bold text-white sm:text-[18px]">
                 Delivery Timeline
               </h3>
-              <p className="font-roboto text-[16px] font-normal leading-6 text-white">
+              <p className="font-roboto text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
                 Delivery of the motorcycle is expected within 60 days after the payment is received
                 and verified by ELFA Team (EV Technologies).
               </p>
-            </div>
+            </FadeIn>
 
-            <div className={cardClass} style={{ backgroundImage: SPARK }}>
-              <h2 className="font-montserrat mb-3 text-[28px] font-bold leading-[1.5] text-white">
+            <FadeIn
+              variant="fadeInUp"
+              speed="normal"
+              className={cardClass}
+              style={{ backgroundImage: SPARK }}
+            >
+              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-white sm:text-[28px]">
                 Government Subsidy Transfer
               </h2>
-              <p className="font-roboto mb-5 text-[16px] font-normal leading-6 text-white">
+              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
                 After your motorcycle is delivered and all formalities are completed, the Government
                 of Pakistan (EDB) will transfer the eligible subsidy amount directly to your bank
                 account.
               </p>
               <Inset>
-                <p className="font-montserrat mb-2 flex items-center gap-2 text-[16px] font-bold text-white">
-                  <Download className="h-4 w-4 text-[#61ce70]" strokeWidth={2.5} />
+                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-[#61ce70] sm:text-[16px]">
+                  <Download className="h-4 w-4" />
                   For More Information
                 </p>
-                <p className="font-roboto text-[16px] font-normal text-white">
+                <p className="font-roboto text-[14px] text-white sm:text-[15px]">
                   Visit the official PAVE website:{" "}
                   <a
                     href="https://www.pave.gov.pk"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-normal text-[#cc3366] underline hover:no-underline"
+                    className="font-semibold text-[#cc3366] underline hover:no-underline"
                   >
                     www.pave.gov.pk
                   </a>
                 </p>
               </Inset>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* 6 — Deposit slip + contact */}
-        <section className="bg-white py-4 pb-12 lg:py-6 lg:pb-16">
-          <div className="mx-auto flex w-full max-w-container flex-col gap-6 px-4 sm:px-6">
-            <div className={cardClass} style={{ backgroundImage: SPARK }}>
-              <h2 className="font-montserrat mb-3 text-[28px] font-bold leading-[1.5] text-white">
+        {/* 6 — Deposit slip + contact — live: 40px between cards */}
+        <section className="bg-white pt-10 pb-16 lg:pb-24">
+          <div className="mx-auto flex w-full max-w-container flex-col gap-10 px-4 sm:px-6">
+            <FadeIn
+              variant="fadeInUp"
+              speed="normal"
+              className={cardClass}
+              style={{ backgroundImage: SPARK }}
+            >
+              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-white sm:text-[28px]">
                 Submission of Deposit Slip
               </h2>
-              <p className="font-roboto mb-4 text-[16px] font-normal leading-6 text-white">
+              <p className="font-roboto mb-4 text-[14px] leading-relaxed text-white/95 sm:text-[15px]">
                 After submitting your Pay Order, you must share a copy of your deposit slip/proof of
                 payment for verification. Include the following details:
               </p>
-              <h3 className="font-montserrat mb-3 text-[24px] font-bold leading-none text-white">
+              <h3 className="font-montserrat mb-3 text-[18px] font-bold text-white sm:text-[20px]">
                 Required Details
               </h3>
-              <ul className="font-roboto mb-6 space-y-2 text-[16px] font-normal text-white">
+              <ul className="font-roboto mb-6 space-y-2 text-[14px] text-white sm:text-[15px]">
                 {requiredDetails.map((d) => (
                   <li key={d} className="flex items-center gap-2">
                     <ChevronRight className="h-4 w-4 shrink-0 text-[#61ce70]" strokeWidth={2.5} />
@@ -388,44 +419,49 @@ export default function PaveSchemePage() {
                   </li>
                 ))}
               </ul>
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <ContactPill
                   href="https://wa.me/923114863532"
-                  icon={<WhatsAppIcon />}
+                  icon={<WhatsAppIcon className="h-5 w-5" />}
                   title="WhatsApp"
                   detail="+(92) 311-486-3532"
                 />
                 <ContactPill
                   href="https://www.pave.gov.pk"
-                  icon={<Upload strokeWidth={2.5} />}
+                  icon={<Download className="h-5 w-5" />}
                   title="PAVE Portal"
                   detail="Upload a copy of your payorder on your PAVA portal"
                 />
               </div>
-            </div>
+            </FadeIn>
 
-            <div className={cardClass} style={{ backgroundImage: SPARK }}>
-              <h2 className="font-montserrat mb-3 text-[28px] font-bold leading-[1.5] text-white">
+            <FadeIn
+              variant="fadeInUp"
+              speed="normal"
+              className={cardClass}
+              style={{ backgroundImage: SPARK }}
+            >
+              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-white sm:text-[28px]">
                 Contact Us
               </h2>
-              <p className="font-roboto mb-5 text-[16px] font-normal text-white">
+              <p className="font-roboto mb-5 text-[14px] text-white/95 sm:text-[15px]">
                 For any queries or questions, please reach out to our support team:
               </p>
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <ContactPill
                   href="https://wa.me/923114863532"
-                  icon={<Phone className="fill-white" strokeWidth={0} />}
+                  icon={<Phone className="h-5 w-5" />}
                   title="Phone / WhatsApp"
                   detail="+(92) 311-486-3532"
                 />
                 <ContactPill
                   href="mailto:info@elfaelectric.com"
-                  icon={<MailIcon  color="white" strokeWidth={2.5} />}
+                  icon={<Mail className="h-5 w-5" />}
                   title="Email"
                   detail="info@elfaelectric.com"
                 />
               </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
 

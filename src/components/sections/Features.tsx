@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 const solutions = [
   {
@@ -51,9 +52,11 @@ export default function Features() {
 
           {/* Text block ~70% width, vertically centered via section flex */}
           <div className="w-full lg:max-w-[70%]">
-            <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-white sm:text-[41px]">
-              Solutions that we offer
-            </h2>
+            <FadeIn variant="fadeInUp" speed="slow">
+              <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-white sm:text-[41px]">
+                Solutions that we offer
+              </h2>
+            </FadeIn>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
               {solutions.map((s) => (
@@ -71,6 +74,7 @@ export default function Features() {
 
       {/* About ELFA Electric Motorcycle */}
       <section className="bg-white py-16 lg:pb-20">
+        <FadeIn variant="fadeIn" speed="slow">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
           <div className="relative overflow-hidden rounded-[19px] border border-[#61ce70] bg-black px-6 py-12 text-center sm:px-12 lg:px-16 lg:py-16">
             <div
@@ -108,6 +112,7 @@ export default function Features() {
             </div>
           </div>
         </div>
+        </FadeIn>
       </section>
     </>
   );

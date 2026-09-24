@@ -1,21 +1,33 @@
+"use client";
+
 import Image from "next/image";
 import Container from "@/components/ui/Container";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 const features = [
   {
     title: "Meet Us",
     body: "Locate us today to enjoy a unique and personalized experience.",
+    /** Wave 1 — with “Welcome” */
+    wave: 1 as const,
   },
   {
     title: "Book A Test Ride",
     body: "Experience the journey from your doorstep by booking a Test Ride.",
+    wave: 1 as const,
   },
   {
     title: "Discover Your Perfect Ride",
     body: "Available in a range of striking colors to match your style.",
+    /** Wave 2 — with Explore headline */
+    wave: 2 as const,
   },
 ];
 
+/**
+ * Wave 1: Welcome + Meet Us + Book A Test Ride → from right → left
+ * Wave 2 (delayed): Explore title + Discover → from right → left
+ */
 export default function Welcome() {
   return (
     <section className="bg-white py-16 lg:py-20">
@@ -32,21 +44,32 @@ export default function Welcome() {
           </div>
 
           <div>
-            <span className="font-montserrat block text-[24px] font-bold text-[#61ce70] sm:text-[30px]">
-              Welcome
-            </span>
-            <h2 className="font-montserrat mb-8 max-w-[565px] text-[32px] font-bold leading-tight text-[#212121] sm:text-[38px] lg:text-[44px]">
-              Explore, Experience, And Connect With Us
-            </h2>
+            <FadeIn variant="fadeInRight" speed="slow" delay={0}>
+              <span className="font-montserrat block text-[24px] font-bold text-[#61ce70] sm:text-[30px]">
+                Welcome
+              </span>
+            </FadeIn>
+
+            <FadeIn variant="fadeInRight" speed="slow" delay={0.35}>
+              <h2 className="font-montserrat mb-8 max-w-[565px] text-[32px] font-bold leading-tight text-[#212121] sm:text-[38px] lg:text-[44px]">
+                Explore, Experience, And Connect With Us
+              </h2>
+            </FadeIn>
 
             <div className="grid grid-cols-1 gap-x-[20px] gap-y-8 sm:grid-cols-2">
               {features.map((f) => (
-                <div key={f.title} className="max-w-[273px]">
+                <FadeIn
+                  key={f.title}
+                  variant="fadeInRight"
+                  speed="slow"
+                  delay={f.wave === 1 ? 0 : 0.35}
+                  className="max-w-[273px]"
+                >
                   <h3 className="font-montserrat mb-2 text-[18px] font-bold text-[#61ce70] sm:text-[20px]">
                     {f.title}
                   </h3>
                   <p className="font-roboto text-[14px] leading-relaxed text-[#212121]">{f.body}</p>
-                </div>
+                </FadeIn>
               ))}
             </div>
           </div>

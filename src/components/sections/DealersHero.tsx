@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 const FEATURES = [
   {
@@ -48,9 +49,13 @@ const FEATURES = [
   },
 ] as const;
 
+/**
+ * Matches live elfaelectric.com/our-dealers hero (~535px tall @1440):
+ * inner pad ~30/16, feature→bike gap 0, bike ~575×372–389.
+ */
 export default function DealersHero() {
   return (
-    <section className="relative flex min-h-[480px] items-center overflow-hidden sm:min-h-[520px] lg:min-h-[620px]">
+    <section className="relative flex items-center overflow-hidden lg:min-h-[535px]">
       <Image
         src="/assets/images/blog-hero-bg.jpg"
         alt=""
@@ -61,10 +66,10 @@ export default function DealersHero() {
       />
       <div className="absolute inset-0 bg-black/25" />
 
-      <div className="relative z-10 mx-auto w-full max-w-container px-4 py-10 sm:px-6 sm:py-12 lg:py-14">
-        {/* Mobile: text → bike → features (all centered). Desktop: text left | features + bike right */}
-        <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
-          <div className="w-full max-w-[560px] text-center lg:text-left">
+      <div className="relative z-10 mx-auto w-full max-w-container px-4 py-8 sm:px-6 lg:py-0 lg:pt-[30px] lg:pb-4">
+        {/* Mobile: text → bike → features. Desktop: text left | features + bike right */}
+        <div className="flex flex-col items-center gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
+          <div className="w-full max-w-[560px] text-center lg:max-w-[575px] lg:text-left">
             <h1 className="font-montserrat text-[22px] font-bold uppercase leading-[30px] text-white sm:text-[32px] sm:leading-[42px] lg:text-[35px] lg:leading-[46px]">
               Authorized
               <br />
@@ -84,33 +89,36 @@ export default function DealersHero() {
             </div>
           </div>
 
-          <div className="flex w-full flex-col items-center gap-5 lg:max-w-[620px] lg:flex-1 lg:items-stretch">
-            {/* Bike first on mobile, second on desktop */}
-            <div className="relative order-1 mx-auto h-[180px] w-full max-w-[420px] sm:h-[240px] lg:order-2 lg:h-[300px] lg:max-w-none">
-              <Image
-                src="/assets/images/dealers/black-bike.png"
-                alt="ELFA EV-125 electric motorcycle"
-                fill
-                priority
-                className="object-contain object-bottom"
-                sizes="(max-width: 1024px) 90vw, 520px"
-              />
+          {/* Ref right col: features then bike, gap 0 */}
+          <div className="flex w-full flex-col items-center gap-3 lg:max-w-[575px] lg:flex-1 lg:items-stretch lg:gap-0">
+            {/* Bike first on mobile, under features on desktop */}
+            <div className="relative order-1 mx-auto h-[200px] w-full max-w-[420px] sm:h-[260px] lg:order-2 lg:mx-0 lg:h-[372px] lg:max-w-none">
+              <FadeIn variant="fadeIn" speed="slow" className="absolute inset-0" immediate>
+                <Image
+                  src="/assets/images/dealers/black-bike.png"
+                  alt="ELFA EV-125 electric motorcycle"
+                  fill
+                  priority
+                  className="object-contain object-bottom"
+                  sizes="(max-width: 1024px) 90vw, 575px"
+                />
+              </FadeIn>
             </div>
 
-            {/* Features below bike on mobile, above bike on desktop — 4 in a row */}
-            <div className="order-2 grid w-full grid-cols-4 gap-1.5 sm:gap-3 lg:order-1 lg:gap-4">
+            {/* Features — 4-up; ref gap 10px between cards */}
+            <div className="order-2 grid w-full grid-cols-4 gap-1.5 sm:gap-2.5 lg:order-1 lg:gap-2.5">
               {FEATURES.map((f) => (
-                <div key={f.alt} className="text-center">
-                  <h2 className="font-montserrat mb-1 text-[8px] font-bold uppercase leading-tight text-white sm:mb-1.5 sm:text-[12px] lg:text-[18px]">
+                <div key={f.alt} className="flex flex-col gap-1 text-center sm:gap-1.5">
+                  <h2 className="font-montserrat text-[8px] font-bold uppercase leading-[1] text-white sm:text-[12px] lg:text-[18px] lg:leading-[18px]">
                     {f.label}
                   </h2>
-                  <div className="relative mx-auto aspect-[958/492] w-full overflow-hidden rounded-[3px] border border-white/80 sm:rounded-[4px]">
+                  <div className="relative mx-auto aspect-[136/73] w-full overflow-hidden rounded-[10px] border border-white/80">
                     <Image
                       src={f.src}
                       alt={f.alt}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 640px) 22vw, 160px"
+                      sizes="(max-width: 640px) 22vw, 136px"
                     />
                   </div>
                 </div>

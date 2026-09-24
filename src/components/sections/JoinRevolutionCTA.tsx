@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Calendar } from "lucide-react";
 import ProductSelectModal from "@/components/ui/ProductSelectModal";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 const SPARK =
   "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
@@ -14,7 +15,9 @@ export default function JoinRevolutionCTA() {
     <>
       <section className="bg-white py-8 lg:py-10">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-          <div
+          <FadeIn
+            variant="fadeInUp"
+            speed="normal"
             className="flex flex-col items-start gap-6 rounded-[15px] px-6 py-10 text-center sm:px-10"
             style={{ backgroundImage: SPARK }}
           >
@@ -44,7 +47,7 @@ export default function JoinRevolutionCTA() {
                 Book a Test Ride
               </a>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 

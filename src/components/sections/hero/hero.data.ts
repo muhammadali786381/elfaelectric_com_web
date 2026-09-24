@@ -68,6 +68,6 @@ export const slides: Slide[] = [
     image: "/assets/images/hero-pave-gr.webp",
     imageMobile: "/assets/images/hero-pave-gr-vertical.webp",
     alt: "PAVE pre-booking — get Rs. 80,000 government subsidy on ELFA EV125 and EV1",
-    href: "/pave-scheme",
+    href: "https://docs.google.com/forms/d/e/1FAIpQLSdxnx9J7GDgtDHg3_jnbsRfdYb_dR79s9VJc0xZ4kKxqcsA1w/viewform",
   },
 ];

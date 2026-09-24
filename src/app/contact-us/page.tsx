@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 import Marquee from "@/components/sections/Marquee";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 export const metadata: Metadata = {
   title: "Contact ELFA Electric Motorcycle Pakistan",
@@ -82,7 +83,7 @@ const socialLinks = [
   {
     label: "YouTube",
     href: "#",
-    path: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z",
+    path: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.016 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z",
   },
 ];
 
@@ -102,6 +103,10 @@ function ChevronList({ items }: { items: string[] }) {
   );
 }
 
+/**
+ * Animations use opacity + px translate only.
+ * FadeIn IS the card (same classes) — no extra wrapper that breaks grid height.
+ */
 export default function ContactUsPage() {
   return (
     <>
@@ -122,10 +127,12 @@ export default function ContactUsPage() {
           bikesSrc="/assets/images/blog-page.png"
         />
 
-        {/* Looking to contact + EV-125 */}
+        {/* Looking to contact (from left) + bike fade */}
         <section className="bg-white py-10 lg:py-14">
           <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
-            <div
+            <FadeIn
+              variant="fadeInLeft"
+              speed="slow"
               className="rounded-[10px] border-2 border-[#61ce70] px-5 py-10 sm:px-5 sm:py-[60px] sm:pr-5"
               style={{ backgroundImage: SPARK }}
             >
@@ -139,8 +146,8 @@ export default function ContactUsPage() {
                 or email — or visit our nearest EV bike service center. Your journey toward sustainable
                 mobility in Pakistan starts here!
               </p>
-            </div>
-            <div className="relative mx-auto aspect-square w-full max-w-[480px]">
+            </FadeIn>
+            <FadeIn variant="fadeIn" speed="slow" className="relative mx-auto aspect-square w-full max-w-[480px]">
               <Image
                 src="/assets/images/contact/EV-125-BIKE-1.png"
                 alt="ELFA EV-125 electric motorcycle"
@@ -148,14 +155,18 @@ export default function ContactUsPage() {
                 className="object-contain"
                 sizes="480px"
               />
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* Scooty + Get in Touch */}
+        {/* Scooty fade + Get in Touch from right */}
         <section className="bg-white pb-10 lg:pb-14">
           <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
-            <div className="relative mx-auto aspect-[624/753] w-full max-w-[420px] order-2 lg:order-1">
+            <FadeIn
+              variant="fadeIn"
+              speed="slow"
+              className="relative mx-auto aspect-[624/753] w-full max-w-[420px] order-2 lg:order-1"
+            >
               <Image
                 src="/assets/images/contact/new-bike-scooty.png"
                 alt="ELFA EV-1 Scooty and EV-125"
@@ -163,8 +174,10 @@ export default function ContactUsPage() {
                 className="object-contain"
                 sizes="420px"
               />
-            </div>
-            <div
+            </FadeIn>
+            <FadeIn
+              variant="fadeInRight"
+              speed="slow"
               className="order-1 rounded-[10px] border-2 border-[#61ce70] px-5 py-10 sm:px-10 sm:py-10 sm:pl-5 lg:order-2"
               style={{ backgroundImage: SPARK }}
             >
@@ -179,15 +192,17 @@ export default function ContactUsPage() {
               <p className="font-roboto mt-5 text-[15px] leading-relaxed text-white sm:text-[16px]">
                 Do not hesitate to reach out—we are just a call or click away!
               </p>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* Email + Dealers */}
+        {/* Email + Dealers — both from left; h-full keeps equal card height */}
         <section className="bg-white pb-12 lg:pb-16">
-          <div className="mx-auto grid w-full max-w-container gap-5 px-4 sm:px-6 lg:grid-cols-2">
-            <div
-              className="rounded-[20px] border-2 border-[#61ce70] p-[30px]"
+          <div className="mx-auto grid w-full max-w-container items-stretch gap-5 px-4 sm:px-6 lg:grid-cols-2">
+            <FadeIn
+              variant="fadeInLeft"
+              speed="slow"
+              className="h-full rounded-[20px] border-2 border-[#61ce70] p-[30px]"
               style={{ backgroundImage: SPARK }}
             >
               <h2 className="font-montserrat mb-4 text-[22px] font-semibold text-[#61ce70] sm:text-[25px] sm:leading-[33px]">
@@ -206,10 +221,13 @@ export default function ContactUsPage() {
               <p className="font-roboto text-[15px] leading-relaxed text-white sm:text-[16px]">
                 We typically respond within 24 hours. For urgent matters, please call or WhatsApp us.
               </p>
-            </div>
+            </FadeIn>
 
-            <div
-              className="rounded-[20px] border-2 border-[#61ce70] p-[30px]"
+            <FadeIn
+              variant="fadeInLeft"
+              speed="slow"
+              delay={0.12}
+              className="h-full rounded-[20px] border-2 border-[#61ce70] p-[30px]"
               style={{ backgroundImage: SPARK }}
             >
               <h2 className="font-montserrat mb-4 text-[22px] font-semibold text-[#61ce70] sm:text-[25px] sm:leading-[33px]">
@@ -225,26 +243,34 @@ export default function ContactUsPage() {
                 </Link>{" "}
                 and locate the nearest electric bike dealer near me!
               </p>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* Form + contact info */}
+        {/* Form block — heading L/R, form fade */}
         <section className="bg-white pb-10 lg:pb-14">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <p className="font-montserrat mb-1 text-[16px] font-semibold text-[#7a7a7a] sm:text-[18px]">
-              Contact Us
-            </p>
-            <h2 className="font-montserrat mb-3 text-[28px] font-semibold leading-tight text-[#61ce70] sm:text-[40px] lg:text-[55px] lg:leading-[55px]">
-              Reach Our Experts For Support
-            </h2>
-            <p className="font-roboto mb-8 max-w-[720px] text-[15px] leading-relaxed text-[#212121]">
-              Whether you have a question, a suggestion, or just want to say hello, this is the place
-              to do it. Please fill out the form below with your details and message, and we will get
-              back to you as soon as possible.
-            </p>
+            <FadeIn variant="fadeInLeft" speed="slow">
+              <p className="font-montserrat mb-1 text-center text-[16px] font-semibold text-[#7a7a7a] sm:text-[18px]">
+                Contact Us
+              </p>
+            </FadeIn>
+            <FadeIn variant="fadeInRight" speed="slow" delay={0.1}>
+              <h2 className="font-montserrat mb-3 text-center text-[28px] font-semibold leading-tight text-[#61ce70] sm:text-[40px] lg:text-[55px] lg:leading-[55px]">
+                Reach Our Experts For Support
+              </h2>
+            </FadeIn>
+            <FadeIn variant="fadeInLeft" speed="slow" delay={0.2}>
+              <p className="font-roboto mx-auto mb-8 max-w-[720px] text-center text-[15px] leading-relaxed text-[#212121]">
+                Whether you have a question, a suggestion, or just want to say hello, this is the place
+                to do it. Please fill out the form below with your details and message, and we will get
+                back to you as soon as possible.
+              </p>
+            </FadeIn>
 
-            <div
+            <FadeIn
+              variant="fadeIn"
+              speed="slow"
               className="grid grid-cols-1 gap-8 rounded-[15px] border border-black/[0.06] p-5 sm:p-8 lg:grid-cols-[1.2fr_1fr] lg:gap-10"
               style={{ backgroundImage: SPARK }}
             >
@@ -340,30 +366,34 @@ export default function ContactUsPage() {
                   ))}
                 </div>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        {/* Map */}
+        {/* Map fade in — fixed iframe height unchanged */}
         <section className="w-full p-10 lg:p-16">
-          <iframe
-            title="ELFA Electric office location"
-            src="https://maps.google.com/maps?q=C3i%20GA-70-A3%2C%20Korangi%20Creek%20Industrial%20Park%20Korangi%2C%20Karachi%2C%20Sindh&t=m&z=14&output=embed&iwloc=near"
-            className="h-[250px] w-full border-0 sm:h-[420px] lg:h-[520px]"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+          <FadeIn variant="fadeIn" speed="slow">
+            <iframe
+              title="ELFA Electric office location"
+              src="https://maps.google.com/maps?q=C3i%20GA-70-A3%2C%20Korangi%20Creek%20Industrial%20Park%20Korangi%2C%20Karachi%2C%20Sindh&t=m&z=14&output=embed&iwloc=near"
+              className="h-[250px] w-full border-0 sm:h-[420px] lg:h-[520px]"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </FadeIn>
         </section>
 
-        {/* FAQs — centered heading + chevron accordion (matches live contact) */}
+        {/* FAQ — title fade up only */}
         <section className="bg-white py-14 lg:py-20">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <p className="font-montserrat text-center text-[20px] font-bold leading-[18px] text-[#61ce70] sm:text-[24px]">
-              Do you have
-            </p>
-            <h2 className="font-montserrat  my-3 text-center text-[32px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px] lg:leading-[50px]">
-              Frequently Asked Questions
-            </h2>
+            <FadeIn variant="fadeInUp" speed="slow">
+              <p className="font-montserrat text-center text-[20px] font-bold leading-[18px] text-[#61ce70] sm:text-[24px]">
+                Do you have
+              </p>
+              <h2 className="font-montserrat my-3 text-center text-[32px] font-bold text-[#212121] sm:text-[42px] lg:text-[50px] lg:leading-[50px]">
+                Frequently Asked Questions
+              </h2>
+            </FadeIn>
             <div className="mx-auto flex max-w-[700px] flex-col gap-[10px]">
               {faqs.map((f) => (
                 <details
