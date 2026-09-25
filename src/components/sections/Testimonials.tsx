@@ -8,6 +8,8 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { FadeIn } from "@/components/motion/FadeIn";
+import FlipButton from "@/components/ui/FlipButton";
+import { motion } from "motion/react";
 
 const testimonials = [
   {
@@ -82,7 +84,7 @@ function StarRating({ rating }: { rating: number }) {
 
 export default function Testimonials() {
   return (
-    <section className="bg-bg-primary py-16 lg:py-24">
+    <section className="bg-[#050505] py-8 lg:py-12">
       <style>{`
         .testimonials-swiper .swiper-pagination {
           position: static;
@@ -103,18 +105,23 @@ export default function Testimonials() {
         }
       `}</style>
 
-      <FadeIn variant="fadeIn" speed="slow">
-        <div className="mx-auto w-full max-w-container px-4 sm:px-6">
+      <div className="mx-auto w-full max-w-container px-4 sm:px-6">
 
-          {/* Heading */}
-          <div className="mb-12 text-center">
-            <p className="font-roboto mb-3 text-[12px] font-semibold uppercase tracking-[2px] text-brand-primary">
-              Real riders, real results
-            </p>
-            <h2 className="font-montserrat text-[32px] font-bold text-text-primary sm:text-[40px] lg:text-[48px]">
-              Our Happy Customers
-            </h2>
-          </div>
+        {/* Heading */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12 text-center"
+        >
+          <p className="font-roboto mb-3 text-[12px] font-semibold uppercase tracking-[2px] text-brand-primary">
+            Real riders, real results
+          </p>
+          <h2 className="font-montserrat text-[32px] font-bold text-text-primary sm:text-[40px] lg:text-[48px]">
+            Our Happy Customers
+          </h2>
+        </motion.div>
 
           {/* Swiper */}
           <div className="mx-auto max-w-[900px]">
@@ -179,19 +186,17 @@ export default function Testimonials() {
 
           {/* Video Testimonials CTA */}
           <div className="mt-10 text-center">
-            <Link
+            <FlipButton
               href="/video-testimonials"
-              className="group font-roboto inline-flex h-12 items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-7 text-[13px] font-semibold uppercase tracking-[1.5px] text-white/70 transition-all hover:border-brand-primary/40 hover:bg-brand-primary/10 hover:text-brand-primary"
+              variant="primary"
+              icon={<Play className="h-4 w-4 fill-zinc-950 text-zinc-950" />}
+              className="h-14 border-2 border-[#00c965] shadow-[0_0_20px_rgba(0,229,115,0.2)]"
             >
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-primary/20 transition-all group-hover:bg-brand-primary/30">
-                <Play className="h-3 w-3 fill-brand-primary text-brand-primary" />
-              </span>
               Watch Video Testimonials
-            </Link>
+            </FlipButton>
           </div>
 
         </div>
-      </FadeIn>
     </section>
   );
 }

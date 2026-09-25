@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ProductPage from "@/components/product/ProductPage";
+import ScootyPage from "@/components/scooty/ScootyPage";
 import { scootyEv1 } from "@/data/products/scooty-ev-1";
 
 export const dynamic = "force-static";
@@ -15,8 +15,9 @@ export default function ScootyEv1Page() {
   return (
     <>
       <Header />
-      <ProductPage product={scootyEv1} />
+      <ScootyPage product={scootyEv1} />
       <Footer />
     </>
   );
 }
+
