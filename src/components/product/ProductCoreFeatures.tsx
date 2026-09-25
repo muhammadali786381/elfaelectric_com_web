@@ -1,117 +1,136 @@
+"use client";
+
 import Image from "next/image";
 import type { ProductCoreFeature } from "@/data/products/types";
+import { motion } from "motion/react";
 
 type Props = {
   features: ProductCoreFeature[];
-  /** Center product image (live ~529×500) */
   centerImage: string;
   productName: string;
 };
 
-function FeatureRow({
-  feature,
-  mirror,
-}: {
-  feature: ProductCoreFeature;
-  /** Right column: text first, icon on the outside */
-  mirror?: boolean;
+function FeatureCard({ 
+  feature, 
+  align = "left",
+  index = 0
+}: { 
+  feature: ProductCoreFeature, 
+  align?: "left" | "right" | "center",
+  index?: number
 }) {
+  const isRightSide = align === "left"; // Text aligns left -> it's placed on the right side of the bike
+  const isLeftSide = align === "right"; // Text aligns right -> it's placed on the left side of the bike
+  
+  // They emerge from the bike, so left items come from right (+x), right items come from left (-x)
+  const initialX = isRightSide ? -60 : isLeftSide ? 60 : 0;
+  const initialY = align === "center" ? 40 : 0;
+
   return (
-    <div
-      className={`flex items-center gap-3 sm:gap-4 ${mirror ? "flex-row-reverse text-right" : "text-left"}`}
+    <motion.div
+      initial={{ opacity: 0, x: initialX, y: initialY }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ 
+        duration: 0.8, 
+        ease: [0.16, 1, 0.3, 1], 
+        delay: index * 0.15 
+      }}
+      className={`group flex flex-col gap-2 ${
+        align === "right" ? "items-end text-right" : align === "center" ? "items-center text-center" : "items-start text-left"
+      }`}
     >
-      <div className="relative h-[52px] w-[52px] shrink-0 sm:h-[60px] sm:w-[60px]">
-        <Image src={feature.icon} alt="" fill className="object-contain" sizes="60px" />
+      <div className="relative h-10 w-10 shrink-0 transition-transform duration-500 group-hover:scale-110 sm:h-12 sm:w-12">
+        <Image src={feature.icon} alt="" fill className="object-contain" sizes="48px" />
       </div>
-      <div className="min-w-0">
-        <h3 className="font-montserrat text-[18px] font-bold leading-tight text-text-primary sm:text-[22px]">
+      <div>
+        <h3 className="font-montserrat text-[20px] font-bold leading-tight text-white sm:text-[24px]">
           {feature.title}
         </h3>
-        <p className="font-roboto mt-0.5 text-[14px] font-normal leading-snug text-text-primary sm:text-[16px]">
+        <p className="font-roboto mt-2 max-w-[280px] text-[15px] font-normal leading-relaxed text-white/60">
           {feature.description}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-/** Mobile cell: icon above title + desc, centered — matches live mobile ref */
-function FeatureCell({ feature }: { feature: ProductCoreFeature }) {
-  return (
-    <div className="flex flex-col items-center px-1 text-center">
-      <div className="relative mb-2 h-[44px] w-[44px] sm:h-[52px] sm:w-[52px]">
-        <Image src={feature.icon} alt="" fill className="object-contain" sizes="52px" />
-      </div>
-      <h3 className="font-montserrat text-[14px] font-bold leading-tight text-text-primary sm:text-[15px]">
-        {feature.title}
-      </h3>
-      <p className="font-roboto mt-1 text-[11px] font-normal leading-snug text-text-primary sm:text-[12px]">
-        {feature.description}
-      </p>
-    </div>
-  );
-}
-
-/**
- * Live layout:
- * - Desktop: left | bike | right (mirrored)
- * - Mobile: 2-col icon-top grid, then center bike
- */
 export default function ProductCoreFeatures({ features, centerImage, productName }: Props) {
   const left = features.slice(0, 3);
   const right = features.slice(3, 6);
-  // Pair left[i] with right[i] for 2-col mobile rows
-  const mobileRows = left.map((l, i) => [l, right[i]] as const).filter(([, r]) => r);
 
   return (
-    <section className="bg-bg-secondary py-10 lg:py-16">
-      <div className="mx-auto w-full max-w-[1150px] px-3 sm:px-6">
-        <h2 className="font-montserrat text-center text-[28px] font-bold leading-none text-text-primary sm:text-[36px] lg:text-[51px]">
-          Core Features
-        </h2>
-
-        {/* Mobile: 2-col grid (icon above text), then bike */}
-        <div className="mt-8 lg:hidden">
-          <div className="mx-auto grid max-w-[400px] grid-cols-2 gap-x-4 gap-y-6">
-            {mobileRows.flatMap(([l, r]) => [
-              <FeatureCell key={l.title} feature={l} />,
-              <FeatureCell key={r.title} feature={r} />,
-            ])}
-          </div>
-
-          <div className="relative mx-auto mt-8 h-[280px] w-full max-w-[360px] sm:h-[320px]">
-            <Image
-              src={centerImage}
-              alt={productName}
-              fill
-              className="object-contain"
-              sizes="360px"
-            />
-          </div>
+    <section className="relative w-full overflow-hidden bg-[#050505] py-24 lg:py-32">
+      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6">
+        
+        <div className="mb-20 flex flex-col items-center justify-center text-center">
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 0.2, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="font-montserrat text-[40px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[56px] lg:text-[80px]"
+          >
+            Core Features
+          </motion.h2>
         </div>
 
         {/* Desktop: left | bike | right */}
-        <div className="mt-12 hidden items-center lg:grid lg:grid-cols-[1fr_minmax(420px,529px)_1fr] lg:gap-6 xl:gap-8">
-          <div className="flex flex-col justify-center gap-[30px]">
-            {left.map((f) => (
-              <FeatureRow key={f.title} feature={f} />
+        <div className="hidden items-center lg:grid lg:grid-cols-[1fr_minmax(400px,500px)_1fr] lg:gap-8 xl:gap-16">
+          {/* Left Column (aligned right to point at bike) */}
+          <div className="flex flex-col gap-16">
+            {left.map((f, i) => (
+              <FeatureCard key={f.title} feature={f} align="right" index={i} />
             ))}
           </div>
 
-          <div className="relative mx-auto h-[500px] w-full max-w-[529px]">
+          {/* Center Bike */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="relative mx-auto flex h-[500px] w-full items-center justify-center"
+          >
             <Image
               src={centerImage}
               alt={productName}
               fill
-              className="object-contain"
-              sizes="529px"
+              className="object-contain drop-shadow-2xl"
+              sizes="500px"
               priority
             />
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col justify-center gap-[30px]">
-            {right.map((f) => (
-              <FeatureRow key={f.title} feature={f} mirror />
+          {/* Right Column (aligned left to point at bike) */}
+          <div className="flex flex-col gap-16">
+            {right.map((f, i) => (
+              <FeatureCard key={f.title} feature={f} align="left" index={i} />
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile / Tablet Grid */}
+        <div className="flex flex-col gap-16 lg:hidden">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="relative mx-auto h-[300px] w-full max-w-[400px] sm:h-[400px]"
+          >
+            <Image
+              src={centerImage}
+              alt={productName}
+              fill
+              className="object-contain drop-shadow-2xl"
+              sizes="100vw"
+            />
+          </motion.div>
+          
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
+            {features.map((f, i) => (
+              <FeatureCard key={f.title} feature={f} align="center" index={i} />
             ))}
           </div>
         </div>

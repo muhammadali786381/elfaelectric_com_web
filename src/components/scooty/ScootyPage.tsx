@@ -1,6 +1,6 @@
 import type { Product } from "@/data/products/types";
-import ProductHero from "@/components/product/ProductHero";
-import ProductColorCarousel from "@/components/product/ProductColorCarousel";
+import ScootyHero from "@/components/scooty/ScootyHero";
+import ScootyShowcase from "@/components/scooty/ScootyShowcase";
 import ProductCoreFeatures from "@/components/product/ProductCoreFeatures";
 import ProductAdvancedFeatures from "@/components/product/ProductAdvancedFeatures";
 import ProductSpecs from "@/components/product/ProductSpecs";
@@ -9,30 +9,55 @@ import SavingsCalculator from "@/components/sections/SavingsCalculator";
 import Testimonials from "@/components/sections/Testimonials";
 import AdventureCTA from "@/components/sections/AdventureCTA";
 import Marquee from "@/components/sections/Marquee";
-import FinalCTA from "../sections/FinalCTA";
+import ScootyMetaSection from "@/components/scooty/ScootyMetaSection";
 
-/** Shared product page layout — pass EV-125 / EV-1 (etc.) data. */
-export default function ProductPage({ product }: { product: Product }) {
+/** EV-1 Scooty dedicated page — lighter, modern personality vs EV-125 */
+export default function ScootyPage({ product }: { product: Product }) {
   return (
     <main className="flex-1">
-      <ProductHero product={product} />
-      <ProductColorCarousel title={product.colorTitle} images={product.colorImages} />
+      {/* Hero: larger scooty, no partition, urban grid bg */}
+      <ScootyHero product={product} />
+
+      {/* Scooty Showcase: clean full-width view, replaces color comparison slider */}
+      <ScootyShowcase
+        image={product.colorImages[0]}
+        title={product.colorTitle}
+        productName={product.name}
+      />
+
+      {/* Savings Calculator */}
       <SavingsCalculator productId={product.calculatorId} />
+
+      {/* Core Features: animated emerge from scooty */}
       <ProductCoreFeatures
         features={product.coreFeatures}
         centerImage={product.coreFeatureImage}
         productName={product.name}
       />
+
+      {/* Advanced Features */}
       <ProductAdvancedFeatures features={product.advancedFeatures} />
+
+      {/* Specifications */}
       <ProductSpecs groups={product.specs} />
-      {/* <FinalCTA/> */}
+
+      {/* Product Gallery */}
       <ProductGallery
         shortName={product.shortName}
         buyHref={product.buyHref}
         images={product.galleryImages}
       />
+
+      {/* Top Performing on Meta
+      <ScootyMetaSection /> */}
+
+      {/* Testimonials */}
       <Testimonials />
+
+      {/* CTA */}
       <AdventureCTA />
+
+      {/* Marquee */}
       <Marquee />
     </main>
   );

@@ -1,96 +1,49 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
-import type { Swiper as SwiperType } from "swiper";
-import "swiper/css";
+import { ImageComparisonSlider } from "@/components/ui/image-comparison-slider-horizontal";
 
 type Props = {
   title: string;
   images: string[];
 };
 
-/**
- * Color / variant strip under the hero.
- * ≤2 images: static row, no arrows, no sliding.
- * >2 images: Swiper (2-up desktop) + black chevron arrows — matches live EV-125.
- */
 export default function ProductColorCarousel({ title, images }: Props) {
-  const swiperRef = useRef<SwiperType | null>(null);
-  const canSlide = images.length > 2;
+  // We need at least 2 images to compare. If there's only 1, we just duplicate it.
+  const leftImage = images[0] || "";
+  const rightImage = images[1] || images[0] || "";
 
   return (
-    <section className="bg-bg-primary py-[60px]">
-      <div className="mx-auto w-full max-w-[1150px] px-4 sm:px-6">
-        <h2 className="font-montserrat text-center text-[28px] font-bold leading-[1.2] text-text-primary sm:text-[36px] lg:text-[42px] lg:leading-[51px]">
+    <section className="relative w-full overflow-hidden bg-[#050505] py-24 lg:py-36">
+      {/* Background Image with Dark Gradients */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/assets/images/products-bg.jpeg"
+          alt="Colors Background"
+          fill
+          priority
+          className="object-cover object-center opacity-30 mix-blend-luminosity"
+        />
+        {/* Gradients to fade smoothly into the hero above and sections below */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505]" />
+        <div className="absolute inset-0 bg-[#050505]/40" />
+      </div>
+
+      <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-center px-6">
+        <h2 className="font-montserrat mb-16 text-center text-[36px] font-black italic uppercase leading-none tracking-tighter text-white sm:text-[48px] lg:text-[72px]">
           {title}
         </h2>
-
-        {!canSlide ? (
-          <div className="mt-[60px] flex flex-wrap items-end justify-center gap-[27px]">
-            {images.map((src) => (
-              <div
-                key={src}
-                className="relative h-[280px] w-full max-w-[560px] sm:h-[380px] lg:h-[500px]"
-              >
-                <Image src={src} alt="" fill className="object-contain object-bottom" sizes="560px" />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="relative mt-[60px] px-10 sm:px-12 lg:px-14">
-            <Swiper
-              modules={[Autoplay, Navigation]}
-              onSwiper={(s) => {
-                swiperRef.current = s;
-              }}
-              loop
-              autoplay={{ delay: 3500, disableOnInteraction: false, pauseOnMouseEnter: true }}
-              speed={500}
-              spaceBetween={27}
-              slidesPerView={1}
-              breakpoints={{
-                768: { slidesPerView: 2 },
-              }}
-              className="w-full [&_.swiper-wrapper]:items-end"
-            >
-              {images.map((src) => (
-                <SwiperSlide key={src}>
-                  <div className="relative mx-auto h-[300px] w-full sm:h-[400px] lg:h-[500px]">
-                    <Image
-                      src={src}
-                      alt=""
-                      fill
-                      className="object-contain object-bottom"
-                      sizes="(min-width: 768px) 560px, 90vw"
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-
-            {/* Live: 46px black chevrons, no circle fill */}
-            <button
-              type="button"
-              aria-label="Previous color"
-              onClick={() => swiperRef.current?.slidePrev()}
-              className="absolute top-[55%] left-0 z-10 flex h-[46px] w-[46px] -translate-y-1/2 items-center justify-center text-text-primary"
-            >
-              <ChevronLeft className="h-[46px] w-[46px]" strokeWidth={1.25} />
-            </button>
-            <button
-              type="button"
-              aria-label="Next color"
-              onClick={() => swiperRef.current?.slideNext()}
-              className="absolute top-[55%] right-0 z-10 flex h-[46px] w-[46px] -translate-y-1/2 items-center justify-center text-text-primary"
-            >
-              <ChevronRight className="h-[46px] w-[46px]" strokeWidth={1.25} />
-            </button>
-          </div>
-        )}
+        
+        {/* The Slider Container */}
+        <div className="relative aspect-[4/3] w-full max-w-[900px] overflow-hidden lg:aspect-[16/9]">
+           <ImageComparisonSlider
+             leftImage={leftImage}
+             rightImage={rightImage}
+             altLeft="Color Variant 1"
+             altRight="Color Variant 2"
+             className="w-full h-full"
+           />
+        </div>
       </div>
     </section>
   );
