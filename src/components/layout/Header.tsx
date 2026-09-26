@@ -27,6 +27,72 @@ const navLinks = [
   { label: "Blogs", href: "/blog" },
   { label: "Contact", href: "/contact-us" },
 ];
+const SEARCH_INDEX = [
+  {
+    id: "ev125",
+    title: "ELFA EV-125 BIKE",
+    description: "Designed to perform on rough roads",
+    href: "/ev-125",
+    image: "/assets/images/shop/ev-125-catalog.png",
+    keywords: ["bike", "motorcycle", "ev125", "ev-125", "125"],
+  },
+  {
+    id: "scooty",
+    title: "ELFA EV-1 Scooty",
+    description: "The perfect urban commuter",
+    href: "/scooty-ev-1",
+    image: "/assets/images/shop/ev1-scooty-catalog.png",
+    keywords: ["scooty", "scooter", "ev1", "ev-1", "urban"],
+  },
+  {
+    id: "dealers",
+    title: "Our Dealers",
+    description: "Find an ELFA dealership near you",
+    href: "/our-dealers",
+    image: null,
+    keywords: ["dealers", "dealership", "location", "buy", "store"],
+  },
+  {
+    id: "financing",
+    title: "Financing Partners",
+    description: "Easy installment plans for your EV",
+    href: "/financing-partners",
+    image: null,
+    keywords: ["finance", "installment", "loan", "bank", "pay"],
+  },
+  {
+    id: "pave",
+    title: "PAVE Scheme",
+    description: "Prime Minister's scheme for electric vehicles",
+    href: "/pave-scheme",
+    image: null,
+    keywords: ["pave", "scheme", "prime minister", "government", "subsidy"],
+  },
+  {
+    id: "mechanics",
+    title: "Certified Mechanics",
+    description: "Find authorized mechanics for your ELFA EV",
+    href: "/certified-mechanics",
+    image: null,
+    keywords: ["mechanic", "repair", "service", "maintenance", "workshop", "certified"],
+  },
+  {
+    id: "referral",
+    title: "Referral Program",
+    description: "Earn PKR 10,000 for every successful referral",
+    href: "/referral",
+    image: null,
+    keywords: ["referral", "earn", "reward", "money", "friend", "program"],
+  },
+  {
+    id: "contact",
+    title: "Contact Us",
+    description: "Get in touch with ELFA Electric",
+    href: "/contact-us",
+    image: null,
+    keywords: ["contact", "support", "help", "phone", "email"],
+  },
+];
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -36,8 +102,17 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { scrollY } = useScroll();
+
+  useEffect(() => {
+    if (isSearchOpen) {
+      setTimeout(() => searchInputRef.current?.focus(), 100);
+    } else {
+      setSearchQuery("");
+    }
+  }, [isSearchOpen]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
@@ -57,7 +132,7 @@ export default function Header() {
         layout
         initial={false}
         animate={{
-          width: isScrolled ? "min(1000px, calc(100vw - 32px))" : "100%",
+          width: isScrolled ? "min(1000px, calc(100% - 32px))" : "100%",
           maxWidth: isScrolled ? "1000px" : "1600px",
           height: isScrolled ? "72px" : "96px",
           borderRadius: isScrolled ? "999px" : "0px",
@@ -391,7 +466,7 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-start bg-black/80 p-4 pt-[10vh] backdrop-blur-sm sm:p-6 sm:pt-[15vh]"
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-start pointer-events-auto bg-black/80 p-4 pt-[10vh] backdrop-blur-sm sm:p-6 sm:pt-[15vh]"
           >
             <div className="relative w-full max-w-[700px]">
               <div className="relative flex items-center">
@@ -400,6 +475,8 @@ export default function Header() {
                   ref={searchInputRef}
                   type="text"
                   placeholder="Search bikes, scooties, or features..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="font-roboto h-16 w-full rounded-full border border-white/10 bg-white/5 pl-16 pr-14 text-[18px] text-white shadow-2xl outline-none backdrop-blur-xl transition-all focus:border-brand-primary focus:bg-white/10"
                 />
                 <button
@@ -411,44 +488,54 @@ export default function Header() {
               </div>
 
               <div className="mt-8">
-                <p className="font-roboto mb-4 text-[14px] font-medium text-white/50 uppercase tracking-widest">
-                  Popular Searches
-                </p>
-                <div className="flex flex-col gap-2">
-                  <Link
-                    href="/product/elfaev125"
-                    onClick={() => setIsSearchOpen(false)}
-                    className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-colors hover:border-white/10 hover:bg-white/[0.05]"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/5">
-                        <Image src="/assets/images/shop/ev-125-catalog.png" alt="EV-125" fill className="object-contain p-1" />
-                      </div>
-                      <div>
-                        <p className="font-montserrat text-[16px] font-bold text-white group-hover:text-brand-primary">ELFA EV-125 BIKE</p>
-                        <p className="font-roboto text-[13px] text-white/50">Designed to perform on rough roads</p>
-                      </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-white/30 transition-colors group-hover:text-brand-primary" />
-                  </Link>
+                {(() => {
+                  const query = searchQuery.trim().toLowerCase();
+                  const results = query
+                    ? SEARCH_INDEX.filter(
+                        (item) =>
+                          item.title.toLowerCase().includes(query) ||
+                          item.description.toLowerCase().includes(query) ||
+                          item.keywords.some((kw) => kw.toLowerCase().includes(query))
+                      )
+                    : SEARCH_INDEX.slice(0, 2);
 
-                  <Link
-                    href="/product/ev1-scooty"
-                    onClick={() => setIsSearchOpen(false)}
-                    className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-colors hover:border-white/10 hover:bg-white/[0.05]"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/5">
-                        <Image src="/assets/images/shop/ev1-scooty-catalog.png" alt="EV-1" fill className="object-contain p-1" />
+                  return (
+                    <>
+                      <p className="font-roboto mb-4 text-[14px] font-medium text-white/50 uppercase tracking-widest">
+                        {query ? (results.length > 0 ? "Search Results" : "No results found") : "Popular Searches"}
+                      </p>
+                      <div className="flex flex-col gap-2">
+                        {results.map((item) => (
+                          <Link
+                            key={item.id}
+                            href={item.href}
+                            onClick={() => setIsSearchOpen(false)}
+                            className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-colors hover:border-white/10 hover:bg-white/[0.05]"
+                          >
+                            <div className="flex items-center gap-4">
+                              {item.image ? (
+                                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/5">
+                                  <Image src={item.image} alt={item.title} fill sizes="48px" className="object-contain p-1" />
+                                </div>
+                              ) : (
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white/5 text-white/50 transition-colors group-hover:text-brand-primary">
+                                  <Search className="h-5 w-5" />
+                                </div>
+                              )}
+                              <div>
+                                <p className="font-montserrat text-[16px] font-bold text-white transition-colors group-hover:text-brand-primary">
+                                  {item.title}
+                                </p>
+                                <p className="font-roboto text-[13px] text-white/50">{item.description}</p>
+                              </div>
+                            </div>
+                            <ArrowRight className="h-5 w-5 text-white/30 transition-colors group-hover:text-brand-primary" />
+                          </Link>
+                        ))}
                       </div>
-                      <div>
-                        <p className="font-montserrat text-[16px] font-bold text-white group-hover:text-brand-primary">ELFA EV-1 Scooty</p>
-                        <p className="font-roboto text-[13px] text-white/50">The perfect urban commuter</p>
-                      </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-white/30 transition-colors group-hover:text-brand-primary" />
-                  </Link>
-                </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
           </motion.div>

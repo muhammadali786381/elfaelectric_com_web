@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Phone, MapPin } from "lucide-react";
-import PageHero from "@/components/sections/PageHero";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 import { FadeIn } from "@/components/motion/FadeIn";
 
 export const metadata: Metadata = {
@@ -9,8 +9,7 @@ export const metadata: Metadata = {
     "Find your nearest ELFA certified mechanic for genuine electric bike service and repairs.",
 };
 
-const SPARK =
-  "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
+
 
 /** Scraped from https://elfaelectric.com/elfa-certified-mechanics/ */
 const mechanics = [
@@ -60,57 +59,51 @@ export default function CertifiedMechanicsPage() {
   return (
     <>
             <main className="flex-1">
-        <PageHero
-          title="ELFA Certified Mechanics"
-          breadcrumb="ELFA Certified Mechanics"
-          withBikes
-          largeTitle
-          backgroundSrc="/assets/images/blog-hero-bg.jpg"
-          bikesSrc="/assets/images/blog-page.png"
+        <SecondaryHero
+          titleLine1="Certified"
+          titleLine2="Mechanics"
+          description="Find your nearest ELFA certified mechanic for genuine electric bike service and repairs across Pakistan."
+          imageSrc="/assets/images/hero4.jpeg"
+          imageAlt="ELFA Certified Mechanics"
         />
 
-        <section className="bg-bg-primary py-16 lg:py-[70px]">
+        <section className="bg-[#050505] py-20 lg:py-32">
           <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <h2 className="font-montserrat mb-8 text-center text-[26px] font-bold text-text-primary sm:text-[30px] lg:text-left">
-              ELFA certified Mechanics
+            <h2 className="font-montserrat mb-16 text-center text-[36px] font-black italic uppercase tracking-tight text-white sm:text-[48px] lg:text-left lg:text-[64px]">
+              Our <span className="text-brand-primary">Network</span>
             </h2>
-            <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3 xl:gap-16">
               {mechanics.map((m, i) => (
                 <FadeIn
                   key={m.name}
                   variant="fadeInUp"
                   speed="normal"
                   delay={Math.floor(i / 3) * 0.1}
-                  className="h-full rounded-[20px] border-b-[3px] border-brand-primary px-5 py-3 transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_12px_24px_rgba(0,0,0,0.12)]"
-                  style={{ backgroundImage: SPARK }}
+                  className="group flex flex-col justify-between border-t-2 border-white/10 pt-6 transition-colors hover:border-brand-primary"
                 >
-                  <h3 className="font-montserrat mb-2 text-[24px] font-bold leading-tight text-text-inverse sm:text-[30px]">
-                    {m.name}
-                  </h3>
-                  <div className="flex flex-col gap-2.5">
-                    <div className="flex items-start gap-2.5">
-                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-primary/20">
-                        <Phone className="h-3.5 w-3.5 text-brand-primary" strokeWidth={2} />
-                      </span>
-                      <div className="font-roboto flex flex-wrap gap-x-1 text-[15px] leading-relaxed text-text-inverse">
-                        {m.phones.map((p, pi) => (
-                          <span key={p}>
-                            <a
-                              href={`tel:${p.replace(/\s/g, "")}`}
-                              className="transition-colors hover:text-brand-primary"
-                            >
-                              {p}
-                            </a>
-                            {pi < m.phones.length - 1 && <span className="mx-1">|</span>}
-                          </span>
+                  <div>
+                    <h3 className="font-montserrat mb-8 text-[24px] font-bold uppercase leading-tight tracking-tight text-white transition-colors group-hover:text-brand-primary sm:text-[26px]">
+                      {m.name}
+                    </h3>
+                  </div>
+                  <div className="flex flex-col gap-5">
+                    <div className="flex items-start gap-4">
+                      <Phone className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" strokeWidth={2.5} />
+                      <div className="font-roboto flex flex-col gap-1.5 text-[16px] font-medium leading-snug text-white/70 sm:text-[18px]">
+                        {m.phones.map((p) => (
+                          <a
+                            key={p}
+                            href={`tel:${p.replace(/\s/g, "")}`}
+                            className="transition-colors hover:text-white"
+                          >
+                            {p}
+                          </a>
                         ))}
                       </div>
                     </div>
-                    <div className="flex items-start gap-2.5">
-                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-primary/20">
-                        <MapPin className="h-3.5 w-3.5 text-brand-primary" strokeWidth={2} />
-                      </span>
-                      <p className="font-roboto text-[15px] leading-relaxed text-text-inverse">{m.location}</p>
+                    <div className="flex items-start gap-4">
+                      <MapPin className="mt-1 h-5 w-5 shrink-0 text-brand-primary" strokeWidth={2.5} />
+                      <p className="font-roboto text-[16px] leading-relaxed text-white/70 sm:text-[18px]">{m.location}</p>
                     </div>
                   </div>
                 </FadeIn>
