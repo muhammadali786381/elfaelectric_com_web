@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ChevronRight, Mail } from "lucide-react";
-import PageHero from "@/components/sections/PageHero";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 import { FadeIn } from "@/components/motion/FadeIn";
 import FlipButton from "@/components/ui/FlipButton";
 
@@ -85,95 +85,119 @@ export default function ReferralPage() {
   return (
     <>
             <main className="flex-1">
-        <PageHero
-          title="ELFA Referral Program Pakistan – Earn PKR 10,000 Per Friend Referred"
-          subtitle={HERO_SUBTITLE}
-          breadcrumb="Referral"
-          withBikes
-          bodySubtitle
-          backgroundSrc="/assets/images/blog-hero-bg.jpg"
-          bikesSrc="/assets/images/blog-page.png"
+        <SecondaryHero
+          titleLine1="Referral"
+          titleLine2="Program"
+          description={HERO_SUBTITLE}
+          imageSrc="/assets/images/hero4.jpeg"
+          imageAlt="ELFA Referral Program"
         />
 
         {/* Exciting News */}
-        <section className="bg-bg-primary pt-12 pb-8 lg:pt-16 lg:pb-10">
+        <section className="bg-bg-primary border-b border-white/5 pb-12 pt-16 lg:pb-16 lg:pt-24">
           <div className="mx-auto w-full max-w-container px-4 text-center sm:px-6">
-            <h2 className="font-montserrat text-[32px] font-bold uppercase leading-tight text-brand-primary sm:text-[42px] lg:text-[52px]">
-              Exciting News from ELFA Electric!
+            <h2 className="font-montserrat text-[36px] font-black italic uppercase leading-tight text-brand-primary sm:text-[48px] lg:text-[64px]">
+              Earn PKR 10,000!
             </h2>
-            <p className="font-roboto mt-4 text-[16px] leading-relaxed text-text-secondary">
-              We are excited to launch our <strong><em>Referral Program</em></strong>, open to everyone!
+            <p className="font-roboto mx-auto mt-4 max-w-2xl text-[18px] leading-relaxed text-text-secondary lg:text-[20px]">
+              We are excited to launch our <strong><em>Referral Program</em></strong>, open to everyone. Help Pakistan go green and get rewarded instantly.
             </p>
           </div>
         </section>
 
-        {/* How it works + Why join — fade from left */}
-        <section className="bg-bg-primary pb-10 lg:pb-12">
-          <div className="mx-auto grid w-full max-w-container items-stretch gap-5 px-4 sm:px-6 lg:grid-cols-2">
-            <FadeIn
-              variant="fadeInLeft"
-              speed="normal"
-              className="h-full rounded-[19px] border border-brand-primary p-[30px]"
-              style={{ backgroundImage: SPARK }}
-            >
-              <SectionTitle>How the ELFA Referral Program Pakistan Works</SectionTitle>
-              <p className="font-roboto mb-5 text-[15px] leading-relaxed text-text-inverse">
-                Participating in the ELFA referral program Pakistan is simple and rewarding:
-              </p>
-              <ChevronList items={howItWorks} />
+        {/* How it works + Why join — text heavy editorial layout */}
+        <section className="bg-bg-primary py-16 lg:py-24">
+          <div className="mx-auto grid w-full max-w-container items-start gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-20">
+            <FadeIn variant="fadeInUp" speed="normal">
+              <h3 className="font-montserrat mb-8 text-[32px] font-bold tracking-tight text-white lg:text-[40px]">
+                How It Works
+              </h3>
+              <div className="flex flex-col gap-6">
+                {howItWorks.map((item, i) => (
+                  <div key={i} className="flex gap-5 border-t border-white/10 pt-6">
+                    <span className="font-montserrat text-[24px] font-black text-brand-primary/50">
+                      {(i + 1).toString().padStart(2, "0")}
+                    </span>
+                    <p className="font-roboto text-[16px] leading-relaxed text-text-inverse sm:text-[18px]">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </FadeIn>
 
-            <FadeIn
-              variant="fadeInLeft"
-              speed="normal"
-              delay={0.12}
-              className="h-full rounded-[19px] border border-brand-primary p-[30px]"
-              style={{ backgroundImage: SPARK }}
-            >
-              <SectionTitle>Why Join Our Electric Bike Referral Rewards?</SectionTitle>
-              <ChevronList items={benefits} />
+            <FadeIn variant="fadeInUp" speed="normal" delay={0.12}>
+              <h3 className="font-montserrat mb-8 text-[32px] font-bold tracking-tight text-white lg:text-[40px]">
+                Why Join?
+              </h3>
+              <ul className="flex flex-col gap-6">
+                {benefits.map((item) => (
+                  <li key={item} className="flex items-start gap-5">
+                    <div className="mt-2 flex h-2 w-2 shrink-0 rounded-full bg-brand-primary" />
+                    <span className="font-roboto text-[16px] leading-relaxed text-text-inverse sm:text-[18px]">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </FadeIn>
           </div>
         </section>
 
-        {/* Step-by-step + single big spark panel */}
-        <section className="bg-bg-primary pb-14 lg:pb-20">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <h2 className="font-montserrat mb-8 text-center text-[28px] font-bold text-brand-primary sm:text-[35px]">
-              Step-by-Step Guide to Earn PKR 10,000 Per Referral
+        {/* Terms & Details - Box-free editorial flow */}
+        <section className="bg-[#070707] py-16 lg:py-24">
+          <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
+            <h2 className="font-montserrat mb-12 text-center text-[32px] font-black uppercase tracking-tight text-brand-primary sm:text-[40px] lg:text-[48px]">
+              Terms & Details
             </h2>
 
-            <div
-              className="rounded-[20px] border border-brand-primary p-[30px] sm:p-10"
-              style={{ backgroundImage: SPARK }}
-            >
-              <SectionTitle>1. General Rules</SectionTitle>
-              <ChevronList items={generalRules} />
+            <div className="flex flex-col gap-12">
+              <div>
+                <h3 className="font-montserrat mb-6 text-[22px] font-bold text-white sm:text-[26px]">
+                  1. General Rules
+                </h3>
+                <ChevronList items={generalRules} />
+              </div>
 
-              <SectionTitle className="mt-10">Terms and Conditions: What You Need to Know</SectionTitle>
-              <ChevronList items={terms} />
+              <div className="border-t border-white/5 pt-12">
+                <h3 className="font-montserrat mb-6 text-[22px] font-bold text-white sm:text-[26px]">
+                  2. Terms and Conditions
+                </h3>
+                <ChevronList items={terms} />
+              </div>
 
-              <SectionTitle className="mt-10">3. Eligibility Criteria</SectionTitle>
-              <ChevronList items={eligibility} />
+              <div className="border-t border-white/5 pt-12">
+                <h3 className="font-montserrat mb-6 text-[22px] font-bold text-white sm:text-[26px]">
+                  3. Eligibility Criteria
+                </h3>
+                <ChevronList items={eligibility} />
+              </div>
 
-              <SectionTitle className="mt-10">4. Program Terms</SectionTitle>
-              <ChevronList items={programTerms} />
+              <div className="border-t border-white/5 pt-12">
+                <h3 className="font-montserrat mb-6 text-[22px] font-bold text-white sm:text-[26px]">
+                  4. Program Terms
+                </h3>
+                <ChevronList items={programTerms} />
+              </div>
 
-              <SectionTitle className="mt-12">Ready to Start Referring? Contact Us Now!</SectionTitle>
-              <p className="font-roboto mb-6 max-w-[720px] text-[15px] leading-relaxed text-text-inverse sm:text-[16px]">
-                Don’t wait—join the ELFA referral program Pakistan today! Message us on WhatsApp at{" "}
-                <strong>+92 3114863532</strong>, call us, or email{" "}
-                <strong>info@elfaelectric.com</strong> to get your referral code and start earning PKR
-                10,000 per referral.
-              </p>
-              <FlipButton
-                href="/contact-us"
-                variant="primary"
-                icon={<Mail className="h-4 w-4" strokeWidth={2} />}
-                className="font-roboto rounded-[3px] px-6 py-3 text-[14px] font-semibold tracking-[1px]"
-              >
-                Contact us
-              </FlipButton>
+              <div className="border-t border-brand-primary/20 pt-16">
+                <h3 className="font-montserrat mb-4 text-[28px] font-black uppercase tracking-tight text-brand-primary sm:text-[36px]">
+                  Ready to Start Referring?
+                </h3>
+                <p className="font-roboto mb-8 max-w-2xl text-[16px] leading-relaxed text-text-inverse/70 sm:text-[18px]">
+                  Message us on WhatsApp at <strong className="text-white">+92 3114863532</strong>, call us, or email <strong className="text-white">info@elfaelectric.com</strong> to get your referral code and start earning PKR 10,000 per referral.
+                </p>
+                <div className="flex">
+                  <FlipButton
+                    href="/contact-us"
+                    variant="primary"
+                    icon={<Mail className="h-5 w-5" strokeWidth={2} />}
+                    className="font-roboto h-[54px] rounded-none px-8 text-[14px] font-bold uppercase tracking-[1px]"
+                  >
+                    Contact Us Now
+                  </FlipButton>
+                </div>
+              </div>
             </div>
           </div>
         </section>
