@@ -1,20 +1,17 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { ArrowRight, ChevronRight, Download, Info, Mail, MapPin, Phone } from "lucide-react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import PageHero from "@/components/sections/PageHero";
-import Marquee from "@/components/sections/Marquee";
+import Image from "next/image";
+import { ArrowRight, ChevronRight, Download, Info, Mail, MapPin, Phone, CreditCard, Truck, FileText, Landmark } from "lucide-react";
+import JoinRevolutionCTA from "@/components/sections/JoinRevolutionCTA";
 import { FadeIn } from "@/components/motion/FadeIn";
+import SecondaryHero from "@/components/sections/SecondaryHero";
+import FlipButton from "@/components/ui/FlipButton";
 
 export const metadata: Metadata = {
   title: "PAVE Scheme | ELFA Electric Bike Instructions & Delivery",
   description:
     "Details for applicants selected under the PAVE Scheme (Self-Finance): pay order instructions, courier address, delivery timeline, and government subsidy transfer.",
 };
-
-const SPARK =
-  "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
 
 const INFO_VIDEO = "https://youtu.be/AB-iP7vWQtk?si=moPN1gQnP_8B4t8P";
 
@@ -40,8 +37,6 @@ const requiredDetails = [
   "CNIC Number",
 ];
 
-const cardClass = "rounded-[16px] p-5 shadow-[0_12px_40px_rgba(0,0,0,0.18)] sm:p-8 lg:p-10";
-
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -50,425 +45,252 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-function Inset({ children }: { children: ReactNode }) {
+function StepSection({ number, title, children }: { number: string, title: string, children: ReactNode }) {
   return (
-    <div className="rounded-[10px] border-l-[3px] border-brand-primary bg-bg-inverse/25 px-4 py-4">
-      {children}
-    </div>
-  );
-}
-
-function ContactPill({
-  href,
-  icon,
-  title,
-  detail,
-}: {
-  href: string;
-  icon: ReactNode;
-  title: string;
-  detail: string;
-}) {
-  return (
-    <a
-      href={href}
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-      className="flex min-w-0 flex-1 items-center gap-3 rounded-[12px] border border-bg-primary/20 bg-bg-inverse/20 px-4 py-3 transition-colors hover:border-brand-primary"
-    >
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-primary text-text-inverse">
-        {icon}
-      </span>
-      <span className="min-w-0 text-left">
-        <span className="font-montserrat block text-[15px] font-semibold text-text-inverse sm:text-[16px]">
+    <div className="flex gap-6 lg:gap-10">
+      <div className="hidden sm:flex flex-col items-center">
+        <div className="w-16 h-16 rounded-full bg-brand-primary/10 border border-brand-primary/30 flex items-center justify-center font-montserrat text-[24px] font-black text-brand-primary shrink-0">
+          {number}
+        </div>
+        <div className="w-px h-full bg-white/10 mt-6" />
+      </div>
+      <div className="flex-1 pb-16 lg:pb-24">
+        <div className="flex items-center gap-4 mb-6 sm:hidden">
+          <div className="w-12 h-12 rounded-full bg-brand-primary/10 border border-brand-primary/30 flex items-center justify-center font-montserrat text-[18px] font-black text-brand-primary shrink-0">
+            {number}
+          </div>
+          <h2 className="font-montserrat text-[24px] font-bold text-white tracking-tight">{title}</h2>
+        </div>
+        <h2 className="hidden sm:block font-montserrat text-[32px] font-bold text-white tracking-tight mb-8">
           {title}
-        </span>
-        <span className="font-roboto block text-[13px] leading-snug text-text-inverse/90 sm:text-[14px]">
-          {detail}
-        </span>
-      </span>
-    </a>
+        </h2>
+        <div className="font-roboto text-white/70 text-[16px] leading-relaxed space-y-6">
+          {children}
+        </div>
+      </div>
+    </div>
   );
 }
 
 export default function PaveSchemePage() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
-        <PageHero
-          title="PAVE Scheme"
-          breadcrumb="PAVE Scheme"
-          withBikes
-          backgroundSrc="/assets/images/blog-hero-bg.jpg"
-          bikesSrc="/assets/images/blog-page.png"
+            <main className="flex-1 bg-bg-primary">
+        <SecondaryHero 
+          titleLine1="PAVE"
+          titleLine2="SCHEME"
+          description="Complete details for applicants selected under the PAVE Scheme (Self-Finance) to receive your ELFA Electric Bike."
+          imageSrc="/assets/images/hero4.jpeg"
+          imageAlt="PAVE Scheme"
         />
 
-        {/* Information for Selected Applicants — live: border 1px var(--color-brand-primary), radius 15px, -40px overlap */}
-        <section className="relative z-10 -mt-10 bg-transparent pb-0 pt-0">
-          <div className="mx-auto w-full max-w-[920px] px-4 sm:px-6">
-            <FadeIn
-              variant="fadeInUp"
-              speed="normal"
-              className="rounded-[15px] border border-brand-primary px-5 py-[30px] text-center sm:px-10"
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-[1] text-brand-primary sm:text-[36px] lg:text-[45px]">
-                Information for Selected Applicants
+        {/* Content Flow */}
+        <section className="relative z-10 w-full max-w-[900px] mx-auto px-4 sm:px-6 py-16 lg:py-24">
+          
+          {/* Intro Information Card */}
+          <FadeIn variant="fadeInUp" speed="normal" className="mb-20 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-md">
+            <div className="p-8 sm:p-12 text-center relative z-10">
+              <h2 className="font-montserrat text-[28px] sm:text-[36px] font-bold text-white mb-4 tracking-tight">
+                Information for Selected <span className="text-brand-primary">Applicants</span>
               </h2>
-              <p className="font-roboto mx-auto mb-3 max-w-[720px] text-[14px] text-text-inverse sm:text-[15px]">
+              <p className="font-roboto text-white/90 text-[16px] sm:text-[18px] mb-6 font-medium">
                 For assistance, please reach out to:
               </p>
-              <p className="font-roboto mx-auto mb-5 max-w-[720px] text-[14px] leading-relaxed text-text-inverse sm:text-[15px]">
-                This page contains all the details for applicants selected under the PAVE Scheme
-                (Self-Finance) on how to receive their ELFA Electric Bike.
+              <p className="font-roboto text-white/70 text-[15px] sm:text-[16px] max-w-3xl mx-auto mb-8 leading-relaxed">
+                This page contains all the details for applicants selected under the PAVE Scheme (Self-Finance) on how to receive their ELFA Electric Bike.
               </p>
-              <div className="font-roboto mx-auto flex max-w-[640px] flex-col gap-2 text-[14px] text-text-inverse">
-                <p>
-                  For further information for Self Finance applicants,{" "}
-                  <a
-                    href={INFO_VIDEO}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-semibold text-[#cc3366] underline hover:no-underline"
-                  >
-                    click here
-                  </a>
-                </p>
-                <p>
-                  For further information for Bank Lease applicants,{" "}
-                  <a
-                    href={INFO_VIDEO}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-semibold text-[#cc3366] underline hover:no-underline"
-                  >
-                    click here
-                  </a>
-                </p>
-              </div>
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-                <a
-                  href="mailto:info@elfaelectric.com"
-                  className="font-roboto inline-flex items-center gap-2 text-[14px] text-text-inverse transition-colors hover:text-brand-primary"
-                >
-                  <Mail className="h-5 w-5 fill-brand-primary text-brand-primary" strokeWidth={0} />
-                  info@elfaelectric.com
+              
+              <div className="flex flex-col gap-4">
+                <a href={INFO_VIDEO} target="_blank" rel="noopener noreferrer" className="font-roboto text-white/90 text-[15px] sm:text-[16px] hover:text-white transition-colors">
+                  For further information for Self Finance applicants, <span className="text-brand-primary hover:text-white transition-colors underline underline-offset-4">click here</span>
                 </a>
-                <a
-                  href="https://wa.me/923114863532"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-roboto inline-flex items-center gap-2 text-[14px] text-text-inverse transition-colors hover:text-brand-primary"
-                >
-                  <WhatsAppIcon className="h-5 w-5 text-brand-primary" />
-                  +(92) 311-486-3532
+                <a href={INFO_VIDEO} target="_blank" rel="noopener noreferrer" className="font-roboto text-white/90 text-[15px] sm:text-[16px] hover:text-white transition-colors">
+                  For further information for Bank Lease applicants, <span className="text-brand-primary hover:text-white transition-colors underline underline-offset-4">click here</span>
                 </a>
               </div>
-            </FadeIn>
-          </div>
-        </section>
-
-        {/* How to Receive — live: padding 100px 0, gap 20px, 60px filled circles, 35px arrows */}
-        <section className="bg-bg-primary py-[60px] lg:py-[100px]">
-          <FadeIn
-            variant="fadeInUp"
-            speed="normal"
-            className="mx-auto flex w-full max-w-container flex-col items-center gap-5 px-4 sm:px-6"
-          >
-            <h2 className="font-montserrat text-center text-[28px] font-bold leading-[1] text-brand-primary sm:text-[36px] lg:text-[45px]">
-              How to Receive Your ELFA Bike
-            </h2>
-            <p className="font-roboto mx-auto max-w-[720px] text-center text-[14px] leading-relaxed text-text-primary">
-              To confirm your selection and approval for the ELFA electric bike, you can check the
-              PAVE portal or wait for a confirmation call from ELFA. Once you receive confirmation,
-              please follow the instructions to receive your bike.
-            </p>
-            <div className="h-[2px] w-[128px] bg-brand-primary sm:w-[182px]" />
-
-            <div className="mt-2 flex w-full flex-wrap items-start justify-center gap-x-2 gap-y-8 lg:mt-4 lg:flex-nowrap lg:justify-between lg:gap-x-0">
-              {overviewSteps.map((s, i) => (
-                <div key={s.n} className="contents">
-                  <div className="flex w-[117px] flex-col items-center text-center sm:w-[140px] lg:w-[160px]">
-                    <span className="font-montserrat flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-[55px] bg-bg-inverse text-[45px] font-bold leading-none text-text-inverse">
-                      {s.n}
-                    </span>
-                    <span className="font-roboto mt-3 text-[15px] leading-snug text-text-primary">
-                      {s.label}
-                    </span>
-                  </div>
-                  {i < overviewSteps.length - 1 && (
-                    <ArrowRight
-                      className="mt-[12px] hidden h-[35px] w-[35px] shrink-0 text-text-primary lg:block"
-                      strokeWidth={2}
-                      aria-hidden
-                    />
-                  )}
-                </div>
-              ))}
             </div>
           </FadeIn>
-        </section>
 
-        {/* 1 — Pay Order — live: mt 70px after how-to */}
-        <section className="bg-bg-primary pt-[70px] pb-0">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <FadeIn
-              variant="fadeInUp"
-              speed="normal"
-              className={cardClass}
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-text-inverse sm:text-[28px]">
-                Pay Order Instructions – PAVE Program
-              </h2>
-              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
-                Please prepare a Pay Order for the amount of the ELFA Electric Bike you are receiving
-                through the PAVE program.
-              </p>
-
-              <Inset>
-                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-brand-primary sm:text-[16px]">
-                  <Info className="h-4 w-4" />
-                  Important Payment Details
+          {/* Steps Flow */}
+          <div className="relative">
+            
+            <FadeIn variant="fadeInUp" speed="slow">
+              <StepSection number="01" title="Pay Order Instructions">
+                <p>
+                  Please prepare a Pay Order for the amount of the ELFA Electric Bike you are receiving
+                  through the PAVE program. The Pay Order should be made in the name of{" "}
+                  <strong className="text-white">EV Technologies Private Limited</strong> and can be issued at any branch of
+                  the <strong className="text-white">UBL bank</strong>.
                 </p>
-                <p className="font-roboto text-[14px] leading-relaxed text-text-inverse sm:text-[15px]">
-                  The Pay Order should be made in the name of{" "}
-                  <strong>EV Technologies Private Limited</strong> and can be issued at any branch of
-                  the <strong>UBL bank</strong>.
-                </p>
-              </Inset>
-
-              <div className="my-6 overflow-hidden rounded-[8px]">
-                <div className="grid grid-cols-2 bg-brand-primary">
-                  <div className="font-montserrat px-4 py-3 text-[16px] font-bold text-text-inverse sm:text-[18px]">
-                    Model
+                
+                <div className="mt-8 rounded-2xl border border-white/10 overflow-hidden bg-black/20">
+                  <div className="grid grid-cols-2 bg-white/5 border-b border-white/10">
+                    <div className="px-6 py-4 font-montserrat text-[14px] font-bold text-white uppercase tracking-wider">Model</div>
+                    <div className="px-6 py-4 font-montserrat text-[14px] font-bold text-white uppercase tracking-wider text-right">Price (PKR)</div>
                   </div>
-                  <div className="font-montserrat px-4 py-3 text-[16px] font-bold text-text-inverse sm:text-[18px]">
-                    Price (PKR)
+                  {pricing.map((row) => (
+                    <div key={row.model} className="grid grid-cols-2 border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
+                      <div className="px-6 py-4 text-[15px] text-white/80">{row.model}</div>
+                      <div className="px-6 py-4 text-[15px] font-medium text-white text-right">{row.price}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8 p-6 rounded-2xl border border-white/10 bg-white/5">
+                  <h4 className="font-montserrat text-[16px] font-bold text-white mb-4 flex items-center gap-2">
+                    <Info className="w-5 h-5 text-brand-primary" /> Bank Details (Account Title Verification)
+                  </h4>
+                  <ul className="space-y-3">
+                    <li className="flex justify-between border-b border-white/10 pb-3">
+                      <span className="text-white/60">Bank</span>
+                      <span className="text-white font-medium text-right">United Bank Limited</span>
+                    </li>
+                    <li className="flex justify-between border-b border-white/10 pb-3">
+                      <span className="text-white/60">Account Title</span>
+                      <span className="text-white font-medium text-right">EV Technologies Private Limited</span>
+                    </li>
+                    <li className="flex justify-between pt-1">
+                      <span className="text-white/60">IBAN #</span>
+                      <span className="text-white font-medium text-right text-[13px] sm:text-[15px]">PK11 UNIL 0109 0003 1662 3238</span>
+                    </li>
+                  </ul>
+                </div>
+              </StepSection>
+            </FadeIn>
+
+            <FadeIn variant="fadeInUp" speed="slow">
+              <StepSection number="02" title="Courier Your Pay Order">
+                <p>
+                  Please send your pay order via courier to the address mentioned below. Once we receive the payment, we will immediately share the receipt with you.
+                </p>
+                <div className="mt-6 flex items-start gap-4 p-6 rounded-2xl border border-white/10 bg-white/5">
+                  <MapPin className="w-6 h-6 text-brand-primary shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-montserrat text-[16px] font-bold text-white mb-2">Shipping Address</h4>
+                    <p className="text-white/70 leading-relaxed">
+                      Wavetec C3i, GA-70-A3, Korangi Creek Industrial Park,<br className="hidden sm:block" /> Korangi, Karachi, Sindh.
+                    </p>
                   </div>
                 </div>
-                {pricing.map((row, i) => {
-                  const light = i === 1;
-                  return (
-                    <div
-                      key={row.model}
-                      className={`grid grid-cols-2 ${light ? "bg-bg-primary text-text-primary" : "bg-bg-inverse/35 text-text-inverse"}`}
-                    >
-                      <div className="font-roboto px-4 py-3 text-[14px] sm:text-[16px]">{row.model}</div>
-                      <div className="font-roboto px-4 py-3 text-right text-[14px] font-bold sm:text-[16px]">
-                        {row.price}
-                      </div>
+              </StepSection>
+            </FadeIn>
+
+            <FadeIn variant="fadeInUp" speed="slow">
+              <StepSection number="03" title="Delivery Process">
+                <p>
+                  Motorcycle delivery will be facilitated by ELFA. The applicable delivery charges, which depend on your location, will be communicated to you by our representative.
+                </p>
+              </StepSection>
+            </FadeIn>
+
+            <FadeIn variant="fadeInUp" speed="slow">
+              <StepSection number="04" title="Delivery Timeline">
+                <p>
+                  Delivery of the motorcycle is expected within <strong>60 days</strong> after the payment is received and verified by the ELFA Team (EV Technologies).
+                </p>
+              </StepSection>
+            </FadeIn>
+
+            <FadeIn variant="fadeInUp" speed="slow">
+              <StepSection number="05" title="Government Subsidy Transfer">
+                <p>
+                  After your motorcycle is delivered and all formalities are completed, the Government of Pakistan (EDB) will transfer the eligible subsidy amount directly to your bank account.
+                </p>
+                <div className="mt-6 flex items-center gap-4 p-6 rounded-2xl border border-white/10 bg-white/5">
+                  <Landmark className="w-6 h-6 text-brand-primary shrink-0" />
+                  <div>
+                    <p className="text-white/70">
+                      For more information, visit the official PAVE website at{" "}
+                      <a href="https://www.pave.gov.pk" target="_blank" rel="noopener noreferrer" className="text-white font-medium hover:text-brand-primary transition-colors underline underline-offset-4">
+                        www.pave.gov.pk
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </StepSection>
+            </FadeIn>
+
+            <FadeIn variant="fadeInUp" speed="slow">
+              <StepSection number="06" title="Submission of Deposit Slip">
+                <p>
+                  After submitting your Pay Order, you must share a copy of your deposit slip or proof of payment for verification. Please include the following details:
+                </p>
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {requiredDetails.map((detail) => (
+                    <div key={detail} className="flex items-center gap-3 p-4 rounded-xl border border-white/5 bg-black/20">
+                      <ChevronRight className="w-4 h-4 text-brand-primary" />
+                      <span className="text-white/80">{detail}</span>
                     </div>
-                  );
-                })}
-              </div>
-
-              <h3 className="font-montserrat mb-3 text-[18px] font-bold text-text-inverse sm:text-[22px]">
-                Bank Details (For Account Title Verification Only)
-              </h3>
-              <Inset>
-                <ul className="font-roboto space-y-2 text-[14px] text-text-inverse sm:text-[15px]">
-                  {[
-                    ["Bank:", "United Bank Limited"],
-                    ["Account Title:", "EV Technologies Private Limited"],
-                    ["IBAN #:", "PK11 UNIL 0109 0003 1662 3238"],
-                  ].map(([label, value]) => (
-                    <li key={label} className="flex items-start gap-2">
-                      <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-brand-primary" strokeWidth={2.5} />
-                      <span>
-                        <strong>{label}</strong> {value}
-                      </span>
-                    </li>
                   ))}
-                </ul>
-              </Inset>
-            </FadeIn>
-          </div>
-        </section>
-
-        {/* 2 — Courier — live: mt 40px between spark cards */}
-        <section className="bg-bg-primary pt-10 pb-0">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <FadeIn
-              variant="fadeInUp"
-              speed="normal"
-              className={cardClass}
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-text-inverse sm:text-[28px]">
-                Courier your Pay order
-              </h2>
-              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
-                Please send your pay order via courier to the address mentioned below:
-              </p>
-              <Inset>
-                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-brand-primary sm:text-[16px]">
-                  <MapPin className="h-4 w-4" />
-                  Address mentioned
-                </p>
-                <p className="font-roboto text-[14px] leading-relaxed text-text-inverse sm:text-[15px]">
-                  Wavetec C3i, GA-70-A3, Korangi Creek Industrial Park, Korangi, Karachi, Sindh.
-                </p>
-              </Inset>
-              <p className="font-roboto mt-5 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
-                Once we receive the payment, we will immediately share the receipt with you.
-              </p>
-              <p className="font-roboto mt-3 text-[14px] text-text-inverse/95 sm:text-[15px]">
-                In case of any query, please feel free to reach out to us:
-              </p>
-              <div className="mt-4 max-w-[360px]">
-                <ContactPill
-                  href="https://wa.me/923114863532"
-                  icon={<Phone className="h-5 w-5" />}
-                  title="Phone / WhatsApp"
-                  detail="+(92) 311-486-3532"
-                />
-              </div>
-            </FadeIn>
-          </div>
-        </section>
-
-        {/* Delivery + subsidy — live: 40px between cards */}
-        <section className="bg-bg-primary pt-10 pb-0">
-          <div className="mx-auto flex w-full max-w-container flex-col gap-10 px-4 sm:px-6">
-            <FadeIn
-              variant="fadeInUp"
-              speed="normal"
-              className={cardClass}
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-4 text-[22px] font-bold text-text-inverse sm:text-[28px]">
-                Delivery Information
-              </h2>
-              <h3 className="font-montserrat mb-2 text-[16px] font-bold text-text-inverse sm:text-[18px]">
-                Motorcycle Delivery Process
-              </h3>
-              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
-                Motorcycle delivery will be facilitated by ELFA. The applicable delivery charges,
-                which depend on your location, will be communicated to you by our representative.
-              </p>
-              <h3 className="font-montserrat mb-2 text-[16px] font-bold text-text-inverse sm:text-[18px]">
-                Delivery Timeline
-              </h3>
-              <p className="font-roboto text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
-                Delivery of the motorcycle is expected within 60 days after the payment is received
-                and verified by ELFA Team (EV Technologies).
-              </p>
-            </FadeIn>
-
-            <FadeIn
-              variant="fadeInUp"
-              speed="normal"
-              className={cardClass}
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-text-inverse sm:text-[28px]">
-                Government Subsidy Transfer
-              </h2>
-              <p className="font-roboto mb-5 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
-                After your motorcycle is delivered and all formalities are completed, the Government
-                of Pakistan (EDB) will transfer the eligible subsidy amount directly to your bank
-                account.
-              </p>
-              <Inset>
-                <p className="font-montserrat mb-2 flex items-center gap-2 text-[15px] font-semibold text-brand-primary sm:text-[16px]">
-                  <Download className="h-4 w-4" />
-                  For More Information
-                </p>
-                <p className="font-roboto text-[14px] text-text-inverse sm:text-[15px]">
-                  Visit the official PAVE website:{" "}
-                  <a
+                </div>
+                <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                  <FlipButton
                     href="https://www.pave.gov.pk"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-semibold text-[#cc3366] underline hover:no-underline"
+                    variant="primary"
+                    icon={<Download className="w-5 h-5" />}
+                    className="flex-1 h-auto rounded-xl p-4 text-[14px] hover:bg-white hover:text-black"
                   >
-                    www.pave.gov.pk
-                  </a>
-                </p>
-              </Inset>
+                    Upload to PAVE Portal
+                  </FlipButton>
+                  <FlipButton
+                    href="https://wa.me/923114863532"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="outline"
+                    icon={<WhatsAppIcon className="w-5 h-5" />}
+                    className="flex-1 h-auto rounded-xl border-white/20 p-4 text-[14px] hover:border-brand-primary hover:bg-transparent"
+                  >
+                    Send via WhatsApp
+                  </FlipButton>
+                </div>
+              </StepSection>
             </FadeIn>
+
           </div>
-        </section>
 
-        {/* 6 — Deposit slip + contact — live: 40px between cards */}
-        <section className="bg-bg-primary pt-10 pb-16 lg:pb-24">
-          <div className="mx-auto flex w-full max-w-container flex-col gap-10 px-4 sm:px-6">
-            <FadeIn
-              variant="fadeInUp"
-              speed="normal"
-              className={cardClass}
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-text-inverse sm:text-[28px]">
-                Submission of Deposit Slip
-              </h2>
-              <p className="font-roboto mb-4 text-[14px] leading-relaxed text-text-inverse/95 sm:text-[15px]">
-                After submitting your Pay Order, you must share a copy of your deposit slip/proof of
-                payment for verification. Include the following details:
-              </p>
-              <h3 className="font-montserrat mb-3 text-[18px] font-bold text-text-inverse sm:text-[20px]">
-                Required Details
-              </h3>
-              <ul className="font-roboto mb-6 space-y-2 text-[14px] text-text-inverse sm:text-[15px]">
-                {requiredDetails.map((d) => (
-                  <li key={d} className="flex items-center gap-2">
-                    <ChevronRight className="h-4 w-4 shrink-0 text-brand-primary" strokeWidth={2.5} />
-                    {d}
-                  </li>
-                ))}
-              </ul>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <ContactPill
-                  href="https://wa.me/923114863532"
-                  icon={<WhatsAppIcon className="h-5 w-5" />}
-                  title="WhatsApp"
-                  detail="+(92) 311-486-3532"
-                />
-                <ContactPill
-                  href="https://www.pave.gov.pk"
-                  icon={<Download className="h-5 w-5" />}
-                  title="PAVE Portal"
-                  detail="Upload a copy of your payorder on your PAVA portal"
-                />
-              </div>
-            </FadeIn>
-
-            <FadeIn
-              variant="fadeInUp"
-              speed="normal"
-              className={cardClass}
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold text-text-inverse sm:text-[28px]">
+          {/* Contact Us Card */}
+          <FadeIn variant="fadeInUp" speed="slow" className="mt-16">
+            <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-md p-8 sm:p-12 relative z-10">
+              <h2 className="font-montserrat text-[28px] sm:text-[32px] font-bold text-white mb-2 tracking-tight">
                 Contact Us
               </h2>
-              <p className="font-roboto mb-5 text-[14px] text-text-inverse/95 sm:text-[15px]">
+              <p className="font-roboto text-white/70 text-[15px] sm:text-[16px] mb-8">
                 For any queries or questions, please reach out to our support team:
               </p>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <ContactPill
-                  href="https://wa.me/923114863532"
-                  icon={<Phone className="h-5 w-5" />}
-                  title="Phone / WhatsApp"
-                  detail="+(92) 311-486-3532"
-                />
-                <ContactPill
-                  href="mailto:info@elfaelectric.com"
-                  icon={<Mail className="h-5 w-5" />}
-                  title="Email"
-                  detail="info@elfaelectric.com"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Phone Box */}
+                <a href="https://wa.me/923114863532" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-5 p-6 rounded-2xl border border-white/10 bg-black/20 hover:bg-white/5 hover:border-brand-primary/30 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 group-hover:bg-brand-primary/20 transition-colors">
+                    <Phone className="w-5 h-5 text-brand-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-montserrat text-[18px] font-bold text-white transition-colors">Phone / WhatsApp</h3>
+                    <p className="font-roboto text-white/70 text-[15px] mt-1">+(92) 311-486-3532</p>
+                  </div>
+                </a>
+                
+                {/* Email Box */}
+                <a href="mailto:info@elfaelectric.com" className="group flex items-center gap-5 p-6 rounded-2xl border border-white/10 bg-black/20 hover:bg-white/5 hover:border-brand-primary/30 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 group-hover:bg-brand-primary/20 transition-colors">
+                    <Mail className="w-5 h-5 text-brand-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-montserrat text-[18px] font-bold text-white transition-colors">Email</h3>
+                    <p className="font-roboto text-white/70 text-[15px] mt-1">info@elfaelectric.com</p>
+                  </div>
+                </a>
               </div>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
+
         </section>
 
-        <Marquee />
+        {/* Unified CTA */}
+        <JoinRevolutionCTA />
 
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

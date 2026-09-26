@@ -1,8 +1,5 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/hero";
 import CityMarquee from "@/components/sections/CityMarquee";
-import Marquee from "@/components/sections/Marquee";
 import AboutUs from "@/components/sections/AboutUs";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import ProductShowcase from "@/components/sections/ProductShowcase";
@@ -19,11 +16,9 @@ export const dynamic = "force-static";
 export default function Home() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
+            <main className="flex-1">
         <Hero />
         <CityMarquee />
-        {/* <Marquee /> */}
         <AboutUs />
         <WhyChooseUs />
         <ProductShowcase />
@@ -34,7 +29,6 @@ export default function Home() {
         <FAQ />
         <AdventureCTA />
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

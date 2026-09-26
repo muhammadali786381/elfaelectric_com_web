@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Play } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { Play, X } from "lucide-react";
 
 interface VideoCard {
   id: number;
@@ -11,7 +11,8 @@ interface VideoCard {
   city: string;
   model: string;
   duration: string;
-  thumbnail: string; // gradient fallback
+  thumbnail: string; // gradient fallback or url()
+  thumbnailUrl?: string; // direct image url
   videoSrc: string;
 }
 
@@ -78,8 +79,86 @@ const videoTestimonials: VideoCard[] = [
   },
 ];
 
-export default function ZigzagGallery() {
+interface ZigzagGalleryProps {
+  headingLine1?: string;
+  headingLine2?: string;
+  subtitle?: string;
+  videoLinks?: string[];
+}
+
+export default function ZigzagGallery({
+  headingLine1 = "Customer",
+  headingLine2 = "Stories.",
+  subtitle = "Real ELFA riders share their experience — from daily commutes to zero fuel bills. Watch and be inspired.",
+  videoLinks,
+}: ZigzagGalleryProps = {}) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scrollRange, setScrollRange] = useState(0);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+  const displayCards: VideoCard[] = videoLinks
+    ? videoLinks.map((url, i) => {
+        let embedUrl = url;
+        let thumbUrl = "";
+        let isShorts = false;
+
+        if (url.includes("youtube.com") || url.includes("youtu.be")) {
+          let videoId = "";
+          if (url.includes("shorts/")) {
+            videoId = url.split("shorts/")[1]?.split("?")[0];
+            isShorts = true;
+          } else if (url.includes("v=")) {
+            videoId = url.split("v=")[1]?.split("&")[0];
+          } else if (url.includes("youtu.be/")) {
+            videoId = url.split("youtu.be/")[1]?.split("?")[0];
+          }
+
+          if (videoId) {
+            embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            thumbUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+          }
+        } else if (url.includes("instagram.com/reel/")) {
+          const id = url.split("reel/")[1]?.split("/")[0];
+          if (id) {
+            embedUrl = `https://www.instagram.com/p/${id}/embed/`;
+            isShorts = true;
+          }
+        } else if (url.includes("tiktok.com")) {
+          const id = url.split("video/")[1]?.split("?")[0];
+          if (id) {
+            embedUrl = `https://www.tiktok.com/embed/v2/${id}`;
+            isShorts = true;
+          }
+        }
+
+        return {
+          id: i + 1,
+          title: `Rider Story ${i + 1}`,
+          customer: "ELFA Rider",
+          city: "Pakistan",
+          model: "EV Bike",
+          duration: isShorts ? "Shorts" : "Video",
+          thumbnail: `linear-gradient(135deg, #050505, #002200, #00451a)`,
+          thumbnailUrl: thumbUrl,
+          videoSrc: embedUrl,
+        };
+      })
+    : videoTestimonials;
+
+  useEffect(() => {
+    const updateRange = () => {
+      if (scrollContainerRef.current) {
+        // Add a small buffer (e.g. 40px) so the right padding isn't completely flush
+        const range = scrollContainerRef.current.scrollWidth - window.innerWidth + 40;
+        setScrollRange(range > 0 ? range : 0);
+      }
+    };
+    
+    updateRange();
+    window.addEventListener("resize", updateRange);
+    return () => window.removeEventListener("resize", updateRange);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: trackRef,
@@ -93,12 +172,12 @@ export default function ZigzagGallery() {
     restDelta: 0.001,
   });
 
-  // Map vertical scroll → horizontal translation
-  const x = useTransform(smoothProgress, [0, 1], ["0%", "-62%"]);
+  // Map vertical scroll → dynamic horizontal translation in pixels
+  const x = useTransform(smoothProgress, [0, 1], [0, -scrollRange]);
 
   // Stagger effect: cards slowly stagger apart over the entire scroll
-  const yEven = useTransform(smoothProgress, [0, 1], [0, -60]);
-  const yOdd = useTransform(smoothProgress, [0, 1], [0, 60]);
+  const yEven = useTransform(smoothProgress, [0, 1], [0, -15]);
+  const yOdd = useTransform(smoothProgress, [0, 1], [0, 15]);
 
   return (
     <div ref={trackRef} className="relative h-[320vh]  mt-8 mb-48 ">
@@ -110,34 +189,46 @@ export default function ZigzagGallery() {
             className=" max-w-[520px] font-black leading-[0.92] tracking-tighter text-white"
             style={{ fontSize: "clamp(1.4rem, 4vw, 4.5rem)" }}
           >
-            Customer
+            {headingLine1}
             <br />
-            <span className="text-[#00E573]">Stories.</span>
+            <span className="text-[#00E573]">{headingLine2}</span>
           </h2>
           <p className=" hidden max-w-[280px] pt-3 text-[15px] leading-relaxed text-white/50 lg:block">
-            Real ELFA riders share their experience — from daily commutes to
-            zero fuel bills. Watch and be inspired.
+            {subtitle}
           </p>
         </div>
 
         {/* ── Horizontal scroll track ── */}
         <motion.div
+          ref={scrollContainerRef}
           style={{ x }}
-          className="mt-10 flex items-center gap-6 px-8 sm:px-12 lg:px-20 will-change-transform"
+          className="mt-10 flex items-center gap-6 px-8 sm:px-12 lg:px-20 will-change-transform w-max"
         >
-          {videoTestimonials.map((card, idx) => {
+          {displayCards.map((card, idx) => {
             const isEven = idx % 2 === 0;
             return (
               <motion.div
                 key={card.id}
+                onClick={() => setActiveVideo(card.videoSrc)}
                 style={{ y: isEven ? yEven : yOdd }}
                 className="group relative shrink-0 w-[300px] sm:w-[360px] lg:w-[400px] h-[440px] sm:h-[500px] rounded-2xl border border-neutral-800 overflow-hidden cursor-pointer"
               >
                 {/* Thumbnail / gradient bg */}
                 <div
-                  className="absolute inset-0"
+                  className="absolute inset-0 bg-cover bg-center"
                   style={{ background: card.thumbnail }}
-                />
+                >
+                  {card.thumbnailUrl ? (
+                    <img src={card.thumbnailUrl} alt="" className="h-full w-full object-cover" />
+                  ) : card.videoSrc.includes("instagram.com") || card.videoSrc.includes("tiktok.com") ? (
+                    <iframe
+                      src={card.videoSrc}
+                      className="pointer-events-none h-full w-full border-0 object-cover"
+                      allow="autoplay; encrypted-media; fullscreen"
+                      tabIndex={-1}
+                    />
+                  ) : null}
+                </div>
 
                 {/* Dark overlay */}
                 <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/10" />
@@ -191,6 +282,46 @@ export default function ZigzagGallery() {
           <span className="text-[10px] uppercase tracking-[3px]">Scroll</span>
         </div>
       </div>
+
+      {/* Video Player Modal */}
+      <AnimatePresence>
+        {activeVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveVideo(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md sm:p-6"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className={`relative w-full overflow-hidden rounded-2xl bg-black shadow-2xl ${
+                activeVideo.includes("youtube.com/embed") && activeVideo.includes("shorts")
+                  ? "aspect-[9/16] max-w-[400px] max-h-[85vh]"
+                  : activeVideo.includes("instagram.com") || activeVideo.includes("tiktok.com")
+                  ? "aspect-[9/16] max-w-[400px] max-h-[85vh]"
+                  : "aspect-video max-w-[900px]"
+              }`}
+            >
+              <button
+                onClick={() => setActiveVideo(null)}
+                className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white transition-colors hover:bg-black/80"
+              >
+                <X className="h-6 w-6" />
+              </button>
+              <iframe
+                src={activeVideo}
+                className="h-full w-full border-0"
+                allow="autoplay; encrypted-media; fullscreen"
+                allowFullScreen
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

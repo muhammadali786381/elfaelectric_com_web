@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import PageHero from "@/components/sections/PageHero";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 import ShopCatalog from "@/components/shop/ShopCatalog";
 import { purchaseEv125 } from "@/data/products/purchase-ev125";
 import { purchaseEv1 } from "@/data/products/purchase-ev1";
@@ -29,21 +27,15 @@ const SHOP_PRODUCTS = [
 
 export default function ShopPage() {
   return (
-    <>
-      <Header />
-      <main className="flex-1">
-        {/* Same hero stack as Newsroom / live shop */}
-        <PageHero
-          title="Shop"
-          breadcrumb="Shop"
-          withBikes
-          bigTitle
-          backgroundSrc="/assets/images/blog-hero-bg.jpg"
-          bikesSrc="/assets/images/blog-page.png"
-        />
-        <ShopCatalog products={SHOP_PRODUCTS} />
-      </main>
-      <Footer />
-    </>
+    <main className="flex-1 bg-[#050505]">
+      <SecondaryHero
+        titleLine1="Our"
+        titleLine2="Shop"
+        description="Choose your perfect ELFA electric bike or scooty and step into the future of mobility."
+        imageSrc="/assets/images/hero4.jpeg"
+        imageAlt="Shop ELFA Electric"
+      />
+      <ShopCatalog products={SHOP_PRODUCTS} />
+    </main>
   );
 }

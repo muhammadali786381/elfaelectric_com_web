@@ -14,6 +14,8 @@ interface FlipButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElem
   className?: string;
   variant?: "primary" | "dark" | "outline" | "glass" | "light";
   icon?: React.ReactNode;
+  target?: React.HTMLAttributeAnchorTarget;
+  rel?: string;
 }
 
 const MotionLink = motion.create(Link);
@@ -24,6 +26,8 @@ export default function FlipButton({
   className = "",
   variant = "primary",
   icon,
+  target,
+  rel,
   ...props
 }: FlipButtonProps) {
   const baseClasses =
@@ -31,13 +35,13 @@ export default function FlipButton({
 
   const variants = {
     primary:
-      "bg-[#00E573] text-zinc-950 hover:bg-[#00c965] hover:shadow-[0_0_20px_rgba(0,229,115,0.4)]",
+      "bg-brand-primary text-bg-primary hover:bg-brand-secondary hover:shadow-[0_0_20px_rgba(97,206,112,0.4)]",
     dark: "bg-zinc-950 text-white hover:bg-zinc-900 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]",
     light: "bg-white text-zinc-950 hover:bg-zinc-100",
     outline:
-      "border border-zinc-950 text-zinc-950 hover:bg-zinc-950 hover:text-white",
+      "border border-white/25 bg-transparent text-white hover:border-white hover:bg-white hover:text-black",
     glass:
-      "backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20",
+      "backdrop-blur-md bg-white/5 border border-white/10 text-white hover:bg-white/10",
   };
 
   const combinedClasses = cn(baseClasses, variants[variant], className);
@@ -105,6 +109,8 @@ export default function FlipButton({
     return (
       <MotionLink
         href={href}
+        target={target}
+        rel={rel}
         initial="initial"
         whileHover="hovered"
         whileTap="hovered"

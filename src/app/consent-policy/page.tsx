@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 
 export const metadata: Metadata = {
@@ -20,8 +18,7 @@ const terms = [
 export default function ConsentPolicyPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1 bg-bg-primary">
+            <main className="flex-1 bg-bg-primary">
         <PageHero
           title="Consent & Policy Acknowledgement"
           breadcrumb="Consent & Policy Acknowledgement"
@@ -45,7 +42,6 @@ export default function ConsentPolicyPage() {
           </div>
         </section>
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

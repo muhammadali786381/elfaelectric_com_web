@@ -97,7 +97,7 @@ export default function Hero() {
       </div>
 
       {/* Product Image - Right side on desktop */}
-      <div className="relative z-10 flex flex-1 items-center justify-center px-4 pb-20 sm:px-10 lg:absolute lg:inset-y-0 lg:right-0 lg:w-[55%] lg:items-end lg:pb-0 lg:pr-4">
+      <div className="relative z-10 flex flex-1 items-center justify-center px-4 pb-20 sm:px-10 lg:absolute lg:inset-y-0 lg:right-0 lg:w-[55%] lg:items-end lg:pb-[60px] lg:pr-4">
         <motion.div
           initial={{ opacity: 0, x: "20vw" }}
           animate={{ opacity: 1, x: 0 }}
@@ -107,7 +107,7 @@ export default function Hero() {
             stiffness: 50,
             damping: 15
           }}
-          className="relative aspect-[4/3] w-[90%] max-w-[500px] lg:aspect-auto lg:h-[85%] lg:w-[130%] lg:max-w-none lg:translate-x-[-5%]"
+          className="relative aspect-[4/3] w-[90%] max-w-[500px] lg:aspect-auto lg:h-[80%] lg:w-[130%] lg:max-w-none lg:translate-x-[-5%]"
         >
           <Image
             src="/assets/images/consent-policy-banner.png"

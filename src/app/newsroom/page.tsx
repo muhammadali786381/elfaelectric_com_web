@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import PageHero from "@/components/sections/PageHero";
-import ContentCard, { type ContentCardItem } from "@/components/sections/ContentCard";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
 
 export const metadata: Metadata = {
@@ -10,8 +9,17 @@ export const metadata: Metadata = {
   description: "ELFA Electric in the press — coverage and mentions from Pakistan's leading media outlets.",
 };
 
+type NewsItem = {
+  title: string;
+  link: string;
+  date?: string;
+  excerpt: string;
+  imagePath: string;
+  external?: boolean;
+};
+
 // Title / image / excerpt scraped from https://elfaelectric.com/newsroom/
-const newsItems: ContentCardItem[] = [
+const newsItems: NewsItem[] = [
   {
     title: "ELFA Partners with Wasl Mobility Modaraba to Make Electric Motorcycle More Accessible in Pakistan",
     link: "https://elfaelectric.com/elfa-wasl-partnership-electric-motorcycle-pakistan/",
@@ -144,39 +152,81 @@ const newsItems: ContentCardItem[] = [
 
 export default function NewsroomPage() {
   return (
-    <>
-      <Header />
-      <main className="flex-1">
-        <PageHero
-          title="Latest News"
-          subtitle="Read the latest trends around the world"
-          breadcrumb="Newsroom"
-          withBikes
-          bigTitle
-          backgroundSrc="/assets/images/blog-hero-bg.jpg"
-          bikesSrc="/assets/images/blog-page.png"
-        />
+    <main className="flex-1 bg-[#050505] text-white">
+      {/* Massive Hero Section */}
+      <section className="relative flex min-h-[60dvh] items-center justify-center overflow-hidden border-b border-white/10 pt-28 pb-20 lg:min-h-[70dvh] lg:pt-32">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/assets/images/hero4.jpeg"
+            alt="News Hero Background"
+            fill
+            priority
+            className="object-cover opacity-60"
+          />
+          {/* Pinkish/reddish dark overlay to match Joresx */}
+          <div className="absolute inset-0 bg-rose-950/40 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-transparent to-[#050505]" />
+          <div className="absolute inset-0 bg-[#050505]/40" />
+        </div>
 
-        <FadeIn variant="fadeInUp" speed="normal" className="bg-bg-primary px-4 pb-8 pt-12 text-center sm:px-6 sm:pt-14">
-          <h2 className="font-montserrat text-[24px] font-bold leading-[18px] text-brand-primary sm:text-[28px]">
-            Our News
-          </h2>
-          <h3 className="font-montserrat mt-5 text-[32px] font-bold leading-tight text-text-primary sm:mt-6 sm:text-[44px] sm:leading-[50px] lg:text-[50px]">
-            Latest News
-          </h3>
-        </FadeIn>
+        <div className="relative z-10 w-full text-center px-4">
+          <FadeIn variant="fadeInUp" speed="slow">
+            <h1 className="font-montserrat text-[80px] sm:text-[120px] md:text-[160px] lg:text-[200px] font-normal leading-none tracking-tighter text-white">
+              NEWS©
+            </h1>
+          </FadeIn>
+        </div>
+      </section>
 
-        <section className="bg-bg-primary pb-16 pt-2 sm:pb-20">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 lg:grid-cols-3">
-              {newsItems.map((item) => (
-                <ContentCard key={item.title + item.link} item={item} />
-              ))}
-            </div>
+      {/* Wireframe Grid Layout */}
+      <section className="w-full py-16 sm:py-24">
+        <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+            {newsItems.map((item, i) => (
+              <div key={i} className="bg-[#050505] flex flex-col h-full">
+                <FadeIn variant="fadeInUp" speed="normal" delay={i * 0.1} className="flex-1 flex flex-col h-full">
+                  <Link
+                    href={item.link}
+                    target={item.external ? "_blank" : "_self"}
+                    className="group flex flex-col h-full"
+                  >
+                    {/* Image Container */}
+                    <div className="relative aspect-[4/3] sm:aspect-square md:aspect-[4/3] w-full overflow-hidden border-b border-white/10 shrink-0">
+                      <Image
+                        src={item.imagePath}
+                        alt={item.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+
+                      {/* Hover Overlay (Slides up from bottom) */}
+                      <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-[#050505] via-[#050505]/95 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] flex flex-col justify-end p-6 sm:p-8">
+                        <div className="transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 flex flex-col justify-end">
+                          <p className="font-roboto text-[13px] sm:text-[14px] text-white/80 line-clamp-4">
+                            {item.excerpt}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Top Right Arrow Icon */}
+                      <div className="absolute top-4 right-4 w-10 h-10 bg-black/60 backdrop-blur-md flex items-center justify-center transition-colors duration-300 group-hover:bg-white group-hover:text-black text-white/80 border border-white/10 group-hover:border-white z-10">
+                        <ArrowUpRight className="w-5 h-5" />
+                      </div>
+                    </div>
+
+                    {/* Title Container (Bottom) */}
+                    <div className="p-6 sm:p-8 flex-1 flex flex-col justify-start bg-[#050505] relative z-0">
+                      <h3 className="font-roboto text-[16px] sm:text-[20px] font-bold text-white leading-snug group-hover:text-brand-primary transition-colors">
+                        {item.title}
+                      </h3>
+                    </div>
+                  </Link>
+                </FadeIn>
+              </div>
+            ))}
           </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+        </div>
+      </section>
+    </main>
   );
 }

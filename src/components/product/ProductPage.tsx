@@ -5,10 +5,12 @@ import ProductCoreFeatures from "@/components/product/ProductCoreFeatures";
 import ProductAdvancedFeatures from "@/components/product/ProductAdvancedFeatures";
 import ProductSpecs from "@/components/product/ProductSpecs";
 import ProductGallery from "@/components/product/ProductGallery";
+import ReelsCarousel from "@/components/sections/ReelsCarousel";
 import SavingsCalculator from "@/components/sections/SavingsCalculator";
+import { dummyVideoLinks } from "@/data/video-links";
 import Testimonials from "@/components/sections/Testimonials";
 import AdventureCTA from "@/components/sections/AdventureCTA";
-import Marquee from "@/components/sections/Marquee";
+
 import FinalCTA from "../sections/FinalCTA";
 
 /** Shared product page layout — pass EV-125 / EV-1 (etc.) data. */
@@ -31,9 +33,10 @@ export default function ProductPage({ product }: { product: Product }) {
         buyHref={product.buyHref}
         images={product.galleryImages}
       />
+      <ReelsCarousel reels={dummyVideoLinks} />
       <Testimonials />
       <AdventureCTA />
-      <Marquee />
+      
     </main>
   );
 }

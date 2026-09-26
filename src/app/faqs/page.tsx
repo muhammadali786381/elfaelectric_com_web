@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 import PavePromo from "@/components/sections/PavePromo";
 import FAQAccordion from "./FAQAccordion";
@@ -82,8 +80,7 @@ export const faqs = [
 export default function FAQsPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
+            <main className="flex-1">
         <PageHero
           title="Frequently Asked Questions"
           breadcrumb="FAQs"
@@ -99,7 +96,6 @@ export default function FAQsPage() {
         </section>
 
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

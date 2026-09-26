@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 
 export const metadata: Metadata = {
@@ -58,8 +56,7 @@ const policySections = [
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1 bg-bg-primary">
+            <main className="flex-1 bg-bg-primary">
         <PageHero
           title="Privacy Policy"
           breadcrumb="Privacy Policy"
@@ -89,7 +86,6 @@ export default function PrivacyPolicyPage() {
           </div>
         </section>
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

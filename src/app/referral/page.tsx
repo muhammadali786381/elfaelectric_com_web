@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ChevronRight, Mail } from "lucide-react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 import { FadeIn } from "@/components/motion/FadeIn";
+import FlipButton from "@/components/ui/FlipButton";
 
 export const metadata: Metadata = {
   title: "ELFA Referral Program Pakistan | Earn PKR 10,000 Per Friend",
@@ -86,8 +84,7 @@ function SectionTitle({ children, className = "" }: { children: React.ReactNode;
 export default function ReferralPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
+            <main className="flex-1">
         <PageHero
           title="ELFA Referral Program Pakistan – Earn PKR 10,000 Per Friend Referred"
           subtitle={HERO_SUBTITLE}
@@ -169,18 +166,18 @@ export default function ReferralPage() {
                 <strong>info@elfaelectric.com</strong> to get your referral code and start earning PKR
                 10,000 per referral.
               </p>
-              <Link
+              <FlipButton
                 href="/contact-us"
-                className="font-roboto inline-flex items-center gap-2 rounded-[3px] bg-brand-primary px-6 py-3 text-[14px] font-semibold uppercase tracking-[1px] text-text-inverse transition-colors hover:bg-brand-secondary"
+                variant="primary"
+                icon={<Mail className="h-4 w-4" strokeWidth={2} />}
+                className="font-roboto rounded-[3px] px-6 py-3 text-[14px] font-semibold tracking-[1px]"
               >
-                <Mail className="h-4 w-4" strokeWidth={2} />
                 Contact us
-              </Link>
+              </FlipButton>
             </div>
           </div>
         </section>
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Phone, Mail, Headphones, ChevronRight, ChevronDown } from "lucide-react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import PageHero from "@/components/sections/PageHero";
-import Marquee from "@/components/sections/Marquee";
+import { MapPin, Phone, Mail, Headphones, ChevronRight, ShoppingCart, CalendarCheck, MessageSquare, Plus, Minus } from "lucide-react";
+import SecondaryHero from "@/components/sections/SecondaryHero";
+
 import { FadeIn } from "@/components/motion/FadeIn";
 import FlipButton from "@/components/ui/FlipButton";
 
@@ -106,174 +104,75 @@ function ChevronList({ items }: { items: string[] }) {
 
 /**
  * Animations use opacity + px translate only.
- * FadeIn IS the card (same classes) — no extra wrapper that breaks grid height.
  */
 export default function ContactUsPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
-        <PageHero
-          title={
-            <>
-              <span className="text-text-inverse">CONTACT</span> ELFA ELECTRIC MOTORCYCLE{" "}
-              <span className="text-text-inverse">PAKISTAN</span>
-            </>
-          }
-          subtitle="Get In Touch With Our Team"
-          breadcrumb="Contact us"
-          withBikes
-          greenTitle
-          backgroundSrc="/assets/images/contact/contact-hero-bg.webp"
-          bikesSrc="/assets/images/blog-page.png"
+      <main className="flex-1 bg-[#050505]">
+        <SecondaryHero 
+          titleLine1="Contact"
+          titleLine2="Us"
+          description="Get in touch with ELFA Electric for product inquiries, test ride bookings, or dealership partnerships."
+          imageSrc="/assets/images/hero4.jpeg"
+          imageAlt="Contact ELFA"
         />
 
-        {/* Looking to contact (from left) + bike fade */}
-        <section className="bg-bg-primary py-10 lg:py-14">
-          <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
-            <FadeIn
-              variant="fadeInLeft"
-              speed="slow"
-              className="rounded-[10px] border-2 border-brand-primary px-5 py-10 sm:px-5 sm:py-[60px] sm:pr-5"
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-3 text-[26px] font-semibold capitalize leading-tight text-brand-primary sm:text-[32px] sm:leading-[41px]">
-                Looking to contact ELFA Electric Pakistan?
-              </h2>
-              <p className="font-roboto mb-3 text-[16px] font-medium text-text-inverse">We are here to help!</p>
-              <p className="font-roboto text-[15px] leading-relaxed text-text-inverse sm:text-[16px]">
-                Whether you want to buy an electric bike, schedule a test ride, or need customer
-                support, we are here to help! Reach out to our electric bike team via phone, WhatsApp,
-                or email — or visit our nearest EV bike service center. Your journey toward sustainable
-                mobility in Pakistan starts here!
+        {/* Action Cards */}
+        <section className="bg-[#050505] py-16 lg:py-24 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#050505]/80 to-[#050505]" />
+          <div className="mx-auto grid w-full max-w-[1200px] gap-6 px-4 sm:px-6 md:grid-cols-3 relative z-10">
+            <FadeIn variant="fadeInUp" speed="normal" className="flex flex-col items-center text-center p-10 rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-xl transition-transform hover:-translate-y-2 transform-gpu">
+              <ShoppingCart className="w-8 h-8 text-white mb-6" />
+              <h3 className="font-montserrat text-[22px] font-bold text-white mb-3">Buy Now</h3>
+              <p className="font-roboto text-white/70 text-[15px] mb-8 flex-1">
+                Ready to switch to sustainable mobility? Explore our range of ELFA electric bikes and scooties.
               </p>
+              <Link href="/shop" className="text-[15px] font-semibold text-brand-primary hover:text-white transition-colors">
+                Shop now &gt;
+              </Link>
             </FadeIn>
-            <FadeIn variant="fadeIn" speed="slow" className="relative mx-auto aspect-square w-full max-w-[480px]">
-              <Image
-                src="/assets/images/contact/EV-125-BIKE-1.png"
-                alt="ELFA EV-125 electric motorcycle"
-                fill
-                className="object-contain"
-                sizes="480px"
-              />
+
+            <FadeIn variant="fadeInUp" speed="normal" delay={0.1} className="flex flex-col items-center text-center p-10 rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-xl transition-transform hover:-translate-y-2 transform-gpu">
+              <CalendarCheck className="w-8 h-8 text-white mb-6" />
+              <h3 className="font-montserrat text-[22px] font-bold text-white mb-3">Book a Test Ride</h3>
+              <p className="font-roboto text-white/70 text-[15px] mb-8 flex-1">
+                Experience the thrill of electric riding. Schedule a free test ride at our authorized showrooms.
+              </p>
+              <Link href="/book-a-test-ride" className="text-[15px] font-semibold text-brand-primary hover:text-white transition-colors">
+                Book now &gt;
+              </Link>
+            </FadeIn>
+
+            <FadeIn variant="fadeInUp" speed="normal" delay={0.2} className="flex flex-col items-center text-center p-10 rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-xl transition-transform hover:-translate-y-2 transform-gpu">
+              <MessageSquare className="w-8 h-8 text-white mb-6" />
+              <h3 className="font-montserrat text-[22px] font-bold text-white mb-3">Contact Us</h3>
+              <p className="font-roboto text-white/70 text-[15px] mb-8 flex-1">
+                Have questions? Need after-sales support? Our dedicated team is here to assist you.
+              </p>
+              <a href="#contact-form" className="text-[15px] font-semibold text-brand-primary hover:text-white transition-colors">
+                Get in touch &gt;
+              </a>
             </FadeIn>
           </div>
         </section>
 
-        {/* Scooty fade + Get in Touch from right */}
-        <section className="bg-bg-primary pb-10 lg:pb-14">
-          <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
-            <FadeIn
-              variant="fadeIn"
-              speed="slow"
-              className="relative mx-auto aspect-[624/753] w-full max-w-[420px] order-2 lg:order-1"
-            >
-              <Image
-                src="/assets/images/contact/new-bike-scooty.png"
-                alt="ELFA EV-1 Scooty and EV-125"
-                fill
-                className="object-contain"
-                sizes="420px"
-              />
-            </FadeIn>
-            <FadeIn
-              variant="fadeInRight"
-              speed="slow"
-              className="order-1 rounded-[10px] border-2 border-brand-primary px-5 py-10 sm:px-10 sm:py-10 sm:pl-5 lg:order-2"
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-4 text-[26px] font-semibold capitalize leading-tight text-brand-primary sm:text-[32px] sm:leading-[41px]">
-                Get in Touch with ELFA Electric Motorcycle
+        {/* Form block */}
+        <section id="contact-form" className="bg-[#050505] pb-16 lg:pb-24 relative overflow-hidden">
+          <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+            <FadeIn variant="fadeInUp" speed="slow" className="text-center mb-16">
+              <h2 className="font-montserrat mb-4 text-[36px] font-black italic uppercase tracking-tighter text-white sm:text-[48px] lg:text-[55px]">
+                Reach Our <span className="text-brand-primary">Experts</span>
               </h2>
-              <p className="font-roboto mb-5 text-[15px] leading-relaxed text-text-inverse sm:text-[16px]">
-                Contact ELFA Electric Pakistan for all your electric bike and electric scooter needs.
-                Our friendly team is ready to assist you with:
-              </p>
-              <ChevronList items={getInTouchItems} />
-              <p className="font-roboto mt-5 text-[15px] leading-relaxed text-text-inverse sm:text-[16px]">
-                Do not hesitate to reach out—we are just a call or click away!
-              </p>
-            </FadeIn>
-          </div>
-        </section>
-
-        {/* Email + Dealers — both from left; h-full keeps equal card height */}
-        <section className="bg-bg-primary pb-12 lg:pb-16">
-          <div className="mx-auto grid w-full max-w-container items-stretch gap-5 px-4 sm:px-6 lg:grid-cols-2">
-            <FadeIn
-              variant="fadeInLeft"
-              speed="slow"
-              className="h-full rounded-[20px] border-2 border-brand-primary p-[30px]"
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-4 text-[22px] font-semibold text-brand-primary sm:text-[25px] sm:leading-[33px]">
-                Email Us for Detailed Inquiries
-              </h2>
-              <p className="font-roboto mb-3 text-[15px] leading-relaxed text-text-inverse sm:text-[16px]">
-                For detailed questions about electric bikes, dealerships, or referral programs, email
-                us at:
-              </p>
-              <p className="font-roboto mb-3 text-[15px] text-text-inverse sm:text-[16px]">
-                Email:{" "}
-                <a href="mailto:info@elfaelectric.com" className="text-brand-primary hover:underline">
-                  info@elfaelectric.com
-                </a>
-              </p>
-              <p className="font-roboto text-[15px] leading-relaxed text-text-inverse sm:text-[16px]">
-                We typically respond within 24 hours. For urgent matters, please call or WhatsApp us.
-              </p>
-            </FadeIn>
-
-            <FadeIn
-              variant="fadeInLeft"
-              speed="slow"
-              delay={0.12}
-              className="h-full rounded-[20px] border-2 border-brand-primary p-[30px]"
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-4 text-[22px] font-semibold text-brand-primary sm:text-[25px] sm:leading-[33px]">
-                Find an ELFA Electric Dealer Near You
-              </h2>
-              <p className="font-roboto mb-4 text-[15px] leading-relaxed text-text-inverse sm:text-[16px]">
-                Can’t visit our flagship showroom? Find an ELFA Electric dealer near you:
-              </p>
-              <ChevronList items={dealerCities} />
-              <p className="font-roboto mt-5 text-[15px] leading-relaxed text-text-inverse sm:text-[16px]">
-                <Link href="/our-dealers" className="text-brand-primary underline hover:no-underline">
-                  View all dealers
-                </Link>{" "}
-                and locate the nearest electric bike dealer near me!
-              </p>
-            </FadeIn>
-          </div>
-        </section>
-
-        {/* Form block — heading L/R, form fade */}
-        <section className="bg-bg-primary pb-10 lg:pb-14">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <FadeIn variant="fadeInLeft" speed="slow">
-              <p className="font-montserrat mb-1 text-center text-[16px] font-semibold text-text-secondary sm:text-[18px]">
-                Contact Us
-              </p>
-            </FadeIn>
-            <FadeIn variant="fadeInRight" speed="slow" delay={0.1}>
-              <h2 className="font-montserrat mb-3 text-center text-[28px] font-semibold leading-tight text-brand-primary sm:text-[40px] lg:text-[55px] lg:leading-[55px]">
-                Reach Our Experts For Support
-              </h2>
-            </FadeIn>
-            <FadeIn variant="fadeInLeft" speed="slow" delay={0.2}>
-              <p className="font-roboto mx-auto mb-8 max-w-[720px] text-center text-[15px] leading-relaxed text-text-primary">
+              <p className="font-roboto mx-auto max-w-[720px] text-[16px] leading-relaxed text-white/60">
                 Whether you have a question, a suggestion, or just want to say hello, this is the place
-                to do it. Please fill out the form below with your details and message, and we will get
-                back to you as soon as possible.
+                to do it. We typically respond within 24 hours.
               </p>
             </FadeIn>
 
             <FadeIn
-              variant="fadeIn"
+              variant="fadeInUp"
               speed="slow"
-              className="grid grid-cols-1 gap-8 rounded-[15px] border border-black/[0.06] p-5 sm:p-8 lg:grid-cols-[1.2fr_1fr] lg:gap-10"
-              style={{ backgroundImage: SPARK }}
+              className="grid grid-cols-1 gap-12 rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-2xl p-8 sm:p-12 lg:grid-cols-[1.2fr_1fr] items-center"
             >
               <form className="flex flex-col gap-4">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -282,14 +181,14 @@ export default function ContactUsPage() {
                     name="name"
                     placeholder="Full Name"
                     required
-                    className="font-roboto h-[48px] w-full rounded-[6px] border-0 bg-bg-primary px-4 text-[15px] text-text-secondary outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-brand-primary"
+                    className="font-roboto h-[48px] w-full rounded-[6px] border border-white/10 bg-black/40 px-4 text-[15px] text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary placeholder:text-white/40"
                   />
                   <input
                     type="tel"
                     name="phone"
                     placeholder="Phone Number"
                     required
-                    className="font-roboto h-[48px] w-full rounded-[6px] border-0 bg-bg-primary px-4 text-[15px] text-text-secondary outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-brand-primary"
+                    className="font-roboto h-[48px] w-full rounded-[6px] border border-white/10 bg-black/40 px-4 text-[15px] text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary placeholder:text-white/40"
                   />
                 </div>
                 <input
@@ -297,61 +196,69 @@ export default function ContactUsPage() {
                   name="email"
                   placeholder="Email Address"
                   required
-                  className="font-roboto h-[48px] w-full rounded-[6px] border-0 bg-bg-primary px-4 text-[15px] text-text-secondary outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-brand-primary"
+                  className="font-roboto h-[48px] w-full rounded-[6px] border border-white/10 bg-black/40 px-4 text-[15px] text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary placeholder:text-white/40"
                 />
                 <textarea
                   name="message"
                   placeholder="Your Message"
                   rows={5}
                   required
-                  className="font-roboto w-full resize-none rounded-[6px] border-0 bg-bg-primary px-4 py-3 text-[15px] text-text-secondary outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-brand-primary"
+                  className="font-roboto w-full resize-none rounded-[6px] border border-white/10 bg-black/40 px-4 py-3 text-[15px] text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary placeholder:text-white/40"
                 />
                 <FlipButton
                   type="submit"
                   variant="primary"
-                  className="w-full mt-1 rounded-[6px] h-[48px] text-[15px]"
+                  className="mt-2 h-[48px] w-full rounded-[6px] text-[15px] font-bold tracking-widest hover:bg-white hover:text-black"
                 >
                   Submit Now
                 </FlipButton>
               </form>
 
               <div className="flex flex-col justify-center">
-                <h3 className="font-montserrat mb-5 text-[22px] font-medium text-text-inverse sm:text-[28px]">
-                  Contact information
+                <h3 className="font-montserrat mb-8 text-[22px] font-bold text-white sm:text-[28px]">
+                  Contact Information
                 </h3>
-                <ul className="flex flex-col gap-4 text-[15px] text-text-inverse">
-                  <li className="flex items-start gap-3">
-                    <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
-                    <span className="font-roboto">
+                <ul className="flex flex-col gap-6 text-[15px] text-white/80">
+                  <li className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
+                      <MapPin className="h-5 w-5 text-brand-primary" />
+                    </div>
+                    <span className="font-roboto pt-2">
                       C3i GA-70-A3, Korangi Creek Industrial Park Korangi, Karachi, Sindh
                     </span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <Phone className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
+                  <li className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
+                      <Phone className="h-5 w-5 text-brand-primary" />
+                    </div>
                     <a
                       href="https://wa.me/923114863532"
-                      className="font-roboto hover:text-brand-primary"
+                      className="font-roboto pt-2 hover:text-brand-primary transition-colors"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      +(92) 311-486-3532
+                      +(92) 311-486-3532 (WhatsApp)
                     </a>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <Headphones className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
-                    <a href="tel:02137173532" className="font-roboto hover:text-brand-primary">
-                      021-37173532
+                  <li className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
+                      <Headphones className="h-5 w-5 text-brand-primary" />
+                    </div>
+                    <a href="tel:02137173532" className="font-roboto pt-2 hover:text-brand-primary transition-colors">
+                      021-37173532 (Office)
                     </a>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <Mail className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
-                    <a href="mailto:info@elfaelectric.com" className="font-roboto hover:text-brand-primary">
+                  <li className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
+                      <Mail className="h-5 w-5 text-brand-primary" />
+                    </div>
+                    <a href="mailto:info@elfaelectric.com" className="font-roboto pt-2 hover:text-brand-primary transition-colors">
                       info@elfaelectric.com
                     </a>
                   </li>
                 </ul>
 
-                <div className="mt-6 flex flex-wrap gap-3">
+                <div className="mt-10 flex gap-4">
                   {socialLinks.map((s) => (
                     <a
                       key={s.label}
@@ -359,9 +266,9 @@ export default function ContactUsPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-bg-primary/10 text-text-inverse transition-colors hover:bg-brand-primary hover:text-text-inverse"
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white transition-all hover:bg-brand-primary hover:border-brand-primary hover:text-black"
                     >
-                      <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d={s.path} />
                       </svg>
                     </a>
@@ -372,53 +279,70 @@ export default function ContactUsPage() {
           </div>
         </section>
 
-        {/* Map fade in — fixed iframe height unchanged */}
-        <section className="w-full p-10 lg:p-16">
-          <FadeIn variant="fadeIn" speed="slow">
-            <iframe
-              title="ELFA Electric office location"
-              src="https://maps.google.com/maps?q=C3i%20GA-70-A3%2C%20Korangi%20Creek%20Industrial%20Park%20Korangi%2C%20Karachi%2C%20Sindh&t=m&z=14&output=embed&iwloc=near"
-              className="h-[250px] w-full border-0 sm:h-[420px] lg:h-[520px]"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+        {/* Map */}
+        <section className="w-full bg-[#050505]">
+          <FadeIn variant="fadeInUp" speed="slow" className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8 pb-16 lg:pb-24">
+            <div className="rounded-[24px] overflow-hidden border border-white/10 relative z-10 bg-white/5">
+              <iframe
+                title="ELFA Electric office location"
+                src="https://maps.google.com/maps?q=C3i%20GA-70-A3%2C%20Korangi%20Creek%20Industrial%20Park%20Korangi%2C%20Karachi%2C%20Sindh&t=m&z=14&output=embed&iwloc=near"
+                className="h-[350px] w-full border-0 sm:h-[420px] lg:h-[520px]"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </FadeIn>
         </section>
 
-        {/* FAQ — title fade up only */}
-        <section className="bg-bg-primary py-14 lg:py-20">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <FadeIn variant="fadeInUp" speed="slow">
-              <p className="font-montserrat text-center text-[20px] font-bold leading-[18px] text-brand-primary sm:text-[24px]">
-                Do you have
+        {/* FAQ */}
+        <section className="bg-[#050505] py-20 lg:py-32">
+          <div className="mx-auto grid w-full max-w-[1200px] gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.2fr] lg:gap-20 items-start">
+            {/* Left Column: Heading */}
+            <FadeIn variant="fadeInLeft" speed="slow" className="flex flex-col items-start">
+              <p className="text-brand-primary font-montserrat text-[11px] font-bold uppercase tracking-[0.2em] mb-4">
+                Got Questions?
               </p>
-              <h2 className="font-montserrat my-3 text-center text-[32px] font-bold text-text-primary sm:text-[42px] lg:text-[50px] lg:leading-[50px]">
-                Frequently Asked Questions
+              <h2 className="font-montserrat text-[48px] sm:text-[64px] lg:text-[72px] font-black leading-[1] text-white tracking-tighter mb-6">
+                Frequently<br />
+                <span className="text-brand-primary">Asked.</span>
               </h2>
+              <p className="font-roboto text-[15px] leading-relaxed text-white/60 mb-10 max-w-md">
+                Everything you need to know about ordering, charging, warranty, and owning your ELFA electric bike.
+              </p>
+              <FlipButton
+                href="#contact-form"
+                variant="glass"
+                className="px-6 py-3.5 text-[11px] font-bold tracking-[0.15em] text-white/80"
+              >
+                Still have questions?
+              </FlipButton>
             </FadeIn>
-            <div className="mx-auto flex max-w-[700px] flex-col gap-[10px]">
-              {faqs.map((f) => (
+
+            {/* Right Column: Accordions */}
+            <FadeIn variant="fadeInRight" speed="slow" className="w-full border-t border-white/10 mt-2">
+              {faqs.map((f, i) => (
                 <details
                   key={f.q}
-                  className="group overflow-hidden rounded-[10px]"
-                  style={{ backgroundImage: SPARK }}
+                  className="group overflow-hidden border-b border-white/10"
                 >
-                  <summary className="font-montserrat flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 text-left text-[16px] font-semibold text-text-inverse sm:px-6 sm:text-[18px] [&::-webkit-details-marker]:hidden">
+                  <summary className="font-roboto flex cursor-pointer list-none items-center justify-between gap-4 py-6 text-left text-[15px] font-medium text-white/90 sm:text-[16px] [&::-webkit-details-marker]:hidden outline-none">
                     {f.q}
-                    <ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-300 group-open:rotate-180" />
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/20 text-white/50 transition-all group-hover:border-white/40 group-open:bg-brand-primary group-open:border-brand-primary group-open:text-black">
+                      <Plus className="h-4 w-4 group-open:hidden" />
+                      <Minus className="h-4 w-4 hidden group-open:block" />
+                    </div>
                   </summary>
-                  <div className="bg-bg-primary px-5 py-4 sm:px-6">
-                    <p className="font-roboto text-[15px] leading-relaxed text-text-secondary">{f.a}</p>
+                  <div className="pb-6 pr-12">
+                    <div className="font-roboto text-[15px] leading-relaxed text-white/60">{f.a}</div>
                   </div>
                 </details>
               ))}
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        <Marquee />
+        
       </main>
-      <Footer />
     </>
   );
 }

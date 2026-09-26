@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
-import Marquee from "@/components/sections/Marquee";
+
 import FinancingPlans from "@/app/financing-partners/FinancingPlans";
 
 export const metadata: Metadata = {
@@ -15,8 +13,7 @@ export const metadata: Metadata = {
 export default function InstallmentPlansPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
+            <main className="flex-1">
         <PageHero
           title={
             <>
@@ -33,9 +30,8 @@ export default function InstallmentPlansPage() {
         />
 
         <FinancingPlans />
-        <Marquee />
+        
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

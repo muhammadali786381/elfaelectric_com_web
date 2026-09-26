@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ArrowRight, Bike, Clock } from "lucide-react";
+import FlipButton from "@/components/ui/FlipButton";
 
 const PAVE_FORM_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSdxnx9J7GDgtDHg3_jnbsRfdYb_dR79s9VJc0xZ4kKxqcsA1w/viewform";
@@ -67,15 +68,16 @@ export default function PavePromo() {
               <Clock className="h-4 w-4 shrink-0" />
               Book now before stocks run out
             </div>
-            <a
+            <FlipButton
               href={PAVE_FORM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-roboto inline-flex h-[48px] items-center justify-center gap-2 rounded-[6px] bg-bg-inverse text-[14px] font-semibold uppercase tracking-[1px] text-text-inverse transition-colors hover:bg-bg-inverse"
+              variant="dark"
+              icon={<ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
+              className="font-roboto h-[48px] w-full rounded-[6px] bg-bg-inverse text-[14px] font-semibold tracking-[1px] text-text-inverse hover:bg-bg-inverse"
             >
               Pre-book now
-              <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-            </a>
+            </FlipButton>
           </div>
         </div>
       </div>

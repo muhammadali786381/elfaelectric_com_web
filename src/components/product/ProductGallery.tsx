@@ -1,6 +1,7 @@
 "use client";
 
-import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel";
+import CarouselStacked from "@/components/ui/carousel-07";
+import { motion } from "motion/react";
 
 type Props = {
   shortName: string;
@@ -9,12 +10,11 @@ type Props = {
 };
 
 /**
- * Product gallery — centered title + 3D cylindrical photo carousel.
- * Layout title matches live EV-125; media uses the Framer Motion 3D carousel.
+ * Product gallery — centered title + interactive stacked photo carousel.
  */
-import { motion } from "motion/react";
-
 export default function ProductGallery({ shortName, images }: Props) {
+  const slides = images.map((image) => ({ image }));
+
   return (
     <section className="bg-[#050505] py-8 lg:py-12">
       <div className="mx-auto w-full max-w-[1150px] px-4 sm:px-6">
@@ -34,7 +34,7 @@ export default function ProductGallery({ shortName, images }: Props) {
         </motion.div>
 
         <div className="mt-8 sm:mt-10">
-          <ThreeDPhotoCarousel images={images} />
+          <CarouselStacked slides={slides} />
         </div>
       </div>
     </section>

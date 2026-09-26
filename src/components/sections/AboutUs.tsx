@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
+import FlipButton from "@/components/ui/FlipButton";
 
 export default function AboutUs() {
   return (
@@ -15,7 +15,7 @@ export default function AboutUs() {
           <FadeIn variant="fadeInLeft" speed="slow">
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
               <Image
-                src="/assets/images/solutions.webp"
+                src="/assets/images/ne-a.webp"
                 alt="ELFA Electric Solutions"
                 fill
                 className="object-cover object-center"
@@ -50,13 +50,14 @@ export default function AboutUs() {
                 </p>
               </div>
               <div className="mt-2">
-                <Link
+                <FlipButton
                   href="/about-us"
-                  className="font-roboto inline-flex h-[48px] items-center gap-2 rounded-full bg-brand-primary px-8 text-[13px] font-bold uppercase tracking-[1.5px] text-bg-primary transition-all hover:bg-brand-secondary hover:shadow-[0_0_24px_rgba(97,206,112,0.4)]"
+                  variant="primary"
+                  icon={<ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
+                  className="font-roboto h-[48px] px-8 text-[13px] tracking-[1.5px]"
                 >
                   Discover More
-                  <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-                </Link>
+                </FlipButton>
               </div>
             </div>
           </FadeIn>

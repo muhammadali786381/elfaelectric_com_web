@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import type { ProductPurchase } from "@/data/products/purchase-types";
 import { formatRs, moneyFromPurchase, useCart } from "@/components/cart/CartContext";
+import FlipButton from "@/components/ui/FlipButton";
 
 export type ShopProduct = {
   product: ProductPurchase;
@@ -34,15 +35,15 @@ export default function ShopCatalog({ products }: { products: ShopProduct[] }) {
   });
 
   return (
-    <section className="bg-bg-primary pb-16 pt-10 lg:pb-20 lg:pt-12">
-      <div className="mx-auto w-full max-w-[800px] px-4 sm:px-6">
-        <div className="font-roboto mb-8 flex flex-wrap items-center justify-between gap-3 text-[16px] text-text-secondary">
+    <section className="bg-[#050505] text-white pb-16 pt-10 lg:pb-20 lg:pt-12">
+      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+        <div className="font-roboto mb-8 flex flex-wrap items-center justify-between gap-3 text-[16px] text-white/60">
           <p>Showing all {sorted.length} results</p>
           <select
             aria-label="Shop order"
             value={sort}
             onChange={(e) => setSort(e.target.value as SortKey)}
-            className="h-10 rounded border border-text-secondary/30 bg-bg-primary px-3 text-[14px] outline-none focus:border-brand-primary"
+            className="h-10 rounded border border-white/10 bg-[#0a0a0a] px-3 text-[14px] text-white outline-none focus:border-brand-primary"
           >
             <option value="menu_order">Default sorting</option>
             <option value="popularity">Sort by popularity</option>
@@ -121,47 +122,56 @@ function ShopProductCard({
   };
 
   return (
-    <article className="relative flex flex-col items-center rounded-[39px] border border-[rgba(122,122,122,0.14)] bg-bg-primary px-3 pb-5 pt-2.5 text-center">
+    <article className="relative flex flex-col items-center rounded-[39px] border border-white/5 bg-white/[0.02] px-6 pb-8 pt-4 text-center transition-colors hover:border-white/10 hover:bg-white/[0.04]">
+      {product.offerBadge && (
+        <div className="absolute right-4 top-4 z-10 flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 shadow-sm">
+          <span className="flex h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
+          <span className="font-roboto text-[11px] font-bold tracking-wide text-red-400 uppercase">
+            {product.offerBadge}
+          </span>
+        </div>
+      )}
       <Link href={href} className="group block w-full">
-        <span className="relative mx-auto mb-3 block aspect-square w-full max-w-[280px]">
+        <span className="relative mx-auto mb-6 mt-4 block aspect-video w-full max-w-[420px]">
           <Image
             src={catalogImage}
             alt={product.title}
             fill
-            className="object-contain transition-transform duration-200 group-hover:scale-[1.02]"
-            sizes="280px"
+            className="object-contain transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+            sizes="(min-width: 640px) 420px, 100vw"
           />
         </span>
-        <h2 className="font-montserrat text-[20px] font-bold text-text-primary">{product.title}</h2>
-        <p className="font-roboto mt-1 text-[15px] text-text-secondary">{formatRs(price)}</p>
+        <h2 className="font-montserrat text-[22px] font-bold text-white transition-colors group-hover:text-brand-primary">{product.title}</h2>
+        <p className="font-roboto mt-2 text-[16px] font-medium text-brand-primary/80">{formatRs(price)}</p>
       </Link>
 
-      <div className="relative mt-4 w-full" ref={panelRef}>
-        <button
+      <div className="relative mt-8 w-full" ref={panelRef}>
+        <FlipButton
           type="button"
           onClick={onToggle}
-          className="font-roboto mx-auto flex h-10 min-w-[140px] items-center justify-center rounded-[3px] bg-bg-inverse px-5 text-[14px] font-semibold text-text-inverse hover:bg-bg-inverse"
+          variant="primary"
+          className="font-roboto mx-auto h-11 w-full max-w-[200px] rounded-full text-[14px] font-bold"
         >
           Select options
-        </button>
+        </FlipButton>
 
         {open && active ? (
-          <div className="absolute left-1/2 top-[calc(100%+8px)] z-20 w-[min(100%,280px)] -translate-x-1/2 rounded border border-[#e0e0e0] bg-bg-primary shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
-            <div className="flex items-center justify-between border-b border-text-secondary/20 bg-bg-secondary px-3 py-2">
-              <p className="font-roboto truncate text-[13px] text-text-secondary">
+          <div className="absolute left-1/2 top-[calc(100%+12px)] z-20 w-[min(100%,320px)] -translate-x-1/2 rounded-2xl border border-white/10 bg-[#0a0a0a] shadow-[0_16px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+            <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.02] px-4 py-3 rounded-t-2xl">
+              <p className="font-roboto truncate text-[13px] font-medium text-white/80">
                 {product.variantLabel} : {active.label}
               </p>
               <button
                 type="button"
                 aria-label="Close"
                 onClick={onClose}
-                className="shrink-0 p-0.5 text-text-secondary hover:text-text-primary"
+                className="shrink-0 p-1 text-white/50 transition-colors hover:text-white"
               >
                 <X className="h-4 w-4" strokeWidth={2.5} />
               </button>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-2 px-3 py-3">
+            <div className="flex flex-wrap justify-center gap-3 px-4 py-4">
               {product.variants.map((v) => (
                 <button
                   key={v.id}
@@ -169,16 +179,16 @@ function ShopProductCard({
                   aria-label={v.label}
                   aria-pressed={v.id === active.id}
                   onClick={() => setVariantId(v.id)}
-                  className={`relative h-12 w-12 overflow-hidden rounded border-2 bg-bg-secondary ${
-                    v.id === active.id ? "border-[#212121]" : "border-transparent"
+                  className={`relative h-14 w-14 overflow-hidden rounded-lg border bg-white/5 transition-all ${
+                    v.id === active.id ? "border-brand-primary ring-2 ring-brand-primary/20 scale-105" : "border-white/10 hover:border-white/30"
                   }`}
                 >
-                  <Image src={v.thumb} alt="" fill className="object-contain p-0.5" sizes="48px" />
+                  <Image src={v.thumb} alt="" fill className="object-contain p-1" sizes="56px" />
                 </button>
               ))}
             </div>
 
-            <div className="flex items-center justify-center gap-2 px-3 pb-3">
+            <div className="flex items-center justify-center gap-3 px-4 pb-4">
               <input
                 type="number"
                 min={1}
@@ -188,15 +198,16 @@ function ShopProductCard({
                   const n = Number(e.target.value);
                   if (!Number.isNaN(n)) setQty(Math.max(1, n));
                 }}
-                className="font-roboto h-9 w-12 rounded border border-[rgba(32,7,7,0.8)] text-center text-[14px] outline-none focus:border-brand-primary"
+                className="font-roboto h-10 w-16 rounded-lg border border-white/10 bg-white/5 text-center text-[14px] text-white outline-none transition-colors focus:border-brand-primary"
               />
-              <button
+              <FlipButton
                 type="button"
                 onClick={handleAdd}
-                className="font-roboto h-9 rounded-[3px] bg-bg-inverse px-4 text-[13px] font-semibold text-text-inverse hover:bg-bg-inverse"
+                variant="primary"
+                className="font-roboto h-10 rounded-lg px-5 text-[14px] font-bold"
               >
                 Add to cart
-              </button>
+              </FlipButton>
             </div>
           </div>
         ) : null}

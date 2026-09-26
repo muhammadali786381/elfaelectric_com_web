@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo, useState, type FormEvent } from "react";
 import { ChevronDown, Info } from "lucide-react";
 import { formatRs, useCart } from "@/components/cart/CartContext";
+import FlipButton from "@/components/ui/FlipButton";
 import {
   generateOrderId,
   PK_STATES,
@@ -26,12 +27,15 @@ const emptyAddress = (): CheckoutAddress => ({
 });
 
 const fieldClass =
-  "font-roboto h-[50px] w-full rounded border border-[rgba(43,45,47,0.8)] bg-bg-primary px-3 text-[16px] text-text-primary outline-none transition-colors placeholder:text-text-secondary focus:border-brand-primary";
+  "font-roboto h-[50px] w-full rounded-lg border border-white/10 bg-white/5 px-4 text-[15px] text-white outline-none transition-colors placeholder:text-white/30 focus:border-brand-primary";
 
-const labelClass = "font-roboto mb-1.5 block text-[13px] font-medium text-text-secondary";
+const labelClass = "font-roboto mb-2 block text-[13px] font-bold tracking-wide text-white/70";
 
 const sectionTitleClass =
-  "font-roboto mb-4 text-[20px] font-medium leading-tight text-text-primary";
+  "font-montserrat mb-6 text-[24px] font-bold tracking-tight text-white border-b border-white/10 pb-4";
+
+const sectionClass =
+  "rounded-[24px] border border-white/5 bg-white/[0.02] backdrop-blur-2xl p-6 sm:p-8 lg:p-10 shadow-2xl";
 
 type FieldErrors = Partial<Record<string, string>>;
 
@@ -125,46 +129,48 @@ export default function CheckoutPageContent() {
 
   if (placedOrder) {
     return (
-      <section className="bg-bg-secondary py-10 lg:py-14">
-        <div className="mx-auto max-w-[720px] rounded-lg border border-[#e0e0e0] bg-bg-primary px-6 py-10 text-center shadow-sm sm:px-10">
-          <p className="font-montserrat text-[14px] font-semibold uppercase tracking-wide text-brand-primary">
+      <section className="bg-[#050505] text-white pt-32 pb-10 lg:pt-40 lg:pb-24 min-h-[70vh] flex flex-col items-center justify-center">
+        <div className={`${sectionClass} mx-auto max-w-[720px] text-center`}>
+          <p className="font-montserrat text-[14px] font-bold uppercase tracking-widest text-brand-primary">
             Order received
           </p>
-          <h1 className="font-montserrat mt-2 text-[28px] font-bold text-text-primary sm:text-[32px]">
+          <h1 className="font-montserrat mt-4 text-[32px] font-bold text-white sm:text-[42px]">
             Thank you!
           </h1>
-          <p className="font-roboto mt-3 text-[15px] leading-relaxed text-text-secondary">
-            Your order <span className="font-semibold text-text-primary">{placedOrder.id}</span> is
+          <p className="font-roboto mt-4 text-[16px] leading-relaxed text-white/70">
+            Your order <span className="font-bold text-white">{placedOrder.id}</span> is
             pending bank transfer. Please use this Order ID as the payment reference. We will
             process shipping once funds clear.
           </p>
-          <div className="font-roboto mt-6 rounded-md border border-text-secondary/20 bg-bg-secondary px-4 py-4 text-left text-[14px] text-text-secondary">
-            <div className="flex justify-between gap-4 border-b border-text-secondary/20 py-2">
+          <div className="font-roboto mt-8 rounded-xl border border-white/10 bg-white/5 p-6 text-left text-[15px] text-white/70">
+            <div className="flex justify-between gap-4 border-b border-white/10 py-3">
               <span>Email</span>
-              <span className="font-medium">{placedOrder.email}</span>
+              <span className="font-bold text-white">{placedOrder.email}</span>
             </div>
-            <div className="flex justify-between gap-4 border-b border-text-secondary/20 py-2">
+            <div className="flex justify-between gap-4 border-b border-white/10 py-3">
               <span>Total</span>
-              <span className="font-bold">{formatRs(placedOrder.total)}</span>
+              <span className="font-bold text-brand-primary">{formatRs(placedOrder.total)}</span>
             </div>
-            <div className="flex justify-between gap-4 py-2">
+            <div className="flex justify-between gap-4 py-3">
               <span>Payment</span>
-              <span className="font-medium">Direct bank transfer</span>
+              <span className="font-bold text-white">Direct bank transfer</span>
             </div>
           </div>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <FlipButton
               href="/shop"
-              className="font-roboto inline-flex h-11 items-center justify-center rounded-[3px] bg-brand-primary px-6 text-[15px] font-bold text-text-inverse hover:bg-brand-secondary"
+              variant="primary"
+              className="font-roboto h-14 rounded-xl px-8 text-[16px] font-bold"
             >
               Continue shopping
-            </Link>
-            <Link
+            </FlipButton>
+            <FlipButton
               href="/"
-              className="font-roboto inline-flex h-11 items-center justify-center rounded-[3px] border border-[#212121] px-6 text-[15px] text-text-primary hover:bg-bg-secondary"
+              variant="outline"
+              className="font-roboto h-14 rounded-xl px-8 text-[16px] font-bold"
             >
               Back to home
-            </Link>
+            </FlipButton>
           </div>
         </div>
       </section>
@@ -173,27 +179,28 @@ export default function CheckoutPageContent() {
 
   if (items.length === 0) {
     return (
-      <section className="bg-bg-primary py-10 lg:py-14">
-        <div className="mx-auto max-w-[1095px] px-4 sm:px-5">
-          <h1 className="font-montserrat text-[28px] font-bold text-text-primary">Checkout</h1>
-          <p className="font-roboto mt-3 text-[15px] text-text-secondary">Your cart is currently empty.</p>
-          <Link
+      <section className="bg-[#050505] text-white pt-32 pb-10 lg:pt-40 lg:pb-24 min-h-[60vh] flex flex-col items-center justify-center">
+        <div className="mx-auto max-w-[1095px] px-4 sm:px-5 text-center">
+          <h1 className="font-montserrat mb-6 text-[32px] font-bold text-white">Checkout</h1>
+          <p className="font-roboto mb-8 text-[20px] text-white/50">Your cart is currently empty.</p>
+          <FlipButton
             href="/shop"
-            className="font-roboto mt-6 inline-flex h-10 items-center justify-center rounded-[3px] border border-text-secondary/30 bg-bg-secondary px-5 text-[14px] font-medium text-text-secondary hover:bg-bg-secondary"
+            variant="primary"
+            className="font-roboto h-14 rounded-xl px-10 text-[16px] font-bold uppercase tracking-wider"
           >
             Return to shop
-          </Link>
+          </FlipButton>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="bg-bg-secondary py-6 lg:py-10">
+    <section className="bg-[#050505] text-white pt-32 pb-10 lg:pt-40 lg:pb-24">
       {/* Free delivery notice */}
-      <div className="mx-auto mb-5 max-w-[1040px] px-4 sm:px-5">
-        <div className="flex items-start gap-2 rounded-md bg-brand-primary/10 px-4 py-3 text-[14px] leading-snug text-text-secondary sm:items-center sm:text-[15px]">
-          <Info className="mt-0.5 h-4 w-4 shrink-0 text-brand-primary sm:mt-0" strokeWidth={2.25} />
+      <div className="mx-auto mb-8 max-w-[1200px] px-4 sm:px-6 lg:px-8">
+        <div className="flex items-start gap-3 rounded-xl border border-brand-primary/20 bg-brand-primary/5 px-6 py-4 text-[14px] leading-snug text-white/80 sm:items-center sm:text-[15px]">
+          <Info className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary sm:mt-0" strokeWidth={2} />
           <p className="font-roboto">
             Free delivery in Karachi and Hyderabad! If you&apos;re in another city, our team will
             give you a call to confirm if we can deliver there and go over the options with you.
@@ -203,38 +210,42 @@ export default function CheckoutPageContent() {
 
       <form
         onSubmit={onSubmit}
-        className="mx-auto grid w-full max-w-[1040px] grid-cols-1 gap-6 px-4 sm:px-5 lg:grid-cols-[minmax(0,1fr)_364px] lg:gap-8"
+        className="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_400px] lg:px-8"
         noValidate
       >
         {/* Left: checkout fields */}
-        <div className="rounded-lg border border-[#e0e0e0] bg-bg-primary p-5 shadow-sm sm:p-7">
+        <div className={`${sectionClass} flex flex-col gap-10`}>
           {/* Contact */}
-          <div className="mb-8">
+          <div>
             <h2 className={sectionTitleClass}>Contact information</h2>
-            <label htmlFor="email" className={labelClass}>
-              Email address
-            </label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={fieldClass}
-            />
-            {errors.email ? (
-              <p className="font-roboto mt-1 text-[13px] text-brand-accent">{errors.email}</p>
-            ) : null}
-            <p className="font-roboto mt-2 text-[13px] text-text-secondary">
-              You are currently checking out as a guest.
-            </p>
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="email" className={labelClass}>
+                  Email address
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={fieldClass}
+                />
+                {errors.email ? (
+                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">{errors.email}</p>
+                ) : null}
+              </div>
+              <p className="font-roboto text-[13px] text-white/50">
+                You are currently checking out as a guest.
+              </p>
+            </div>
           </div>
 
           {/* Shipping */}
-          <div className="mb-8">
+          <div>
             <h2 className={sectionTitleClass}>Shipping address</h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="shipping-first_name" className={labelClass}>
                   First name
@@ -247,7 +258,7 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.firstName"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
+                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
                 ) : null}
               </div>
               <div>
@@ -275,7 +286,7 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.lastName"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
+                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
                 ) : null}
               </div>
               <div className="sm:col-span-2">
@@ -290,13 +301,13 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.address1"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
+                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
                 ) : null}
                 {!showApartment ? (
                   <button
                     type="button"
                     onClick={() => setShowApartment(true)}
-                    className="font-roboto mt-2 text-[14px] text-brand-primary hover:underline"
+                    className="font-roboto mt-3 text-[14px] font-medium text-brand-primary transition-colors hover:text-white"
                   >
                     + Add apartment, suite, unit, etc.
                   </button>
@@ -322,7 +333,7 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.city"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
+                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
                 ) : null}
               </div>
               <div>
@@ -354,7 +365,7 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.postcode"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
+                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
                 ) : null}
               </div>
               <div>
@@ -370,24 +381,24 @@ export default function CheckoutPageContent() {
                   className={fieldClass}
                 />
                 {errors["shipping.phone"] ? (
-                  <p className="font-roboto mt-1 text-[13px] text-brand-accent">Required</p>
+                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
                 ) : null}
               </div>
             </div>
 
-            <label className="font-roboto mt-4 flex cursor-pointer items-center gap-2.5 text-[14px] text-text-secondary">
+            <label className="font-roboto mt-6 flex cursor-pointer items-center gap-3 text-[14px] font-medium text-white/70">
               <input
                 type="checkbox"
                 checked={billingSame}
                 onChange={(e) => setBillingSame(e.target.checked)}
-                className="h-4 w-4 accent-brand-primary"
+                className="h-5 w-5 rounded border-white/20 bg-white/5 accent-brand-primary"
               />
               Use same address for billing
             </label>
 
             {!billingSame ? (
-              <div className="mt-6 grid grid-cols-1 gap-4 border-t border-text-secondary/20 pt-6 sm:grid-cols-2">
-                <p className="font-roboto sm:col-span-2 text-[16px] font-medium text-text-primary">
+              <div className="mt-8 grid grid-cols-1 gap-5 border-t border-white/10 pt-8 sm:grid-cols-2">
+                <p className="font-montserrat sm:col-span-2 text-[18px] font-bold text-white">
                   Billing address
                 </p>
                 {(
@@ -434,10 +445,10 @@ export default function CheckoutPageContent() {
           </div>
 
           {/* Shipping options */}
-          <div className="mb-8">
+          <div>
             <h2 className={sectionTitleClass}>Shipping options</h2>
-            <label className="flex cursor-pointer items-center justify-between rounded border border-[#212121] px-4 py-3.5">
-              <span className="font-roboto flex items-center gap-3 text-[14px] text-text-primary">
+            <label className="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-white/5 px-5 py-4 transition-colors hover:border-brand-primary">
+              <span className="font-roboto flex items-center gap-3 text-[15px] text-white">
                 <input
                   type="radio"
                   name="shipping_method"
@@ -446,27 +457,27 @@ export default function CheckoutPageContent() {
                 />
                 Free shipping
               </span>
-              <span className="font-roboto text-[13px] font-bold uppercase tracking-wide text-text-primary">
+              <span className="font-roboto text-[14px] font-bold uppercase tracking-wide text-white">
                 FREE
               </span>
             </label>
           </div>
 
           {/* Payment */}
-          <div className="mb-8">
+          <div>
             <h2 className={sectionTitleClass}>Payment options</h2>
-            <div className="rounded border border-[#212121]">
-              <label className="flex cursor-pointer items-center gap-3 px-4 py-3.5">
+            <div className="rounded-xl border border-white/10 bg-white/5 overflow-hidden">
+              <label className="flex cursor-pointer items-center gap-3 px-5 py-4">
                 <input
                   type="radio"
                   name="payment_method"
                   defaultChecked
                   className="h-4 w-4 accent-brand-primary"
                 />
-                <span className="font-roboto text-[14px] text-text-primary">Direct bank transfer</span>
+                <span className="font-roboto text-[15px] font-medium text-white">Direct bank transfer</span>
               </label>
-              <div className="border-t border-text-secondary/20 bg-bg-secondary px-4 py-3">
-                <p className="font-roboto text-[13px] leading-relaxed text-text-secondary">
+              <div className="border-t border-white/10 bg-black/20 px-5 py-4">
+                <p className="font-roboto text-[14px] leading-relaxed text-white/60">
                   Make your payment directly into our bank account. Please use your Order ID as the
                   payment reference. Your order will not be shipped until the funds have cleared in
                   our account.
@@ -476,136 +487,142 @@ export default function CheckoutPageContent() {
           </div>
 
           {/* Note */}
-          <label className="font-roboto mb-4 flex cursor-pointer items-center gap-2.5 text-[14px] text-text-secondary">
-            <input
-              type="checkbox"
-              checked={addNote}
-              onChange={(e) => setAddNote(e.target.checked)}
-              className="h-4 w-4 accent-brand-primary"
-            />
-            Add a note to your order
-          </label>
-          {addNote ? (
-            <textarea
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              rows={3}
-              placeholder="Notes about your order, e.g. special notes for delivery."
-              className="font-roboto mb-4 w-full rounded border border-[rgba(43,45,47,0.8)] bg-bg-primary px-3 py-2.5 text-[15px] text-text-primary outline-none focus:border-brand-primary"
-            />
-          ) : null}
+          <div>
+            <label className="font-roboto mb-4 flex cursor-pointer items-center gap-3 text-[14px] font-medium text-white/70">
+              <input
+                type="checkbox"
+                checked={addNote}
+                onChange={(e) => setAddNote(e.target.checked)}
+                className="h-5 w-5 rounded border-white/20 bg-white/5 accent-brand-primary"
+              />
+              Add a note to your order
+            </label>
+            {addNote ? (
+              <textarea
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                rows={3}
+                placeholder="Notes about your order, e.g. special notes for delivery."
+                className="font-roboto w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-[15px] text-white outline-none focus:border-brand-primary placeholder:text-white/30"
+              />
+            ) : null}
+          </div>
 
-          <p className="font-roboto mb-5 text-[13px] leading-relaxed text-text-secondary">
+          <p className="font-roboto mt-4 text-[13px] leading-relaxed text-white/50">
             By proceeding with your purchase you agree to our{" "}
-            <Link href="/consent-policy" className="text-brand-accent hover:underline">
+            <Link href="/consent-policy" className="text-white hover:text-brand-primary hover:underline">
               Terms and Conditions
             </Link>{" "}
             and{" "}
-            <Link href="/privacy-policy" className="text-brand-accent hover:underline">
+            <Link href="/privacy-policy" className="text-white hover:text-brand-primary hover:underline">
               Privacy Policy
             </Link>
           </p>
 
-          <button
+          <FlipButton
             type="submit"
             disabled={submitting}
-            className="font-roboto flex w-full items-center justify-center rounded-[3px] border border-[#212121] bg-transparent px-[30px] py-[18px] text-[16px] text-text-primary transition-colors hover:bg-bg-inverse hover:text-text-inverse disabled:opacity-60"
+            variant="primary"
+            className="font-roboto mt-4 h-14 w-full rounded-xl px-6 text-[16px] font-bold uppercase tracking-wider disabled:opacity-60"
           >
             {submitting ? "Placing order…" : "Place Order"}
-          </button>
+          </FlipButton>
         </div>
 
         {/* Right: order summary */}
-        <aside className="h-fit rounded-lg border border-[#e0e0e0] bg-bg-primary p-5 shadow-sm lg:sticky lg:top-24">
-          <h2 className="font-roboto mb-4 text-[20px] font-medium text-text-primary">Order summary</h2>
+        <div className="relative">
+          <aside className={`${sectionClass} sticky top-32`}>
+            <h2 className={sectionTitleClass}>Order summary</h2>
 
-          <ul className="mb-4 space-y-4">
-            {items.map((item) => (
-              <li key={item.id} className="flex gap-3">
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded border border-text-secondary/20 bg-bg-secondary">
-                  <Image src={item.image} alt="" fill className="object-contain p-1" sizes="64px" />
-                  <span className="font-roboto absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-bg-inverse px-1 text-[11px] font-semibold text-text-inverse">
-                    {item.qty}
-                  </span>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-roboto text-[14px] font-medium text-text-primary">{item.name}</p>
-                  <p className="font-roboto text-[12px] text-text-secondary">Color: {item.variantLabel}</p>
-                  <p className="font-roboto mt-0.5 text-[14px] font-semibold text-brand-primary">
-                    {formatRs(item.price * item.qty)}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
+            <ul className="mb-6 space-y-5">
+              {items.map((item) => (
+                <li key={item.id} className="flex gap-4">
+                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                    <Image src={item.image} alt="" fill className="object-contain p-2" sizes="80px" />
+                    <span className="font-roboto absolute -top-2 -right-2 flex h-6 min-w-[24px] items-center justify-center rounded-full bg-brand-primary px-1 text-[12px] font-bold text-[#050505]">
+                      {item.qty}
+                    </span>
+                  </div>
+                  <div className="min-w-0 flex-1 py-1">
+                    <p className="font-roboto text-[16px] font-bold text-white">{item.name}</p>
+                    <p className="font-roboto mt-1 text-[13px] text-white/50">Color: {item.variantLabel}</p>
+                    <p className="font-roboto mt-1.5 text-[15px] font-bold text-brand-primary">
+                      {formatRs(item.price * item.qty)}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
 
-          <p className="font-roboto mb-3 text-[13px] text-text-secondary">
-            {itemCount} {itemCount === 1 ? "item" : "items"}
-          </p>
+            <p className="font-roboto mb-6 text-[14px] text-white/50">
+              {itemCount} {itemCount === 1 ? "item" : "items"}
+            </p>
 
-          {/* Coupon */}
-          <button
-            type="button"
-            onClick={() => setCouponOpen((o) => !o)}
-            className="font-roboto mb-3 flex w-full items-center justify-between border-y border-text-secondary/20 py-3 text-left text-[14px] text-text-secondary"
-          >
-            Add coupons
-            <ChevronDown
-              className={`h-4 w-4 transition-transform ${couponOpen ? "rotate-180" : ""}`}
-            />
-          </button>
-          {couponOpen ? (
-            <div className="mb-4 flex gap-2">
-              <input
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
-                placeholder="Enter code"
-                className="font-roboto h-10 flex-1 rounded border border-[#ccc] px-3 text-[14px] outline-none focus:border-brand-primary"
-              />
-              <button
-                type="button"
-                onClick={() => applyCoupon(couponCode)}
-                className="font-roboto h-10 shrink-0 rounded bg-brand-primary px-4 text-[13px] font-bold text-text-inverse hover:bg-brand-secondary"
-              >
-                Apply
-              </button>
-            </div>
-          ) : null}
-          {coupon ? (
+            {/* Coupon */}
             <button
               type="button"
-              onClick={removeCoupon}
-              className="font-roboto mb-3 text-[13px] text-brand-accent hover:underline"
+              onClick={() => setCouponOpen((o) => !o)}
+              className="font-roboto mb-5 flex w-full items-center justify-between border-y border-white/10 py-4 text-left text-[15px] font-medium text-white/70 transition-colors hover:text-white"
             >
-              Remove {coupon.code}
+              Add coupons
+              <ChevronDown
+                className={`h-5 w-5 transition-transform ${couponOpen ? "rotate-180" : ""}`}
+              />
             </button>
-          ) : null}
-
-          <div className="font-roboto space-y-2.5 text-[14px] text-text-secondary">
-            <div className="flex justify-between gap-3">
-              <span>Subtotal</span>
-              <span>{formatRs(subtotal)}</span>
-            </div>
-            {discount > 0 ? (
-              <div className="flex justify-between gap-3 text-brand-primary">
-                <span>Coupon ({coupon?.code})</span>
-                <span>−{formatRs(discount)}</span>
+            {couponOpen ? (
+              <div className="mb-6 flex gap-3">
+                <input
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  placeholder="Enter code"
+                  className="font-roboto h-12 flex-1 rounded-lg border border-white/10 bg-white/5 px-4 text-[14px] text-white outline-none transition-colors placeholder:text-white/30 focus:border-brand-primary"
+                />
+                <FlipButton
+                  type="button"
+                  onClick={() => applyCoupon(couponCode)}
+                  variant="primary"
+                  className="font-roboto h-12 shrink-0 rounded-lg px-6 text-[14px] font-bold"
+                >
+                  Apply
+                </FlipButton>
               </div>
             ) : null}
-            <div className="flex justify-between gap-3">
-              <span>Free shipping</span>
-              <span className="font-bold uppercase">FREE</span>
+            {coupon ? (
+              <button
+                type="button"
+                onClick={removeCoupon}
+                className="font-roboto mb-6 text-[13px] font-medium text-red-400 hover:underline"
+              >
+                Remove {coupon.code}
+              </button>
+            ) : null}
+
+            <div className="font-roboto space-y-4 text-[15px] text-white/70">
+              <div className="flex justify-between gap-3">
+                <span>Subtotal</span>
+                <span className="text-white">{formatRs(subtotal)}</span>
+              </div>
+              {discount > 0 ? (
+                <div className="flex justify-between gap-3 text-brand-primary">
+                  <span>Coupon ({coupon?.code})</span>
+                  <span>−{formatRs(discount)}</span>
+                </div>
+              ) : null}
+              <div className="flex justify-between gap-3">
+                <span>Free shipping</span>
+                <span className="font-bold text-white uppercase">FREE</span>
+              </div>
+              <div className="flex justify-between gap-3">
+                <span>Taxes</span>
+                <span className="text-white">{formatRs(taxTotal)}</span>
+              </div>
+              <div className="flex justify-between gap-3 border-t border-white/10 pt-5 text-[20px] font-bold text-white">
+                <span>Total</span>
+                <span className="text-brand-primary">{formatRs(total)}</span>
+              </div>
             </div>
-            <div className="flex justify-between gap-3">
-              <span>Taxes</span>
-              <span>{formatRs(taxTotal)}</span>
-            </div>
-            <div className="flex justify-between gap-3 border-t border-[#212121] pt-3 text-[18px] font-bold text-text-primary">
-              <span>Total</span>
-              <span>{formatRs(total)}</span>
-            </div>
-          </div>
-        </aside>
+          </aside>
+        </div>
       </form>
     </section>
   );

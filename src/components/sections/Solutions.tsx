@@ -35,16 +35,6 @@ export default function Solutions() {
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-container flex-col justify-center px-4 sm:px-6">
-        <div className="mb-8 flex justify-center lg:hidden">
-          <Image
-            src="/assets/images/solutions.webp"
-            alt="ELFA EV-1 Scooty"
-            width={1311}
-            height={1784}
-            className="h-auto w-full max-w-[280px] object-contain"
-          />
-        </div>
-
         <div className="w-full lg:max-w-[70%]">
           <FadeIn variant="fadeInUp" speed="slow">
             <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-text-inverse sm:text-[41px]">
@@ -62,6 +52,16 @@ export default function Solutions() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="mt-12 flex justify-center lg:hidden">
+          <Image
+            src="/assets/images/solutions.webp"
+            alt="ELFA EV-1 Scooty"
+            width={1311}
+            height={1784}
+            className="h-auto w-full max-w-[280px] object-contain drop-shadow-2xl"
+          />
         </div>
       </div>
     </section>

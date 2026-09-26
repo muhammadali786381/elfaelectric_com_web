@@ -34,67 +34,70 @@ export default function ScootyHero({ product }: { product: Product }) {
       </div>
 
       {/* Main Container */}
-      <div className="relative z-10 flex h-full w-full max-w-[1400px] flex-col items-center justify-between flex-1">
-        
-        {/* Top: Header Section (Centered) */}
-        <div className="flex w-full flex-col items-center text-center mt-2 lg:mt-4 z-20 shrink-0">
-          {product.offerBadge && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease }}
-              className="mb-3"
-            >
-              <Badge variant="outline" className="h-6 border-brand-primary/30 bg-brand-primary/5 px-3 font-roboto text-[10px] font-bold uppercase tracking-widest text-brand-primary backdrop-blur-md">
-                <span className="mr-2 h-1 w-1 rounded-full bg-brand-primary animate-pulse" />
-                {product.offerBadge}
-              </Badge>
-            </motion.div>
-          )}
+      <div className="relative z-10 flex h-full w-full max-w-[1500px] mx-auto flex-col justify-between flex-1 pt-8 lg:pt-0">
 
-          <h1 className="font-montserrat text-[42px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[56px] lg:text-[80px] xl:text-[96px]">
-            {product.title.split(" ").map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
+        <div className="flex flex-col lg:flex-row lg:items-center w-full flex-1 gap-10 lg:gap-0 lg:pl-4">
+
+          {/* Left: Header Section */}
+          <div className="flex w-full lg:w-[45%] xl:w-[40%] flex-col items-center lg:items-start text-center lg:text-left z-20 shrink-0">
+            {product.offerBadge && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: i * 0.12, ease }}
-                className="inline-block mr-[0.25em] last:mr-0"
+                transition={{ duration: 0.6, ease }}
+                className="mb-4 lg:mb-6"
               >
-                {word}
-              </motion.span>
-            ))}
-          </h1>
+                <Badge variant="outline" className="h-7 border-brand-primary/30 bg-brand-primary/5 px-4 font-roboto text-[11px] font-bold uppercase tracking-widest text-brand-primary backdrop-blur-md">
+                  <span className="mr-2 h-1.5 w-1.5 rounded-full bg-brand-primary animate-pulse" />
+                  {product.offerBadge}
+                </Badge>
+              </motion.div>
+            )}
 
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease }}
-            className="font-roboto mt-3 max-w-[500px] text-[14px] font-medium leading-relaxed text-white/60 sm:text-[15px] lg:text-[17px]"
+            <h1 className="font-montserrat flex flex-wrap justify-center lg:justify-start text-[48px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[64px] lg:text-[80px] xl:text-[100px]">
+              {product.title.split(" ").map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: i * 0.12, ease }}
+                  className="inline-block mr-[0.25em] last:mr-0"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </h1>
+
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease }}
+              className="font-roboto mt-5 max-w-[480px] text-[15px] font-medium leading-relaxed text-white/60 sm:text-[17px] lg:text-[19px]"
+            >
+              {product.subtitle}
+            </motion.p>
+          </div>
+
+          {/* Right: Huge Scooter */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, x: -150 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 1.2, delay: 0.2, ease }}
+            className="relative flex-1 w-full lg:w-[55%] xl:w-[60%] max-w-[700px] lg:max-w-none min-h-[300px] lg:min-h-[500px] z-10 scale-[1.1]  lg:-mr-10 xl:-mr-20"
           >
-            {product.subtitle}
-          </motion.p>
-        </div>
+            {/* Decorative glow behind scooty */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-brand-primary/15 blur-[100px] rounded-full pointer-events-none" />
 
-        {/* Middle: Huge Centered Scooter */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 30 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.2, ease }}
-          className="relative flex-1 w-full max-w-[600px] lg:max-w-[850px] min-h-[250px] z-10 my-2"
-        >
-          {/* Decorative glow behind scooty */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-brand-primary/15 blur-[100px] rounded-full pointer-events-none" />
-          
-          <Image
-            src={product.heroImage}
-            alt={product.name}
-            fill
-            priority
-            className="object-contain object-center drop-shadow-2xl"
-            sizes="(max-width: 1024px) 100vw, 850px"
-          />
-        </motion.div>
+            <Image
+              src={product.heroImage}
+              alt={product.name}
+              fill
+              priority
+              className="object-contain object-center drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+              sizes="(max-width: 1024px) 100vw, 1000px"
+            />
+          </motion.div>
+        </div>
 
         {/* Bottom: Specs (Left/Center) & Pricing/CTAs (Right) */}
         <motion.div

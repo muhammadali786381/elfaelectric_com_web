@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import ProductPurchasePage from "@/components/product-purchase/ProductPurchasePage";
 import {
   getAllPurchaseSlugs,
@@ -33,9 +31,7 @@ export default async function PurchaseProductRoute({ params }: Props) {
 
   return (
     <>
-      <Header />
-      <ProductPurchasePage product={product} />
-      <Footer />
-    </>
+            <ProductPurchasePage product={product} />
+          </>
   );
 }

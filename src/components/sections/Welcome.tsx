@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import Container from "@/components/ui/Container";
 import { FadeIn } from "@/components/motion/FadeIn";
+import FlipButton from "@/components/ui/FlipButton";
 
 const features = [
   {
@@ -75,12 +75,13 @@ export default function Welcome() {
             </div>
             
             <FadeIn variant="fadeInRight" speed="slow" delay={0.5} className="mt-8">
-              <Link
+              <FlipButton
                 href="/ev-education"
-                className="font-roboto inline-flex h-12 items-center justify-center gap-2 rounded-[4px] bg-brand-primary px-8 text-[15px] font-semibold uppercase tracking-[1px] text-text-inverse transition-colors hover:bg-brand-secondary"
+                variant="primary"
+                className="font-roboto h-12 rounded-[4px] px-8 text-[15px] font-semibold tracking-[1px]"
               >
                 EV Education
-              </Link>
+              </FlipButton>
             </FadeIn>
           </div>
         </div>

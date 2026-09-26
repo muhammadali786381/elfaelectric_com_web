@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
+import FlipButton from "@/components/ui/FlipButton";
 
 const solutions = [
   {
@@ -102,13 +102,14 @@ export default function Features() {
                 motorcycles are meticulously designed, engineered, and rigorously tested for the local
                 rider, using top-quality components.
               </p>
-              <Link
+              <FlipButton
                 href="/about-us"
-                className="font-roboto inline-flex h-[41px] items-center gap-2 rounded-[3px] bg-brand-primary px-6 text-[17px] font-semibold uppercase tracking-[1px] text-text-inverse transition-colors hover:bg-brand-secondary"
+                variant="primary"
+                icon={<ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
+                className="font-roboto h-[41px] rounded-[3px] px-6 text-[17px] font-semibold tracking-[1px]"
               >
                 About us
-                <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-              </Link>
+              </FlipButton>
             </div>
           </div>
         </div>

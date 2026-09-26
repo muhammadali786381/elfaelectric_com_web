@@ -82,16 +82,16 @@ export default function WhyChooseUs() {
 
       {/* Content overlaid on top */}
       <div className="relative z-10 mx-auto w-full max-w-container px-4 sm:px-6">
-        
+
         {/* Heading */}
         <FadeIn variant="fadeIn" speed="slow" className="mb-16">
           <div className="text-center">
             <p className="font-roboto mb-3 text-[12px] font-semibold uppercase tracking-[2px] text-brand-primary">
               Built Different
             </p>
-            <h2 className="font-montserrat text-[28px] font-bold text-white sm:text-[36px] lg:text-[44px]">
+            {/* <h2 className="font-montserrat text-[28px] font-bold text-white sm:text-[36px] lg:text-[44px]">
               Why Choose <span className="text-brand-primary">ELFA?</span>
-            </h2>
+            </h2> */}
           </div>
         </FadeIn>
 
