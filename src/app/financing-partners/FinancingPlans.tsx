@@ -293,59 +293,79 @@ const socialLinks = [
   },
 ];
 
-function PlanCard({
-  plan,
-  selected,
-  onSelect,
-}: {
-  plan: Plan;
-  selected: boolean;
-  onSelect: () => void;
-}) {
+import { Check } from "lucide-react";
+import Image from "next/image";
+import { FadeIn } from "@/components/motion/FadeIn";
+
+function PlanCard({ plan }: { plan: Plan }) {
   return (
-    <button
-      type="button"
-      onClick={onSelect}
-      className={`flex flex-col rounded-[10px] border p-[25px] text-left transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_8px_15px_rgba(0,0,0,0.1)] ${
-        selected ? "border-2 border-brand-primary" : "border border-[#e0e0e0]"
-      }`}
-      style={{ backgroundImage: SPARK }}
+    <div
+      className="relative flex flex-col rounded-[24px] border border-white/10 bg-white/10 backdrop-blur-xl p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transform-gpu"
     >
-      <div className="mb-4 flex items-start justify-between gap-3">
-        <h3 className="font-montserrat mt-2 mb-0 text-[20.8px] font-bold leading-tight text-text-inverse">
+      <div className="mb-8 border-b border-white/10 pb-6">
+        <h3 className="font-roboto text-[16px] font-bold uppercase tracking-widest text-white mb-4">
           {plan.title}
         </h3>
-        <span className="shrink-0 rounded-[20px] bg-brand-primary px-3 py-1 text-[13.6px] font-medium leading-[1.6] text-text-inverse">
-          {plan.badge ?? `${plan.months} Months`}
-        </span>
+        <div className="flex items-baseline gap-2">
+          <span className="font-montserrat text-[48px] font-black tracking-tighter text-white">
+            {formatRs(plan.perMonth)}
+          </span>
+          <span className="font-roboto text-[15px] font-medium text-white/50 uppercase tracking-widest">/mo</span>
+        </div>
       </div>
 
-      <div className="flex flex-1 flex-col">
-        {plan.details.map((d) => (
-          <div
-            key={d.label}
-            className="font-roboto mb-2.5 flex items-center justify-between gap-3 py-2 text-[16px] leading-[1.6] text-text-inverse last:mb-0"
-          >
-            <span>{d.label}</span>
-            <span className="font-medium">{d.value}</span>
+      <div className="flex-1 space-y-4 mb-10">
+        <div className="flex items-center gap-3">
+          <Check className="h-5 w-5 shrink-0 text-brand-primary" />
+          <div className="flex flex-1 items-center justify-between font-roboto text-[15px]">
+            <span className="text-white/60">Term Length</span>
+            <span className="font-bold text-white">{plan.badge ?? `${plan.months} Months`}</span>
           </div>
-        ))}
+        </div>
+        {plan.details.map((d) => {
+          if (d.label === "Monthly Installment" || d.label === "Total Months") return null;
+          return (
+            <div key={d.label} className="flex items-center gap-3">
+              <Check className="h-5 w-5 shrink-0 text-brand-primary" />
+              <div className="flex flex-1 items-center justify-between font-roboto text-[15px]">
+                <span className="text-white/60">{d.label}</span>
+                <span className="font-bold text-white">{d.value}</span>
+              </div>
+            </div>
+          );
+        })}
+        {plan.total > 0 && (
+          <div className="flex items-center gap-3 pt-4 mt-2 border-t border-white/10">
+            <Check className="h-5 w-5 shrink-0 text-brand-primary" />
+            <div className="flex flex-1 items-center justify-between font-roboto text-[15px]">
+              <span className="text-white/80 font-bold uppercase text-[12px] tracking-widest">Total Cost</span>
+              <span className="font-bold text-brand-primary">{formatRs(plan.total)}</span>
+            </div>
+          </div>
+        )}
       </div>
 
-      <div className="font-roboto mt-[15px] w-full rounded-[10px] bg-brand-primary px-3 py-3 text-center text-[16px] font-medium text-text-inverse">
-        {formatRs(plan.perMonth)} Per Month
-      </div>
-    </button>
+      <FlipButton
+        type="button"
+        onClick={() => {
+          document.getElementById('get-started')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        variant="outline"
+        className="w-full rounded-[8px] h-[52px] text-[15px] font-bold border-white/20 text-white hover:bg-white hover:text-black"
+      >
+        Apply Online
+      </FlipButton>
+    </div>
   );
 }
 
 function OptionHeading({ children }: { children: string }) {
   return (
-    <div className="mb-8">
-      <h3 className="font-montserrat mb-3 text-center text-[22px] font-semibold text-text-primary sm:text-[26px]">
+    <div className="mb-10 text-center relative">
+      <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      <span className="relative bg-[#080808] px-6 font-roboto text-[13px] font-bold uppercase tracking-[0.2em] text-brand-primary">
         {children}
-      </h3>
-      <div className="mx-auto h-px w-full bg-brand-primary" />
+      </span>
     </div>
   );
 }
@@ -353,7 +373,6 @@ function OptionHeading({ children }: { children: string }) {
 export default function FinancingPlans() {
   const [provider, setProvider] = useState<ProviderId>("asaan-ghar");
   const [tmfOption, setTmfOption] = useState<"with" | "without">("with");
-  const [selectedPlanId, setSelectedPlanId] = useState("1");
   const [partner, setPartner] = useState("");
 
   const plans = useMemo(() => {
@@ -363,17 +382,9 @@ export default function FinancingPlans() {
     return ev125Plans[provider];
   }, [provider, tmfOption]);
 
-  const selectedPlan = plans.find((p) => p.id === selectedPlanId) ?? plans[0];
-
   const switchProvider = (id: ProviderId) => {
     setProvider(id);
-    setSelectedPlanId("1");
     if (id === "tmf") setTmfOption("with");
-  };
-
-  const selectTmfPlan = (option: "with" | "without", planId: string) => {
-    setTmfOption(option);
-    setSelectedPlanId(planId);
   };
 
   const inputClass =
@@ -381,191 +392,111 @@ export default function FinancingPlans() {
 
   return (
     <>
-      <section className="bg-bg-primary py-10 lg:py-14">
-        <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-          <div className="mb-10 flex flex-wrap justify-center gap-3">
+      <section className="relative w-full py-20 lg:py-32 overflow-hidden">
+        {/* Background Image & Dark Overlay for Glass Effect */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/assets/images/hero5.jpeg"
+            alt="Background"
+            fill
+            className="object-cover object-center grayscale  opacity-60"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#050505]/70 to-[#050505]" />
+        </div>
+
+        <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+          <FadeIn variant="fadeInUp" speed="normal" className="mb-16 text-center">
+            <h2 className="font-montserrat text-[32px] sm:text-[48px] font-black uppercase italic tracking-tight text-white mb-4">
+              Choose Your <span className="text-brand-primary">Plan</span>
+            </h2>
+            <p className="font-roboto max-w-xl mx-auto text-[16px] text-white/60">
+              Select one of our trusted financing partners to view all available installment plans for the EV-125 and EV-1.
+            </p>
+          </FadeIn>
+
+          <div className="mb-16 flex flex-wrap justify-center gap-4">
             {PROVIDERS.map((p) => (
               <button
                 key={p.id}
                 type="button"
                 onClick={() => switchProvider(p.id)}
-                className={`font-roboto rounded-[10px] border-2 border-brand-primary px-[30px] py-3 text-[16px] font-medium transition-colors sm:text-[18px] ${
-                  provider === p.id
-                    ? "bg-brand-primary text-text-inverse"
-                    : "bg-bg-primary text-text-primary hover:bg-brand-primary hover:text-text-inverse"
-                }`}
+                className={`font-roboto rounded-full border px-8 py-3 text-[14px] font-bold uppercase tracking-widest transition-all duration-300 ${provider === p.id
+                  ? "border-brand-primary bg-brand-primary text-black shadow-[0_0_20px_rgba(0,200,83,0.3)]"
+                  : "border-white/20 bg-black/40 text-white backdrop-blur-sm hover:border-white/40 hover:bg-white/10"
+                  }`}
               >
                 {p.label}
               </button>
             ))}
           </div>
 
-          {provider === "tmf" ? (
-            <div className="flex flex-col gap-12">
-              <div>
-                <OptionHeading>Option-1 (With Advance)</OptionHeading>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {tmfWithAdvance.map((plan) => (
-                    <PlanCard
-                      key={`with-${plan.id}`}
-                      plan={plan}
-                      selected={tmfOption === "with" && selectedPlanId === plan.id}
-                      onSelect={() => selectTmfPlan("with", plan.id)}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div>
-                <OptionHeading>Option-2 (Without Advance)</OptionHeading>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {tmfWithoutAdvance.map((plan) => (
-                    <PlanCard
-                      key={`without-${plan.id}`}
-                      plan={plan}
-                      selected={tmfOption === "without" && selectedPlanId === plan.id}
-                      onSelect={() => selectTmfPlan("without", plan.id)}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {plans.map((plan) => (
-                <PlanCard
-                  key={`${provider}-${plan.id}`}
-                  plan={plan}
-                  selected={selectedPlanId === plan.id}
-                  onSelect={() => setSelectedPlanId(plan.id)}
-                />
-              ))}
-            </div>
-          )}
-
-          {selectedPlan && (
-            <div
-              className="mt-12 rounded-[10px] border border-[#e0e0e0] p-6 sm:p-8"
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-6 text-center text-[28px] font-semibold text-brand-primary sm:text-[32px]">
-                Payment Calculator
-              </h2>
-              <div className="mx-auto grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <label className="flex flex-col gap-2">
-                  <span className="font-roboto text-[14px] text-text-inverse">Select Provider</span>
-                  <select
-                    value={provider}
-                    onChange={(e) => switchProvider(e.target.value as ProviderId)}
-                    className="font-roboto h-11 rounded-[4px] border border-bg-inverse/20 bg-bg-primary px-3 text-[15px] text-text-primary outline-none"
-                  >
-                    {PROVIDERS.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.label}
-                      </option>
+          <FadeIn variant="fadeInUp" speed="slow">
+            {provider === "tmf" ? (
+              <div className="flex flex-col gap-24">
+                <div>
+                  <OptionHeading>Option 1: With Advance</OptionHeading>
+                  <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    {tmfWithAdvance.map((plan) => (
+                      <PlanCard key={`with-${plan.id}`} plan={plan} />
                     ))}
-                  </select>
-                </label>
-                <label className="flex flex-col gap-2">
-                  <span className="font-roboto text-[14px] text-text-inverse">Select Plan</span>
-                  <select
-                    value={
-                      provider === "tmf" ? `${tmfOption}-${selectedPlanId}` : selectedPlanId
-                    }
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      if (provider === "tmf") {
-                        const [opt, id] = val.split("-") as ["with" | "without", string];
-                        selectTmfPlan(opt, id);
-                      } else {
-                        setSelectedPlanId(val);
-                      }
-                    }}
-                    className="font-roboto h-11 rounded-[4px] border border-bg-inverse/20 bg-bg-primary px-3 text-[15px] text-text-primary outline-none"
-                  >
-                    {provider === "tmf" ? (
-                      <>
-                        {tmfWithAdvance.map((p) => (
-                          <option key={`with-${p.id}`} value={`with-${p.id}`}>
-                            Option-1 · {p.title}
-                          </option>
-                        ))}
-                        {tmfWithoutAdvance.map((p) => (
-                          <option key={`without-${p.id}`} value={`without-${p.id}`}>
-                            Option-2 · {p.title}
-                          </option>
-                        ))}
-                      </>
-                    ) : (
-                      plans.map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {p.title}
-                        </option>
-                      ))
-                    )}
-                  </select>
-                </label>
-              </div>
-
-              <div className="mt-8">
-                <h3 className="font-montserrat mb-5 text-center text-[24px] font-semibold text-text-inverse sm:text-[28px]">
-                  Payment Summary
-                </h3>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-                  {[
-                    { label: "Down Payment", value: formatRs(selectedPlan.downPayment) },
-                    { label: "Monthly Payment", value: formatRs(selectedPlan.perMonth) },
-                    { label: "Payment Period", value: `${selectedPlan.months} Months` },
-                    { label: "Total Amount", value: formatRs(selectedPlan.total) },
-                  ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="rounded-[8px] bg-bg-primary px-3 py-4 text-center shadow-sm sm:px-4"
-                    >
-                      <p className="font-montserrat text-[18px] font-bold text-brand-primary sm:text-[22px]">
-                        {item.value}
-                      </p>
-                      <p className="font-roboto mt-1 text-[12px] text-text-secondary sm:text-[13px]">
-                        {item.label}
-                      </p>
-                    </div>
-                  ))}
+                  </div>
+                </div>
+                <div>
+                  <OptionHeading>Option 2: Without Advance</OptionHeading>
+                  <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    {tmfWithoutAdvance.map((plan) => (
+                      <PlanCard key={`without-${plan.id}`} plan={plan} />
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">
+                {plans.map((plan) => (
+                  <PlanCard key={`${provider}-${plan.id}`} plan={plan} />
+                ))}
+              </div>
+            )}
+          </FadeIn>
         </div>
       </section>
 
-      <section className="bg-bg-secondary pb-14 pt-4 lg:pb-20 lg:pt-6">
+      <section id="get-started" className="bg-[#050505] pb-14 pt-16 lg:pb-24 lg:pt-20">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-          <h2 className="font-montserrat mb-3 text-center text-[32px] font-bold text-brand-primary sm:text-[44px] lg:text-[55px]">
+          <h2 className="font-montserrat mb-4 text-center text-[36px] font-black italic tracking-tighter text-brand-primary sm:text-[48px] lg:text-[60px]">
             Get Started with ELFA
           </h2>
-          <p className="font-roboto mx-auto mb-8 max-w-[720px] text-center text-[15px] leading-relaxed text-text-primary">
+          <p className="font-roboto mx-auto mb-12 max-w-[720px] text-center text-[16px] leading-relaxed text-white/60">
             Ready to take the first step towards owning your EV bike? Fill out the form below, and
             let’s make it happen!
           </p>
 
           <div
-            className="grid grid-cols-1 gap-8 rounded-[15px] border-2 border-brand-primary p-5 sm:p-8 lg:grid-cols-[1.45fr_1fr] lg:gap-10"
-            style={{ backgroundImage: SPARK }}
+            className="grid grid-cols-1 gap-8 rounded-3xl border border-white/10 bg-[#080808]/60 backdrop-blur-xl p-8 sm:p-12 lg:grid-cols-[1.45fr_1fr] lg:gap-16 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_40px_rgba(0,0,0,0.4)] relative overflow-hidden"
           >
+            {/* Subtle top ambient glow line */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/30 to-transparent" />
+
             <form
-              className="flex flex-col gap-3.5"
+              className="flex flex-col gap-4 relative z-10"
               onSubmit={(e) => {
                 e.preventDefault();
               }}
             >
-              <input type="text" name="name" placeholder="Name*" required className={inputClass} />
-              <input
-                type="text"
-                name="surname"
-                placeholder="Surname*"
-                required
-                className={inputClass}
-              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input type="text" name="name" placeholder="Name*" required className={inputClass} />
+                <input
+                  type="text"
+                  name="surname"
+                  placeholder="Surname*"
+                  required
+                  className={inputClass}
+                />
+              </div>
+
               <div className="relative">
-                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px]">
+                <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[16px]">
                   🇵🇰
                 </span>
                 <input
@@ -573,27 +504,29 @@ export default function FinancingPlans() {
                   name="phone"
                   placeholder="Phone*"
                   required
-                  className={`${inputClass} pl-11`}
+                  className={`${inputClass} pl-12`}
                 />
               </div>
               <div className="relative">
-                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-secondary" />
+                <Mail className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/30" />
                 <input
                   type="email"
                   name="email"
                   placeholder="Email"
-                  className={`${inputClass} pl-10`}
+                  className={`${inputClass} pl-12`}
                 />
               </div>
-              <input type="text" name="city" placeholder="City*" required className={inputClass} />
-              <input
-                type="text"
-                name="cnic"
-                placeholder="Enter 13-digit CNIC*"
-                required
-                maxLength={13}
-                className={inputClass}
-              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input type="text" name="city" placeholder="City*" required className={inputClass} />
+                <input
+                  type="text"
+                  name="cnic"
+                  placeholder="Enter 13-digit CNIC*"
+                  required
+                  maxLength={13}
+                  className={inputClass}
+                />
+              </div>
               <select
                 name="partner"
                 value={partner}
@@ -613,43 +546,43 @@ export default function FinancingPlans() {
               <FlipButton
                 type="submit"
                 variant="primary"
-                className="w-full mt-1 rounded-[6px] h-[48px] text-[15px]"
+                className="w-full mt-4 rounded-xl h-[56px] text-[16px] font-bold shadow-[0_0_20px_rgba(0,200,83,0.3)] hover:shadow-[0_0_30px_rgba(0,200,83,0.5)] transition-all"
               >
                 Submit Now
               </FlipButton>
             </form>
 
-            <div className="flex flex-col justify-center">
-              <h3 className="font-montserrat mb-5 text-[22px] font-medium text-text-inverse sm:text-[28px]">
+            <div className="flex flex-col justify-center relative z-10 lg:pl-10 lg:border-l lg:border-white/10">
+              <h3 className="font-montserrat mb-8 text-[24px] font-bold tracking-tight text-white sm:text-[32px]">
                 Contact Information
               </h3>
-              <ul className="flex flex-col gap-4 text-[15px] text-text-inverse">
-                <li className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
-                  <span className="font-roboto">
+              <ul className="flex flex-col gap-6 text-[16px] text-white/80">
+                <li className="flex items-start gap-4">
+                  <MapPin className="mt-1 h-5 w-5 shrink-0 text-brand-primary" />
+                  <span className="font-roboto leading-relaxed">
                     C3i GA-70-A3, Korangi Creek Industrial Park Korangi, Karachi, Sindh
                   </span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <Phone className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
-                  <a href="https://wa.me/923114863532" className="font-roboto hover:text-brand-primary">
+                <li className="flex items-center gap-4">
+                  <Phone className="h-5 w-5 shrink-0 text-brand-primary" />
+                  <a href="https://wa.me/923114863532" className="font-roboto hover:text-brand-primary transition-colors">
                     +(92) 311-486-3532
                   </a>
                 </li>
-                <li className="flex items-start gap-3">
-                  <Headphones className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
-                  <a href="tel:02137173532" className="font-roboto hover:text-brand-primary">
+                <li className="flex items-center gap-4">
+                  <Headphones className="h-5 w-5 shrink-0 text-brand-primary" />
+                  <a href="tel:02137173532" className="font-roboto hover:text-brand-primary transition-colors">
                     021-37173532
                   </a>
                 </li>
-                <li className="flex items-start gap-3">
-                  <Mail className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
-                  <a href="mailto:info@elfaelectric.com" className="font-roboto hover:text-brand-primary">
+                <li className="flex items-center gap-4">
+                  <Mail className="h-5 w-5 shrink-0 text-brand-primary" />
+                  <a href="mailto:info@elfaelectric.com" className="font-roboto hover:text-brand-primary transition-colors">
                     info@elfaelectric.com
                   </a>
                 </li>
               </ul>
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-12 flex flex-wrap gap-4">
                 {socialLinks.map((s) => (
                   <a
                     key={s.label}
@@ -657,7 +590,7 @@ export default function FinancingPlans() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="flex h-10 w-10 items-center justify-center rounded-full text-brand-primary transition-colors hover:bg-brand-primary hover:text-text-inverse"
+                    className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white transition-all duration-300 hover:bg-brand-primary hover:border-brand-primary hover:text-black hover:scale-110"
                   >
                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d={s.path} />

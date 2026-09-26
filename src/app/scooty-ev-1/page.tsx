@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import ScootyPage from "@/components/scooty/ScootyPage";
 import { scootyEv1 } from "@/data/products/scooty-ev-1";
 
@@ -14,10 +12,8 @@ export const metadata: Metadata = {
 export default function ScootyEv1Page() {
   return (
     <>
-      <Header />
-      <ScootyPage product={scootyEv1} />
-      <Footer />
-    </>
+            <ScootyPage product={scootyEv1} />
+          </>
   );
 }
 

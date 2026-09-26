@@ -56,20 +56,24 @@ export default function ProductShowcase() {
             {products.map((product) => (
               <article key={product.id} className="overflow-hidden rounded-[20px] bg-[#1a1a1a] border border-white/5">
                 {/* Photo — shared gradient background + product cutout, matching the live site exactly */}
-                <div className="relative h-[260px] w-full sm:h-[300px] lg:h-[337px]">
+                <div className="relative h-[260px] w-full sm:h-[300px] lg:h-[337px] overflow-hidden">
                   <Image
-                    src="/assets/images/products-bg.jpeg"
+                    src="/assets/images/hero5.jpeg"
                     alt=""
                     fill
-                    className="object-cover object-center "
+                    className="object-cover object-center scale-[1.2]"
                     sizes="(min-width: 640px) 440px, 100vw"
                   />
+                  {/* Heavy dark overlay so text and product pop */}
+                  <div className="absolute inset-0 bg-black/70 mix-blend-multiply" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                  
                   <Image
                     src={product.image}
                     alt={`${product.nameHighlight}${product.nameRest}`}
                     width={330}
                     height={312}
-                    className="absolute inset-0 m-auto h-[85%] w-[85%] object-contain"
+                    className="absolute inset-0 m-auto h-[85%] w-[85%] object-contain drop-shadow-2xl"
                   />
                 </div>
 
@@ -119,9 +123,11 @@ export default function ProductShowcase() {
                     {product.price}
                   </p>
 
-                  <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#ff4d2e] px-4 py-[6px] text-[12px] font-black uppercase tracking-wide text-white sm:text-[13px]">
-                    <span className="h-[6px] w-[6px] rounded-full bg-white" />
-                    Limited time offer
+                  <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1.5 shadow-sm">
+                    <span className="flex h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+                    <span className="font-roboto text-[11px] font-bold tracking-wide text-red-400 uppercase">
+                      Limited time offer
+                    </span>
                   </span>
 
                   <p className="font-roboto mb-5 text-[14px] font-semibold text-brand-primary">{product.savings}</p>

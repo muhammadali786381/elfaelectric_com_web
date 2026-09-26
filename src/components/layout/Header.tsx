@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X, ChevronDown, Calendar, User, Search } from "lucide-react";
+import { Menu, X, ChevronDown, Calendar, User, Search, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import FlipButton from "@/components/ui/FlipButton";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -23,7 +24,7 @@ const navLinks = [
   { label: "PAVE", href: "/pave-scheme" },
   { label: "Education", href: "/ev-education" },
   { label: "News", href: "/newsroom" },
-  { label: "Blogs", href: "/blogs" },
+  { label: "Blogs", href: "/blog" },
   { label: "Contact", href: "/contact-us" },
 ];
 
@@ -34,6 +35,8 @@ export default function Header() {
   const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -56,7 +59,7 @@ export default function Header() {
         animate={{
           width: isScrolled ? "min(1000px, calc(100vw - 32px))" : "100%",
           maxWidth: isScrolled ? "1000px" : "1600px",
-          height: isScrolled ? "64px" : "80px",
+          height: isScrolled ? "72px" : "96px",
           borderRadius: isScrolled ? "999px" : "0px",
           marginTop: isScrolled ? "16px" : "0px",
           backgroundColor: isScrolled ? "rgba(18, 18, 18, 0)" : "rgba(0, 0, 0, 0)",
@@ -104,7 +107,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex xl:gap-2">
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex xl:gap-2">
             <AnimatePresence mode="popLayout">
               {visibleLinks.map((link) => (
                 <motion.div
@@ -121,9 +124,8 @@ export default function Header() {
                   {link.hasDropdown ? (
                     <button
                       type="button"
-                      className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-200 hover:bg-white/10 xl:px-4 xl:text-[13px]"
+                      className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-white/5 hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary xl:px-4 xl:text-[13px]"
                       style={{
-                        background: "rgba(255,255,255,0.06)",
                         backdropFilter: "blur(12px)",
                         WebkitBackdropFilter: "blur(12px)",
                         border: "1px solid rgba(255,255,255,0.05)",
@@ -136,9 +138,8 @@ export default function Header() {
                   ) : (
                     <Link
                       href={link.href}
-                      className="font-roboto flex items-center whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-200 hover:bg-white/10 xl:px-4 xl:text-[13px]"
+                      className="font-roboto flex items-center whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-white/5 hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary xl:px-4 xl:text-[13px]"
                       style={{
-                        background: "rgba(255,255,255,0.06)",
                         backdropFilter: "blur(12px)",
                         WebkitBackdropFilter: "blur(12px)",
                         border: "1px solid rgba(255,255,255,0.05)",
@@ -187,9 +188,8 @@ export default function Header() {
                 >
                   <button
                     type="button"
-                    className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-200 hover:bg-white/10 xl:px-4 xl:text-[13px]"
+                    className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-white/5 hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary xl:px-4 xl:text-[13px]"
                     style={{
-                      background: "rgba(255,255,255,0.06)",
                       backdropFilter: "blur(12px)",
                       WebkitBackdropFilter: "blur(12px)",
                       border: "1px solid rgba(255,255,255,0.05)",
@@ -228,26 +228,27 @@ export default function Header() {
 
           {/* Right side Actions */}
           <div className="flex shrink-0 items-center gap-2 pl-4 xl:gap-3 xl:pl-6">
-            <Link
-              href="/login"
-              className="font-roboto hidden h-9 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/5 px-4 text-[11px] font-semibold uppercase tracking-[1px] text-text-primary transition-all hover:bg-white/10 lg:flex 2xl:h-10 2xl:text-[12px]"
+            <FlipButton
+              href="https://webapp.elfaelectric.com/login"
+              variant="glass"
+              icon={<User className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />}
+              className="font-roboto hidden h-9 whitespace-nowrap px-4 text-[11px] font-semibold tracking-[1px] xl:inline-flex 2xl:h-10 2xl:text-[12px]"
             >
-              <User className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
-              <span className="hidden xl:inline">Login</span>
-            </Link>
+              Login
+            </FlipButton>
 
-            <Link
+            <FlipButton
               href="/book-a-test-ride"
-              className="font-roboto hidden h-9 items-center gap-1.5 whitespace-nowrap rounded-full bg-brand-primary px-4 text-[11px] font-bold uppercase tracking-[1px] text-bg-primary transition-all hover:bg-brand-secondary hover:shadow-[0_0_20px_rgba(97,206,112,0.4)] lg:flex 2xl:h-10 2xl:text-[12px]"
+              variant="primary"
+              icon={<Calendar className="h-3.5 w-3.5 shrink-0" strokeWidth={2.5} />}
+              className="font-roboto hidden h-9 whitespace-nowrap px-4 text-[11px] tracking-[1px] xl:inline-flex 2xl:h-10 2xl:text-[12px]"
             >
-              <Calendar className="h-3.5 w-3.5 shrink-0" strokeWidth={2.5} />
-              <span className={isScrolled ? "hidden xl:inline" : "hidden lg:inline"}>
-                Book a test ride
-              </span>
-            </Link>
+              Book a test ride
+            </FlipButton>
 
             <button
               type="button"
+              onClick={() => setIsSearchOpen(true)}
               className="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-text-primary transition-all hover:bg-white/10 2xl:h-10 2xl:w-10"
               aria-label="Search"
             >
@@ -257,7 +258,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((v) => !v)}
-              className="relative z-50 ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-text-primary transition-all hover:bg-white/10 lg:hidden"
+              className="relative z-50 ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-text-primary transition-all hover:bg-white/10 xl:hidden"
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
             >
@@ -271,75 +272,185 @@ export default function Header() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "100vh" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.28, ease: "easeInOut" }}
-            className="fixed inset-0 z-40 overflow-y-auto bg-bg-primary pt-[80px] lg:hidden pointer-events-auto"
+            initial={{ opacity: 0, y: "-100%" }}
+            animate={{ opacity: 1, y: "0%" }}
+            exit={{ opacity: 0, y: "-100%" }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[100] flex flex-col overflow-y-auto bg-[#00E573] p-6 lg:hidden pointer-events-auto"
           >
-            <nav className="mt-4 flex flex-col gap-1 px-6 pb-[100px]">
-              {navLinks.map((link) => (
-                <div key={link.label} className="border-b border-white/5 py-4">
+            {/* Top bar inside menu */}
+            <div className="flex items-center justify-between pb-8 pt-4">
+              <Link href="/" onClick={closeMobile} className="shrink-0">
+                <Image
+                  src="/assets/images/logo-full.png"
+                  alt="ELFA Electric"
+                  width={180}
+                  height={32}
+                  className="h-[28px] w-auto object-contain brightness-0"
+                />
+              </Link>
+              <button
+                onClick={closeMobile}
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-black/10 text-black transition-colors hover:bg-black/20"
+                aria-label="Close menu"
+              >
+                <X className="h-6 w-6" strokeWidth={2.5} />
+              </button>
+            </div>
+
+            <nav className="flex flex-1 flex-col gap-1">
+              {navLinks.map((link, i) => (
+                <motion.div 
+                  key={link.label} 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + i * 0.04, duration: 0.3 }}
+                  className="border-b border-black/10 py-4"
+                >
                   {link.hasDropdown ? (
                     <>
                       <button
                         type="button"
                         onClick={() => setIsMobileProductsOpen((v) => !v)}
-                        className="font-roboto flex w-full items-center justify-between text-[18px] font-medium text-text-primary"
+                        className="font-montserrat flex w-full items-center justify-between text-[26px] font-bold tracking-tight text-black"
                         aria-expanded={isMobileProductsOpen}
                       >
                         {link.label}
                         <ChevronDown
-                          className={`h-5 w-5 transition-transform ${isMobileProductsOpen ? "rotate-180" : ""}`}
-                          strokeWidth={2}
+                          className={`h-7 w-7 transition-transform ${isMobileProductsOpen ? "rotate-180" : ""}`}
+                          strokeWidth={2.5}
                         />
                       </button>
-                      {isMobileProductsOpen && (
-                        <div className="mt-4 flex flex-col gap-3 border-l-2 border-brand-primary pl-5">
-                          {link.dropdown?.map((item) => (
-                            <Link
-                              key={item.label}
-                              href={item.href}
-                              onClick={closeMobile}
-                              className="font-roboto block text-[15px] text-text-secondary hover:text-brand-primary"
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
+                      <AnimatePresence>
+                        {isMobileProductsOpen && (
+                          <motion.div 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="mt-4 flex flex-col gap-4 pl-4 overflow-hidden"
+                          >
+                            {link.dropdown?.map((item) => (
+                              <Link
+                                key={item.label}
+                                href={item.href}
+                                onClick={closeMobile}
+                                className="font-roboto block text-[18px] font-medium text-black/70 hover:text-black transition-colors"
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </>
                   ) : (
                     <Link
                       href={link.href}
                       onClick={closeMobile}
-                      className="font-roboto block text-[18px] font-medium text-text-primary"
+                      className="font-montserrat block w-full text-[26px] font-bold tracking-tight text-black"
                     >
                       {link.label}
                     </Link>
                   )}
-                </div>
+                </motion.div>
               ))}
-
-              <div className="mt-8 flex flex-col gap-4">
-                <Link
-                  href="/book-a-test-ride"
-                  onClick={closeMobile}
-                  className="font-roboto flex h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-primary text-[14px] font-bold uppercase tracking-[1px] text-bg-primary"
-                >
-                  <Calendar className="h-5 w-5 shrink-0" />
-                  Book a test ride
-                </Link>
-                <Link
-                  href="/login"
-                  onClick={closeMobile}
-                  className="font-roboto flex h-12 w-full items-center justify-center gap-2 rounded-full border border-white/20 bg-transparent text-[14px] font-bold uppercase tracking-[1px] text-text-primary"
-                >
-                  <User className="h-5 w-5 shrink-0" />
-                  Login
-                </Link>
-              </div>
             </nav>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="mt-8 flex flex-col gap-4 pb-8"
+            >
+              <Link
+                href="/book-a-test-ride"
+                onClick={closeMobile}
+                className="font-montserrat flex h-14 w-full items-center justify-center gap-2 rounded-full bg-black px-6 text-[14px] font-bold tracking-[1px] uppercase text-white transition-transform hover:scale-[0.98] active:scale-95 shadow-xl"
+              >
+                <Calendar className="h-5 w-5" />
+                Book a test ride
+              </Link>
+              <Link
+                href="https://webapp.elfaelectric.com/login"
+                onClick={closeMobile}
+                className="font-montserrat flex h-14 w-full items-center justify-center gap-2 rounded-full border-2 border-black px-6 text-[14px] font-bold tracking-[1px] uppercase text-black transition-colors hover:bg-black hover:text-white active:scale-95"
+              >
+                <User className="h-5 w-5" />
+                Login
+              </Link>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Search Modal Overlay */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-start bg-black/80 p-4 pt-[10vh] backdrop-blur-sm sm:p-6 sm:pt-[15vh]"
+          >
+            <div className="relative w-full max-w-[700px]">
+              <div className="relative flex items-center">
+                <Search className="absolute left-6 h-6 w-6 text-white/50" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="Search bikes, scooties, or features..."
+                  className="font-roboto h-16 w-full rounded-full border border-white/10 bg-white/5 pl-16 pr-14 text-[18px] text-white shadow-2xl outline-none backdrop-blur-xl transition-all focus:border-brand-primary focus:bg-white/10"
+                />
+                <button
+                  onClick={() => setIsSearchOpen(false)}
+                  className="absolute right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white/60 transition-colors hover:bg-white/20 hover:text-white"
+                >
+                  <X className="h-5 w-5" strokeWidth={2} />
+                </button>
+              </div>
+
+              <div className="mt-8">
+                <p className="font-roboto mb-4 text-[14px] font-medium text-white/50 uppercase tracking-widest">
+                  Popular Searches
+                </p>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href="/product/elfaev125"
+                    onClick={() => setIsSearchOpen(false)}
+                    className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-colors hover:border-white/10 hover:bg-white/[0.05]"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/5">
+                        <Image src="/assets/images/shop/ev-125-catalog.png" alt="EV-125" fill className="object-contain p-1" />
+                      </div>
+                      <div>
+                        <p className="font-montserrat text-[16px] font-bold text-white group-hover:text-brand-primary">ELFA EV-125 BIKE</p>
+                        <p className="font-roboto text-[13px] text-white/50">Designed to perform on rough roads</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-white/30 transition-colors group-hover:text-brand-primary" />
+                  </Link>
+
+                  <Link
+                    href="/product/ev1-scooty"
+                    onClick={() => setIsSearchOpen(false)}
+                    className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-colors hover:border-white/10 hover:bg-white/[0.05]"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/5">
+                        <Image src="/assets/images/shop/ev1-scooty-catalog.png" alt="EV-1" fill className="object-contain p-1" />
+                      </div>
+                      <div>
+                        <p className="font-montserrat text-[16px] font-bold text-white group-hover:text-brand-primary">ELFA EV-1 Scooty</p>
+                        <p className="font-roboto text-[13px] text-white/50">The perfect urban commuter</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-white/30 transition-colors group-hover:text-brand-primary" />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

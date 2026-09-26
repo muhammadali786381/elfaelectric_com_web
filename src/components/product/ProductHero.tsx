@@ -110,16 +110,16 @@ export default function ProductHero({ product }: { product: Product }) {
           initial={{ opacity: 0, x: -50, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.2, ease }}
-          className="relative flex-1 w-full min-h-[300px] my-6 z-[5] pointer-events-none lg:absolute lg:inset-0 lg:my-0 lg:pb-32 lg:pt-32 lg:translate-x-[5%] lg:flex lg:items-center lg:justify-center"
+          className="relative flex-1 w-full min-h-[300px] my-6 z-[5] pointer-events-none lg:absolute lg:inset-0 lg:my-0 lg:pb-[140px] lg:pt-[120px] lg:translate-x-[5%] lg:flex lg:items-center lg:justify-center"
         >
-          <div className="relative w-full h-[300px] sm:h-[400px] lg:h-full max-w-[650px]">
+          <div className="relative w-full h-[300px] sm:h-[400px] lg:h-full max-w-[900px] xl:max-w-[1000px] scale-[1.1] ">
             <Image
               src={product.heroImage}
               alt={product.name}
               fill
               priority
-              className="object-contain object-center drop-shadow-2xl"
-              sizes="(max-width: 1024px) 100vw, 680px"
+              className="object-contain object-center drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+              sizes="(max-width: 1024px) 100vw, 900px"
             />
           </div>
         </motion.div>
@@ -129,7 +129,7 @@ export default function ProductHero({ product }: { product: Product }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease }}
-          className="pointer-events-auto flex flex-col items-start justify-between gap-8 border-t border-white/10 pt-8 lg:mt-16 lg:flex-row lg:items-center lg:gap-0 lg:pt-10"
+          className="pointer-events-auto relative z-20 flex flex-col items-start justify-between gap-8 border-t border-white/10 pt-8 lg:mt-16 lg:flex-row lg:items-center lg:gap-0 lg:pt-10"
         >
           <div className="flex flex-col gap-1">
             {product.priceTagline && (

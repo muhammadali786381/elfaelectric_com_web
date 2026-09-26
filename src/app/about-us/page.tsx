@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import PageHero from "@/components/sections/PageHero";
 import Marquee from "@/components/sections/Marquee";
 import { FadeIn } from "@/components/motion/FadeIn";
-import FlipButton from "@/components/ui/FlipButton";
+import JoinRevolutionCTA from "@/components/sections/JoinRevolutionCTA";
 
 export const metadata: Metadata = {
   title: "About ELFA Electric – Leading Electric Bike Pakistan",
   description:
     "ELFA Electric, born under EV Technologies at Wavetec, builds sustainable, affordable electric motorcycles engineered for Pakistan's roads.",
 };
-
-const SPARK =
-  "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
 
 const whyChoose = [
   "Best electric bike company in Pakistan with a legacy of 30+ years.",
@@ -29,268 +22,234 @@ const whyChoose = [
 
 const coreValues = [
   {
-    title: (
-      <>
-        Sustainable
-        <br />
-        Innovation
-      </>
-    ),
+    title: "Sustainable Innovation",
     desc: "We never stop evolving. Through continuous learning and experimentation, we deliver smart, sustainable solutions that adapt quickly to changing needs and emerging technologies.",
+    img: "/assets/images/about/engineering.jpeg",
   },
   {
-    title: (
-      <>
-        Unwavering
-        <br />
-        Trust
-      </>
-    ),
+    title: "Unwavering Trust",
     desc: "Trust is our foundation. Built on honesty, integrity, and reliability, we promise performance you can count on.",
+    img: "/assets/images/about/team7.jpeg",
   },
   {
-    title: (
-      <>
-        Customer
-        <br />
-        Obsession
-      </>
-    ),
+    title: "Customer Obsession",
     desc: "Your journey drives us. We listen closely, understand your needs, and design solutions that fit seamlessly into your life.",
+    img: "/assets/images/about/people3.jpeg",
   },
   {
-    title: (
-      <>
-        Equitable
-        <br />
-        Progress
-      </>
-    ),
+    title: "Equitable Progress",
     desc: "We believe progress must be for everyone. That’s why we engineer accessible, fair, and simple solutions that empower people to move forward toward a better future.",
+    img: "/assets/images/about/people6.jpeg",
   },
 ];
 
-/**
- * Hero bikes fade via PageHero. Other sections fade in.
- * Cards: FadeIn IS the card (same classes + h-full) — no wrapper that breaks height.
- */
 export default function AboutUsPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
-        <PageHero
-          title={
-            <>
-              About{" "}
-              <span className="text-brand-primary">ELFA Electric Motorcycle</span> Pakistan
-              Leading Electric
-              <br />
-              Bike &amp; Scooty Brand
-            </>
-          }
-          breadcrumb="About us"
-          withBikes
-          compact
-          backgroundSrc="/assets/images/about/about-hero-bg.webp"
-          bikesSrc="/assets/images/blog-page.png"
-        />
+            <main className="flex-1 bg-bg-primary overflow-hidden">
+        {/* HERO: Cinematic & Minimal */}
+        <section className="relative min-h-[60dvh] lg:min-h-[70dvh] w-full flex items-center justify-center pt-28 pb-20 lg:pt-32">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/assets/images/about/team2.jpeg"
+              alt="ELFA Team"
+              fill
+              priority
+              className="object-cover opacity-40 mix-blend-luminosity grayscale"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-bg-primary/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/80 via-transparent to-transparent" />
+          </div>
 
-        <section className="bg-bg-primary py-12 lg:py-[70px]">
-          <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
-            <FadeIn
-              variant="fadeIn"
-              speed="slow"
-              className="flex flex-col gap-5 rounded-[10px] border-2 border-brand-primary px-5 py-[30px] shadow-[0_0_40px_-20px_rgba(0,0,0,0.5)] sm:px-10 sm:py-[30px] sm:pl-5"
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat text-[28px] font-bold leading-[30px] text-text-inverse sm:text-[32px]">
-                Who We Are
-              </h2>
-              <h3 className="font-montserrat text-[28px] font-bold leading-[35px] text-brand-primary sm:text-[32px]">
-                Welcome to ELFA
-              </h3>
-              <p className="font-roboto text-[14px] leading-relaxed text-text-inverse">
-                ELFA Electric, born under EV Technologies at Wavetec, is driven by a passion for
-                building an electric future with sustainable, affordable, and innovative solutions
-                powered by clean technology.
+          <div className="relative z-10 w-full max-w-[1400px] px-6 text-center">
+            <FadeIn variant="fadeInUp" speed="slow">
+              <p className="font-roboto mb-6 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary">
+                About ELFA Electric
               </p>
-              <p className="font-roboto text-[14px] leading-relaxed text-text-inverse">
-                At ELFA Electric, we believe that every person and every detail matters. Our electric
-                motorcycles are meticulously designed, engineered, and rigorously tested for the local
-                rider, using top-quality components. We have studied driving patterns, road
-                conditions, and the needs of different types of riders to determine the optimal
-                specifications, including the selection of the right motor size, battery, and battery
-                management system for our EV motorcycles. This customer-centric approach to developing
-                solutions is backed by EV Technologies expertise and Wavetec&apos;s 30-year legacy of
-                R&amp;D and technology, which has successfully powered both global and local
-                companies.
-              </p>
-            </FadeIn>
-
-            <FadeIn
-              variant="fadeIn"
-              speed="slow"
-              className="relative mx-auto aspect-square w-full max-w-[420px] lg:max-w-none"
-            >
-              <Image
-                src="/assets/images/about/sut.png"
-                alt="ELFA EV-1 Scooty"
-                fill
-                className="object-contain"
-                sizes="(max-width: 1024px) 420px, 520px"
-              />
+              <h1 className="font-montserrat text-[48px] sm:text-[64px] lg:text-[80px] font-black uppercase italic leading-[0.9] tracking-tighter text-white drop-shadow-2xl">
+                Engineering <br className="hidden sm:block" /> The Future.
+              </h1>
             </FadeIn>
           </div>
         </section>
 
-        <section className="bg-bg-primary py-[50px]">
-          <FadeIn variant="fadeIn" speed="slow" className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <h2 className="font-montserrat text-center text-[32px] font-bold leading-none text-brand-primary sm:text-[44px]">
-              Vision &amp; Mission
-            </h2>
-            <p className="font-montserrat mt-4 text-center text-[24px] font-bold leading-tight text-text-primary sm:mt-5 sm:text-[32px]">
-              For a Cleaner, and Brighter Future
-            </p>
-
-            <div className="mx-auto mt-10 grid max-w-[900px] items-stretch gap-6 md:grid-cols-2 md:gap-8">
-              <FadeIn
-                variant="fadeIn"
-                speed="slow"
-                delay={0.08}
-                className="h-full rounded-[20px] border-2 border-brand-primary p-[30px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
-                style={{ backgroundImage: SPARK }}
-              >
-                <h3 className="font-montserrat mb-4 text-[28px] font-bold leading-[35px] text-brand-primary sm:text-[35px]">
-                  Our Vision
-                </h3>
-                <p className="font-roboto text-[14px] leading-relaxed text-text-inverse">
-                  Enable equitable progress through sustainable mobility.
-                </p>
-              </FadeIn>
-              <FadeIn
-                variant="fadeIn"
-                speed="slow"
-                delay={0.16}
-                className="h-full rounded-[20px] border-2 border-brand-primary p-[30px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
-                style={{ backgroundImage: SPARK }}
-              >
-                <h3 className="font-montserrat mb-4 text-[28px] font-bold leading-[35px] text-brand-primary sm:text-[35px]">
-                  Our Mission
-                </h3>
-                <p className="font-roboto text-[14px] leading-relaxed text-text-inverse">
-                  Deliver accessible, smart, and reliable electric solutions that fuel everyday
-                  productivity and progress for everyone.
+        {/* WHO WE ARE - STICKY SCROLL LAYOUT */}
+        <section className="relative w-full px-6 py-24 sm:py-32 max-w-[1400px] mx-auto border-t border-white/5">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+            <div className="lg:col-span-5 lg:sticky lg:top-32">
+              <FadeIn variant="fadeInLeft" speed="slow">
+                <h2 className="font-montserrat text-[40px] sm:text-[64px] font-black uppercase italic leading-[0.9] tracking-tighter text-white">
+                  Driven By <br className="hidden lg:block" />
+                  <span className="text-brand-primary">Purpose</span>
+                </h2>
+                <p className="mt-8 font-roboto text-[12px] text-white/50 uppercase tracking-widest font-bold">
+                  Welcome to ELFA
                 </p>
               </FadeIn>
             </div>
-          </FadeIn>
+            <div className="lg:col-span-7 flex flex-col gap-12 sm:gap-20">
+              <FadeIn
+                variant="fadeInUp"
+                speed="slow"
+                className="text-[20px] sm:text-[32px] font-roboto leading-snug text-white/60"
+              >
+                <span className="text-white font-medium">ELFA Electric</span>, born under EV
+                Technologies at Wavetec, is driven by a passion for building an electric future with
+                sustainable, affordable, and innovative solutions powered by clean technology.
+              </FadeIn>
+              <FadeIn
+                variant="fadeInUp"
+                speed="slow"
+                className="text-[20px] sm:text-[32px] font-roboto leading-snug text-white/60"
+              >
+                At ELFA Electric, we believe that every person and every detail matters. Our electric
+                motorcycles are meticulously designed, engineered, and rigorously tested for the
+                local rider, using top-quality components.
+              </FadeIn>
+              <FadeIn
+                variant="fadeInUp"
+                speed="slow"
+                className="text-[20px] sm:text-[32px] font-roboto leading-snug text-white/60"
+              >
+                We have studied driving patterns, road conditions, and the needs of different types
+                of riders to determine the optimal specifications. This customer-centric approach is
+                backed by EV Technologies expertise and Wavetec&apos;s 30-year legacy of R&amp;D.
+              </FadeIn>
+
+              <FadeIn
+                variant="fadeInUp"
+                speed="slow"
+                className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden mt-8 grayscale hover:grayscale-0 transition-all duration-1000 border border-white/10"
+              >
+                <Image
+                  src="/assets/images/about/engineering.jpeg"
+                  alt="Engineering"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </FadeIn>
+            </div>
+          </div>
         </section>
 
-        <section className="bg-bg-primary pb-12 pt-4 lg:pb-16">
-          <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
-            <FadeIn
-              variant="fadeIn"
-              speed="slow"
-              className="relative mx-auto aspect-[380/360] w-full max-w-[420px] lg:max-w-none"
-            >
-              <Image
-                src="/assets/images/contact/EV-125-BIKE-1.png"
-                alt="ELFA EV-125 Bike"
-                fill
-                className="object-contain"
-                sizes="(max-width: 1024px) 420px, 520px"
-              />
+        {/* MISSION & VISION - HUGE TYPOGRAPHY */}
+        <section className="relative w-full py-32 sm:py-48 border-t border-white/5 bg-[#050505] overflow-hidden">
+          {/* Subtle background glow */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-brand-primary/5 blur-[120px]" />
+          
+          <div className="max-w-[1400px] mx-auto px-6 flex flex-col gap-32 relative z-10">
+            <FadeIn variant="fadeInUp" speed="slow" className="max-w-5xl">
+              <p className="font-roboto mb-8 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary/80">
+                Our Vision
+              </p>
+              <h3 className="font-montserrat text-[32px] sm:text-[64px] font-medium leading-[1.1] tracking-tight text-white">
+                Enable equitable progress through <br className="hidden sm:block" />
+                <span className="text-brand-primary font-black italic">sustainable mobility.</span>
+              </h3>
             </FadeIn>
-            <FadeIn
-              variant="fadeIn"
-              speed="slow"
-              className="rounded-[10px] border-2 border-brand-primary px-5 py-[30px] pb-10 shadow-[0_0_40px_-20px_rgba(0,0,0,0.5)] sm:px-5"
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-6 text-[26px] font-bold leading-tight text-brand-primary sm:text-[32px]">
-                Why Choose ELFA Electric Bikes &amp; Scooty?
-              </h2>
-              <ul className="flex flex-col gap-3">
-                {whyChoose.map((item) => (
-                  <li
-                    key={item}
-                    className="font-roboto flex items-start gap-3 text-[14px] leading-relaxed text-text-inverse"
-                  >
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-primary" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            <FadeIn variant="fadeInUp" speed="slow" className="max-w-5xl lg:self-end lg:text-right">
+              <p className="font-roboto mb-8 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary/80">
+                Our Mission
+              </p>
+              <h3 className="font-montserrat text-[32px] sm:text-[64px] font-medium leading-[1.1] tracking-tight text-white">
+                Deliver accessible, smart, and reliable electric solutions that fuel{" "}
+                <span className="text-brand-primary font-black italic">
+                  everyday productivity
+                </span>{" "}
+                for everyone.
+              </h3>
             </FadeIn>
           </div>
         </section>
 
-        <section className="bg-bg-primary py-12 lg:py-16">
-          <FadeIn variant="fadeIn" speed="slow" className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <h2 className="font-montserrat mb-10 text-center text-[28px] font-bold text-text-primary sm:text-[32px]">
-              Core Values
-            </h2>
-            <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {coreValues.map(({ title, desc }, i) => (
+        {/* CORE VALUES - IMMERSIVE OVERLAY LIST */}
+        <section className="relative w-full py-24 sm:py-32 border-t border-white/5 bg-bg-primary">
+          <div className="max-w-[1400px] mx-auto px-6">
+            <FadeIn variant="fadeInUp" speed="slow" className="mb-20">
+              <p className="font-roboto mb-4 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary">
+                Philosophy
+              </p>
+              <h2 className="font-montserrat text-[40px] sm:text-[80px] font-black uppercase italic leading-none tracking-tighter text-white">
+                Core <br /> Values
+              </h2>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {coreValues.map((value, i) => (
                 <FadeIn
-                  key={desc.slice(0, 24)}
-                  variant="fadeIn"
+                  key={i}
+                  variant="fadeInUp"
+                  delay={i * 0.1}
                   speed="slow"
-                  delay={i * 0.08}
-                  className="h-full rounded-[20px] border-2 border-brand-primary p-[15px] text-center shadow-[0_0_20px_-11px_rgba(0,0,0,0.5)]"
-                  style={{ backgroundImage: SPARK }}
+                  className="group relative h-[500px] rounded-3xl overflow-hidden cursor-pointer border border-white/5 bg-[#080808]"
                 >
-                  <h3 className="font-montserrat mb-3 text-[15px] font-bold uppercase leading-[15px] text-text-inverse">
-                    {title}
-                  </h3>
-                  <p className="font-roboto text-[13px] leading-relaxed text-text-inverse/85">{desc}</p>
+                  <Image
+                    src={value.img}
+                    alt={value.title}
+                    fill
+                    className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-40 mix-blend-luminosity grayscale group-hover:grayscale-0"
+                    sizes="(max-width: 1024px) 100vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-60" />
+                  <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                    <h4 className="font-montserrat text-[24px] font-bold uppercase italic leading-tight text-white mb-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      {value.title}
+                    </h4>
+                    <p className="font-roboto text-[15px] leading-relaxed text-white/60 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                      {value.desc}
+                    </p>
+                  </div>
                 </FadeIn>
               ))}
             </div>
-          </FadeIn>
-        </section>
-
-        <section className="bg-bg-primary py-8 lg:py-12">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <FadeIn
-              variant="fadeIn"
-              speed="slow"
-              className="rounded-[15px] px-6 py-10 text-center sm:px-10 sm:py-[40px]"
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-tight text-text-inverse sm:text-[36px] lg:text-[42px] lg:leading-[42px]">
-                Join Pakistan&apos;s Electric Bike Revolution Today
-              </h2>
-              <p className="font-roboto mx-auto mb-8 max-w-[720px] text-[14px] leading-relaxed text-text-inverse/90 sm:text-[15px]">
-                Boost-up your adventure with an E-Vehicle! Enjoy every ride like never before. Our
-                powerful, eco-friendly E-Vehicles offer smooth, exciting drives—perfect for city trips
-                or outdoor adventures. Take your journey to the next level with ELFA Electric—the best
-                electric bike company in Pakistan.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <FlipButton
-                  href="/book-a-test-ride"
-                  variant="primary"
-                  className="rounded-[3px] h-12 px-6"
-                >
-                  Book a Test Ride
-                </FlipButton>
-                <FlipButton
-                  href="/ev-125"
-                  variant="primary"
-                  className="rounded-[3px] h-12 px-6"
-                >
-                  Buy Now
-                </FlipButton>
-              </div>
-            </FadeIn>
           </div>
         </section>
 
-        <Marquee />
+        {/* WHY CHOOSE US - MINIMALIST SPLIT */}
+        <section className="relative w-full py-24 sm:py-32 border-t border-white/5 bg-[#050505] overflow-hidden">
+          <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+            <div className="order-2 lg:order-1 relative h-[500px] lg:h-[700px] w-full">
+              {/* Using EV-125-BIKE-1.png which has a transparent background for a sleek product showcase */}
+              <Image
+                src="/assets/images/contact/EV-125-BIKE-1.png"
+                alt="ELFA EV-125"
+                fill
+                className="object-contain lg:scale-125 transition-transform duration-1000 hover:scale-150"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <FadeIn variant="fadeInUp" speed="slow">
+                <p className="font-roboto mb-4 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary">
+                  The Edge
+                </p>
+                <h2 className="font-montserrat text-[40px] sm:text-[64px] font-black uppercase italic leading-[0.9] tracking-tighter text-white mb-12">
+                  The ELFA <br /> <span className="text-brand-primary">Advantage</span>
+                </h2>
+                <ul className="space-y-6">
+                  {whyChoose.map((item, i) => (
+                    <li
+                      key={i}
+                      className="flex gap-6 items-start font-roboto text-[16px] sm:text-[18px] text-white/70"
+                    >
+                      <span className="text-brand-primary font-black mt-0.5">
+                        0{i + 1}
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <JoinRevolutionCTA />
+
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import CartPageContent from "@/components/cart/CartPageContent";
-import Marquee from "@/components/sections/Marquee";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 
 export const metadata: Metadata = {
   title: "Cart - ELFA Electric",
@@ -11,13 +9,8 @@ export const metadata: Metadata = {
 
 export default function CartPage() {
   return (
-    <>
-      <Header />
-      <main className="flex-1">
-        <CartPageContent />
-        {/* <Marquee /> */}
-      </main>
-      <Footer />
-    </>
+    <main className="flex-1 bg-[#050505]  ">
+      <CartPageContent />
+    </main>
   );
 }

@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Phone, MapPin } from "lucide-react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 import { FadeIn } from "@/components/motion/FadeIn";
 
@@ -61,8 +59,7 @@ const mechanics = [
 export default function CertifiedMechanicsPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
+            <main className="flex-1">
         <PageHero
           title="ELFA Certified Mechanics"
           breadcrumb="ELFA Certified Mechanics"
@@ -122,7 +119,6 @@ export default function CertifiedMechanicsPage() {
           </div>
         </section>
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/components/motion/FadeIn";
-import Link from "next/link";
+import FlipButton from "@/components/ui/FlipButton";
 
 const faqs = [
   {
@@ -131,15 +131,13 @@ export default function FAQ() {
               <p className="font-roboto mb-8 max-w-[360px] text-[14px] leading-relaxed text-white/40 sm:text-[15px]">
                 Everything you need to know about ordering, charging, warranty, and owning your ELFA electric bike.
               </p>
-              <Link
+              <FlipButton
                 href="/contact-us"
-                className="font-roboto group inline-flex h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 text-[12px] font-semibold uppercase tracking-[1.5px] text-white/50 transition-all hover:border-brand-primary/40 hover:bg-brand-primary/10 hover:text-brand-primary"
+                variant="glass"
+                className="font-roboto h-11 px-6 text-[12px] font-semibold tracking-[1.5px] text-white/50 hover:border-brand-primary/40 hover:bg-brand-primary/10 hover:text-brand-primary"
               >
                 Still have questions?
-                <span className="text-brand-primary/60 transition-transform duration-200 group-hover:translate-x-0.5">
-                  →
-                </span>
-              </Link>
+              </FlipButton>
             </div>
           </FadeIn>
 

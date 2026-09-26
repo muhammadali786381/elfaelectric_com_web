@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import PageHero from "@/components/sections/PageHero";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | ELFA Electric",
@@ -58,15 +56,13 @@ const policySections = [
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1 bg-bg-primary">
-        <PageHero
-          title="Privacy Policy"
-          breadcrumb="Privacy Policy"
-          withBikes
-          largeTitle
-          backgroundSrc="/assets/images/blog-hero-bg.jpg"
-          bikesSrc="/assets/images/blog-page.png"
+            <main className="flex-1 bg-bg-primary">
+        <SecondaryHero
+          titleLine1="Privacy"
+          titleLine2="Policy"
+          description="Learn about our practices regarding the collection, use, and protection of your personal information."
+          imageSrc="/assets/images/hero4.jpeg"
+          imageAlt="ELFA Electric Motorcycle"
         />
 
         <section className="mx-auto w-full max-w-container px-4 py-12 sm:px-6 lg:py-16">
@@ -89,7 +85,6 @@ export default function PrivacyPolicyPage() {
           </div>
         </section>
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

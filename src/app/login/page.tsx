@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/sections/PageHero";
 import FlipButton from "@/components/ui/FlipButton";
 
@@ -13,8 +11,7 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
+            <main className="flex-1">
         <PageHero title="My Account" breadcrumb="Login" />
 
         <section className="bg-bg-primary py-16 lg:py-20">
@@ -76,7 +73,6 @@ export default function LoginPage() {
           </div>
         </section>
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Anton, Montserrat, Poppins, Roboto, Geist } from "next/font/google";
 import CartShell from "@/components/cart/CartShell";
 import Click2Connect from "@/components/layout/Click2Connect";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -62,7 +64,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-screen flex flex-col antialiased">
         <CartShell>
+          <Header />
           {children}
+          <Footer />
           <Click2Connect />
         </CartShell>
       </body>

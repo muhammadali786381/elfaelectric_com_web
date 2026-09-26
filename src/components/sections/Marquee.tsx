@@ -1,7 +1,5 @@
 import { Zap } from "lucide-react";
 
-// Live site marquee: bg var(--color-brand-primary), pad 30px 0,
-// Roboto 500 34px / 51px, uppercase, white, hyphen separators
 const items = [
   "ENVIRONMENTAL BENEFITS",
   "VARIETY OF MODELS",

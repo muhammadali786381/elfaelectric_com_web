@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, ChevronRight } from "lucide-react";
+import FlipButton from "@/components/ui/FlipButton";
 
 export const SPARK_GRADIENT =
   "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
@@ -57,15 +58,16 @@ export default function ContentCard({ item }: { item: ContentCardItem }) {
           {item.excerpt}
         </p>
 
-        <Link
+        <FlipButton
           href={item.link}
           target={item.external ? "_blank" : undefined}
           rel={item.external ? "noopener noreferrer" : undefined}
-          className="font-roboto mt-auto inline-flex items-center gap-1 pt-5 text-[16px] font-semibold leading-4 text-text-inverse transition-colors hover:text-brand-primary"
-          >
+          variant="outline"
+          icon={<ChevronRight className="h-4 w-4" strokeWidth={2.5} />}
+          className="font-roboto mt-auto h-auto rounded-none border-0 bg-transparent px-0 py-0 pt-5 text-[16px] font-semibold normal-case tracking-normal text-text-inverse hover:bg-transparent hover:text-brand-primary"
+        >
           Read More
-          <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
-        </Link>
+        </FlipButton>
         </div>
       </div>
     </article>

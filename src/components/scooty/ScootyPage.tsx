@@ -5,10 +5,12 @@ import ProductCoreFeatures from "@/components/product/ProductCoreFeatures";
 import ProductAdvancedFeatures from "@/components/product/ProductAdvancedFeatures";
 import ProductSpecs from "@/components/product/ProductSpecs";
 import ProductGallery from "@/components/product/ProductGallery";
+import ReelsCarousel from "@/components/sections/ReelsCarousel";
 import SavingsCalculator from "@/components/sections/SavingsCalculator";
+import { dummyVideoLinks } from "@/data/video-links";
 import Testimonials from "@/components/sections/Testimonials";
 import AdventureCTA from "@/components/sections/AdventureCTA";
-import Marquee from "@/components/sections/Marquee";
+
 import ScootyMetaSection from "@/components/scooty/ScootyMetaSection";
 
 /** EV-1 Scooty dedicated page — lighter, modern personality vs EV-125 */
@@ -48,6 +50,8 @@ export default function ScootyPage({ product }: { product: Product }) {
         images={product.galleryImages}
       />
 
+      <ReelsCarousel reels={dummyVideoLinks} />
+
       {/* Top Performing on Meta
       <ScootyMetaSection /> */}
 
@@ -58,7 +62,7 @@ export default function ScootyPage({ product }: { product: Product }) {
       <AdventureCTA />
 
       {/* Marquee */}
-      <Marquee />
+      
     </main>
   );
 }

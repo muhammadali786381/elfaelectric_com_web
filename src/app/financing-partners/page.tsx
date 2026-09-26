@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import PageHero from "@/components/sections/PageHero";
-import Marquee from "@/components/sections/Marquee";
+import Image from "next/image";
 import FinancingPlans from "./FinancingPlans";
+import { FadeIn } from "@/components/motion/FadeIn";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 
 export const metadata: Metadata = {
   title: "ELFA Financing Partners | Easy Electric Bike Installments",
@@ -14,27 +13,17 @@ export const metadata: Metadata = {
 export default function FinancingPartnersPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
-        <PageHero
-          title={
-            <>
-              Financing
-              <br />
-              Partners
-            </>
-          }
-          breadcrumb="Financing Partners"
-          withBikes
-          xlTitle
-          backgroundSrc="/assets/images/blog-hero-bg.jpg"
-          bikesSrc="/assets/images/blog-page.png"
+      <main className="flex-1 bg-bg-primary overflow-hidden">
+        <SecondaryHero 
+          titleLine1="Financing"
+          titleLine2="Partners"
+          description="Explore ELFA EV-125 and EV-1 installment plans with our trusted financing partners. Zero hassle, instant approvals."
+          imageSrc="/assets/images/hero4.jpeg"
+          imageAlt="Financing Partners"
         />
 
         <FinancingPlans />
-        <Marquee />
       </main>
-      <Footer />
     </>
   );
 }

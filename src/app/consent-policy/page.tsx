@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import PageHero from "@/components/sections/PageHero";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 
 export const metadata: Metadata = {
   title: "Consent & Policy Acknowledgement | ELFA Electric",
@@ -20,14 +18,13 @@ const terms = [
 export default function ConsentPolicyPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1 bg-bg-primary">
-        <PageHero
-          title="Consent & Policy Acknowledgement"
-          breadcrumb="Consent & Policy Acknowledgement"
-          withBikes
-          backgroundSrc="/assets/images/blog-hero-bg.jpg"
-          bikesSrc="/assets/images/blog-page.png"
+            <main className="flex-1 bg-bg-primary">
+        <SecondaryHero
+          titleLine1="Consent & Policy"
+          titleLine2="Acknowledgement"
+          description="Please review our terms and conditions regarding vehicle usage, software updates, and warranty."
+          imageSrc="/assets/images/hero4.jpeg"
+          imageAlt="ELFA Electric Motorcycle"
         />
 
         <section className="mx-auto w-full max-w-container px-4 py-12 sm:px-6 lg:py-16">
@@ -45,7 +42,6 @@ export default function ConsentPolicyPage() {
           </div>
         </section>
       </main>
-      <Footer />
-    </>
+          </>
   );
 }

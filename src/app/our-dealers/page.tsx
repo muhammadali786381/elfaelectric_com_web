@@ -1,23 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import DealersHero from "@/components/sections/DealersHero";
-import Marquee from "@/components/sections/Marquee";
-import { FadeIn } from "@/components/motion/FadeIn";
-import FlipButton from "@/components/ui/FlipButton";
-import DealersDirectory from "./DealersDirectory";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 
+import { FadeIn } from "@/components/motion/FadeIn";
+import DealersDirectory from "./DealersDirectory";
+import JoinRevolutionCTA from "@/components/sections/JoinRevolutionCTA";
 export const metadata: Metadata = {
   title: "ELFA Electric Dealers | Authorized Showrooms in Pakistan",
   description:
     "Find authorized ELFA Electric dealers across Karachi, Hyderabad, Lahore, Rahim Yar Khan, and Rawalpindi. Book a test ride or visit a showroom near you.",
 };
 
-const SPARK =
-  "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
 
 const whyItems = [
   "Complete instruction on electric bikes and electric scooters.",
@@ -32,9 +26,14 @@ const whyItems = [
 export default function OurDealersPage() {
   return (
     <>
-      <Header />
-      <main className="flex-1">
-        <DealersHero />
+            <main className="flex-1">
+        <SecondaryHero 
+          titleLine1="Authorized"
+          titleLine2="ELFA Dealers"
+          description="Find your nearest showroom across Pakistan. Book a test ride and experience the future of urban mobility today."
+          imageSrc="/assets/images/hero4.jpeg"
+          imageAlt="ELFA Electric Motorcycle"
+        />
 
         {/* Bike from left · card from right */}
         <section className="bg-bg-primary py-10 lg:py-14">
@@ -42,13 +41,12 @@ export default function OurDealersPage() {
             <FadeIn
               variant="fadeInRight"
               speed="slow"
-              className="order-1 rounded-[16px] border-2 border-brand-primary px-4 py-8 sm:rounded-[20px] sm:px-8 sm:py-20 lg:order-2"
-              style={{ backgroundImage: SPARK }}
+              className="order-1 flex flex-col justify-center py-8 lg:order-2 lg:pl-10"
             >
-              <h2 className="font-montserrat mb-3 text-[22px] font-semibold capitalize leading-tight text-text-inverse sm:mb-4 sm:text-[32px] sm:leading-[41px]">
+              <h2 className="font-montserrat mb-4 text-[28px] font-black italic uppercase leading-none tracking-tight text-white sm:mb-6 sm:text-[40px] lg:text-[48px]">
                 Looking for ELFA Electric dealers in Pakistan?
               </h2>
-              <p className="font-roboto text-[14px] leading-relaxed text-text-inverse sm:text-[16px]">
+              <p className="font-roboto text-[16px] leading-relaxed text-white/70 sm:text-[18px]">
                 Our authorized dealers across Karachi, Hyderabad, Lahore, and other cities offer
                 electric bikes, electric scooty, and expert support. Whether you want to buy an
                 electric bike, schedule a test ride, or become an ELFA dealer, we have got you
@@ -77,30 +75,29 @@ export default function OurDealersPage() {
             <FadeIn
               variant="fadeInLeft"
               speed="slow"
-              className="order-1 rounded-[16px] border-2 border-brand-primary px-4 py-8 sm:rounded-[20px] sm:px-8 sm:py-16"
-              style={{ backgroundImage: SPARK }}
+              className="order-1 flex flex-col justify-center py-8 lg:pr-10"
             >
-              <h2 className="font-montserrat mb-3 text-[22px] font-semibold capitalize leading-tight text-text-inverse sm:mb-4 sm:text-[32px] sm:leading-[41px]">
+              <h2 className="font-montserrat mb-4 text-[28px] font-black italic uppercase leading-none tracking-tight text-white sm:mb-6 sm:text-[40px] lg:text-[48px]">
                 Why Buy From Authorized ELFA Electric Motorcycle Dealers?
               </h2>
-              <p className="font-roboto mb-4 text-[14px] leading-relaxed text-text-inverse sm:text-[16px]">
+              <p className="font-roboto mb-6 text-[16px] leading-relaxed text-white/70 sm:text-[18px]">
                 When you choose ELFA Electric Motorcycle dealers in Pakistan, you get:
               </p>
               <ul className="flex flex-col gap-2.5">
                 {whyItems.map((item) => (
                   <li
                     key={item}
-                    className="font-roboto flex items-start gap-2 text-[14px] text-text-inverse sm:text-[16px]"
+                    className="font-roboto flex items-start gap-3 text-[16px] font-medium text-white sm:text-[18px]"
                   >
                     <ChevronRight
-                      className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary"
-                      strokeWidth={2.5}
+                      className="mt-1 h-5 w-5 shrink-0 text-brand-primary"
+                      strokeWidth={3}
                     />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-              <p className="font-roboto mt-5 text-[14px] leading-relaxed text-text-inverse sm:text-[16px]">
+              <p className="font-roboto mt-8 text-[16px] font-medium leading-relaxed text-brand-primary sm:text-[18px]">
                 Visit your nearest EV bike showroom in Pakistan for the complete experience!
               </p>
             </FadeIn>
@@ -123,35 +120,16 @@ export default function OurDealersPage() {
 
         <DealersDirectory />
 
-        {/* Apply CTA — spark gradient + fade up */}
-        <section className="bg-bg-primary py-12 lg:py-16">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <FadeIn
-              variant="fadeInUp"
-              speed="slow"
-              className="rounded-[15px] px-6 py-10 text-center sm:px-10 sm:py-12"
-              style={{ backgroundImage: SPARK }}
-            >
-              <h2 className="font-montserrat mb-3 text-[28px] font-bold text-text-inverse sm:text-[36px]">
-                Contact Our Dealer Support Team
-              </h2>
-              <p className="font-roboto mx-auto mb-6 max-w-[560px] text-[15px] text-text-inverse sm:text-[16px]">
-                Apply online to become an ELFA dealer today!
-              </p>
-              <FlipButton
-                href="/contact-us"
-                variant="primary"
-                className="rounded-[3px] h-[48px] px-8 text-[16px]"
-              >
-                Apply Online
-              </FlipButton>
-            </FadeIn>
-          </div>
-        </section>
+        <JoinRevolutionCTA
+          title={<>Contact Our <br className="hidden sm:block" /> Support Team</>}
+          subtitle="Apply online to become an ELFA dealer today!"
+          primaryButtonText="Apply Online"
+          primaryButtonHref="/contact-us"
+          secondaryButtonText=""
+        />
 
-        <Marquee />
+        
       </main>
-      <Footer />
-    </>
+          </>
   );
 }
