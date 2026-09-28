@@ -322,11 +322,11 @@ export default function DealersDirectory() {
         </h2>
       </div>
 
-      {/* Main Layout: List + Map */}
-      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-start lg:gap-10">
+      {/* Main Layout: List scrolls with page · Map stays sticky */}
+      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-start lg:gap-8">
         
-        {/* Left Panel: Search + Normal List (scrolls with page) */}
-        <div className="flex w-full flex-col lg:w-[45%] xl:w-[40%]">
+        {/* Left Panel: Search + list (page scroll) */}
+        <div className="flex w-full flex-col lg:w-[58%] xl:w-[55%]">
           {/* Search Bar */}
           <div className="mb-4 relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" strokeWidth={2} />
@@ -373,18 +373,21 @@ export default function DealersDirectory() {
           </div>
         </div>
 
-        {/* Right Panel: Sticky Map */}
-        <div className="relative w-full overflow-hidden rounded-[16px] border border-white/10 lg:sticky lg:top-24 lg:h-[calc(100vh-140px)] h-[400px]">
-          {/* Map instruction overlay */}
-          {!activeDealer && (
-            <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 -translate-x-1/2">
-              <div className="rounded-full bg-[#0a0a0a]/90 px-4 py-2 font-roboto text-[12px] text-white/50 backdrop-blur-md">
-                Click a dealer card to zoom in
+        {/* Right Panel: sticky outer (no overflow) · clipped inner */}
+        <aside className="w-full shrink-0 lg:sticky lg:top-32 lg:w-[42%] lg:self-start lg:pt-2 xl:w-[45%]">
+          <div className="relative h-[320px] overflow-hidden rounded-[16px] border border-white/10 sm:h-[360px] lg:h-[min(620px,calc(100vh-11rem))]">
+            {!activeDealer && (
+              <div className="pointer-events-none absolute bottom-4 left-1/2 z-10 -translate-x-1/2">
+                <div className="rounded-full bg-[#0a0a0a]/90 px-4 py-2 font-roboto text-[12px] text-white/50 backdrop-blur-md">
+                  Click a dealer card to zoom in
+                </div>
               </div>
+            )}
+            <div className="absolute inset-0">
+              <DynamicMap dealers={filteredDealers} activeDealer={activeDealer} />
             </div>
-          )}
-          <DynamicMap dealers={filteredDealers} activeDealer={activeDealer} />
-        </div>
+          </div>
+        </aside>
       </div>
     </section>
   );

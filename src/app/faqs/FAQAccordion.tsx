@@ -1,42 +1,53 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
-
-const SPARK = "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
+import { Plus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function FAQAccordion({ faqs }: { faqs: { q: string; a: string }[] }) {
-  const [open, setOpen] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="flex flex-col gap-[10px]">
+    <div className="flex flex-col gap-4">
       {faqs.map((faq, i) => {
-        const isOpen = open === i;
+        const isOpen = openIndex === i;
         return (
-          <div key={faq.q} className="overflow-hidden rounded-[10px]" style={{ backgroundImage: SPARK }}>
+          <div 
+            key={faq.q} 
+            className="group rounded-2xl border border-white/10 bg-[#111] overflow-hidden transition-colors hover:border-brand-primary/50"
+          >
             <button
               type="button"
-              onClick={() => setOpen(isOpen ? null : i)}
+              onClick={() => setOpenIndex(isOpen ? null : i)}
               aria-expanded={isOpen}
-              className="group flex w-full items-center justify-between gap-4 px-[10px] py-5 text-left sm:px-4"
+              className="flex w-full items-center justify-between gap-4 p-6 text-left"
             >
-              <span className="font-montserrat text-[16px] font-medium leading-snug text-text-inverse sm:text-[18px] lg:text-[20px]">
+              <span className={`font-montserrat text-[16px] sm:text-[18px] lg:text-[20px] font-bold transition-colors duration-300 ${isOpen ? "text-brand-primary" : "text-white group-hover:text-white/80"}`}>
                 {faq.q}
               </span>
-              <ChevronDown
-                className={`h-5 w-5 shrink-0 text-text-inverse transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                strokeWidth={2.5}
-              />
-            </button>
-            <div
-              className={`grid transition-all duration-300 ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
-            >
-              <div className="overflow-hidden">
-                <div className="bg-bg-primary px-[10px] pb-[15px] pt-[10px] sm:px-4">
-                  <p className="font-roboto text-[15px] leading-relaxed text-text-secondary">{faq.a}</p>
-                </div>
+              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${isOpen ? "border-brand-primary bg-brand-primary/10" : "border-white/10 bg-white/5 group-hover:bg-white/10"}`}>
+                <Plus
+                  className={`h-5 w-5 transition-transform duration-500 ${isOpen ? "rotate-45 text-brand-primary" : "text-white/70"}`}
+                  strokeWidth={2}
+                />
               </div>
-            </div>
+            </button>
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                >
+                  <div className="px-6 pb-6 pt-0">
+                    <p className="font-roboto text-[15px] sm:text-[16px] leading-relaxed text-white/60">
+                      {faq.a}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         );
       })}

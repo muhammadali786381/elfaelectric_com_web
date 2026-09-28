@@ -21,11 +21,12 @@ type ModelConfig = {
   short: string;
   kmPerLitrePetrol: number;
   kmPerUnitElfa: number;
+  buyHref: string;
 };
 
 const models: ModelConfig[] = [
-  { id: "ev125", label: "EV-125 BIKE", short: "EV-125", kmPerLitrePetrol: 45, kmPerUnitElfa: 46 },
-  { id: "ev1", label: "EV-1 Scooty", short: "EV-1", kmPerLitrePetrol: 40, kmPerUnitElfa: 39 },
+  { id: "ev125", label: "EV-125 BIKE", short: "EV-125", kmPerLitrePetrol: 45, kmPerUnitElfa: 46, buyHref: "/product/elfaev125" },
+  { id: "ev1", label: "EV-1 Scooty", short: "EV-1", kmPerLitrePetrol: 40, kmPerUnitElfa: 39, buyHref: "/product/ev1-scooty" },
 ];
 
 const animVariant: Variants = {
@@ -273,7 +274,7 @@ export default function SavingsCalculator({
                 Net savings with {model.label} over 1 year
               </p>
               <FlipButton
-                href="/products"
+                href={model.buyHref}
                 variant="primary"
                 className="mt-8 w-full rounded-md h-12 text-[14px]"
               >

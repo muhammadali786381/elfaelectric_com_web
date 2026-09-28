@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { MapPin, Phone, Mail, Headphones, ChevronRight, ShoppingCart, CalendarCheck, MessageSquare, Plus, Minus } from "lucide-react";
 import SecondaryHero from "@/components/sections/SecondaryHero";
 
 import { FadeIn } from "@/components/motion/FadeIn";
 import FlipButton from "@/components/ui/FlipButton";
+import BuyNowTrigger from "./BuyNowTrigger";
 
 export const metadata: Metadata = {
   title: "Contact ELFA Electric Motorcycle Pakistan",
@@ -109,7 +111,7 @@ export default function ContactUsPage() {
   return (
     <>
       <main className="flex-1 bg-[#050505]">
-        <SecondaryHero 
+        <SecondaryHero
           titleLine1="Contact"
           titleLine2="Us"
           description="Get in touch with ELFA Electric for product inquiries, test ride bookings, or dealership partnerships."
@@ -127,9 +129,7 @@ export default function ContactUsPage() {
               <p className="font-roboto text-white/70 text-[15px] mb-8 flex-1">
                 Ready to switch to sustainable mobility? Explore our range of ELFA electric bikes and scooties.
               </p>
-              <Link href="/shop" className="text-[15px] font-semibold text-brand-primary hover:text-white transition-colors">
-                Shop now &gt;
-              </Link>
+              <BuyNowTrigger />
             </FadeIn>
 
             <FadeIn variant="fadeInUp" speed="normal" delay={0.1} className="flex flex-col items-center text-center p-10 rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-xl transition-transform hover:-translate-y-2 transform-gpu">
@@ -172,53 +172,36 @@ export default function ContactUsPage() {
             <FadeIn
               variant="fadeInUp"
               speed="slow"
-              className="grid grid-cols-1 gap-12 rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-2xl p-8 sm:p-12 lg:grid-cols-[1.2fr_1fr] items-center"
+              className="grid grid-cols-1 gap-10 rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-2xl p-8 sm:p-10 lg:grid-cols-[1.2fr_1fr] items-start"
             >
-              <form className="flex flex-col gap-4">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Full Name"
-                    required
-                    className="font-roboto h-[48px] w-full rounded-[6px] border border-white/10 bg-black/40 px-4 text-[15px] text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary placeholder:text-white/40"
-                  />
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone Number"
-                    required
-                    className="font-roboto h-[48px] w-full rounded-[6px] border border-white/10 bg-black/40 px-4 text-[15px] text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary placeholder:text-white/40"
-                  />
-                </div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  required
-                  className="font-roboto h-[48px] w-full rounded-[6px] border border-white/10 bg-black/40 px-4 text-[15px] text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary placeholder:text-white/40"
+              <div className="flex flex-col w-full overflow-hidden rounded-[6px]">
+                <iframe
+                  src="https://app.digistartup.io/widget/form/3zEOWjB4U2tcRStsYXTH"
+                  style={{ width: "100%", height: "100%", border: "none", borderRadius: "0px" }}
+                  id="inline-3zEOWjB4U2tcRStsYXTH"
+                  data-layout="{'id':'INLINE'}"
+                  data-trigger-type="alwaysShow"
+                  data-trigger-value=""
+                  data-activation-type="alwaysActivated"
+                  data-activation-value=""
+                  data-deactivation-type="neverDeactivate"
+                  data-deactivation-value=""
+                  data-form-name="Contact Us"
+                  data-height="460"
+                  data-layout-iframe-id="inline-3zEOWjB4U2tcRStsYXTH"
+                  data-form-id="3zEOWjB4U2tcRStsYXTH"
+                  data-cookie-consent="true"
+                  data-cookie-consent-provider="auto"
+                  title="Contact Us"
                 />
-                <textarea
-                  name="message"
-                  placeholder="Your Message"
-                  rows={5}
-                  required
-                  className="font-roboto w-full resize-none rounded-[6px] border border-white/10 bg-black/40 px-4 py-3 text-[15px] text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary placeholder:text-white/40"
-                />
-                <FlipButton
-                  type="submit"
-                  variant="primary"
-                  className="mt-2 h-[48px] w-full rounded-[6px] text-[15px] font-bold tracking-widest hover:bg-white hover:text-black"
-                >
-                  Submit Now
-                </FlipButton>
-              </form>
+                <Script src="https://app.digistartup.io/js/form_embed.js" strategy="lazyOnload" />
+              </div>
 
-              <div className="flex flex-col justify-center">
+              <div className="flex flex-col justify-start pt-3 sm:pt-5">
                 <h3 className="font-montserrat mb-8 text-[22px] font-bold text-white sm:text-[28px]">
                   Contact Information
                 </h3>
-                <ul className="flex flex-col gap-6 text-[15px] text-white/80">
+                <ul className="flex flex-col gap-3 text-[15px] text-white/80">
                   <li className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
                       <MapPin className="h-5 w-5 text-brand-primary" />
@@ -258,7 +241,7 @@ export default function ContactUsPage() {
                   </li>
                 </ul>
 
-                <div className="mt-10 flex gap-4">
+                <div className="mt-4 flex gap-4">
                   {socialLinks.map((s) => (
                     <a
                       key={s.label}
@@ -341,7 +324,7 @@ export default function ContactUsPage() {
           </div>
         </section>
 
-        
+
       </main>
     </>
   );

@@ -44,10 +44,10 @@ function FeatureCard({
         <Image src={feature.icon} alt="" fill className="object-contain" sizes="48px" />
       </div>
       <div>
-        <h3 className="font-montserrat text-[20px] font-bold leading-tight text-white sm:text-[24px]">
+        <h3 className="font-montserrat text-[16px] font-bold leading-tight text-white sm:text-[24px]">
           {feature.title}
         </h3>
-        <p className="font-roboto mt-2 max-w-[280px] text-[15px] font-normal leading-relaxed text-white/60">
+        <p className="font-roboto mt-1 max-w-[280px] text-[12px] font-normal leading-relaxed text-white/60 sm:mt-2 sm:text-[15px]">
           {feature.description}
         </p>
       </div>
@@ -67,9 +67,10 @@ export default function ProductCoreFeatures({ features, centerImage, productName
           <motion.h2 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 0.2, y: 0 }}
+            whileHover={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-montserrat text-[40px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[56px] lg:text-[80px]"
+            className="font-montserrat text-[40px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[56px] lg:text-[80px] cursor-default"
           >
             Core Features
           </motion.h2>
@@ -111,13 +112,19 @@ export default function ProductCoreFeatures({ features, centerImage, productName
         </div>
 
         {/* Mobile / Tablet Grid */}
-        <div className="flex flex-col gap-16 lg:hidden">
+        <div className="flex flex-col gap-10 lg:hidden">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-10">
+            {features.map((f, i) => (
+              <FeatureCard key={f.title} feature={f} align={i % 2 === 0 ? "right" : "left"} index={i} />
+            ))}
+          </div>
+
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative mx-auto h-[300px] w-full max-w-[400px] sm:h-[400px]"
+            className="relative mx-auto mt-4 h-[300px] w-full max-w-[400px] sm:h-[400px]"
           >
             <Image
               src={centerImage}
@@ -127,12 +134,6 @@ export default function ProductCoreFeatures({ features, centerImage, productName
               sizes="100vw"
             />
           </motion.div>
-          
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
-            {features.map((f, i) => (
-              <FeatureCard key={f.title} feature={f} align="center" index={i} />
-            ))}
-          </div>
         </div>
       </div>
     </section>

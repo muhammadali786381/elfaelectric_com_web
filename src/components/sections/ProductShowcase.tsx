@@ -22,7 +22,7 @@ const products = [
     price: "PKR 335,000 + tax",
     savings: "Save PKR 10,000 and Buy now",
     exploreHref: "/ev-125",
-    buyHref: "/ev-125",
+    buyHref: "/product/elfaev125",
   },
   {
     id: "ev1",
@@ -39,7 +39,7 @@ const products = [
     price: "PKR 260,000 + tax",
     savings: "Save PKR 10,000 and Buy now",
     exploreHref: "/scooty-ev-1",
-    buyHref: "/scooty-ev-1",
+    buyHref: "/product/ev1-scooty",
   },
 ];
 

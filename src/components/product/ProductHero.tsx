@@ -113,7 +113,7 @@ export default function ProductHero({ product }: { product: Product }) {
           transition={{ duration: 1.2, delay: 0.2, ease }}
           className="relative flex-1 w-full min-h-[300px] my-6 z-[5] pointer-events-none lg:absolute lg:inset-0 lg:my-0 lg:pb-[140px] lg:pt-[120px] lg:flex lg:items-center lg:justify-center 2xl:translate-x-[5%]"
         >
-          <div className="relative  w-full h-[300px] sm:h-[400px] lg:h-full lg:max-w-[55vw] 2xl:max-w-[900px] lg:scale-[1.1]  xl:scale-[0.9] 2xl:scale-[1] ">
+          <div className="relative  w-full h-[300px] sm:h-[400px] lg:h-full lg:max-w-[55vw] 2xl:max-w-[900px] lg:scale-[1.05] lg:mt-12  xl:scale-[0.9] 2xl:scale-[1] ">
             <Image
               src={product.heroImage}
               alt={product.name}

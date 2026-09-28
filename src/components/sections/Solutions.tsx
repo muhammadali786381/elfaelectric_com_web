@@ -60,7 +60,7 @@ export default function Solutions() {
             alt="ELFA EV-1 Scooty"
             width={1311}
             height={1784}
-            className="h-auto w-full max-w-[280px] object-contain drop-shadow-2xl"
+            className="h-auto w-full max-w-[340px] sm:max-w-[380px] object-contain drop-shadow-2xl"
           />
         </div>
       </div>

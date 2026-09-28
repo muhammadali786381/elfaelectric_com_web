@@ -84,7 +84,7 @@ export default function BlogPostsGrid({
               href={featuredPost.href}
               className="group flex flex-col w-full cursor-pointer overflow-hidden rounded-[20px] bg-[#050505] border border-white/5 hover:border-white/10 transition-colors"
             >
-              <div className="relative h-[360px] w-full overflow-hidden shrink-0 sm:h-[440px] lg:h-[520px] border-b border-white/10">
+              <div className="relative aspect-[1.91/1] w-full overflow-hidden shrink-0 border-b border-white/10">
                 <Image
                   src={featuredPost.imageUrl}
                   alt={featuredPost.title}
@@ -172,7 +172,7 @@ export default function BlogPostsGrid({
                     href={post.href}
                     className="group flex flex-col w-full cursor-pointer overflow-hidden rounded-[16px] bg-[#050505] border border-white/5 hover:border-white/10 transition-colors"
                   >
-                    <div className="relative aspect-[16/11] w-full overflow-hidden shrink-0 border-b border-white/10">
+                    <div className="relative aspect-[1.91/1] w-full overflow-hidden shrink-0 border-b border-white/10">
                       <Image
                         src={post.imageUrl}
                         alt={post.title}

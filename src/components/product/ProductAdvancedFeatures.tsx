@@ -14,12 +14,13 @@ export default function ProductAdvancedFeatures({
     <section className="bg-[#050505] py-24 lg:py-32">
       <div className="mx-auto w-full max-w-[1200px] px-6">
         <div className="mb-20 flex flex-col items-center justify-center text-center">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 0.2, y: 0 }}
+            whileHover={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-montserrat text-[40px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[56px] lg:text-[80px]"
+            className="font-montserrat text-[40px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[56px] lg:text-[80px] cursor-default"
           >
             Advanced Features
           </motion.h2>
@@ -35,9 +36,8 @@ export default function ProductAdvancedFeatures({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-                className={`grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16 ${
-                  reverse ? "lg:[&>*:first-child]:order-2" : ""
-                }`}
+                className={`grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16 ${reverse ? "lg:[&>*:first-child]:order-2" : ""
+                  }`}
               >
                 {/* Image Container with Glow */}
                 <div className="relative group">
@@ -81,7 +81,7 @@ export default function ProductAdvancedFeatures({
                   {feat.showStoreBadges ? (
                     <div className="mt-10 flex flex-wrap items-center gap-4">
                       <a
-                        href="https://play.google.com/store"
+                        href="https://play.google.com/store/apps/details?id=com.elfaelectric.webapp "
                         target="_blank"
                         rel="noopener noreferrer"
                         className="relative h-[56px] w-[180px] transition-transform hover:scale-105"
@@ -95,7 +95,7 @@ export default function ProductAdvancedFeatures({
                         />
                       </a>
                       <a
-                        href="https://apps.apple.com"
+                        href="https://apps.apple.com/pk/app/elfa-electric/id6744618877 "
                         target="_blank"
                         rel="noopener noreferrer"
                         className="relative h-[56px] w-[180px] transition-transform hover:scale-105"

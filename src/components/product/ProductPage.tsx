@@ -35,7 +35,7 @@ export default function ProductPage({ product }: { product: Product }) {
       />
       <ReelsCarousel reels={dummyVideoLinks} />
       <Testimonials />
-      <AdventureCTA />
+      <AdventureCTA buyHref={product.buyHref} />
       
     </main>
   );

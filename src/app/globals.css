@@ -90,7 +90,8 @@
   }
   html, body {
     max-width: 100%;
-    overflow-x: hidden;
+    /* clip does not create a scroll container — sticky sidebars keep working */
+    overflow-x: clip;
   }
   body {
     @apply bg-background text-foreground;
@@ -103,7 +104,7 @@
 html {
   scroll-behavior: smooth;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -111,7 +112,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Smooth transitions + pointer on interactive elements */

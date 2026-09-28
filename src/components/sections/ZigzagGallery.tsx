@@ -179,107 +179,132 @@ export default function ZigzagGallery({
   const yEven = useTransform(smoothProgress, [0, 1], [0, -15]);
   const yOdd = useTransform(smoothProgress, [0, 1], [0, 15]);
 
+  const renderCard = (card: VideoCard, idx: number, isDesktop: boolean = false) => {
+    const isEven = idx % 2 === 0;
+    return (
+      <motion.div
+        key={card.id + (isDesktop ? "-desktop" : "-mobile")}
+        onClick={() => setActiveVideo(card.videoSrc)}
+        style={isDesktop ? { y: isEven ? yEven : yOdd } : {}}
+        className={`group relative shrink-0 overflow-hidden cursor-pointer rounded-2xl border border-neutral-800 ${
+          isDesktop
+            ? "w-[400px] h-[500px]"
+            : "w-[80vw] sm:w-[360px] h-[440px] sm:h-[500px] snap-center first:ml-6 last:mr-6"
+        }`}
+      >
+        {/* Thumbnail / gradient bg */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ background: card.thumbnail }}
+        >
+          {card.thumbnailUrl ? (
+            <img src={card.thumbnailUrl} alt="" className="h-full w-full object-cover" />
+          ) : card.videoSrc.includes("instagram.com") || card.videoSrc.includes("tiktok.com") ? (
+            <iframe
+              src={card.videoSrc}
+              className="pointer-events-none h-full w-full border-0 object-cover"
+              allow="autoplay; encrypted-media; fullscreen"
+              tabIndex={-1}
+            />
+          ) : null}
+        </div>
+
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/10" />
+
+        {/* Play button */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#00E573]/90 shadow-[0_0_40px_rgba(0,229,115,0.5)] transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_60px_rgba(0,229,115,0.7)]">
+            <Play className="ml-1 h-6 w-6 fill-zinc-950 text-zinc-950" />
+          </div>
+        </div>
+
+        {/* Duration badge */}
+        <div className="absolute top-4 right-4 rounded-full bg-black/60 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+          {card.duration}
+        </div>
+
+        {/* Card number */}
+        <div className="absolute top-4 left-4 font-black text-[64px] leading-none text-white/5 select-none">
+          {String(idx + 1).padStart(2, "0")}
+        </div>
+
+        {/* Bottom info */}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-5 pb-5 pt-14">
+          <h3 className="font-montserrat font-bold text-[16px] leading-tight text-white mb-2">
+            {card.title}
+          </h3>
+          <div className="flex items-center gap-2">
+            <div className="h-7 w-7 rounded-full bg-[#00E573]/20 flex items-center justify-center border border-[#00E573]/30">
+              <span className="text-[10px] font-bold text-[#00E573]">
+                {card.customer.charAt(0)}
+              </span>
+            </div>
+            <div className="font-roboto">
+              <p className="text-[12px] font-semibold text-white">
+                {card.customer}
+              </p>
+              <p className="text-[10px] text-white/50">
+                {card.city} · {card.model}
+              </p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
+
   return (
-    <div ref={trackRef} className="relative h-[320vh]  mt-8 mb-48 ">
-      {/* Sticky viewport */}
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {/* ── Section header ── */}
-        <div className="flex items-start justify-between px-8 pt-24 pb-0 sm:px-12 lg:px-20">
-          <h2
-            className=" max-w-[520px] font-black leading-[0.92] tracking-tighter text-white"
-            style={{ fontSize: "clamp(1.4rem, 4vw, 4.5rem)" }}
+    <>
+      {/* DESKTOP VIEW (gsap/framer scroll-tied) */}
+      <div ref={trackRef} className="hidden lg:block relative h-[320vh] mt-8 mb-48">
+        <div className="sticky top-0 h-screen overflow-hidden">
+          <div className="flex items-start justify-between px-8 pt-24 pb-0 sm:px-12 lg:px-20">
+            <h2
+              className="max-w-[520px] font-black leading-[0.92] tracking-tighter text-white"
+              style={{ fontSize: "clamp(1.4rem, 4vw, 4.5rem)" }}
+            >
+              {headingLine1}
+              <br />
+              <span className="text-[#00E573]">{headingLine2}</span>
+            </h2>
+            <p className="max-w-[280px] pt-3 text-[15px] leading-relaxed text-white/50 block">
+              {subtitle}
+            </p>
+          </div>
+
+          <motion.div
+            ref={scrollContainerRef}
+            style={{ x }}
+            className="mt-10 flex items-center gap-6 px-8 sm:px-12 lg:px-20 will-change-transform w-max"
           >
+            {displayCards.map((card, idx) => renderCard(card, idx, true))}
+          </motion.div>
+
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30">
+            <div className="h-10 w-px bg-gradient-to-b from-transparent to-white/20" />
+            <span className="text-[10px] uppercase tracking-[3px]">Scroll</span>
+          </div>
+        </div>
+      </div>
+
+      {/* MOBILE/TABLET VIEW (native horizontal scroll) */}
+      <div className="block lg:hidden relative pt-24 mt-8 mb-24 overflow-hidden">
+        <div className="px-6 mb-8 text-left">
+          <h2 className="font-black leading-[0.92] tracking-tighter text-white text-[40px] sm:text-[48px]">
             {headingLine1}
             <br />
             <span className="text-[#00E573]">{headingLine2}</span>
           </h2>
-          <p className=" hidden max-w-[280px] pt-3 text-[15px] leading-relaxed text-white/50 lg:block">
+          <p className="mt-4 text-[15px] leading-relaxed text-white/50 max-w-sm">
             {subtitle}
           </p>
         </div>
 
-        {/* ── Horizontal scroll track ── */}
-        <motion.div
-          ref={scrollContainerRef}
-          style={{ x }}
-          className="mt-10 flex items-center gap-6 px-8 sm:px-12 lg:px-20 will-change-transform w-max"
-        >
-          {displayCards.map((card, idx) => {
-            const isEven = idx % 2 === 0;
-            return (
-              <motion.div
-                key={card.id}
-                onClick={() => setActiveVideo(card.videoSrc)}
-                style={{ y: isEven ? yEven : yOdd }}
-                className="group relative shrink-0 w-[300px] sm:w-[360px] lg:w-[400px] h-[440px] sm:h-[500px] rounded-2xl border border-neutral-800 overflow-hidden cursor-pointer"
-              >
-                {/* Thumbnail / gradient bg */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ background: card.thumbnail }}
-                >
-                  {card.thumbnailUrl ? (
-                    <img src={card.thumbnailUrl} alt="" className="h-full w-full object-cover" />
-                  ) : card.videoSrc.includes("instagram.com") || card.videoSrc.includes("tiktok.com") ? (
-                    <iframe
-                      src={card.videoSrc}
-                      className="pointer-events-none h-full w-full border-0 object-cover"
-                      allow="autoplay; encrypted-media; fullscreen"
-                      tabIndex={-1}
-                    />
-                  ) : null}
-                </div>
-
-                {/* Dark overlay */}
-                <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/10" />
-
-                {/* Play button */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#00E573]/90 shadow-[0_0_40px_rgba(0,229,115,0.5)] transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_60px_rgba(0,229,115,0.7)]">
-                    <Play className="ml-1 h-6 w-6 fill-zinc-950 text-zinc-950" />
-                  </div>
-                </div>
-
-                {/* Duration badge */}
-                <div className="absolute top-4 right-4 rounded-full bg-black/60 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
-                  {card.duration}
-                </div>
-
-                {/* Card number */}
-                <div className="absolute top-4 left-4 font-black text-[64px] leading-none text-white/5 select-none">
-                  {String(idx + 1).padStart(2, "0")}
-                </div>
-
-                {/* Bottom info */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-5 pb-5 pt-14">
-                  <h3 className="font-montserrat font-bold text-[16px] leading-tight text-white mb-2">
-                    {card.title}
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <div className="h-7 w-7 rounded-full bg-[#00E573]/20 flex items-center justify-center border border-[#00E573]/30">
-                      <span className="text-[10px] font-bold text-[#00E573]">
-                        {card.customer.charAt(0)}
-                      </span>
-                    </div>
-                    <div className="font-roboto">
-                      <p className="text-[12px] font-semibold text-white">
-                        {card.customer}
-                      </p>
-                      <p className="text-[10px] text-white/50">
-                        {card.city} · {card.model}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30">
-          <div className="h-10 w-px bg-gradient-to-b from-transparent to-white/20" />
-          <span className="text-[10px] uppercase tracking-[3px]">Scroll</span>
+        {/* Native scroll container */}
+        <div className="flex items-center gap-4 overflow-x-auto snap-x snap-mandatory pb-8 no-scrollbar w-full">
+          {displayCards.map((card, idx) => renderCard(card, idx, false))}
         </div>
       </div>
 
@@ -322,6 +347,6 @@ export default function ZigzagGallery({
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }
