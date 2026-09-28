@@ -78,7 +78,7 @@ export default function ProductHero({ product }: { product: Product }) {
           </div>
 
           {/* Specs (Horizontal on mobile, Vertical on lg/xl) */}
-          <div className="flex flex-wrap items-center gap-6 sm:gap-10 lg:absolute lg:right-0 lg:top-[45%] lg:-translate-y-1/2 lg:flex-col lg:items-start lg:gap-6 xl:gap-10 lg:pr-2 xl:pr-0 z-30 mt-6 lg:mt-0">
+          <div className="flex flex-wrap items-center gap-6 sm:gap-10 lg:absolute lg:right-0 lg:top-[45%] lg:-translate-y-1/2 lg:flex-col lg:items-start lg:gap-6 xl:gap-8 lg:pr-4 xl:pr-0 z-30 mt-6 lg:mt-0">
             {product.heroSpecs.map((spec, i) => (
               <motion.div
                 key={spec.label}
@@ -87,16 +87,16 @@ export default function ProductHero({ product }: { product: Product }) {
                 transition={{ duration: 0.8, delay: 0.5 + i * 0.15, ease }}
                 className="flex items-center gap-4 lg:flex-col lg:items-end lg:text-right"
               >
-                <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/5 lg:h-14 lg:w-14 xl:h-20 xl:w-20 lg:border lg:border-white/10 lg:bg-[#111]/60 lg:backdrop-blur-md">
-                  <div className="relative h-6 w-6 lg:h-7 lg:w-7 xl:h-10 xl:w-10">
+                <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/5 lg:h-14 lg:w-14 xl:h-16 xl:w-16 2xl:h-20 2xl:w-20 lg:border lg:border-white/10 lg:bg-[#111]/60 lg:backdrop-blur-md">
+                  <div className="relative h-6 w-6 lg:h-7 lg:w-7 xl:h-8 xl:w-8 2xl:h-10 2xl:w-10">
                     <Image src={spec.icon} alt="" fill className="object-contain opacity-80" sizes="40px" />
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-montserrat text-[15px] font-bold uppercase tracking-wide text-white lg:text-[14px] xl:text-[20px]">
+                  <span className="font-montserrat text-[15px] font-bold uppercase tracking-wide text-white lg:text-[14px] xl:text-[16px] 2xl:text-[20px]">
                     {spec.label}
                   </span>
-                  <span className="font-roboto text-[12px] font-medium text-brand-primary lg:text-[11px] xl:text-[15px]">
+                  <span className="font-roboto text-[12px] font-medium text-brand-primary lg:text-[11px] xl:text-[13px] 2xl:text-[15px]">
                     {spec.value}
                   </span>
                 </div>
@@ -110,9 +110,9 @@ export default function ProductHero({ product }: { product: Product }) {
           initial={{ opacity: 0, x: -50, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.2, ease }}
-          className="relative flex-1 w-full min-h-[300px] my-6 z-[5] pointer-events-none lg:absolute lg:inset-0 lg:my-0 lg:pb-[140px] lg:pt-[120px] lg:translate-x-0 xl:translate-x-[5%] lg:flex lg:items-center lg:justify-center"
+          className="relative flex-1 w-full min-h-[300px] my-6 z-[5] pointer-events-none lg:absolute lg:inset-0 lg:my-0 lg:pb-[140px] lg:pt-[120px] lg:flex lg:items-center lg:justify-center 2xl:translate-x-[5%]"
         >
-          <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[80%] xl:h-full max-w-[900px] lg:max-w-[500px] xl:max-w-[1000px] scale-100 xl:scale-[1.1] lg:ml-8 xl:ml-0">
+          <div className="relative w-full h-[300px] sm:h-[400px] lg:h-full lg:max-w-[55vw] 2xl:max-w-[900px] lg:scale-[1.15] 2xl:scale-[1.2]">
             <Image
               src={product.heroImage}
               alt={product.name}
