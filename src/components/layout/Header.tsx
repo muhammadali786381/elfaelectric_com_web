@@ -123,8 +123,8 @@ export default function Header() {
     setIsMobileProductsOpen(false);
   };
 
-  const visibleLinks = isScrolled ? navLinks.slice(0, 4) : navLinks;
-  const moreLinks = isScrolled ? navLinks.slice(4) : [];
+  const visibleLinks = isScrolled ? navLinks.slice(0, 4) : navLinks.slice(0, 5);
+  const moreLinks = isScrolled ? navLinks.slice(4) : navLinks.slice(5);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex w-full justify-center pointer-events-none">

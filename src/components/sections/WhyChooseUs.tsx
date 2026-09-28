@@ -89,16 +89,17 @@ export default function WhyChooseUs() {
             <p className="font-roboto mb-3 text-[12px] font-semibold uppercase tracking-[2px] text-brand-primary">
               Built Different
             </p>
-            {/* <h2 className="font-montserrat text-[28px] font-bold text-white sm:text-[36px] lg:text-[44px]">
-              Why Choose <span className="text-brand-primary">ELFA?</span>
-            </h2> */}
+            <h2 className="font-montserrat text-[28px] font-bold text-white sm:text-[36px] lg:text-[44px]">
+              The Smarter <span className="text-brand-primary">Way to Ride</span>
+
+            </h2>
           </div>
         </FadeIn>
 
         {/* Why Choose Us Grid */}
         <FadeIn variant="fadeIn" speed="slow">
           <div className="mb-12">
-            <h3 className="font-montserrat mb-8 text-center text-[18px] font-bold uppercase tracking-[2px] text-brand-primary sm:text-left">
+            <h3 className="font-montserrat mb-8  text-[18px] font-bold uppercase tracking-[2px] text-brand-primary text-left">
               Why Choose Us
             </h3>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
@@ -115,7 +116,7 @@ export default function WhyChooseUs() {
         {/* What Sets Us Apart Grid */}
         <FadeIn variant="fadeIn" speed="slow">
           <div>
-            <h3 className="font-montserrat mb-8 text-center text-[18px] font-bold uppercase tracking-[2px] text-brand-primary sm:text-left">
+            <h3 className="font-montserrat mb-8  text-[18px] font-bold uppercase tracking-[2px] text-brand-primary text-left">
               What Sets Us Apart
             </h3>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">

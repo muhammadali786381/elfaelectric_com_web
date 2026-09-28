@@ -61,13 +61,13 @@ export default function ProductShowcase() {
                     src="/assets/images/hero5.jpeg"
                     alt=""
                     fill
-                    className="object-cover object-center scale-[1.2]"
+                    className="object-cover grayscale object-center scale-[1.2]"
                     sizes="(min-width: 640px) 440px, 100vw"
                   />
                   {/* Heavy dark overlay so text and product pop */}
                   <div className="absolute inset-0 bg-black/70 mix-blend-multiply" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                  
+
                   <Image
                     src={product.image}
                     alt={`${product.nameHighlight}${product.nameRest}`}

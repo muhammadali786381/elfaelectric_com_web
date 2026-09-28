@@ -43,8 +43,8 @@ export default function Hero() {
           THE NEW EV-125 BIKE
         </motion.div>
 
-        <h1 className="font-montserrat mb-4 flex flex-col text-[40px] font-black leading-[0.95] tracking-tight text-white sm:text-[50px] lg:text-[70px] xl:text-[80px]">
-          <div className="block">
+        <h1 className="font-montserrat mb-4 flex flex-col text-[36px] min-[400px]:text-[40px] font-black leading-[0.95] tracking-tight text-white sm:text-[50px] lg:text-[70px] xl:text-[80px]">
+          <div className="block whitespace-nowrap">
             <BreathingText
               staggerDuration={0.08}
               fromFontVariationSettings="'wght' 100, 'slnt' 0"
@@ -53,7 +53,7 @@ export default function Hero() {
               MOVE INTO
             </BreathingText>
           </div>
-          <div className="block text-brand-primary">
+          <div className="block whitespace-nowrap text-brand-primary">
             <BreathingText
               staggerDuration={0.08}
               fromFontVariationSettings="'wght' 100, 'slnt' 0"

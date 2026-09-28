@@ -135,15 +135,15 @@ export default function Testimonials() {
             >
               {testimonials.map((t) => (
                 <SwiperSlide key={t.name}>
-                  <div className="grid h-[600px] grid-cols-1 overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] sm:h-[340px] sm:grid-cols-[260px_1fr] lg:h-[360px] lg:grid-cols-[320px_1fr]">
+                  <div className="grid h-auto min-h-[500px] grid-cols-1 overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] sm:h-[340px] sm:min-h-0 sm:grid-cols-[260px_1fr] lg:h-[360px] lg:grid-cols-[320px_1fr]">
 
                     {/* Photo panel */}
-                    <div className="relative h-[260px] w-full sm:h-full">
+                    <div className="relative h-[360px] w-full sm:h-full">
                       <Image
                         src={t.img}
                         alt={t.name}
                         fill
-                        className="object-cover object-top"
+                        className="object-cover object-center"
                         sizes="(max-width: 640px) 100vw, 320px"
                       />
                       {/* Gradient fade right on desktop */}
