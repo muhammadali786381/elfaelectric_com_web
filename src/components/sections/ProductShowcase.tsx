@@ -73,7 +73,7 @@ export default function ProductShowcase() {
                     alt={`${product.nameHighlight}${product.nameRest}`}
                     width={330}
                     height={312}
-                    className="absolute inset-0 m-auto h-[85%] w-[85%] object-contain drop-shadow-2xl"
+                    className="absolute inset-x-0 bottom-0 mx-auto h-[95%] w-[95%] sm:inset-0 sm:m-auto sm:h-[85%] sm:w-[85%] object-contain object-bottom sm:object-center drop-shadow-2xl"
                   />
                 </div>
 

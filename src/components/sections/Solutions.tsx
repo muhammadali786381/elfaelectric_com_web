@@ -54,7 +54,7 @@ export default function Solutions() {
           </div>
         </div>
 
-        <div className="mt-12 flex justify-center lg:hidden">
+        <div className="mt-12 flex justify-center lg:hidden -mb-16">
           <Image
             src="/assets/images/solutions.webp"
             alt="ELFA EV-1 Scooty"
