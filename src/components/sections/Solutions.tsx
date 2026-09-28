@@ -3,7 +3,7 @@ import { FadeIn } from "@/components/motion/FadeIn";
 
 const solutions = [
   {
-    title: "Lithium iron phosphate battery",
+    title: "Lithium Iron Phosphate Battery",
     desc: "Tested and proven technology with fast charging and exceptional durability, offering higher capacity and long-lasting performance.",
   },
   {
@@ -35,20 +35,20 @@ export default function Solutions() {
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-container flex-col justify-center px-4 sm:px-6">
-        <div className="w-full lg:max-w-[70%]">
+        <div className="w-full lg:max-w-[75%] xl:max-w-[70%]">
           <FadeIn variant="fadeInUp" speed="slow">
             <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-text-inverse sm:text-[41px]">
               Solutions We Offer
             </h2>
           </FadeIn>
 
-          <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
             {solutions.map((s) => (
-              <div key={s.title}>
+              <div key={s.title} className="max-w-[400px]">
                 <h3 className="font-montserrat mb-2 text-[19px] font-bold text-text-inverse sm:text-[20px]">
                   {s.title}
                 </h3>
-                <p className="font-roboto text-[15px] leading-relaxed text-text-inverse/75">{s.desc}</p>
+                <p className="font-roboto text-[15px] leading-relaxed text-text-inverse/75 lg:max-w-[260px] xl:max-w-[320px]">{s.desc}</p>
               </div>
             ))}
           </div>
