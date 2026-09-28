@@ -106,6 +106,8 @@ export default function Header() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { scrollY } = useScroll();
 
+  const [maxVisible, setMaxVisible] = useState(5);
+
   useEffect(() => {
     if (isSearchOpen) {
       setTimeout(() => searchInputRef.current?.focus(), 100);
@@ -113,6 +115,21 @@ export default function Header() {
       setSearchQuery("");
     }
   }, [isSearchOpen]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1536) {
+        setMaxVisible(navLinks.length);
+      } else if (window.innerWidth >= 1280) {
+        setMaxVisible(7);
+      } else {
+        setMaxVisible(5);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
@@ -123,8 +140,9 @@ export default function Header() {
     setIsMobileProductsOpen(false);
   };
 
-  const visibleLinks = isScrolled ? navLinks.slice(0, 4) : navLinks.slice(0, 5);
-  const moreLinks = isScrolled ? navLinks.slice(4) : navLinks.slice(5);
+  const currentMax = isScrolled ? 5 : maxVisible; // when scrolled, pill is narrow, so keep it to 5
+  const visibleLinks = navLinks.slice(0, currentMax);
+  const moreLinks = navLinks.slice(currentMax);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex w-full justify-center pointer-events-none">
@@ -351,7 +369,7 @@ export default function Header() {
             animate={{ opacity: 1, y: "0%" }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[100] flex flex-col overflow-y-auto bg-[#00E573] p-6 lg:hidden pointer-events-auto"
+            className="fixed inset-0 z-[100] flex flex-col overflow-y-auto bg-[#00E573] p-6 xl:hidden pointer-events-auto"
           >
             {/* Top bar inside menu */}
             <div className="flex items-center justify-between pb-8 pt-4">
