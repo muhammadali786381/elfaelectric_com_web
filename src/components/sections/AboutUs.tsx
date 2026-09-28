@@ -18,7 +18,7 @@ export default function AboutUs() {
                 src="/assets/images/ne-a.webp"
                 alt="ELFA Electric Solutions"
                 fill
-                className="object-cover object-center"
+                className="object-contain object-center scale-[1.1] sm:scale-100"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
               {/* Dark gradient overlay */}

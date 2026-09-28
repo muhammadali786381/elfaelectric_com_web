@@ -171,16 +171,16 @@ export default function SavingsCalculator({
         )}
 
         <div className="flex w-full flex-col gap-2 rounded-[2rem] bg-white/[0.02] p-1 shadow-lg border border-white/[0.06] lg:flex-row backdrop-blur-md">
-          <div className="flex flex-1 flex-col gap-12 p-8 lg:p-10">
-            <div className="flex flex-col gap-10">
+          <div className="flex flex-1 flex-col gap-8 lg:gap-12 p-6 sm:p-8 lg:p-10">
+            <div className="flex flex-col gap-8 lg:gap-10">
               <p className="font-roboto text-[16px] leading-relaxed text-white/50">
                 Adjust your daily routine to see how much you could save with an electric bike compared to petrol.
               </p>
 
-              <div className="flex flex-col gap-8">
-                <div className="font-montserrat flex items-center justify-center gap-2 text-5xl font-bold tracking-tight text-white">
+              <div className="flex flex-col gap-6 lg:gap-8">
+                <div className="font-montserrat flex items-center justify-center gap-2 text-4xl sm:text-5xl font-bold tracking-tight text-white">
                   <span>{dailyKm}</span>
-                  <span className="text-white/40 text-2xl">km / day</span>
+                  <span className="text-white/40 text-xl sm:text-2xl">km / day</span>
                 </div>
                 <SliderPattern
                   value={dailyKm}
@@ -191,56 +191,58 @@ export default function SavingsCalculator({
 
             <div className="h-px w-full bg-white/[0.06]" />
 
-            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-              <p className="font-roboto text-[14px] font-medium text-white/80">
-                Average petrol price per litre?
-              </p>
-              <InputGroup className="h-11 w-fit border-white/10 bg-white/5 text-white shadow-none">
-                <InputGroupAddon>
-                  <InputGroupText className="font-medium text-white/40">
-                    Rs
-                  </InputGroupText>
-                </InputGroupAddon>
-                <InputGroupInput
-                  type="number"
-                  value={petrolPrice}
-                  onChange={(e) => setPetrolPrice(Number(e.target.value) || 0)}
-                  min={0}
-                  aria-label="Petrol Price"
-                  className="w-16 text-[16px] font-montserrat font-bold tracking-tight focus-visible:ring-brand-primary/50"
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText className="text-[13px] font-medium text-white/40">
-                    / Ltr
-                  </InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </div>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="font-roboto text-[14px] font-medium text-white/80">
+                  Average petrol price per litre?
+                </p>
+                <InputGroup className="h-11 w-fit border-white/10 bg-white/5 text-white shadow-none">
+                  <InputGroupAddon>
+                    <InputGroupText className="font-medium text-white/40">
+                      Rs
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    type="number"
+                    value={petrolPrice}
+                    onChange={(e) => setPetrolPrice(Number(e.target.value) || 0)}
+                    min={0}
+                    aria-label="Petrol Price"
+                    className="w-16 text-[16px] font-montserrat font-bold tracking-tight focus-visible:ring-brand-primary/50"
+                  />
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText className="text-[13px] font-medium text-white/40">
+                      / Ltr
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+              </div>
 
-            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-              <p className="font-roboto text-[14px] font-medium text-white/80">
-                Average electricity cost per unit?
-              </p>
-              <InputGroup className="h-11 w-fit border-white/10 bg-white/5 text-white shadow-none">
-                <InputGroupAddon>
-                  <InputGroupText className="font-medium text-white/40">
-                    Rs
-                  </InputGroupText>
-                </InputGroupAddon>
-                <InputGroupInput
-                  type="number"
-                  value={elecCost}
-                  onChange={(e) => setElecCost(Number(e.target.value) || 0)}
-                  min={0}
-                  aria-label="Electricity Cost"
-                  className="w-16 text-[16px] font-montserrat font-bold tracking-tight focus-visible:ring-brand-primary/50"
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText className="text-[13px] font-medium text-white/40">
-                    / Unit
-                  </InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
+              <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="font-roboto text-[14px] font-medium text-white/80">
+                  Average electricity cost per unit?
+                </p>
+                <InputGroup className="h-11 w-fit border-white/10 bg-white/5 text-white shadow-none">
+                  <InputGroupAddon>
+                    <InputGroupText className="font-medium text-white/40">
+                      Rs
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    type="number"
+                    value={elecCost}
+                    onChange={(e) => setElecCost(Number(e.target.value) || 0)}
+                    min={0}
+                    aria-label="Electricity Cost"
+                    className="w-16 text-[16px] font-montserrat font-bold tracking-tight focus-visible:ring-brand-primary/50"
+                  />
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText className="text-[13px] font-medium text-white/40">
+                      / Unit
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+              </div>
             </div>
           </div>
 
