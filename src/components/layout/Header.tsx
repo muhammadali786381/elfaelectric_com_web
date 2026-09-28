@@ -140,7 +140,7 @@ export default function Header() {
     setIsMobileProductsOpen(false);
   };
 
-  const currentMax = isScrolled ? 5 : maxVisible; // when scrolled, pill is narrow, so keep it to 5
+  const currentMax = isScrolled ? 3 : maxVisible; // when scrolled, pill is narrow, keep it to 3 links to prevent overlap
   const visibleLinks = navLinks.slice(0, currentMax);
   const moreLinks = navLinks.slice(currentMax);
 
