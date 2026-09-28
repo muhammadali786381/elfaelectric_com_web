@@ -83,7 +83,7 @@ export default function ScootyHero({ product }: { product: Product }) {
             initial={{ opacity: 0, scale: 0.8, x: -150 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.2, ease }}
-            className="relative flex-1 w-full lg:w-[55%] xl:w-[60%] max-w-[700px] lg:max-w-none min-h-[300px] lg:min-h-[500px] z-10 scale-[1.1]  lg:-mr-10 xl:-mr-20"
+            className="relative flex-1 w-full lg:w-[55%] xl:w-[60%] max-w-[700px] lg:max-w-none mx-auto lg:mx-0 min-h-[300px] lg:min-h-[500px] z-10 scale-[1.1] lg:-mr-10 xl:-mr-20"
           >
             {/* Decorative glow behind scooty */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-brand-primary/15 blur-[100px] rounded-full pointer-events-none" />
