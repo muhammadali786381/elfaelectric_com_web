@@ -77,19 +77,19 @@ export default function Hero() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration, delay: 0.4, ease }}
-          className="flex flex-wrap items-center gap-3 sm:gap-4"
+          className="flex w-full flex-col sm:w-auto sm:flex-row sm:items-center gap-3 sm:gap-4 max-w-[300px] sm:max-w-none"
         >
           <FlipButton
             href="/ev-125"
             variant="primary"
-            className="rounded-none h-12 sm:h-[50px] px-6 sm:px-8 text-[13px]"
+            className="rounded-none h-12 sm:h-[50px] px-6 sm:px-8 text-[13px] w-full sm:w-auto"
           >
             Explore Bikes
           </FlipButton>
           <FlipButton
             href="/book-a-test-ride"
             variant="outline"
-            className="rounded-none h-12 sm:h-[50px] px-6 sm:px-8 text-[13px] border-white/20 text-white hover:border-brand-primary hover:bg-transparent hover:text-brand-primary"
+            className="rounded-none h-12 sm:h-[50px] px-6 sm:px-8 text-[13px] border-white/20 text-white hover:border-brand-primary hover:bg-transparent hover:text-brand-primary w-full sm:w-auto"
           >
             Book a test ride
           </FlipButton>
