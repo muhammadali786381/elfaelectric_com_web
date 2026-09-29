@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { X } from "lucide-react";
+import Script from "next/script";
 
 /** Digistartup form from live Elementor popup #1425 on /our-dealers/ */
 export const DEALERSHIP_FORM_SRC =
@@ -64,13 +65,25 @@ export default function DealershipApplyModal({ open, onClose }: Props) {
 
         <div className="w-full" style={{ height: FORM_HEIGHT }}>
           <iframe
-            src={DEALERSHIP_FORM_SRC}
-            title="Apply for Dealership"
-            className="h-full w-full border-0"
-            loading="lazy"
+            src="https://app.digistartup.io/widget/form/0Q8IEKRUvKZhcX8b6jxl"
+            style={{ width: "100%", height: "100%", border: "none", borderRadius: "0px" }}
             id="inline-0Q8IEKRUvKZhcX8b6jxl"
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-form-name="Apply for Dealership"
+            data-height="404"
+            data-layout-iframe-id="inline-0Q8IEKRUvKZhcX8b6jxl"
             data-form-id="0Q8IEKRUvKZhcX8b6jxl"
+            data-cookie-consent="true"
+            data-cookie-consent-provider="auto"
+            title="Apply for Dealership"
           />
+          <Script src="https://app.digistartup.io/js/form_embed.js" strategy="afterInteractive" />
         </div>
       </div>
     </div>

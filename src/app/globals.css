@@ -319,3 +319,15 @@ summary {
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+/* Digistartup / GHL Form Scrollbar Fix */
+iframe[src*="digistartup.io"] {
+  overflow: hidden !important;
+}
+iframe[src*="digistartup.io"]::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.ghl-form-wrapper {
+  overflow: hidden !important;
+}
