@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import Script from "next/script";
 import SecondaryHero from "@/components/sections/SecondaryHero";
 
 import JoinRevolutionCTA from "@/components/sections/JoinRevolutionCTA";
@@ -180,12 +181,13 @@ export default function BookTestRidePage() {
           </FadeIn>
           <div className="w-full overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] p-2 sm:p-4">
             <iframe
-              src={BOOKING_IFRAME}
-              title="Book a test ride"
-              className="min-h-[800px] w-full border-0 rounded-xl bg-transparent"
-              loading="lazy"
-              allow="fullscreen"
+              src="https://app.digistartupgroup.com/widget/booking/f0FdDh2Z0n2Zam9VcR4t" 
+              style={{ width: "100%", height: "800px", border: "none", overflow: "hidden" }} 
+              scrolling="no" 
+              id="f0FdDh2Z0n2Zam9VcR4t"
+              className="bg-transparent rounded-xl w-full"
             />
+            <Script src="https://app.digistartupgroup.com/js/form_embed.js" strategy="afterInteractive" />
           </div>
         </div>
       </section>
@@ -212,7 +214,7 @@ export default function BookTestRidePage() {
         </div>
       </section>
 
-      <JoinRevolutionCTA />
+      <JoinRevolutionCTA secondaryButtonText="" />
       
     </main>
   );

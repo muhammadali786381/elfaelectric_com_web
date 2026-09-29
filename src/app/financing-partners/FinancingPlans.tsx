@@ -1,8 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { MapPin, Phone, Headphones, Mail } from "lucide-react";
+import Script from "next/script";
+import Image from "next/image";
+import { Check, MapPin, Phone, Headphones, Mail } from "lucide-react";
 import FlipButton from "@/components/ui/FlipButton";
+import { FadeIn } from "@/components/motion/FadeIn";
+import PaymentCalculator from "@/components/financing/PaymentCalculator";
 
 const SPARK =
   "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
@@ -293,10 +297,6 @@ const socialLinks = [
   },
 ];
 
-import { Check } from "lucide-react";
-import Image from "next/image";
-import { FadeIn } from "@/components/motion/FadeIn";
-
 function PlanCard({ plan }: { plan: Plan }) {
   return (
     <div
@@ -462,6 +462,8 @@ export default function FinancingPlans() {
         </div>
       </section>
 
+      <PaymentCalculator />
+
       <section id="get-started" className="bg-[#050505] pb-14 pt-16 lg:pb-24 lg:pt-20">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
           <h2 className="font-montserrat mb-4 text-center text-[36px] font-black italic tracking-tighter text-brand-primary sm:text-[48px] lg:text-[60px]">
@@ -478,79 +480,29 @@ export default function FinancingPlans() {
             {/* Subtle top ambient glow line */}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/30 to-transparent" />
 
-            <form
-              className="flex flex-col gap-4 relative z-10"
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input type="text" name="name" placeholder="Name*" required className={inputClass} />
-                <input
-                  type="text"
-                  name="surname"
-                  placeholder="Surname*"
-                  required
-                  className={inputClass}
-                />
-              </div>
-
-              <div className="relative">
-                <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[16px]">
-                  🇵🇰
-                </span>
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone*"
-                  required
-                  className={`${inputClass} pl-12`}
-                />
-              </div>
-              <div className="relative">
-                <Mail className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/30" />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  className={`${inputClass} pl-12`}
-                />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input type="text" name="city" placeholder="City*" required className={inputClass} />
-                <input
-                  type="text"
-                  name="cnic"
-                  placeholder="Enter 13-digit CNIC*"
-                  required
-                  maxLength={13}
-                  className={inputClass}
-                />
-              </div>
-              <select
-                name="partner"
-                value={partner}
-                onChange={(e) => setPartner(e.target.value)}
-                required
-                className={inputClass}
-              >
-                <option value="" disabled>
-                  Our finance partners*
-                </option>
-                {PROVIDERS.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.label}
-                  </option>
-                ))}
-              </select>
-              <FlipButton
-                type="submit"
-                variant="primary"
-                className="w-full mt-4 rounded-xl h-[56px] text-[16px] font-bold shadow-[0_0_20px_rgba(0,200,83,0.3)] hover:shadow-[0_0_30px_rgba(0,200,83,0.5)] transition-all"
-              >
-                Submit Now
-              </FlipButton>
-            </form>
+            <div className="w-full relative z-10  " style={{ height: "100%" }}>
+              <iframe
+                src="https://app.digistartup.io/widget/form/byOsisFes6j0HczrDuIq"
+                style={{ width: "100%", height: "100%", border: "none", borderRadius: "0px", overflow: "hidden" }}
+                scrolling="no"
+                id="inline-byOsisFes6j0HczrDuIq"
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-trigger-value=""
+                data-activation-type="alwaysActivated"
+                data-activation-value=""
+                data-deactivation-type="neverDeactivate"
+                data-deactivation-value=""
+                data-form-name="Installment Plan | EV125"
+                data-height="967"
+                data-layout-iframe-id="inline-byOsisFes6j0HczrDuIq"
+                data-form-id="byOsisFes6j0HczrDuIq"
+                data-cookie-consent="true"
+                data-cookie-consent-provider="auto"
+                title="Installment Plan | EV125"
+              />
+              <Script src="https://app.digistartup.io/js/form_embed.js" strategy="afterInteractive" />
+            </div>
 
             <div className="flex flex-col justify-center relative z-10 lg:pl-10 lg:border-l lg:border-white/10">
               <h3 className="font-montserrat mb-8 text-[24px] font-bold tracking-tight text-white sm:text-[32px]">

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import PageHero from "@/components/sections/PageHero";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 
 import FinancingPlans from "@/app/financing-partners/FinancingPlans";
 
@@ -13,25 +13,17 @@ export const metadata: Metadata = {
 export default function InstallmentPlansPage() {
   return (
     <>
-            <main className="flex-1">
-        <PageHero
-          title={
-            <>
-              Installment
-              <br />
-              Plans
-            </>
-          }
-          breadcrumb="Installment Plans"
-          withBikes
-          xlTitle
-          backgroundSrc="/assets/images/blog-hero-bg.jpg"
-          bikesSrc="/assets/images/blog-page.png"
+      <main className="flex-1 bg-bg-primary overflow-hidden">
+        <SecondaryHero 
+          titleLine1="Installment"
+          titleLine2="Plans"
+          description="Explore our flexible installment plans tailored to make owning an ELFA electric bike easy and affordable."
+          imageSrc="/assets/images/hero4.jpeg"
+          imageAlt="Installment Plans"
         />
 
         <FinancingPlans />
-        
       </main>
-          </>
+    </>
   );
 }

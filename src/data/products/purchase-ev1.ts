@@ -23,7 +23,7 @@ export const purchaseEv1: ProductPurchase = {
       image: `${P}/silver.png`,
     },
   ],
-  installmentHref: "/installment-plans",
+  installmentHref: "/scooty-instalment",
   buyHref: "/contact-us",
   features: [
     {

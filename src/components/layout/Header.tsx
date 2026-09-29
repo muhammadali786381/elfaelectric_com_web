@@ -14,8 +14,8 @@ const navLinks = [
     href: "#",
     hasDropdown: true,
     dropdown: [
-      { label: "EV-125 BIKE", href: "/ev-125" },
-      { label: "EV-1 Scooty", href: "/scooty-ev-1" },
+      { label: "EV-125 BIKE", href: "/ev-125", icon: "/bike1.png" },
+      { label: "EV-1 Scooty", href: "/scooty-ev-1", icon: "/scooty1.png" },
     ],
   },
   { label: "Dealers", href: "/our-dealers" },
@@ -140,53 +140,20 @@ export default function Header() {
     setIsMobileProductsOpen(false);
   };
 
-  const currentMax = isScrolled ? 3 : maxVisible; // when scrolled, pill is narrow, keep it to 3 links to prevent overlap
+  const currentMax = isScrolled ? 3 : maxVisible;
   const visibleLinks = navLinks.slice(0, currentMax);
   const moreLinks = navLinks.slice(currentMax);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex w-full justify-center pointer-events-none">
-      <motion.div
-        layout
-        initial={false}
-        animate={{
-          width: isScrolled ? "min(1000px, calc(100% - 32px))" : "100%",
-          maxWidth: isScrolled ? "1000px" : "1600px",
-          height: isScrolled ? "72px" : "96px",
-          borderRadius: isScrolled ? "999px" : "0px",
-          marginTop: isScrolled ? "16px" : "0px",
-          backgroundColor: isScrolled ? "rgba(18, 18, 18, 0)" : "rgba(0, 0, 0, 0)",
-          borderColor: isScrolled ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0)",
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="relative flex items-center justify-between pointer-events-auto px-4 sm:px-6 lg:px-8"
-        style={{
-          borderStyle: "solid",
-          borderWidth: "1px",
-        }}
+    <header className="fixed inset-x-0 top-0 z-50 flex w-full justify-center pointer-events-none px-3 sm:px-6">
+      <div
+        className={`relative flex items-center justify-between pointer-events-auto transition-all duration-300 ease-out ${
+          isScrolled
+            ? "w-full max-w-[1000px] h-14 sm:h-16 xl:h-[72px] mt-3 sm:mt-4 rounded-full border border-white/12 bg-[#0a0a0c]/80 backdrop-blur-2xl shadow-[0_16px_40px_rgba(0,0,0,0.5)] px-4 sm:px-6 xl:px-6"
+            : "w-full max-w-[1000px] xl:max-w-[1600px] h-14 sm:h-16 xl:h-[96px] mt-3 sm:mt-4 xl:mt-0 rounded-full xl:rounded-none border border-white/12 xl:border-transparent bg-[#0a0a0c]/80 xl:bg-transparent backdrop-blur-2xl xl:backdrop-blur-none shadow-[0_16px_40px_rgba(0,0,0,0.5)] xl:shadow-none px-4 sm:px-6 xl:px-8"
+        }`}
       >
-        {/* Glass pill background - only when scrolled */}
-        <AnimatePresence>
-          {isScrolled && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-full"
-              style={{
-                backdropFilter: "blur(40px) saturate(200%)",
-                WebkitBackdropFilter: "blur(40px) saturate(200%)",
-                backgroundColor: "rgba(10, 10, 12, 0.4)",
-                boxShadow:
-                  "inset 0 1px 1px rgba(255,255,255,0.15), inset 0 -1px 1px rgba(0,0,0,0.5), 0 16px 40px rgba(0,0,0,0.5)",
-                border: "1px solid rgba(255,255,255,0.12)",
-              }}
-            />
-          )}
-        </AnimatePresence>
-
-        {/* Content Layer (on top of glass so dropdowns are not clipped) */}
+        {/* Content Layer */}
         <div className="relative z-10 flex w-full items-center justify-between">
           <Link href="/" className="flex shrink-0 items-center" onClick={closeMobile}>
             <Image
@@ -194,7 +161,7 @@ export default function Header() {
               alt="ELFA Electric"
               width={220}
               height={40}
-              className="h-[30px] w-auto object-contain sm:h-[34px]"
+              className="h-[26px] w-auto object-contain sm:h-[32px]"
               priority
             />
           </Link>
@@ -256,9 +223,14 @@ export default function Header() {
                             <Link
                               key={item.label}
                               href={item.href}
-                              className="font-roboto flex items-center rounded-[8px] px-4 py-2.5 text-[12px] font-medium tracking-wide text-text-secondary transition-all hover:bg-white/5 hover:text-brand-primary"
+                              className="font-roboto flex items-center gap-3 rounded-[8px] px-4 py-2.5 text-[13px] font-medium tracking-wide text-text-secondary transition-all hover:bg-white/5 hover:text-brand-primary group"
                             >
-                              {item.label}
+                              {item.icon && (
+                                <div className="relative flex h-5 w-7 shrink-0 items-center justify-center transition-transform group-hover:scale-110">
+                                  <Image src={item.icon} alt={item.label} fill className="object-contain opacity-80 transition-opacity group-hover:opacity-100" sizes="28px" />
+                                </div>
+                              )}
+                              <span className="mt-0.5">{item.label}</span>
                             </Link>
                           ))}
                         </motion.div>
@@ -359,7 +331,7 @@ export default function Header() {
             </button>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Tablet / mobile menu */}
       <AnimatePresence>
@@ -393,8 +365,8 @@ export default function Header() {
 
             <nav className="flex flex-1 flex-col gap-1">
               {navLinks.map((link, i) => (
-                <motion.div 
-                  key={link.label} 
+                <motion.div
+                  key={link.label}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 + i * 0.04, duration: 0.3 }}
@@ -416,7 +388,7 @@ export default function Header() {
                       </button>
                       <AnimatePresence>
                         {isMobileProductsOpen && (
-                          <motion.div 
+                          <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
@@ -427,9 +399,14 @@ export default function Header() {
                                 key={item.label}
                                 href={item.href}
                                 onClick={closeMobile}
-                                className="font-roboto block text-[18px] font-medium text-black/70 hover:text-black transition-colors"
+                                className="font-roboto flex items-center gap-4 text-[18px] font-medium text-black/70 hover:text-black transition-colors"
                               >
-                                {item.label}
+                                {item.icon && (
+                                  <div className="relative h-6 w-8 shrink-0">
+                                    <Image src={item.icon} alt={item.label} fill className="object-contain opacity-80" sizes="32px" />
+                                  </div>
+                                )}
+                                <span>{item.label}</span>
                               </Link>
                             ))}
                           </motion.div>
@@ -449,7 +426,7 @@ export default function Header() {
               ))}
             </nav>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -510,11 +487,11 @@ export default function Header() {
                   const query = searchQuery.trim().toLowerCase();
                   const results = query
                     ? SEARCH_INDEX.filter(
-                        (item) =>
-                          item.title.toLowerCase().includes(query) ||
-                          item.description.toLowerCase().includes(query) ||
-                          item.keywords.some((kw) => kw.toLowerCase().includes(query))
-                      )
+                      (item) =>
+                        item.title.toLowerCase().includes(query) ||
+                        item.description.toLowerCase().includes(query) ||
+                        item.keywords.some((kw) => kw.toLowerCase().includes(query))
+                    )
                     : SEARCH_INDEX.slice(0, 2);
 
                   return (

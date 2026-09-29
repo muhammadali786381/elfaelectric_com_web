@@ -32,7 +32,7 @@ export default function EVEducationPage() {
         headingLine2="Education."
         subtitle="Learn everything you need to know about charging, maintenance, and the future of electric mobility with ELFA."
       />
-      <ReelsCarousel reels={Object.values(videolinks)} />
+      {/* <ReelsCarousel reels={Object.values(videolinks)} /> */}
     </main>
   );
 }

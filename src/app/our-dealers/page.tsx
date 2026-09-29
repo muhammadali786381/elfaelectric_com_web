@@ -124,7 +124,7 @@ export default function OurDealersPage() {
           title={<>Contact Our <br className="hidden sm:block" /> Support Team</>}
           subtitle="Apply online to become an ELFA dealer today!"
           primaryButtonText="Apply Online"
-          primaryButtonHref="/contact-us"
+          primaryModal="dealership"
           secondaryButtonText=""
         />
 

@@ -59,7 +59,7 @@ export default function ScootyPage({ product }: { product: Product }) {
       <Testimonials />
 
       {/* CTA */}
-      <AdventureCTA />
+      <AdventureCTA buyHref={product.buyHref} />
 
       {/* Marquee */}
       

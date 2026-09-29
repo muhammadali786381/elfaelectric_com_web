@@ -88,6 +88,11 @@
     padding: 0;
     @apply border-border outline-ring/50;
   }
+  html, body {
+    max-width: 100%;
+    /* clip does not create a scroll container — sticky sidebars keep working */
+    overflow-x: clip;
+  }
   body {
     @apply bg-background text-foreground;
   }
@@ -98,12 +103,16 @@
 
 html {
   scroll-behavior: smooth;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
   font-family: "Montserrat", "Roboto", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 /* Smooth transitions + pointer on interactive elements */
@@ -309,4 +318,16 @@ summary {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+/* Digistartup / GHL Form Scrollbar Fix */
+iframe[src*="digistartup.io"] {
+  overflow: hidden !important;
+}
+iframe[src*="digistartup.io"]::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.ghl-form-wrapper {
+  overflow: hidden !important;
 }

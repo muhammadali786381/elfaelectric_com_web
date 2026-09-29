@@ -75,8 +75,8 @@ function StepSection({ number, title, children }: { number: string, title: strin
 export default function PaveSchemePage() {
   return (
     <>
-            <main className="flex-1 bg-bg-primary">
-        <SecondaryHero 
+      <main className="flex-1 bg-bg-primary">
+        <SecondaryHero
           titleLine1="PAVE"
           titleLine2="SCHEME"
           description="Complete details for applicants selected under the PAVE Scheme (Self-Finance) to receive your ELFA Electric Bike."
@@ -86,7 +86,7 @@ export default function PaveSchemePage() {
 
         {/* Content Flow */}
         <section className="relative z-10 w-full max-w-[900px] mx-auto px-4 sm:px-6 py-16 lg:py-24">
-          
+
           {/* Intro Information Card */}
           <FadeIn variant="fadeInUp" speed="normal" className="mb-20 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-md">
             <div className="p-8 sm:p-12 text-center relative z-10">
@@ -99,7 +99,7 @@ export default function PaveSchemePage() {
               <p className="font-roboto text-white/70 text-[15px] sm:text-[16px] max-w-3xl mx-auto mb-8 leading-relaxed">
                 This page contains all the details for applicants selected under the PAVE Scheme (Self-Finance) on how to receive their ELFA Electric Bike.
               </p>
-              
+
               <div className="flex flex-col gap-4">
                 <a href={INFO_VIDEO} target="_blank" rel="noopener noreferrer" className="font-roboto text-white/90 text-[15px] sm:text-[16px] hover:text-white transition-colors">
                   For further information for Self Finance applicants, <span className="text-brand-primary hover:text-white transition-colors underline underline-offset-4">click here</span>
@@ -113,7 +113,7 @@ export default function PaveSchemePage() {
 
           {/* Steps Flow */}
           <div className="relative">
-            
+
             <FadeIn variant="fadeInUp" speed="slow">
               <StepSection number="01" title="Pay Order Instructions">
                 <p>
@@ -122,7 +122,7 @@ export default function PaveSchemePage() {
                   <strong className="text-white">EV Technologies Private Limited</strong> and can be issued at any branch of
                   the <strong className="text-white">UBL bank</strong>.
                 </p>
-                
+
                 <div className="mt-8 rounded-2xl border border-white/10 overflow-hidden bg-black/20">
                   <div className="grid grid-cols-2 bg-white/5 border-b border-white/10">
                     <div className="px-6 py-4 font-montserrat text-[14px] font-bold text-white uppercase tracking-wider">Model</div>
@@ -240,7 +240,7 @@ export default function PaveSchemePage() {
                     rel="noopener noreferrer"
                     variant="outline"
                     icon={<WhatsAppIcon className="w-5 h-5" />}
-                    className="flex-1 h-auto rounded-xl border-white/20 p-4 text-[14px] hover:border-brand-primary hover:bg-transparent"
+                    className="flex-1 h-auto rounded-xl border-white/20 p-4 text-[14px] hover:border-brand-primary hover:bg-transparent hover:text-white"
                   >
                     Send via WhatsApp
                   </FlipButton>
@@ -270,7 +270,7 @@ export default function PaveSchemePage() {
                     <p className="font-roboto text-white/70 text-[15px] mt-1">+(92) 311-486-3532</p>
                   </div>
                 </a>
-                
+
                 {/* Email Box */}
                 <a href="mailto:info@elfaelectric.com" className="group flex items-center gap-5 p-6 rounded-2xl border border-white/10 bg-black/20 hover:bg-white/5 hover:border-brand-primary/30 transition-all duration-300">
                   <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 group-hover:bg-brand-primary/20 transition-colors">
@@ -288,9 +288,9 @@ export default function PaveSchemePage() {
         </section>
 
         {/* Unified CTA */}
-        <JoinRevolutionCTA />
+        {/* <JoinRevolutionCTA /> */}
 
       </main>
-          </>
+    </>
   );
 }

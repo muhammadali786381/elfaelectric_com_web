@@ -60,9 +60,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={cn(montserrat.variable, roboto.variable, poppins.variable, anton.variable, "font-sans", geist.variable)}
+      className={cn(montserrat.variable, roboto.variable, poppins.variable, anton.variable, "font-sans", geist.variable, "overflow-x-clip max-w-full")}
     >
-      <body className="min-h-screen flex flex-col antialiased">
+      <body className="flex min-h-screen max-w-full flex-col overflow-x-clip antialiased">
         <CartShell>
           <Header />
           {children}

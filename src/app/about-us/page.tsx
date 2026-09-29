@@ -46,7 +46,7 @@ const coreValues = [
 export default function AboutUsPage() {
   return (
     <>
-            <main className="flex-1 bg-bg-primary overflow-hidden">
+      <main className="flex-1 bg-bg-primary">
         {/* HERO: Cinematic & Minimal */}
         <section className="relative min-h-[60dvh] lg:min-h-[70dvh] w-full flex items-center justify-center pt-28 pb-20 lg:pt-32">
           <div className="absolute inset-0 z-0">
@@ -138,7 +138,7 @@ export default function AboutUsPage() {
         <section className="relative w-full py-32 sm:py-48 border-t border-white/5 bg-[#050505] overflow-hidden">
           {/* Subtle background glow */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-brand-primary/5 blur-[120px]" />
-          
+
           <div className="max-w-[1400px] mx-auto px-6 flex flex-col gap-32 relative z-10">
             <FadeIn variant="fadeInUp" speed="slow" className="max-w-5xl">
               <p className="font-roboto mb-8 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary/80">
@@ -210,16 +210,20 @@ export default function AboutUsPage() {
         {/* WHY CHOOSE US - MINIMALIST SPLIT */}
         <section className="relative w-full py-24 sm:py-32 border-t border-white/5 bg-[#050505] overflow-hidden">
           <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1 relative h-[500px] lg:h-[700px] w-full">
+            <FadeIn
+              variant="fadeInUp"
+              speed="slow"
+              className="order-2 lg:order-1 relative h-[500px] lg:h-[700px] w-full"
+            >
               {/* Using EV-125-BIKE-1.png which has a transparent background for a sleek product showcase */}
               <Image
                 src="/assets/images/contact/EV-125-BIKE-1.png"
                 alt="ELFA EV-125"
                 fill
-                className="object-contain lg:scale-125 transition-transform duration-1000 hover:scale-150"
+                className="object-contain lg:scale-100 "
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-            </div>
+            </FadeIn>
             <div className="order-1 lg:order-2">
               <FadeIn variant="fadeInUp" speed="slow">
                 <p className="font-roboto mb-4 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary">
@@ -250,6 +254,6 @@ export default function AboutUsPage() {
         <JoinRevolutionCTA />
 
       </main>
-          </>
+    </>
   );
 }

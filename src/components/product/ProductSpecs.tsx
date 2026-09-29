@@ -13,9 +13,10 @@ export default function ProductSpecs({ groups }: { groups: ProductSpecGroup[] })
           <motion.h2 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 0.2, y: 0 }}
+            whileHover={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-montserrat text-[40px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[56px] lg:text-[80px]"
+            className="font-montserrat text-[40px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[56px] lg:text-[80px] cursor-default"
           >
             Specifications
           </motion.h2>

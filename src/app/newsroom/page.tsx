@@ -191,7 +191,7 @@ export default function NewsroomPage() {
                     className="group flex flex-col h-full"
                   >
                     {/* Image Container */}
-                    <div className="relative aspect-[4/3] sm:aspect-square md:aspect-[4/3] w-full overflow-hidden border-b border-white/10 shrink-0">
+                    <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-white/10 shrink-0 bg-[#111]">
                       <Image
                         src={item.imagePath}
                         alt={item.title}
