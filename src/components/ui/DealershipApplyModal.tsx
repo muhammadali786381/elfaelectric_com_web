@@ -4,12 +4,11 @@ import { useEffect } from "react";
 import { X } from "lucide-react";
 import Script from "next/script";
 
-/** Digistartup form from live Elementor popup #1425 on /our-dealers/ */
+/** Digistartup form from live Elementor popup #1425 on /our-locations/ */
 export const DEALERSHIP_FORM_SRC =
   "https://app.digistartupgroup.com/widget/form/0Q8IEKRUvKZhcX8b6jxl";
 
 /** Trimmed vs live 457 — cuts empty space under the submit button */
-const FORM_HEIGHT = 360;
 
 type Props = {
   open: boolean;
@@ -35,14 +34,14 @@ export default function DealershipApplyModal({ open, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/86 p-3 sm:p-5"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/86 p-3 sm:p-5"
       role="dialog"
       aria-modal="true"
       aria-labelledby="dealership-apply-title"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-[800px] px-4 overflow-hidden rounded-[14px] border-4 border-[#464646] bg-[#111] shadow-[2px_8px_23px_3px_rgba(0,0,0,0.58)]"
+        className="relative w-full max-w-[800px] px-4 overflow-y-auto overflow-x-hidden max-h-[95vh] rounded-[14px] border-4 border-[#464646] bg-[#111] shadow-[2px_8px_23px_3px_rgba(0,0,0,0.58)]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -63,10 +62,11 @@ export default function DealershipApplyModal({ open, onClose }: Props) {
           </h2>
         </div>
 
-        <div className="w-full" style={{ height: FORM_HEIGHT }}>
+        <div className="w-full h-[600px] sm:h-[400px] overflow-y-auto overflow-x-hidden rounded-b-[10px]">
           <iframe
             src="https://app.digistartup.io/widget/form/0Q8IEKRUvKZhcX8b6jxl"
             style={{ width: "100%", height: "100%", border: "none", borderRadius: "0px" }}
+            scrolling="yes"
             id="inline-0Q8IEKRUvKZhcX8b6jxl"
             data-layout="{'id':'INLINE'}"
             data-trigger-type="alwaysShow"

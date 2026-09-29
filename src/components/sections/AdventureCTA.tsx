@@ -14,7 +14,7 @@ export default function AdventureCTA({ buyHref }: { buyHref?: string }) {
       primaryButtonText="Buy Now"
       primaryButtonHref={buyHref}
       secondaryButtonText="Book A Test Ride"
-      secondaryButtonHref="/contact-us"
+      secondaryButtonHref="/book-a-test-ride"
     />
   );
 }

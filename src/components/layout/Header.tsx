@@ -14,11 +14,11 @@ const navLinks = [
     href: "#",
     hasDropdown: true,
     dropdown: [
-      { label: "EV-125 BIKE", href: "/ev-125", icon: "/bike1.png" },
-      { label: "EV-1 Scooty", href: "/scooty-ev-1", icon: "/scooty1.png" },
+      { label: "EV-125 BIKE", href: "/ev-125", icon: "/bike1.png", mobileIcon: "/bikeblack.png" },
+      { label: "EV-1 Scooty", href: "/scooty-ev-1", icon: "/scooty1.png", mobileIcon: "/scootyblack.png" },
     ],
   },
-  { label: "Dealers", href: "/our-dealers" },
+  { label: "Locations", href: "/our-locations" },
   { label: "About", href: "/about-us" },
   { label: "Financing", href: "/financing-partners" },
   { label: "PAVE", href: "/pave-scheme" },
@@ -45,10 +45,10 @@ const SEARCH_INDEX = [
     keywords: ["scooty", "scooter", "ev1", "ev-1", "urban"],
   },
   {
-    id: "dealers",
-    title: "Our Dealers",
+    id: "locations",
+    title: "Our Locations",
     description: "Find an ELFA dealership near you",
-    href: "/our-dealers",
+    href: "/our-locations",
     image: null,
     keywords: ["dealers", "dealership", "location", "buy", "store"],
   },
@@ -145,13 +145,12 @@ export default function Header() {
   const moreLinks = navLinks.slice(currentMax);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex w-full justify-center pointer-events-none px-3 sm:px-6">
+    <header className="fixed inset-x-0 top-0 z-[9999] flex w-full justify-center pointer-events-none px-3 sm:px-6">
       <div
-        className={`relative flex items-center justify-between pointer-events-auto transition-all duration-300 ease-out ${
-          isScrolled
+        className={`relative flex items-center justify-between pointer-events-auto transition-all duration-300 ease-out ${isScrolled
             ? "w-full max-w-[1000px] h-14 sm:h-16 xl:h-[72px] mt-3 sm:mt-4 rounded-full border border-white/12 bg-[#0a0a0c]/80 backdrop-blur-2xl shadow-[0_16px_40px_rgba(0,0,0,0.5)] px-4 sm:px-6 xl:px-6"
             : "w-full max-w-[1000px] xl:max-w-[1600px] h-14 sm:h-16 xl:h-[96px] mt-3 sm:mt-4 xl:mt-0 rounded-full xl:rounded-none border border-white/12 xl:border-transparent bg-[#0a0a0c]/80 xl:bg-transparent backdrop-blur-2xl xl:backdrop-blur-none shadow-[0_16px_40px_rgba(0,0,0,0.5)] xl:shadow-none px-4 sm:px-6 xl:px-8"
-        }`}
+          }`}
       >
         {/* Content Layer */}
         <div className="relative z-10 flex w-full items-center justify-between">
@@ -341,7 +340,7 @@ export default function Header() {
             animate={{ opacity: 1, y: "0%" }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[100] flex flex-col overflow-y-auto bg-[#00E573] p-6 xl:hidden pointer-events-auto"
+            className="fixed inset-0 z-[10000] flex flex-col overflow-y-auto bg-[#00E573] p-6 xl:hidden pointer-events-auto"
           >
             {/* Top bar inside menu */}
             <div className="flex items-center justify-between pb-8 pt-4">
@@ -403,7 +402,7 @@ export default function Header() {
                               >
                                 {item.icon && (
                                   <div className="relative h-6 w-8 shrink-0">
-                                    <Image src={item.icon} alt={item.label} fill className="object-contain opacity-80" sizes="32px" />
+                                    <Image src={item.mobileIcon || item.icon} alt={item.label} fill className="object-contain opacity-80" sizes="32px" />
                                   </div>
                                 )}
                                 <span>{item.label}</span>

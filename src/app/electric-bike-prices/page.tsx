@@ -175,7 +175,7 @@ export default function ElectricBikePricesPage() {
               speed="slow"
               className="order-1 flex flex-col justify-center py-8 lg:order-2 lg:pl-10"
             >
-              <h2 className="font-montserrat mb-4 text-[28px] font-black italic uppercase leading-none tracking-tight text-white sm:mb-6 sm:text-[40px] lg:text-[48px]">
+              <h2 className="font-montserrat mb-4 text-[28px] font-black italic uppercase leading-none tracking-tight text-white sm:mb-6 sm:text-[36px] lg:text-[38px] xl:text-[48px]">
                 Looking for the latest electric bike prices in Pakistan?
               </h2>
               <p className="font-roboto text-[16px] leading-relaxed text-white/70 sm:text-[18px]">
@@ -206,7 +206,7 @@ export default function ElectricBikePricesPage() {
               speed="slow"
               className="order-1 flex flex-col justify-center py-8 lg:pr-10"
             >
-              <h2 className="font-montserrat mb-4 text-[28px] font-black italic uppercase leading-none tracking-tight text-white sm:mb-6 sm:text-[40px] lg:text-[48px]">
+              <h2 className="font-montserrat mb-4 text-[28px] font-black italic uppercase leading-none tracking-tight text-white sm:mb-6 sm:text-[36px] lg:text-[38px] xl:text-[48px]">
                 ELFA EV125 – Best Electric Bike
               </h2>
               <p className="font-roboto mb-6 text-[16px] leading-relaxed text-white/70 sm:text-[18px]">
@@ -221,10 +221,10 @@ export default function ElectricBikePricesPage() {
               className="relative order-2 mx-auto aspect-[4/3] w-full"
             >
               <Image
-                src="/assets/images/electric-bike-prices/blog-page.png"
+                src="/assets/images/electric-bike-prices/pricesbike.png"
                 alt="ELFA EV125 electric motorcycle"
                 fill
-                className="object-contain"
+                className="object-contain scale-105 lg:scale-105 origin-center"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </FadeIn>
@@ -232,10 +232,28 @@ export default function ElectricBikePricesPage() {
         </section>
 
         {/* EV-1 Scooty */}
-        <section className="bg-bg-primary pb-10 lg:pb-14">
-          <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-            <FadeIn variant="fadeInUp" speed="slow" className="mx-auto max-w-3xl">
-              <h2 className="font-montserrat mb-4 text-[28px] font-black italic uppercase leading-none tracking-tight text-white sm:mb-6 sm:text-[40px] lg:text-[48px]">
+        <section className="bg-bg-primary pb-10 lg:pb-14 overflow-hidden">
+          <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-12 lg:gap-10">
+            <FadeIn
+              variant="fadeInRight"
+              speed="slow"
+              className="relative order-2 lg:order-1 mx-auto aspect-[4/3] w-full lg:col-span-5"
+            >
+              <Image
+                src="/assets/images/electric-bike-prices/pricesscooty.png"
+                alt="ELFA EV-1 Scooty"
+                fill
+                className="object-contain scale-100 lg:scale-[1.12] lg:-translate-y-8 origin-[20%_50%]"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </FadeIn>
+            <FadeIn
+              variant="fadeInRight"
+              speed="slow"
+              delay={0.12}
+              className="order-1 lg:order-2 flex flex-col justify-center py-8 lg:pl-10 lg:col-span-7"
+            >
+              <h2 className="font-montserrat mb-4 text-[28px] font-black italic uppercase leading-none tracking-tight text-white sm:mb-6 sm:text-[36px] lg:text-[38px] xl:text-[44px]">
                 EV-1 Scooty – Affordable Electric Scooty Price
               </h2>
               <p className="font-roboto mb-6 text-[16px] leading-relaxed text-white/70 sm:text-[18px]">

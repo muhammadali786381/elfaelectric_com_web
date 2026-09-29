@@ -194,10 +194,10 @@ export default function AboutUsPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-60" />
                   <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                    <h4 className="font-montserrat text-[24px] font-bold uppercase italic leading-tight text-white mb-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <h4 className="font-montserrat text-[24px] font-bold uppercase italic leading-tight text-white mb-4 transform translate-y-0 lg:translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                       {value.title}
                     </h4>
-                    <p className="font-roboto text-[15px] leading-relaxed text-white/60 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                    <p className="font-roboto text-[15px] leading-relaxed text-white/60 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-0 lg:translate-y-4 group-hover:translate-y-0">
                       {value.desc}
                     </p>
                   </div>

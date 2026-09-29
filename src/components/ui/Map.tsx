@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Dealer } from "@/app/our-dealers/DealersDirectory";
+import type { Dealer } from "@/app/our-locations/DealersDirectory";
 
 // Approximate coordinates for dealers based on their city/area
 const DEALER_COORDS: Record<string, [number, number]> = {
@@ -13,7 +13,8 @@ const DEALER_COORDS: Record<string, [number, number]> = {
   "Auto Power":               [24.857, 67.017],
   "Green Wheels":             [24.912, 67.109],
   "TK Dealership":            [24.823, 67.078],
-  "Solarize":                 [24.848, 67.184],
+  "Solàrizè Malir":           [24.848, 67.184],
+  "Solàrizè Landhi":          [24.828, 67.184],
   "Al Noor Traders":          [24.937, 67.043],
   "Bangash Green Energy":     [24.930, 67.136],
   "Visdom EV":                [24.903, 67.147],
@@ -127,7 +128,7 @@ export default function MapComponent({ dealers, activeDealer }: MapProps) {
               <h3 style="font-size:16px; font-weight:700; margin:0 0 8px 0;">${dealer.name}</h3>
               <p style="font-size:13px; color:rgba(255,255,255,0.7); margin:0 0 10px 0; line-height:1.5;">${dealer.address}</p>
               <p style="font-size:14px; font-weight:600; color:#00C853; margin:0 0 12px 0;">${dealer.phones[0]}</p>
-              <a href="https://maps.google.com/?q=${encodeURIComponent(dealer.mapQuery || dealer.address)}" target="_blank" style="display:inline-block; background:#00C853; color:#000; font-size:12px; font-weight:700; padding:6px 14px; border-radius:4px; text-decoration:none; text-transform:uppercase; letter-spacing:1px;">Get Directions</a>
+              <a href="${dealer.mapLink || `https://maps.google.com/?q=${encodeURIComponent(dealer.mapQuery || dealer.address)}`}" target="_blank" style="display:inline-block; background:#00C853; color:#000; font-size:12px; font-weight:700; padding:6px 14px; border-radius:4px; text-decoration:none; text-transform:uppercase; letter-spacing:1px;">Get Directions</a>
             </div>
           `);
 
@@ -199,7 +200,7 @@ export default function MapComponent({ dealers, activeDealer }: MapProps) {
             <h3 style="font-size:16px; font-weight:700; margin:0 0 8px 0;">${dealer.name}</h3>
             <p style="font-size:13px; color:rgba(255,255,255,0.7); margin:0 0 10px 0; line-height:1.5;">${dealer.address}</p>
             <p style="font-size:14px; font-weight:600; color:#00C853; margin:0 0 12px 0;">${dealer.phones[0]}</p>
-            <a href="https://maps.google.com/?q=${encodeURIComponent(dealer.mapQuery || dealer.address)}" target="_blank" style="display:inline-block; background:#00C853; color:#000; font-size:12px; font-weight:700; padding:6px 14px; border-radius:4px; text-decoration:none; text-transform:uppercase; letter-spacing:1px;">Get Directions</a>
+            <a href="${dealer.mapLink || `https://maps.google.com/?q=${encodeURIComponent(dealer.mapQuery || dealer.address)}`}" target="_blank" style="display:inline-block; background:#00C853; color:#000; font-size:12px; font-weight:700; padding:6px 14px; border-radius:4px; text-decoration:none; text-transform:uppercase; letter-spacing:1px;">Get Directions</a>
           </div>
         `);
 
@@ -216,7 +217,7 @@ export default function MapComponent({ dealers, activeDealer }: MapProps) {
     const coords = DEALER_COORDS[activeDealer.name];
     if (!coords) return;
 
-    mapInstanceRef.current.flyTo(coords, 14, { duration: 0.8 });
+    mapInstanceRef.current.flyTo(coords, 17, { duration: 0.8 });
 
     const marker = markersRef.current.get(activeDealer.name);
     if (marker) {

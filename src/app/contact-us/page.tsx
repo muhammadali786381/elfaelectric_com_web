@@ -52,7 +52,7 @@ const faqs = [
     a: (
       <>
         Absolutely!{" "}
-        <Link href="/our-dealers" className="text-[#cc3366] underline hover:no-underline">
+        <Link href="/our-locations" className="text-[#cc3366] underline hover:no-underline">
           Learn more about our dealership program.
         </Link>
       </>

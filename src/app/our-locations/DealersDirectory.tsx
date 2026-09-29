@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useCallback } from "react";
-import { Building2, Phone, MessageCircle, Navigation, Clock, CalendarCheck, MapPin, Search, X } from "lucide-react";
+import { Building2, Phone, MessageCircle, Navigation, Clock, CalendarCheck, MapPin, Search, X, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 import FlipButton from "@/components/ui/FlipButton";
 
@@ -11,6 +11,7 @@ export type Dealer = {
   phones: string[];
   email?: string;
   mapQuery?: string;
+  mapLink?: string;
   coordinates?: [number, number];
 };
 
@@ -26,6 +27,12 @@ export type City = (typeof CITIES)[number];
 
 export const dealersByCity: Record<City, Dealer[]> = {
   Karachi: [
+    {
+      name: "Flagship Store Karachi",
+      address: "Plot 1-A, Shahra-e-Faisal, PECHS Extension Block 6, Karachi 74400",
+      phones: ["02137173532"],
+      mapQuery: "ELFA Electric Flagship Store Shahra-e-Faisal Karachi",
+    },
     {
       name: "Smart Electric Wheels",
       address: "Shop No. U3, Al Fizza Glass Tower, Gulshan-e-Iqbal, Block 10A, Rashid Minhas Road, Karachi",
@@ -70,11 +77,18 @@ export const dealersByCity: Record<City, Dealer[]> = {
       mapQuery: "TK Dealership DHA Phase 2 Karachi",
     },
     {
-      name: "Solarize",
-      address: "Shop No. 1, C 43/6, Malir Tanki, Kalaboard, Malir, Karachi",
-      phones: ["0333-2236876"],
-      email: "ssolarize@gmail.com",
-      mapQuery: "Solarize Malir Karachi",
+      name: "Solàrizè Malir",
+      address: "Shop no1 c43/6 malir tanki, kalaboard Malir",
+      phones: ["0333 2236876"],
+      email: "Irfanafnan@hotmail.com",
+      mapLink: "https://maps.app.goo.gl/kCDiVGtJFEhykhWf7",
+    },
+    {
+      name: "Solàrizè Landhi",
+      address: "Shop 2, House no 60, sector 1-C, jaam nagar, landhi no 1, Karachi",
+      phones: ["0333 2236876"],
+      email: "Irfanafnan@hotmail.com",
+      mapLink: "https://maps.app.goo.gl/eixgH1rzk6mCyUxw5",
     },
     {
       name: "Al Noor Traders",
@@ -112,12 +126,7 @@ export const dealersByCity: Record<City, Dealer[]> = {
       phones: ["0370-1335134"],
       mapQuery: "BlueChip Technologies Gulistan-e-Jauhar Karachi",
     },
-    {
-      name: "Flagship Store Karachi",
-      address: "Plot 1-A, Shahra-e-Faisal, PECHS Extension Block 6, Karachi 74400",
-      phones: ["02137173532"],
-      mapQuery: "ELFA Electric Flagship Store Shahra-e-Faisal Karachi",
-    },
+
   ],
   Hyderabad: [
     {
@@ -152,7 +161,7 @@ export const dealersByCity: Record<City, Dealer[]> = {
       name: "New Madina Auto Centre",
       address: "Near Ali Motor, Shahbazpur Road, Shalimar Town, Rahim Yar Khan",
       phones: ["0300-6743738"],
-      mapQuery: "New Madina Auto Centre Rahim Yar Khan",
+      mapLink: "https://maps.app.goo.gl/5N2T56gEv4ZKt5nP9?g_st=iw",
     },
   ],
   Rawalpindi: [
@@ -195,16 +204,15 @@ function DealerCard({
 }) {
   const city = getCityForDealer(dealer);
   const whatsappNum = dealer.phones[0].replace(/[\s-]/g, "").replace(/^0/, "92");
-  const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(dealer.mapQuery || dealer.address)}`;
+  const mapsUrl = dealer.mapLink || `https://maps.google.com/?q=${encodeURIComponent(dealer.mapQuery || dealer.address)}`;
 
   return (
     <article
       onClick={() => onClick(dealer)}
-      className={`group relative flex cursor-pointer flex-col gap-4 border-b border-white/[0.07] p-5 transition-all duration-200 sm:p-6 ${
-        isActive
-          ? "bg-[#0d1a0d] border-l-2 border-l-brand-primary"
-          : "hover:bg-[#0a0a0a] hover:border-l-2 hover:border-l-brand-primary/40"
-      }`}
+      className={`group relative flex cursor-pointer flex-col gap-4 border-b border-white/[0.07] p-5 transition-all duration-200 sm:p-6 ${isActive
+        ? "bg-[#0d1a0d] border-l-2 border-l-brand-primary"
+        : "hover:bg-[#0a0a0a] hover:border-l-2 hover:border-l-brand-primary/40"
+        }`}
     >
       {/* City tag */}
       <div className="flex items-center gap-2">
@@ -281,6 +289,17 @@ function DealerCard({
         >
           WhatsApp
         </FlipButton>
+        {dealer.email && (
+          <FlipButton
+            href={`mailto:${dealer.email}`}
+            onClick={(e) => e.stopPropagation()}
+            variant="outline"
+            icon={<Mail className="h-3 w-3" strokeWidth={2.5} />}
+            className="rounded-[3px] border-white/20 px-3 py-1.5 text-[11px] tracking-wider text-white/70 hover:border-brand-primary hover:bg-transparent hover:text-brand-primary"
+          >
+            Mail Now
+          </FlipButton>
+        )}
       </div>
     </article>
   );
@@ -314,17 +333,17 @@ export default function DealersDirectory() {
     <section className="bg-[#050505] py-10 lg:py-16" id="find-dealer">
       {/* Section Header - Full width */}
       <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 mb-8 lg:mb-12 text-center lg:text-left">
-        <p className="font-roboto mb-2 text-[11px] font-bold uppercase tracking-[3px] text-brand-primary">
-          Find Your Nearest Showroom
-        </p>
-        <h2 className="font-montserrat mb-6 text-[32px] font-black italic uppercase leading-none tracking-tight text-white sm:text-[44px]">
-          Dealer Locations
+        <h2 className="font-montserrat mb-2 text-[32px] font-black italic uppercase leading-none tracking-tight text-white sm:text-[44px]">
+          Find Your Nearest Location
         </h2>
+        <p className="font-roboto mb-6 text-[15px] leading-relaxed text-white/70 sm:text-[16px]">
+          Find ELFA Electric Motorcycle Dealers in Karachi, Lahore, Rahim Yar Khan, Hyderabad, and Rawalpindi.
+        </p>
       </div>
 
       {/* Main Layout: List scrolls with page · Map stays sticky */}
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-start lg:gap-8">
-        
+
         {/* Left Panel: Search + list (page scroll) */}
         <div className="flex w-full flex-col lg:w-[58%] xl:w-[55%]">
           {/* Search Bar */}

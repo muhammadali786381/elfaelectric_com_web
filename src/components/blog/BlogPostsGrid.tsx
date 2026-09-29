@@ -84,13 +84,13 @@ export default function BlogPostsGrid({
               href={featuredPost.href}
               className="group flex flex-col w-full cursor-pointer overflow-hidden rounded-[20px] bg-[#050505] border border-white/5 hover:border-white/10 transition-colors"
             >
-              <div className="relative aspect-[1.91/1] w-full overflow-hidden shrink-0 border-b border-white/10">
+              <div className="relative aspect-[1024/536] w-full overflow-hidden shrink-0 border-b border-white/10 bg-[#050505]">
                 <Image
                   src={featuredPost.imageUrl}
                   alt={featuredPost.title}
                   fill
                   priority
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  className="object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   sizes="(min-width: 1200px) 1200px, 100vw"
                 />
                 
@@ -172,12 +172,12 @@ export default function BlogPostsGrid({
                     href={post.href}
                     className="group flex flex-col w-full cursor-pointer overflow-hidden rounded-[16px] bg-[#050505] border border-white/5 hover:border-white/10 transition-colors"
                   >
-                    <div className="relative aspect-[1.91/1] w-full overflow-hidden shrink-0 border-b border-white/10">
+                    <div className="relative aspect-[1024/536] w-full overflow-hidden shrink-0 border-b border-white/10 bg-[#050505]">
                       <Image
                         src={post.imageUrl}
                         alt={post.title}
                         fill
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                        className="object-contain transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                         sizes="(min-width: 768px) 50vw, 100vw"
                       />
                       

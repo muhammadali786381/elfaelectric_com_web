@@ -26,11 +26,11 @@ const whyItems = [
 export default function OurDealersPage() {
   return (
     <>
-            <main className="flex-1">
-        <SecondaryHero 
-          titleLine1="Authorized"
-          titleLine2="ELFA Dealers"
-          description="Find your nearest showroom across Pakistan. Book a test ride and experience the future of urban mobility today."
+      <main className="flex-1">
+        <SecondaryHero
+          titleLine1="Our"
+          titleLine2="Locations"
+          description="Find your nearest locations across Pakistan"
           imageSrc="/assets/images/hero4.jpeg"
           imageAlt="ELFA Electric Motorcycle"
         />
@@ -128,8 +128,8 @@ export default function OurDealersPage() {
           secondaryButtonText=""
         />
 
-        
+
       </main>
-          </>
+    </>
   );
 }
