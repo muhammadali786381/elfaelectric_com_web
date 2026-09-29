@@ -123,31 +123,39 @@ export default async function BlogPostPage({ params }: Props) {
               {relatedPosts.map((relatedPost) => {
                 const relCat = cats[relatedPost.id % cats.length];
                 return (
-                  <Link 
-                    key={relatedPost.id} 
-                    href={relatedPost.href} 
-                    className="group block relative w-full h-[320px] rounded-[16px] overflow-hidden"
+                  <Link
+                    key={relatedPost.id}
+                    href={relatedPost.href}
+                    className="group flex flex-col w-full cursor-pointer overflow-hidden rounded-[16px] bg-[#050505] border border-white/5 hover:border-white/10 transition-colors"
                   >
-                    <Image
-                      src={relatedPost.imageUrl}
-                      alt={relatedPost.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/40" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/20" />
-                    
-                    <div className="absolute top-6 left-6 z-10">
-                      <span className="inline-flex px-2 py-1 bg-white text-black text-[10px] font-bold uppercase tracking-wide rounded-sm">
+                    <div className="relative aspect-[1024/536] w-full overflow-hidden shrink-0 border-b border-white/10 bg-[#050505]">
+                      <Image
+                        src={relatedPost.imageUrl}
+                        alt={relatedPost.title}
+                        fill
+                        className="object-contain transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                      />
+                      
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-[#050505] via-[#050505]/95 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] flex flex-col justify-end p-5 sm:p-6 z-10">
+                        <div className="transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 flex flex-col justify-end">
+                          <p className="font-roboto text-[12px] sm:text-[13px] text-white/80 line-clamp-4">
+                            {relatedPost.excerpt}
+                          </p>
+                        </div>
+                      </div>
+
+                      <span className="absolute left-5 top-5 z-20 inline-flex rounded-md bg-white px-2.5 py-1 font-roboto text-[11px] font-semibold tracking-[0.02em] text-black sm:left-6 sm:top-6">
                         {relCat}
                       </span>
                     </div>
 
-                    <div className="absolute inset-0 p-6 flex flex-col justify-end z-10">
-                      <h3 className="font-montserrat text-[14px] sm:text-[16px] font-bold leading-snug text-white mb-2 line-clamp-2">
+                    <div className="p-5 sm:p-6 flex-1 flex flex-col justify-start relative z-0">
+                      <h3 className="font-montserrat text-[14px] font-semibold leading-snug tracking-[-0.01em] text-white sm:text-[16px] group-hover:text-brand-primary transition-colors">
                         {relatedPost.title}
                       </h3>
-                      <p className="text-white/55 text-[12px] font-roboto font-medium">
+                      <p className="font-roboto mt-2 text-[12px] font-normal text-white/55">
                         {relatedPost.date}
                       </p>
                     </div>

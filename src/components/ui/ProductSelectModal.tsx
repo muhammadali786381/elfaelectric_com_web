@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { X, ArrowRight } from "lucide-react";
@@ -25,6 +26,12 @@ type ProductSelectModalProps = {
 };
 
 export default function ProductSelectModal({ open, onClose }: ProductSelectModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -39,7 +46,9 @@ export default function ProductSelectModal({ open, onClose }: ProductSelectModal
     };
   }, [open, onClose]);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {open && (
         <div
@@ -64,7 +73,7 @@ export default function ProductSelectModal({ open, onClose }: ProductSelectModal
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="relative w-full max-w-[800px] rounded-[24px] border border-white/10 bg-[#0a0a0a] shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden"
+            className="relative w-full max-h-[90vh] overflow-y-auto overflow-x-hidden max-w-[800px] rounded-[24px] border border-white/10 bg-[#0a0a0a] shadow-[0_0_40px_rgba(0,0,0,0.5)]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top decorative glow */}
@@ -80,10 +89,10 @@ export default function ProductSelectModal({ open, onClose }: ProductSelectModal
               <X className="h-5 w-5" strokeWidth={2} />
             </button>
 
-            <div className="p-8 sm:p-12 relative z-10">
+            <div className="p-6 sm:p-12 relative z-10">
               <h2
                 id="product-select-title"
-                className="font-montserrat mb-2 text-center text-[28px] font-black uppercase italic leading-tight text-white sm:text-[36px]"
+                className="font-montserrat mb-2 text-center text-[24px] font-black uppercase italic leading-tight text-white sm:text-[36px]"
               >
                 Select Your <span className="text-brand-primary">Ride</span>
               </h2>
@@ -97,9 +106,9 @@ export default function ProductSelectModal({ open, onClose }: ProductSelectModal
                     key={p.href}
                     href={p.href}
                     onClick={onClose}
-                    className="group relative flex cursor-pointer flex-col items-center rounded-[16px] border border-white/5 bg-white/[0.03] p-6 transition-all duration-300 hover:border-brand-primary/50 hover:bg-brand-primary/5"
+                    className="group relative flex cursor-pointer flex-col items-center rounded-[16px] border border-white/5 bg-white/[0.03] p-4 sm:p-6 transition-all duration-300 hover:border-brand-primary/50 hover:bg-brand-primary/5"
                   >
-                    <span className="relative mb-6 block h-[180px] w-full max-w-[280px] sm:h-[220px]">
+                    <span className="relative mb-4 block h-[120px] w-full max-w-[200px] sm:mb-6 sm:h-[220px] sm:max-w-[280px]">
                       <Image
                         src={p.image}
                         alt={p.label}
@@ -123,6 +132,7 @@ export default function ProductSelectModal({ open, onClose }: ProductSelectModal
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
