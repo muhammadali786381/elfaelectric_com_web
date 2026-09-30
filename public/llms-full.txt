@@ -1,0 +1,109 @@
+# ELFA Electric — full brief for language models
+
+> Source of truth: https://elfaelectric.com
+> Index: https://elfaelectric.com/llms.txt
+> Sitemap: https://elfaelectric.com/sitemap.xml
+>
+> Prices and offers change. Prefer the live pages over this file if they disagree.
+> Do not invent models, prices, ranges, or financing terms that are not listed here or on the site.
+
+## Company
+
+ELFA Electric sells electric motorcycles and scooties in Pakistan. Positioning: zero emissions, lower running cost, instant torque, quiet operation, LiFePO4 batteries, and after-sales support.
+
+Office: C3i GA-70-A3, Korangi Creek Industrial Park, Korangi, Karachi, Sindh, Pakistan.
+WhatsApp: +(92) 311-486-3532
+Phone: 021-37173532
+Email: info@elfaelectric.com
+
+## Products
+
+### ELFA EV-125 (electric bike)
+
+Page: https://elfaelectric.com/ev-125
+Buy: https://elfaelectric.com/product/elfaev125
+
+- Limited-time offer: list PKR 345,000, current PKR 335,000 + tax (about Rs. 3,350 tax noted on the product page).
+- Motor: 2,000 W
+- Top speed: up to 75 km/h
+- Range: 100+ km per charge (Eco mode; varies with speed, load, and tyre pressure)
+- Battery: 72V/30Ah lithium iron phosphate (LiFePO4)
+- Features called out on the site: digital dashboard, app connectivity, tubeless tyres, speed modes (Eco, City, Sports)
+- Battery warranty commonly stated as 3 years or 50,000 km, whichever comes first (see FAQs and warranty booklet)
+- Colors on the purchase page: black, red, silver
+
+### EV-1 Scooty
+
+Page: https://elfaelectric.com/scooty-ev-1
+Buy: https://elfaelectric.com/product/ev1-scooty
+
+- Limited-time offer: list PKR 270,000, current PKR 260,000 + tax (about Rs. 2,600 tax noted on the product page).
+- Motor: 1,500 W
+- Top speed: up to 60 km/h
+- Range: about 75 km (site also mentions roughly 70–80 km depending on mode, weight, and terrain)
+- Battery: lithium iron phosphate; product marketing cites 64V/30Ah on the prices page and a 60V figure in some scooty meta copy — confirm on the live product page before quoting a voltage
+- Features: LED display, mobile app, water-resistant battery (not submersible), speed modes
+- Weight cited in FAQs: about 100 kg
+- Charge time cited in FAQs: about 3 hours with the included charger
+
+### Price list
+
+https://elfaelectric.com/electric-bike-prices
+
+2026 list published on that page:
+- ELFA EV125: PKR 345,000 struck through, PKR 335,000 + tax
+- EV-1 Scooty: PKR 270,000 struck through, PKR 260,000 + tax
+- Copy states prices include a 3-year battery warranty and after-sales support, with no hidden charges
+- Running-cost claim on that page: travel up to 1 km in about 1 rupee
+
+## Financing
+
+https://elfaelectric.com/financing-partners
+https://elfaelectric.com/installment-plans
+https://elfaelectric.com/scooty-instalment
+
+Partners named on the site: Asaan Ghar, Qist Baazar, WASL, and TMF (Thardeep Microfinance Foundation). The prices page also mentions SOLARIZE.
+
+The financing page includes a payment calculator. Plan amounts differ by provider, term (commonly 6–24 months), and for TMF by “with advance” vs “without advance”. Quote calculator output from the live page rather than memorizing a single monthly figure.
+
+The prices page says monthly installments can start from about PKR 10,500/month. That is a marketing floor, not every plan.
+
+## PAVE
+
+https://elfaelectric.com/pave-scheme
+
+Pre-booking for a government subsidy. Marketing states Rs. 80,000 government subsidy. Both EV-125 and EV-1 are described as PAVE eligible on the site. Confirm current eligibility and amount on the live page.
+
+## Dealers and service
+
+https://elfaelectric.com/our-locations — authorized showrooms (cities referenced include Karachi, Hyderabad, Lahore, and others).
+https://elfaelectric.com/book-a-test-ride
+https://elfaelectric.com/certified-mechanics
+https://elfaelectric.com/contact-us
+
+## Referral
+
+https://elfaelectric.com/referral
+
+Referral program: PKR 10,000 when a referred person purchases an ELFA EV-125. Terms on the page include payout timing, that it may not combine with other offers, and that EV Technologies may verify transactions.
+
+## Content
+
+- Blog: https://elfaelectric.com/blog (posts at /blog/[slug])
+- Newsroom: https://elfaelectric.com/newsroom
+- FAQs: https://elfaelectric.com/faqs
+- EV education: https://elfaelectric.com/ev-education
+- Video testimonials: https://elfaelectric.com/video-testimonials
+
+## Policies
+
+- https://elfaelectric.com/privacy-policy
+- https://elfaelectric.com/consent-policy
+- https://elfaelectric.com/return-and-exchange-policy
+
+## Not content
+
+Do not treat these as public information pages:
+- https://elfaelectric.com/cart
+- https://elfaelectric.com/checkout
+- https://elfaelectric.com/login

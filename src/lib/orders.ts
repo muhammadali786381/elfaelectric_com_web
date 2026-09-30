@@ -1,6 +1,6 @@
 /**
- * Local order store — swap for a database API later.
- * Shape is stable so an admin dashboard can read the same records.
+ * Shared checkout types + order id helper.
+ * Persistence lives in Postgres via server actions.
  */
 
 export type CheckoutAddress = {
@@ -56,41 +56,8 @@ export const PK_STATES = [
   "Sindh",
 ] as const;
 
-const ORDERS_KEY = "elfa-orders-v1";
-
-function readOrders(): CheckoutOrder[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(ORDERS_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw) as CheckoutOrder[];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-function writeOrders(orders: CheckoutOrder[]) {
-  localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-}
-
 export function generateOrderId() {
   const n = Date.now().toString(36).toUpperCase();
   const r = Math.random().toString(36).slice(2, 6).toUpperCase();
   return `ELFA-${n}-${r}`;
-}
-
-export function saveOrder(order: CheckoutOrder) {
-  const all = readOrders();
-  all.unshift(order);
-  writeOrders(all);
-  return order;
-}
-
-export function getOrders() {
-  return readOrders();
-}
-
-export function getOrderById(id: string) {
-  return readOrders().find((o) => o.id === id) ?? null;
 }

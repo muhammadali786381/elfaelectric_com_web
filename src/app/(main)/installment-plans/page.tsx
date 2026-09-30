@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import SecondaryHero from "@/components/sections/SecondaryHero";
 
-import FinancingPlans from "@/app/financing-partners/FinancingPlans";
+import FinancingPlans from "@/app/(main)/financing-partners/FinancingPlans";
 
 export const metadata: Metadata = {
   title: "ELFA Installment Plans | Easy Electric Bike Financing",

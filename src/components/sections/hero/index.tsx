@@ -32,8 +32,8 @@ export default function Hero() {
         <div className="absolute inset-0 top-auto bottom-0 h-40 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent" />
       </div>
 
-      {/* Content - Left side on desktop */}
-      <div className="relative z-10 flex flex-1 flex-col justify-center px-6 pt-4 pb-8 sm:px-10 lg:h-full lg:w-[50%] lg:flex-none lg:pb-32 lg:pl-16 xl:pl-24 2xl:pl-[100px]">
+      {/* Content - centered on mobile, left on desktop */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pt-4 pb-8 text-center sm:px-10 lg:h-full lg:w-[50%] lg:flex-none lg:items-start lg:pb-32 lg:pl-16 lg:text-left xl:pl-24 2xl:pl-[100px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -43,7 +43,7 @@ export default function Hero() {
           THE NEW EV-125 BIKE
         </motion.div>
 
-        <h1 className="font-montserrat mb-4 flex flex-col text-[36px] min-[400px]:text-[40px] font-black leading-[0.95] tracking-tight text-white sm:text-[50px] lg:text-[70px] xl:text-[80px]">
+        <h1 className="font-montserrat mb-4 flex flex-col items-center text-[36px] min-[400px]:text-[40px] font-black leading-[0.95] tracking-tight text-white sm:text-[50px] lg:items-start lg:text-[70px] xl:text-[80px]">
           <div className="block whitespace-nowrap">
             <BreathingText
               staggerDuration={0.08}
@@ -74,10 +74,10 @@ export default function Hero() {
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration, delay: 0.4, ease }}
-          className="flex w-full flex-col sm:w-auto sm:flex-row sm:items-center gap-3 sm:gap-4 max-w-[300px] sm:max-w-none"
+          className="flex w-full max-w-[300px] flex-col items-stretch gap-3 sm:max-w-none sm:w-auto sm:flex-row sm:items-center sm:gap-4 lg:mx-0"
         >
           <FlipButton
             href="/ev-125"

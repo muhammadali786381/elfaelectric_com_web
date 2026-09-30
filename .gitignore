@@ -12,11 +12,15 @@
 /coverage
 
 # next.js
-
 .cursor
 .gemini
 /.next/
 /out/
+
+# local agent skills (Cursor/Claude) — not app source
+.agents/skills/
+skills-lock.json
+.skills-lock.json
 
 # production
 /build
@@ -48,3 +52,6 @@ __pycache__/
 *$py.class
 .venv/
 venv/
+
+# Machine-local Neon IPv4 pool override
+src/lib/db/pool.local.cjs

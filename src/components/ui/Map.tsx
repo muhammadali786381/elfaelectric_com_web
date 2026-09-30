@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Dealer } from "@/app/our-locations/DealersDirectory";
+import type { Dealer } from "@/app/(main)/our-locations/DealersDirectory";
 
 // Approximate coordinates for dealers based on their city/area
 const DEALER_COORDS: Record<string, [number, number]> = {
