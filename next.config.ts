@@ -16,13 +16,15 @@ const securityHeaders = [
       "form-action 'self'",
       "frame-ancestors 'none'",
       "object-src 'none'",
-      // Next.js hydration + Leaflet CDN CSS/JS
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com",
+      // Next.js hydration + Leaflet CDN + Digistartup form embeds
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://app.digistartup.io https://app.digistartupgroup.com",
       "style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
       "connect-src 'self' https:",
       "worker-src 'self' blob:",
+      // Contact/booking forms, Google Maps, YouTube embeds
+      "frame-src 'self' https://app.digistartup.io https://app.digistartupgroup.com https://maps.google.com https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com",
     ].join("; "),
   },
   ...(process.env.NODE_ENV === "production"
