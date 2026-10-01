@@ -18,8 +18,8 @@
   --color-elfa-yellow: #ffc107;
 
   /* Global Theme Variables - Premium Dark Mode */
-  --color-bg-primary: #121212; /* Deep charcoal/black */
-  --color-bg-secondary: #1a1a1a; /* Slightly lighter charcoal */
+  --color-bg-primary: #050505; /* Pitch black matching footer */
+  --color-bg-secondary: #111111; /* Slightly lighter */
   --color-bg-inverse: #f5f5f5; /* Off-white for inversion */
 
   --color-text-primary: #f5f5f5; /* Off-white text on dark */

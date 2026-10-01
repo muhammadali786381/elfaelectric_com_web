@@ -33,7 +33,7 @@ export default function CityMarquee() {
   };
 
   return (
-    <section className="overflow-hidden border-b border-white/5 bg-[#050505] py-8 lg:py-12">
+    <section className="overflow-hidden bg-bg-primary py-8 lg:py-12">
       <div
         className="mx-auto w-full max-w-[1400px]"
         style={{

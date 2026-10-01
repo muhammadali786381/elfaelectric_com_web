@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Zap, Shield, Cpu } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { motion } from "framer-motion";
 
 const whyChooseUs = [
   {
@@ -64,7 +65,7 @@ function FeatureItem({
 
 export default function WhyChooseUs() {
   return (
-    <section className="relative overflow-hidden bg-bg-primary py-16 lg:py-24">
+    <section className="relative z-10 overflow-hidden bg-bg-primary py-16 lg:py-24">
       {/* Full-section background image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -77,7 +78,7 @@ export default function WhyChooseUs() {
         {/* Very dark overlay so text is readable */}
         <div className="absolute inset-0 bg-bg-primary/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-bg-primary via-transparent to-bg-primary" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(8,8,10,0.85)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-bg-primary)_100%)]" />
       </div>
 
       {/* Content overlaid on top */}

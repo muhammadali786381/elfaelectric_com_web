@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import BreathingText from "@/components/fancy/text/breathing-text";
 import FlipButton from "@/components/ui/FlipButton";
 
@@ -15,7 +15,7 @@ const specs = [
 export default function Hero() {
   const duration = 0.8;
   const ease = [0.16, 1, 0.3, 1] as const;
-
+  
   return (
     <section className="relative flex min-h-[100dvh] w-full flex-col overflow-hidden bg-[#050505] pt-20 lg:flex-row lg:items-center lg:pt-0">
       {/* Background with user-provided image and gradient overlay */}

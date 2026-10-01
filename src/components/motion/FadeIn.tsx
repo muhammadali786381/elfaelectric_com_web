@@ -4,7 +4,7 @@ import { motion, type HTMLMotionProps } from "framer-motion";
 import type { ReactNode } from "react";
 
 /** CSS `ease` approx — Motion rejects the string `"ease"` */
-export const ease = [0.25, 0.1, 0.25, 1] as const;
+export const ease = [0.16, 1, 0.3, 1] as const;
 
 export const duration = {
   normal: 1.25,
@@ -20,10 +20,10 @@ const presets: Record<
 > = {
   fadeIn: { initial: { opacity: 0 }, animate: { opacity: 1 } },
   /** From left → place (px only — % x can skew flex/grid card heights) */
-  fadeInLeft: { initial: { opacity: 0, x: -96 }, animate: { opacity: 1, x: 0 } },
+  fadeInLeft: { initial: { opacity: 0, x: -40 }, animate: { opacity: 1, x: 0 } },
   /** From right → place */
-  fadeInRight: { initial: { opacity: 0, x: 96 }, animate: { opacity: 1, x: 0 } },
-  fadeInUp: { initial: { opacity: 0, y: 72 }, animate: { opacity: 1, y: 0 } },
+  fadeInRight: { initial: { opacity: 0, x: 40 }, animate: { opacity: 1, x: 0 } },
+  fadeInUp: { initial: { opacity: 0, y: 40 }, animate: { opacity: 1, y: 0 } },
   fadeOut: { initial: { opacity: 0, scale: 0.96 }, animate: { opacity: 1, scale: 1 } },
 };
 
