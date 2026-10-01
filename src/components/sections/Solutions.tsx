@@ -1,68 +1,145 @@
+"use client";
+
 import Image from "next/image";
-import { FadeIn } from "@/components/motion/FadeIn";
+import { motion } from "framer-motion";
 
 const solutions = [
   {
+    num: "01",
     title: "Lithium Iron Phosphate Battery",
-    desc: "Tested and proven technology with fast charging and exceptional durability, offering higher capacity and long-lasting performance.",
+    desc: "Proven LFP technology — faster charging, greater durability, higher capacity, and long-lasting performance built for daily use.",
   },
   {
+    num: "02",
     title: "Efficient Motor Power",
-    desc: "Delivering optimized performance for extended range, efficient torque, and enhanced energy efficiency.",
+    desc: "Optimized for extended range and responsive torque, with enhanced energy efficiency that lowers your running cost per kilometre.",
   },
   {
+    num: "03",
     title: "App Tracking",
-    desc: "Monitor your bike's location, overall statistics, and the kill switch to disable the engine in case of theft or emergencies.",
+    desc: "Monitor location, live statistics, and remotely kill the engine — safety and oversight in the palm of your hand.",
   },
   {
+    num: "04",
     title: "Advance Features",
-    desc: "A high-build body, alloy rims, and tubeless tyres, providing an optimized riding experience on challenging roads.",
+    desc: "High-build body, alloy rims, and tubeless tyres engineered for Pakistan's roads — every detail optimised for durability.",
   },
 ];
 
 export default function Solutions() {
   return (
-    <section
-      className="relative flex min-h-[560px] items-center overflow-hidden py-16 lg:min-h-[720px] lg:py-20"
-      style={{
-        backgroundImage: "linear-gradient(135deg, #00C853 -80%, #000000 50%, #00C853 290%)",
-      }}
-    >
+    <section className="relative overflow-hidden bg-[#050505] pt-16 pb-0 lg:py-20 min-h-[auto] lg:max-h-[90vh] flex flex-col justify-center">
+      {/* Floating bike — right-pinned, fades out at bottom */}
       <div
-        className="pointer-events-none absolute inset-0 hidden bg-contain bg-right-top bg-no-repeat lg:block"
-        style={{ backgroundImage: "url('/assets/images/solutions.webp')" }}
-        aria-hidden
-      />
-
-      <div className="relative z-10 mx-auto flex w-full max-w-container flex-col justify-center px-4 sm:px-6">
-        <div className="w-full lg:max-w-[75%] xl:max-w-[70%]">
-          <FadeIn variant="fadeInUp" speed="slow">
-            <h2 className="font-montserrat mb-8 text-[32px] font-bold leading-tight text-text-inverse sm:text-[41px]">
-              Solutions We Offer
-            </h2>
-          </FadeIn>
-
-          <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
-            {solutions.map((s) => (
-              <div key={s.title} className="max-w-[400px]">
-                <h3 className="font-montserrat mb-2 text-[19px] font-bold text-text-inverse sm:text-[20px]">
-                  {s.title}
-                </h3>
-                <p className="font-roboto text-[15px] leading-relaxed text-text-inverse/75 lg:max-w-[260px] xl:max-w-[320px]">{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-12 flex justify-center lg:hidden -mb-16">
+        className="pointer-events-none absolute right-0 top-0 hidden h-full w-[40%] lg:block"
+        style={{
+          maskImage:
+            "linear-gradient(to bottom, black 40%, transparent 92%), linear-gradient(to left, black 55%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 40%, transparent 92%), linear-gradient(to left, black 55%, transparent 100%)",
+          maskComposite: "intersect",
+          WebkitMaskComposite: "source-in",
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 1.1, ease: [0.23, 1, 0.32, 1] }}
+          className="relative h-full w-full"
+        >
           <Image
             src="/assets/images/solutions.webp"
             alt="ELFA EV-1 Scooty"
-            width={1311}
-            height={1784}
-            className="h-auto w-full max-w-[340px] sm:max-w-[380px] object-contain drop-shadow-2xl"
+            fill
+            className="object-contain object-right-top opacity-50"
+            sizes="40vw"
           />
+        </motion.div>
+      </div>
+
+      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6">
+        {/* Eyebrow */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+          className="font-roboto mb-4 text-[11px] font-bold uppercase tracking-[3px] text-brand-primary"
+        >
+          What We've Built
+        </motion.p>
+
+        {/* Heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.65, ease: [0.23, 1, 0.32, 1], delay: 0.05 }}
+          className="font-montserrat mb-10 text-[28px] font-bold leading-tight tracking-tight text-white sm:text-[38px] lg:text-[44px] lg:mb-12"
+        >
+          Solutions We Offer
+        </motion.h2>
+
+        {/* Feature list — staggered rows, max width keeps clear of bike */}
+        <div className="w-full lg:max-w-[52%]">
+          {solutions.map((s, i) => (
+            <motion.div
+              key={s.num}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{
+                duration: 0.55,
+                ease: [0.23, 1, 0.32, 1],
+                delay: i * 0.07,
+              }}
+            >
+              {/* Full-width rule */}
+              <div className="h-px w-full bg-white/10" />
+
+              <div className="flex items-start gap-6 py-5">
+                {/* Number */}
+                <span className="font-montserrat shrink-0 text-[11px] font-bold tabular-nums tracking-widest text-white/25 mt-1">
+                  {s.num}
+                </span>
+
+                {/* Text */}
+                <div className="flex flex-col">
+                  <h3 className="font-montserrat mb-1.5 text-[16px] font-semibold leading-snug text-white sm:text-[18px]">
+                    {s.title}
+                  </h3>
+                  <p className="font-roboto text-[14px] leading-relaxed text-white/55">
+                    {s.desc}
+                  </p>
+                </div>
+
+                {/* Brand-primary tick on the far right */}
+                <div className="ml-auto shrink-0 mt-1.5 h-1.5 w-1.5 rounded-full bg-brand-primary opacity-70" />
+              </div>
+            </motion.div>
+          ))}
+
+          {/* Closing rule */}
+          <div className="h-px w-full bg-white/10" />
         </div>
+
+        {/* Mobile-only image */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.97 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+          className="mt-10 flex justify-center lg:hidden"
+        >
+          <Image
+            src="/assets/images/solutions.webp"
+            alt="ELFA EV-1 Scooty"
+            width={500}
+            height={662}
+            className="h-auto w-full max-w-[420px] object-contain opacity-90"
+          />
+        </motion.div>
       </div>
     </section>
   );

@@ -61,7 +61,7 @@ type CartContextValue = {
   dismissNotice: (noticeId: string) => void;
   clearCart: () => void;
   clearFly: () => void;
-  applyCoupon: (code: string) => boolean;
+  applyCoupon: (code: string) => Promise<boolean>;
   removeCoupon: () => void;
 };
 
@@ -72,16 +72,6 @@ const COUPON_KEY = "elfa-cart-coupon-v1";
 const UNDO_KEY = "elfa-cart-undo-v1";
 /** WooCommerce-style undo window */
 export const UNDO_MS = 5 * 60 * 1000;
-
-/**
- * Live site coupons are WooCommerce server-side (`/?wc-ajax=apply_coupon` + nonce).
- * Cross-origin Next.js cannot apply WP coupons without Store API / proxy.
- * These local demo codes mirror typical promo UX until a WooCommerce backend is wired.
- */
-const LOCAL_COUPONS: Record<string, { discount: number; label: string }> = {
-  ELFA10K: { discount: 10000, label: "ELFA10K (−Rs 10,000)" },
-  SAVE5K: { discount: 5000, label: "SAVE5K (−Rs 5,000)" },
-};
 
 function parseMoney(rupeesLabel: string): number {
   const n = Number(rupeesLabel.replace(/[^\d]/g, ""));
@@ -271,26 +261,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCouponMessage(null);
   }, []);
 
-  const applyCoupon = useCallback(
-    (raw: string) => {
-      const code = raw.trim().toUpperCase();
-      if (!code) {
-        setCouponMessage("Please enter a coupon code.");
-        return false;
-      }
-      const match = LOCAL_COUPONS[code];
-      if (!match) {
-        setCouponMessage("Coupon “" + code + "” does not exist!");
-        return false;
-      }
-      const sub = items.reduce((sum, i) => sum + i.price * i.qty, 0);
-      const discount = Math.min(match.discount, sub);
-      setCoupon({ code, discount, label: match.label });
-      setCouponMessage("Coupon code applied successfully.");
-      return true;
-    },
-    [items],
-  );
+  const applyCoupon = useCallback(async (raw: string) => {
+    const code = raw.trim().toUpperCase();
+    if (!code) {
+      setCouponMessage("Please enter a coupon code.");
+      return false;
+    }
+    const sub = itemsRef.current.reduce((sum, i) => sum + i.price * i.qty, 0);
+    const { validateCoupon } = await import("@/actions/admin/coupons");
+    const result = await validateCoupon(code, sub);
+    if (!result.ok) {
+      setCouponMessage(result.error);
+      return false;
+    }
+    setCoupon({
+      code: result.data.code,
+      discount: result.data.discount,
+      label: result.data.label,
+    });
+    setCouponMessage("Coupon code applied successfully.");
+    return true;
+  }, []);
 
   const removeCoupon = useCallback(() => {
     setCoupon(null);

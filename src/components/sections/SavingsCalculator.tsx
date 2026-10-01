@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 
@@ -14,7 +15,6 @@ import {
 import { Slider } from "@/components/ui/slider";
 import FlipButton from "@/components/ui/FlipButton";
 
-// ── Model data ──────────────────────────────────────────────────────────────
 type ModelConfig = {
   id: string;
   label: string;
@@ -22,11 +22,33 @@ type ModelConfig = {
   kmPerLitrePetrol: number;
   kmPerUnitElfa: number;
   buyHref: string;
+  /** Icon when label text is white (inactive) */
+  iconLight: string;
+  /** Icon when label text is black (active on green) */
+  iconDark: string;
 };
 
 const models: ModelConfig[] = [
-  { id: "ev125", label: "EV-125 BIKE", short: "EV-125", kmPerLitrePetrol: 45, kmPerUnitElfa: 46, buyHref: "/product/elfaev125" },
-  { id: "ev1", label: "EV-1 Scooty", short: "EV-1", kmPerLitrePetrol: 40, kmPerUnitElfa: 39, buyHref: "/product/ev1-scooty" },
+  {
+    id: "ev125",
+    label: "EV-125 BIKE",
+    short: "EV-125",
+    kmPerLitrePetrol: 45,
+    kmPerUnitElfa: 46,
+    buyHref: "/product/elfaev125",
+    iconLight: "/bike1.png",
+    iconDark: "/bikeblack.png",
+  },
+  {
+    id: "ev1",
+    label: "EV-1 Scooty",
+    short: "EV-1",
+    kmPerLitrePetrol: 40,
+    kmPerUnitElfa: 39,
+    buyHref: "/product/ev1-scooty",
+    iconLight: "/scooty1.png",
+    iconDark: "/scootyblack.png",
+  },
 ];
 
 const animVariant: Variants = {
@@ -112,7 +134,8 @@ export default function SavingsCalculator({
 }) {
   const locked = Boolean(productId);
   const [activeId, setActiveId] = useState<string>(productId ?? models[0].id);
-  const model = models.find((m) => m.id === (locked ? productId : activeId)) ?? models[0];
+  const model =
+    models.find((m) => m.id === (locked ? productId : activeId)) ?? models[0];
 
   const [dailyKm, setDailyKm] = useState(50);
   const [petrolPrice, setPetrolPrice] = useState(386);
@@ -124,23 +147,28 @@ export default function SavingsCalculator({
   const savings = Math.max(0, Math.round(petrolAnnual - elfaAnnual));
 
   const fmt = (n: number) => `Rs. ${Math.round(n).toLocaleString("en-US")}`;
-  const savingsChars = String(savings).split("");
+  const savingsChars = Math.round(savings).toLocaleString("en-US").split("");
 
   return (
     <section className="relative overflow-hidden bg-bg-primary py-20 ">
-      {/* Subtle radial glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/4 rounded-full opacity-10"
-        style={{ background: "radial-gradient(ellipse, var(--color-brand-primary) 0%, transparent 70%)" }}
+        className="pointer-events-none absolute -right-[15%] top-32 h-[700px] w-[800px] rounded-full opacity-[0.08]"
+        style={{
+          background:
+            "radial-gradient(circle, var(--color-brand-primary) 0%, transparent 70%)",
+        }}
       />
 
       <div
         aria-label="Savings Calculator"
         className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-4 sm:px-6"
       >
-        <div className="flex flex-col items-start gap-4">
-          <Badge variant="outline" className="h-7 px-3 text-brand-primary border-brand-primary/20 bg-brand-primary/5 uppercase tracking-wider font-roboto">
+        <div className="flex flex-col items-center gap-4 text-center lg:items-start lg:text-left">
+          <Badge
+            variant="outline"
+            className="h-7 px-3 text-brand-primary border-brand-primary/20 bg-brand-primary/5 uppercase tracking-wider font-roboto"
+          >
             Calculate your savings
           </Badge>
           <h2 className="font-montserrat max-w-xl text-4xl font-bold tracking-tighter text-white sm:text-[44px]">
@@ -150,23 +178,35 @@ export default function SavingsCalculator({
           </h2>
         </div>
 
-        {/* Model Toggle */}
         {!locked && (
-          <div className="flex">
+          <div className="flex justify-center lg:justify-start">
             <div className="inline-flex gap-1 rounded-full border border-white/10 bg-white/5 p-1">
-              {models.map((m) => (
-                <button
-                  key={m.id}
-                  type="button"
-                  onClick={() => setActiveId(m.id)}
-                  className={`font-roboto relative rounded-full px-5 py-2 text-[12px] font-semibold uppercase tracking-[1px] transition-all duration-300 ${activeId === m.id
-                      ? "bg-brand-primary text-bg-primary shadow-[0_0_16px_rgba(97,206,112,0.4)]"
-                      : "text-white/50 hover:text-white/80"
-                    }`}
-                >
-                  {m.label}
-                </button>
-              ))}
+              {models.map((m) => {
+                const active = activeId === m.id;
+                return (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => setActiveId(m.id)}
+                    className={cn(
+                      "font-roboto relative inline-flex min-h-11 items-center gap-2 rounded-full px-4 py-2 text-[12px] font-semibold uppercase tracking-[1px] transition-all duration-300 sm:px-5",
+                      active
+                        ? "bg-brand-primary text-bg-primary shadow-[0_0_16px_rgba(97,206,112,0.4)]"
+                        : "text-white/50 hover:text-white/80",
+                    )}
+                  >
+                    <Image
+                      src={active ? m.iconDark : m.iconLight}
+                      alt=""
+                      width={28}
+                      height={28}
+                      className="h-6 w-6 object-contain sm:h-7 sm:w-7"
+                      aria-hidden
+                    />
+                    {m.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
@@ -174,19 +214,19 @@ export default function SavingsCalculator({
         <div className="flex w-full flex-col gap-2 rounded-[2rem] bg-white/[0.02] p-1 shadow-lg border border-white/[0.06] lg:flex-row backdrop-blur-md">
           <div className="flex flex-1 flex-col gap-8 lg:gap-12 p-6 sm:p-8 lg:p-10">
             <div className="flex flex-col gap-8 lg:gap-10">
-              <p className="font-roboto text-[16px] leading-relaxed text-white/50">
-                Adjust your daily routine to see how much you could save with an electric bike compared to petrol.
+              <p className="font-roboto text-center text-[16px] leading-relaxed text-white/50 lg:text-left">
+                Adjust your daily routine to see how much you could save with an
+                electric bike compared to petrol.
               </p>
 
               <div className="flex flex-col gap-6 lg:gap-8">
-                <div className="font-montserrat flex items-center justify-center gap-2 text-4xl sm:text-5xl font-bold tracking-tight text-white">
+                <div className="font-montserrat flex items-center justify-center gap-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
                   <span>{dailyKm}</span>
-                  <span className="text-white/40 text-xl sm:text-2xl">km / day</span>
+                  <span className="text-xl text-white/40 sm:text-2xl">
+                    km / day
+                  </span>
                 </div>
-                <SliderPattern
-                  value={dailyKm}
-                  setValue={setDailyKm}
-                />
+                <SliderPattern value={dailyKm} setValue={setDailyKm} />
               </div>
             </div>
 
@@ -206,7 +246,9 @@ export default function SavingsCalculator({
                   <InputGroupInput
                     type="number"
                     value={petrolPrice}
-                    onChange={(e) => setPetrolPrice(Number(e.target.value) || 0)}
+                    onChange={(e) =>
+                      setPetrolPrice(Number(e.target.value) || 0)
+                    }
                     min={0}
                     aria-label="Petrol Price"
                     className="w-16 text-[16px] font-montserrat font-bold tracking-tight focus-visible:ring-brand-primary/50"
@@ -247,17 +289,17 @@ export default function SavingsCalculator({
             </div>
           </div>
 
-          <div className="flex w-full flex-col items-center justify-between gap-8 rounded-[1.8rem] bg-[#050505] border border-white/5 p-8 lg:w-[28rem] lg:p-10">
+          <div className="flex w-full flex-col items-center justify-between gap-8 rounded-[1.8rem] border border-white/5 bg-[#050505] p-8 lg:w-[28rem] lg:p-10">
             <div className="flex w-full flex-col items-center gap-2 text-center">
               <h3 className="font-roboto font-medium tracking-wide text-white/80">
                 Annual Cost Savings
               </h3>
-              <div className="font-montserrat mt-2 flex items-baseline gap-1 text-[56px] leading-none font-bold tracking-tighter text-brand-primary">
-                <span className="text-3xl text-brand-primary/80 mr-1">Rs</span>
+              <div className="font-montserrat mt-2 flex items-baseline gap-1 text-[56px] font-bold leading-none tracking-tighter text-brand-primary">
+                <span className="mr-1 text-3xl text-brand-primary/80">Rs</span>
                 <AnimatePresence mode="popLayout">
                   {savingsChars.map((char, idx) => (
                     <motion.span
-                      key={`${savings}-${idx}`}
+                      key={`${savings}-${idx}-${char}`}
                       variants={animVariant}
                       initial="hidden"
                       animate="visible"
@@ -276,19 +318,21 @@ export default function SavingsCalculator({
               <FlipButton
                 href={model.buyHref}
                 variant="primary"
-                className="mt-8 w-full rounded-md h-12 text-[14px]"
+                className="mt-8 h-12 w-full rounded-md text-[14px]"
               >
                 Buy Now
               </FlipButton>
             </div>
 
             <div className="flex w-full flex-col gap-4 font-roboto text-[14px]">
-              <p className="text-[11px] font-semibold tracking-widest text-white/30 uppercase">
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-white/30">
                 Breakdown
               </p>
               <div className="flex items-center justify-between">
                 <span className="text-white/60">Annual Kilometers</span>
-                <span className="font-medium text-white">{Math.round(annualKm).toLocaleString()} km</span>
+                <span className="font-medium text-white">
+                  {Math.round(annualKm).toLocaleString("en-US")} km
+                </span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-white/60">Petrol Cost (1 Year)</span>
@@ -296,7 +340,9 @@ export default function SavingsCalculator({
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-white/60">ELFA Cost (1 Year)</span>
-                <span className="font-medium text-brand-primary">{fmt(elfaAnnual)}</span>
+                <span className="font-medium text-brand-primary">
+                  {fmt(elfaAnnual)}
+                </span>
               </div>
               <div className="-mx-2 my-1 h-px bg-white/10" />
               <div className="flex items-center justify-between font-bold">

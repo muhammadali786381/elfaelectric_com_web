@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CouponType {
+  FIXED_AMOUNT
+  PERCENTAGE
+}
+
+enum CouponStatus {
+  ACTIVE
+  INACTIVE
+  EXHAUSTED
+}
+
+enum OrderStatus {
+  PENDING
+  HOLD
+  PROCESSING
+  DELIVERED
+  CANCELLED
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+}
+
+model AdminAuditEvent {
+  id        String   @id @default(cuid())
+  action    String
+  email     String   @default("")
+  ip        String   @default("")
+  success   Boolean  @default(false)
+  detail    String   @default("")
+  createdAt DateTime @default(now())
+
+  @@index([action])
+  @@index([createdAt])
+  @@index([email])
+}
+
+model Coupon {
+  id        String       @id @default(cuid())
+  code      String       @unique
+  type      CouponType
+  amount    Int
+  maxUses   Int?
+  uses      Int          @default(0)
+  status    CouponStatus @default(ACTIVE)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model Order {
+  id                    String      @id
+  email                 String
+  status                OrderStatus @default(PENDING)
+  note                  String      @default("")
+  paymentMethod         String      @default("bacs")
+  shippingMethod        String      @default("free_shipping")
+  subtotal              Int
+  discount              Int         @default(0)
+  taxTotal              Int         @default(0)
+  shippingTotal         Int         @default(0)
+  total                 Int
+  couponCode            String?
+  billingSameAsShipping Boolean     @default(true)
+
+  shipFirstName String
+  shipLastName  String
+  shipCountry   String
+  shipAddress1  String
+  shipAddress2  String      @default("")
+  shipCity      String
+  shipState     String
+  shipPostcode  String
+  shipPhone     String
+
+  billFirstName String?
+  billLastName  String?
+  billCountry   String?
+  billAddress1  String?
+  billAddress2  String?
+  billCity      String?
+  billState     String?
+  billPostcode  String?
+  billPhone     String?
+
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  items     OrderItem[]
+  events    OrderStatusEvent[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+}
+
+model OrderStatusEvent {
+  id        String      @id @default(cuid())
+  orderId   String
+  status    OrderStatus
+  note      String      @default("")
+  createdAt DateTime    @default(now())
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id           String @id @default(cuid())
+  orderId      String
+  productId    String
+  name         String
+  variantLabel String
+  price        Int
+  tax          Int    @default(0)
+  image        String
+  qty          Int
+  order        Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+}
+
+enum WebhookEvent {
+  ORDER_CREATED
+}
+
+/// Outbound webhook target. Admin stores a URL; we POST event payloads here.
+model WebhookEndpoint {
+  id              String       @id @default(cuid())
+  url             String
+  label           String       @default("")
+  event           WebhookEvent @default(ORDER_CREATED)
+  enabled         Boolean      @default(true)
+  lastStatus      String?
+  lastError       String       @default("")
+  lastDeliveredAt DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  deliveries      WebhookDeliveryLog[]
+
+  @@index([enabled, event])
+}
+
+/// Per-delivery attempt log — searchable by order id.
+model WebhookDeliveryLog {
+  id            String           @id @default(cuid())
+  orderId       String
+  endpointId    String?
+  endpointUrl   String
+  endpointLabel String           @default("")
+  event         WebhookEvent
+  success       Boolean
+  httpStatus    Int?
+  error         String           @default("")
+  createdAt     DateTime         @default(now())
+  endpoint      WebhookEndpoint? @relation(fields: [endpointId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+  @@index([createdAt])
+  @@index([success])
+  @@index([endpointId])
+}

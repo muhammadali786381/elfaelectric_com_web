@@ -18,8 +18,8 @@
   --color-elfa-yellow: #ffc107;
 
   /* Global Theme Variables - Premium Dark Mode */
-  --color-bg-primary: #121212; /* Deep charcoal/black */
-  --color-bg-secondary: #1a1a1a; /* Slightly lighter charcoal */
+  --color-bg-primary: #050505; /* Pitch black matching footer */
+  --color-bg-secondary: #111111; /* Slightly lighter */
   --color-bg-inverse: #f5f5f5; /* Off-white for inversion */
 
   --color-text-primary: #f5f5f5; /* Off-white text on dark */
@@ -318,6 +318,35 @@ summary {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* Admin: dark shell + ELFA green as primary (not default AI purple) */
+.admin-theme.dark {
+  --background: #050505;
+  --foreground: #f5f5f5;
+  --card: #0a0a0c;
+  --card-foreground: #f5f5f5;
+  --popover: #0a0a0c;
+  --popover-foreground: #f5f5f5;
+  --primary: #61ce70;
+  --primary-foreground: #050505;
+  --secondary: #141416;
+  --secondary-foreground: #f5f5f5;
+  --muted: #141416;
+  --muted-foreground: #a3a3a3;
+  --accent: #141416;
+  --accent-foreground: #f5f5f5;
+  --border: rgb(255 255 255 / 10%);
+  --input: rgb(255 255 255 / 12%);
+  --ring: #61ce70;
+  --sidebar: #0a0a0c;
+  --sidebar-foreground: #f5f5f5;
+  --sidebar-primary: #61ce70;
+  --sidebar-primary-foreground: #050505;
+  --sidebar-accent: #141416;
+  --sidebar-accent-foreground: #f5f5f5;
+  --sidebar-border: rgb(255 255 255 / 10%);
+  --sidebar-ring: #61ce70;
 }
 /* Digistartup / GHL Form Scrollbar Fix */
 iframe[src*="digistartup.io"] {

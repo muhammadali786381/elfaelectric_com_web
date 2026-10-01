@@ -120,8 +120,10 @@ export default function Header() {
     const handleResize = () => {
       if (window.innerWidth >= 1536) {
         setMaxVisible(navLinks.length);
-      } else if (window.innerWidth >= 1280) {
+      } else if (window.innerWidth >= 1361) {
         setMaxVisible(7);
+      } else if (window.innerWidth >= 1280) {
+        setMaxVisible(6);
       } else {
         setMaxVisible(5);
       }

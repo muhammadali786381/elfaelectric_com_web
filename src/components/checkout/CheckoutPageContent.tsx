@@ -6,13 +6,14 @@ import { useMemo, useState, type FormEvent } from "react";
 import { ChevronDown, Info } from "lucide-react";
 import { formatRs, useCart } from "@/components/cart/CartContext";
 import FlipButton from "@/components/ui/FlipButton";
+import { placeOrder } from "@/actions/checkout";
 import {
-  generateOrderId,
-  PK_STATES,
-  saveOrder,
-  type CheckoutAddress,
-  type CheckoutOrder,
-} from "@/lib/orders";
+  parseCheckoutForm,
+  sanitizePhoneInput,
+  sanitizePostcodeInput,
+  zodFieldErrors,
+} from "@/lib/checkout-schema";
+import { PK_STATES, type CheckoutAddress } from "@/lib/orders";
 
 const emptyAddress = (): CheckoutAddress => ({
   firstName: "",
@@ -29,6 +30,9 @@ const emptyAddress = (): CheckoutAddress => ({
 const fieldClass =
   "font-roboto h-[50px] w-full rounded-lg border border-white/10 bg-white/5 px-4 text-[15px] text-white outline-none transition-colors placeholder:text-white/30 focus:border-brand-primary";
 
+const fieldErrorClass =
+  "font-roboto border-red-500/60 focus:border-red-400";
+
 const labelClass = "font-roboto mb-2 block text-[13px] font-bold tracking-wide text-white/70";
 
 const sectionTitleClass =
@@ -39,20 +43,11 @@ const sectionClass =
 
 type FieldErrors = Partial<Record<string, string>>;
 
-function validateEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function validateAddress(addr: CheckoutAddress, prefix: string): FieldErrors {
-  const e: FieldErrors = {};
-  if (!addr.firstName.trim()) e[`${prefix}.firstName`] = "Required";
-  if (!addr.lastName.trim()) e[`${prefix}.lastName`] = "Required";
-  if (!addr.address1.trim()) e[`${prefix}.address1`] = "Required";
-  if (!addr.city.trim()) e[`${prefix}.city`] = "Required";
-  if (!addr.state.trim()) e[`${prefix}.state`] = "Required";
-  if (!addr.postcode.trim()) e[`${prefix}.postcode`] = "Required";
-  if (!addr.phone.trim()) e[`${prefix}.phone`] = "Required";
-  return e;
+function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+  return (
+    <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">{message}</p>
+  );
 }
 
 export default function CheckoutPageContent() {
@@ -79,7 +74,12 @@ export default function CheckoutPageContent() {
   const [couponCode, setCouponCode] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
-  const [placedOrder, setPlacedOrder] = useState<CheckoutOrder | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [placedOrder, setPlacedOrder] = useState<{
+    id: string;
+    email: string;
+    total: number;
+  } | null>(null);
 
   const itemCount = useMemo(() => items.reduce((n, i) => n + i.qty, 0), [items]);
 
@@ -91,40 +91,54 @@ export default function CheckoutPageContent() {
     setBilling((s) => ({ ...s, [key]: value }));
   }
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    const next: FieldErrors = {};
-    if (!email.trim() || !validateEmail(email)) next.email = "Enter a valid email";
-    Object.assign(next, validateAddress(shipping, "shipping"));
-    if (!billingSame) Object.assign(next, validateAddress(billing, "billing"));
-    setErrors(next);
-    if (Object.keys(next).length > 0) return;
-
-    setSubmitting(true);
-    const order: CheckoutOrder = {
-      id: generateOrderId(),
-      createdAt: new Date().toISOString(),
-      status: "pending_payment",
-      email: email.trim(),
+    const parsed = parseCheckoutForm({
+      email,
       shipping,
       billingSameAsShipping: billingSame,
       billing: billingSame ? null : billing,
-      note: addNote ? note.trim() : "",
-      paymentMethod: "bacs",
-      shippingMethod: "free_shipping",
-      items: items.map((i) => ({ ...i })),
-      subtotal,
-      discount,
-      couponCode: coupon?.code ?? null,
-      taxTotal,
-      shippingTotal: 0,
-      total,
-    };
+      note: addNote ? note : "",
+    });
 
-    saveOrder(order);
-    clearCart();
-    setPlacedOrder(order);
-    setSubmitting(false);
+    if (!parsed.success) {
+      setErrors(zodFieldErrors(parsed.error));
+      setSubmitError(null);
+      return;
+    }
+
+    setErrors({});
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const result = await placeOrder({
+        email: parsed.data.email,
+        shipping: parsed.data.shipping,
+        billingSameAsShipping: parsed.data.billingSameAsShipping,
+        billing: parsed.data.billing,
+        note: parsed.data.note,
+        items: items.map((i) => ({ ...i })),
+        couponCode: coupon?.code ?? null,
+      });
+      if (!result.ok) {
+        setSubmitError(result.error);
+        return;
+      }
+      clearCart();
+      setPlacedOrder({
+        id: result.data.id,
+        email: result.data.email,
+        total: result.data.total,
+      });
+    } catch {
+      setSubmitError("Could not place order. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  function inputClass(field: string) {
+    return errors[field] ? `${fieldClass} ${fieldErrorClass}` : fieldClass;
   }
 
   if (placedOrder) {
@@ -229,12 +243,14 @@ export default function CheckoutPageContent() {
                   autoComplete="email"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={fieldClass}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
+                  }}
+                  className={inputClass("email")}
+                  aria-invalid={Boolean(errors.email)}
                 />
-                {errors.email ? (
-                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">{errors.email}</p>
-                ) : null}
+                <FieldError message={errors.email} />
               </div>
               <p className="font-roboto text-[13px] text-white/50">
                 You are currently checking out as a guest.
@@ -252,14 +268,14 @@ export default function CheckoutPageContent() {
                 </label>
                 <input
                   id="shipping-first_name"
+                  autoComplete="given-name"
                   required
                   value={shipping.firstName}
                   onChange={(e) => setShip("firstName", e.target.value)}
-                  className={fieldClass}
+                  className={inputClass("shipping.firstName")}
+                  aria-invalid={Boolean(errors["shipping.firstName"])}
                 />
-                {errors["shipping.firstName"] ? (
-                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
-                ) : null}
+                <FieldError message={errors["shipping.firstName"]} />
               </div>
               <div>
                 <label htmlFor="shipping-country" className={labelClass}>
@@ -269,10 +285,11 @@ export default function CheckoutPageContent() {
                   id="shipping-country"
                   value={shipping.country}
                   onChange={(e) => setShip("country", e.target.value)}
-                  className={fieldClass}
+                  className={inputClass("shipping.country")}
                 >
                   <option value="Pakistan">Pakistan</option>
                 </select>
+                <FieldError message={errors["shipping.country"]} />
               </div>
               <div className="sm:col-span-2">
                 <label htmlFor="shipping-last_name" className={labelClass}>
@@ -280,14 +297,14 @@ export default function CheckoutPageContent() {
                 </label>
                 <input
                   id="shipping-last_name"
+                  autoComplete="family-name"
                   required
                   value={shipping.lastName}
                   onChange={(e) => setShip("lastName", e.target.value)}
-                  className={fieldClass}
+                  className={inputClass("shipping.lastName")}
+                  aria-invalid={Boolean(errors["shipping.lastName"])}
                 />
-                {errors["shipping.lastName"] ? (
-                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
-                ) : null}
+                <FieldError message={errors["shipping.lastName"]} />
               </div>
               <div className="sm:col-span-2">
                 <label htmlFor="shipping-address_1" className={labelClass}>
@@ -295,14 +312,14 @@ export default function CheckoutPageContent() {
                 </label>
                 <input
                   id="shipping-address_1"
+                  autoComplete="address-line1"
                   required
                   value={shipping.address1}
                   onChange={(e) => setShip("address1", e.target.value)}
-                  className={fieldClass}
+                  className={inputClass("shipping.address1")}
+                  aria-invalid={Boolean(errors["shipping.address1"])}
                 />
-                {errors["shipping.address1"] ? (
-                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
-                ) : null}
+                <FieldError message={errors["shipping.address1"]} />
                 {!showApartment ? (
                   <button
                     type="button"
@@ -314,6 +331,7 @@ export default function CheckoutPageContent() {
                 ) : (
                   <input
                     id="shipping-address_2"
+                    autoComplete="address-line2"
                     value={shipping.address2}
                     onChange={(e) => setShip("address2", e.target.value)}
                     placeholder="Apartment, suite, unit, etc."
@@ -327,14 +345,14 @@ export default function CheckoutPageContent() {
                 </label>
                 <input
                   id="shipping-city"
+                  autoComplete="address-level2"
                   required
                   value={shipping.city}
                   onChange={(e) => setShip("city", e.target.value)}
-                  className={fieldClass}
+                  className={inputClass("shipping.city")}
+                  aria-invalid={Boolean(errors["shipping.city"])}
                 />
-                {errors["shipping.city"] ? (
-                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
-                ) : null}
+                <FieldError message={errors["shipping.city"]} />
               </div>
               <div>
                 <label htmlFor="shipping-state" className={labelClass}>
@@ -342,9 +360,10 @@ export default function CheckoutPageContent() {
                 </label>
                 <select
                   id="shipping-state"
+                  autoComplete="address-level1"
                   value={shipping.state}
                   onChange={(e) => setShip("state", e.target.value)}
-                  className={fieldClass}
+                  className={inputClass("shipping.state")}
                 >
                   {PK_STATES.map((s) => (
                     <option key={s} value={s}>
@@ -352,6 +371,7 @@ export default function CheckoutPageContent() {
                     </option>
                   ))}
                 </select>
+                <FieldError message={errors["shipping.state"]} />
               </div>
               <div>
                 <label htmlFor="shipping-postcode" className={labelClass}>
@@ -359,14 +379,18 @@ export default function CheckoutPageContent() {
                 </label>
                 <input
                   id="shipping-postcode"
+                  autoComplete="postal-code"
+                  inputMode="numeric"
+                  pattern="[0-9]{5}"
+                  maxLength={5}
                   required
                   value={shipping.postcode}
-                  onChange={(e) => setShip("postcode", e.target.value)}
-                  className={fieldClass}
+                  onChange={(e) => setShip("postcode", sanitizePostcodeInput(e.target.value))}
+                  className={inputClass("shipping.postcode")}
+                  aria-invalid={Boolean(errors["shipping.postcode"])}
+                  placeholder="e.g. 75500"
                 />
-                {errors["shipping.postcode"] ? (
-                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
-                ) : null}
+                <FieldError message={errors["shipping.postcode"]} />
               </div>
               <div>
                 <label htmlFor="shipping-phone" className={labelClass}>
@@ -375,14 +399,16 @@ export default function CheckoutPageContent() {
                 <input
                   id="shipping-phone"
                   type="tel"
+                  autoComplete="tel"
+                  inputMode="tel"
                   required
                   value={shipping.phone}
-                  onChange={(e) => setShip("phone", e.target.value)}
-                  className={fieldClass}
+                  onChange={(e) => setShip("phone", sanitizePhoneInput(e.target.value))}
+                  className={inputClass("shipping.phone")}
+                  aria-invalid={Boolean(errors["shipping.phone"])}
+                  placeholder="03XX XXXXXXX"
                 />
-                {errors["shipping.phone"] ? (
-                  <p className="font-roboto mt-1.5 text-[13px] font-medium text-red-400">Required</p>
-                ) : null}
+                <FieldError message={errors["shipping.phone"]} />
               </div>
             </div>
 
@@ -403,26 +429,52 @@ export default function CheckoutPageContent() {
                 </p>
                 {(
                   [
-                    ["firstName", "First name"],
-                    ["lastName", "Last name"],
-                    ["address1", "Street address"],
-                    ["city", "Town / City"],
-                    ["postcode", "Postcode / ZIP"],
-                    ["phone", "Phone"],
+                    ["firstName", "First name", "text"],
+                    ["lastName", "Last name", "text"],
+                    ["address1", "Street address", "text"],
+                    ["city", "Town / City", "text"],
+                    ["postcode", "Postcode / ZIP", "postcode"],
+                    ["phone", "Phone", "phone"],
                   ] as const
-                ).map(([key, label]) => (
-                  <div key={key} className={key === "address1" ? "sm:col-span-2" : ""}>
-                    <label className={labelClass} htmlFor={`billing-${key}`}>
-                      {label}
-                    </label>
-                    <input
-                      id={`billing-${key}`}
-                      value={billing[key]}
-                      onChange={(e) => setBill(key, e.target.value)}
-                      className={fieldClass}
-                    />
-                  </div>
-                ))}
+                ).map(([key, label, kind]) => {
+                  const errorKey = `billing.${key}`;
+                  return (
+                    <div key={key} className={key === "address1" ? "sm:col-span-2" : ""}>
+                      <label className={labelClass} htmlFor={`billing-${key}`}>
+                        {label}
+                      </label>
+                      <input
+                        id={`billing-${key}`}
+                        type={kind === "phone" ? "tel" : "text"}
+                        inputMode={
+                          kind === "phone" ? "tel" : kind === "postcode" ? "numeric" : undefined
+                        }
+                        maxLength={kind === "postcode" ? 5 : undefined}
+                        value={billing[key]}
+                        onChange={(e) => {
+                          const raw = e.target.value;
+                          const next =
+                            kind === "phone"
+                              ? sanitizePhoneInput(raw)
+                              : kind === "postcode"
+                                ? sanitizePostcodeInput(raw)
+                                : raw;
+                          setBill(key, next);
+                        }}
+                        className={inputClass(errorKey)}
+                        aria-invalid={Boolean(errors[errorKey])}
+                        placeholder={
+                          kind === "phone"
+                            ? "03XX XXXXXXX"
+                            : kind === "postcode"
+                              ? "e.g. 75500"
+                              : undefined
+                        }
+                      />
+                      <FieldError message={errors[errorKey]} />
+                    </div>
+                  );
+                })}
                 <div>
                   <label className={labelClass} htmlFor="billing-state">
                     State / County
@@ -431,7 +483,7 @@ export default function CheckoutPageContent() {
                     id="billing-state"
                     value={billing.state}
                     onChange={(e) => setBill("state", e.target.value)}
-                    className={fieldClass}
+                    className={inputClass("billing.state")}
                   >
                     {PK_STATES.map((s) => (
                       <option key={s} value={s}>
@@ -439,6 +491,7 @@ export default function CheckoutPageContent() {
                       </option>
                     ))}
                   </select>
+                  <FieldError message={errors["billing.state"]} />
                 </div>
               </div>
             ) : null}
@@ -518,6 +571,12 @@ export default function CheckoutPageContent() {
               Privacy Policy
             </Link>
           </p>
+
+          {submitError ? (
+            <p className="font-roboto mt-4 text-[14px] text-[#ff6b5a]">
+              {submitError}
+            </p>
+          ) : null}
 
           <FlipButton
             type="submit"

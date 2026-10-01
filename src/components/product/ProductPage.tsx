@@ -3,6 +3,7 @@ import ProductHero from "@/components/product/ProductHero";
 import ProductColorCarousel from "@/components/product/ProductColorCarousel";
 import ProductCoreFeatures from "@/components/product/ProductCoreFeatures";
 import ProductAdvancedFeatures from "@/components/product/ProductAdvancedFeatures";
+import ProductMobileApp from "@/components/product/ProductMobileApp";
 import ProductSpecs from "@/components/product/ProductSpecs";
 import ProductGallery from "@/components/product/ProductGallery";
 import ReelsCarousel from "@/components/sections/ReelsCarousel";
@@ -15,6 +16,9 @@ import FinalCTA from "../sections/FinalCTA";
 
 /** Shared product page layout — pass EV-125 / EV-1 (etc.) data. */
 export default function ProductPage({ product }: { product: Product }) {
+  const appFeature = product.advancedFeatures.find((f) => f.title === "Mobile App");
+  const otherFeatures = product.advancedFeatures.filter((f) => f.title !== "Mobile App");
+
   return (
     <main className="flex-1">
       <ProductHero product={product} />
@@ -25,7 +29,8 @@ export default function ProductPage({ product }: { product: Product }) {
         centerImage={product.coreFeatureImage}
         productName={product.name}
       />
-      <ProductAdvancedFeatures features={product.advancedFeatures} />
+      <ProductAdvancedFeatures features={otherFeatures} />
+      {appFeature && <ProductMobileApp feature={appFeature} />}
       <ProductSpecs groups={product.specs} />
       {/* <FinalCTA/> */}
       <ProductGallery

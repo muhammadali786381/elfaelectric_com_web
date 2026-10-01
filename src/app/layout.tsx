@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import { Anton, Montserrat, Poppins, Roboto, Geist } from "next/font/google";
-import CartShell from "@/components/cart/CartShell";
-import Click2Connect from "@/components/layout/Click2Connect";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -63,12 +59,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={cn(montserrat.variable, roboto.variable, poppins.variable, anton.variable, "font-sans", geist.variable, "overflow-x-clip max-w-full")}
     >
       <body className="flex min-h-screen max-w-full flex-col overflow-x-clip antialiased">
-        <CartShell>
-          <Header />
-          {children}
-          <Footer />
-          <Click2Connect />
-        </CartShell>
+        {children}
       </body>
     </html>
   );

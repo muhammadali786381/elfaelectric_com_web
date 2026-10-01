@@ -1,0 +1,64 @@
+/**
+ * Example machine-local pg.Pool override.
+ * Copy to pool.local.cjs (gitignored) only if your machine cannot reach Neon over IPv6.
+ *
+ * cp src/lib/db/pool.local.cjs.example src/lib/db/pool.local.cjs
+ */
+"use strict";
+
+const { execFileSync } = require("node:child_process");
+const pg = require("pg");
+
+function resolveIpv4(hostname) {
+  try {
+    const out = execFileSync("getent", ["ahostsv4", hostname], {
+      encoding: "utf8",
+      timeout: 5000,
+    });
+    for (const line of out.split("\n")) {
+      const ip = line.trim().split(/\s+/)[0];
+      if (ip && /^\d{1,3}(?:\.\d{1,3}){3}$/.test(ip)) return ip;
+    }
+  } catch {
+    // fall through
+  }
+
+  const out = execFileSync(
+    process.execPath,
+    [
+      "-e",
+      `require("node:dns").resolve4(${JSON.stringify(hostname)},(e,a)=>{if(e||!a||!a.length){process.stderr.write(String(e||"no A"));process.exit(1);}process.stdout.write(a[0]);})`,
+    ],
+    { encoding: "utf8", timeout: 8000 },
+  );
+  const ip = out.trim();
+  if (!/^\d{1,3}(?:\.\d{1,3}){3}$/.test(ip)) {
+    throw new Error(`pool.local: no IPv4 for ${hostname}`);
+  }
+  return ip;
+}
+
+function createPool(defaults) {
+  const raw = process.env.DATABASE_URL;
+  if (!raw) {
+    throw new Error("DATABASE_URL is required for pool.local.cjs");
+  }
+
+  const u = new URL(raw.replace(/^postgres:/, "postgresql:"));
+  const hostname = u.hostname;
+  const address = resolveIpv4(hostname);
+
+  const { connectionString: _ignored, ssl: _ssl, ...rest } = defaults;
+
+  return new pg.Pool({
+    ...rest,
+    host: address,
+    port: Number(u.port || 5432),
+    user: decodeURIComponent(u.username),
+    password: decodeURIComponent(u.password),
+    database: decodeURIComponent(u.pathname.replace(/^\//, "")),
+    ssl: { rejectUnauthorized: false, servername: hostname },
+  });
+}
+
+module.exports = { createPool };
