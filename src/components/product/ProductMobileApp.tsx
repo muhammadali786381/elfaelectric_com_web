@@ -12,35 +12,16 @@ export default function ProductMobileApp({
 }) {
   return (
     <section className="bg-[#050505] py-24 lg:py-32 overflow-hidden border-t border-white/5">
-      <div className="mx-auto w-full max-w-[1400px] px-6">
-        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[1.2fr_1fr] lg:gap-24">
-          
-          {/* Left: Huge Floating Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="relative flex justify-center lg:justify-end"
-          >
-            <div className="relative w-full max-w-[500px] lg:max-w-none lg:w-[110%] aspect-[3/4] lg:h-[700px] lg:aspect-auto">
-              <Image
-                src={feature.image}
-                alt={feature.title}
-                fill
-                className="object-contain object-center lg:object-right opacity-90"
-                sizes="(min-width: 1024px) 60vw, 100vw"
-              />
-            </div>
-          </motion.div>
+      <div className="mx-auto w-full max-w-[1300px] px-6">
+        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[1fr_1.2fr] lg:gap-24">
 
-          {/* Right: Content */}
+          {/* Left: Content */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="flex flex-col items-start lg:pl-10"
+            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col items-start lg:pr-10 order-2 lg:order-1"
           >
             {/* Eyebrow */}
             <div className="mb-6 flex items-center gap-3 text-[16px] font-medium tracking-wide text-white">
@@ -92,7 +73,26 @@ export default function ProductMobileApp({
               </div>
             )}
           </motion.div>
-          
+
+          {/* Right: Huge Floating Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            className="relative flex justify-center lg:justify-start order-1 lg:order-2"
+          >
+            <div className="relative w-full max-w-[500px] lg:max-w-none lg:w-[110%] aspect-[3/4] lg:h-[700px] lg:aspect-auto">
+              <Image
+                src={feature.image}
+                alt={feature.title}
+                fill
+                className="object-contain object-center lg:object-left opacity-90"
+                sizes="(min-width: 1024px) 60vw, 100vw"
+              />
+            </div>
+          </motion.div>
+
         </div>
       </div>
     </section>

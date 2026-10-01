@@ -12,8 +12,14 @@ const ease = [0.16, 1, 0.3, 1] as const;
 export default function ScootyHero({ product }: { product: Product }) {
   return (
     <section className="relative flex min-h-[100dvh] w-full flex-col items-center justify-between overflow-hidden bg-[#050505] px-4 pb-12 pt-28 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-      {/* Background */}
-      <div className="absolute inset-0 z-0 bg-[#050505]">
+      {/* Background fading via mask */}
+      <div 
+        className="absolute inset-0 z-0 bg-[#050505]"
+        style={{
+          maskImage: 'linear-gradient(to bottom, black 0%, black 85%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 85%, transparent 100%)'
+        }}
+      >
         <Image
           src="/assets/images/newhero3.jpeg"
           alt="Background"
@@ -21,7 +27,6 @@ export default function ScootyHero({ product }: { product: Product }) {
           priority
           className="object-cover object-center opacity-25 mix-blend-luminosity"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#050505]/40 to-[#050505]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/60 via-transparent to-[#050505]/60" />
         {/* Subtle urban grid lines */}
         <div

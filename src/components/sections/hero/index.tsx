@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
-import BreathingText from "@/components/fancy/text/breathing-text";
+import { motion, useReducedMotion } from "framer-motion";
 import FlipButton from "@/components/ui/FlipButton";
 
 const specs = [
@@ -12,20 +11,97 @@ const specs = [
   { value: "100+ Km", label: "RANGE" },
 ];
 
+type WaveTextProps = {
+  children: string;
+  offset?: number;
+  className?: string;
+};
+
+function WaveText({
+  children,
+  offset = 0,
+  className = "",
+}: WaveTextProps) {
+  const reducedMotion = useReducedMotion();
+
+  const stagger = 0.1;
+  const pulseDuration = 0.9;
+  const cycleDuration = 3.5;
+
+  const restingShadow = [
+    "0px 0px 0px rgba(97,206,112,0)",
+    "0px 0px 0px rgba(97,206,112,0)",
+    "0px 0px 0px rgba(255,255,255,0)",
+  ].join(", ");
+
+  const activeShadow = [
+    "-5px 1.5px 1.5px rgba(97,206,112,0.6)",
+    "5px -1.5px 1.5px rgba(97,206,112,1)",
+    "0px 0px 10px rgba(255,255,255,0.25)",
+  ].join(", ");
+
+  return (
+    <span
+      aria-hidden="true"
+      className={`block whitespace-nowrap ${className}`}
+    >
+      {Array.from(children).map((letter, index) =>
+        letter === " " ? (
+          <span
+            key={index}
+            className="inline-block w-[0.3em]"
+          >
+            {"\u00A0"}
+          </span>
+        ) : (
+          <motion.span
+            key={index}
+            className="inline-block origin-bottom"
+            initial={false}
+            animate={
+              reducedMotion
+                ? { y: 0, scale: 1, textShadow: restingShadow }
+                : {
+                    y: [0, -3, 0],
+                    scale: [1, 1.04, 1],
+                    textShadow: [
+                      restingShadow,
+                      activeShadow,
+                      restingShadow,
+                    ],
+                  }
+            }
+            transition={{
+              duration: pulseDuration,
+              times: [0, 0.5, 1],
+              ease: "easeInOut",
+              delay: 0.4 + (offset + index) * stagger,
+              repeat: Infinity,
+              repeatDelay: cycleDuration - pulseDuration,
+            }}
+          >
+            {letter}
+          </motion.span>
+        ),
+      )}
+    </span>
+  );
+}
+
 export default function Hero() {
   const duration = 0.8;
   const ease = [0.16, 1, 0.3, 1] as const;
-  
+
   return (
     <section className="relative flex min-h-[100dvh] w-full flex-col overflow-hidden bg-[#050505] pt-20 lg:flex-row lg:items-center lg:pt-0">
       {/* Background with user-provided image and gradient overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/assets/images/newhero1.jpeg"
+          src="/assets/images/heronew.jpeg"
           alt="Hero Background"
           fill
           priority
-          className="object-cover object-center opacity-80"
+          className="object-cover object-center opacity-20"
         />
         {/* Gradients adjusted to let the background show through more clearly */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/70 to-transparent lg:w-[60%]" />
@@ -43,25 +119,23 @@ export default function Hero() {
           THE NEW EV-125 BIKE
         </motion.div>
 
-        <h1 className="font-montserrat mb-4 flex flex-col items-center text-[36px] min-[400px]:text-[40px] font-black leading-[0.95] tracking-tight text-white sm:text-[50px] lg:items-start lg:text-[70px] xl:text-[80px]">
-          <div className="block whitespace-nowrap">
-            <BreathingText
-              staggerDuration={0.08}
-              fromFontVariationSettings="'wght' 100, 'slnt' 0"
-              toFontVariationSettings="'wght' 900, 'slnt' -10"
-            >
-              MOVE INTO
-            </BreathingText>
-          </div>
-          <div className="block whitespace-nowrap text-brand-primary">
-            <BreathingText
-              staggerDuration={0.08}
-              fromFontVariationSettings="'wght' 100, 'slnt' 0"
-              toFontVariationSettings="'wght' 900, 'slnt' -10"
-            >
-              THE FUTURE.
-            </BreathingText>
-          </div>
+        <h1
+          aria-label="Move into the future."
+          className="font-montserrat mb-4 flex flex-col items-center
+            text-[36px] min-[400px]:text-[40px] font-black
+            leading-[0.95] tracking-tight text-white
+            sm:text-[50px] lg:items-start lg:text-[70px] xl:text-[80px]"
+        >
+          <WaveText>
+            MOVE INTO
+          </WaveText>
+
+          <WaveText
+            offset={"MOVE INTO".length}
+            className="text-brand-primary"
+          >
+            THE FUTURE.
+          </WaveText>
         </h1>
 
         <motion.p
@@ -110,7 +184,7 @@ export default function Hero() {
           className="relative aspect-[4/3] w-[90%] max-w-[500px] lg:aspect-auto lg:h-[80%] lg:w-[130%] lg:max-w-none lg:translate-x-[-5%]"
         >
           <Image
-            src="/assets/images/consent-policy-banner.png"
+            src="/assets/images/herobikes.png"
             alt="EV-125 Bike"
             fill
             priority

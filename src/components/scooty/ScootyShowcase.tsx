@@ -14,15 +14,20 @@ type Props = {
 export default function ScootyShowcase({ image, title, productName }: Props) {
   return (
     <section className="relative w-full overflow-hidden bg-[#050505] py-20 lg:py-28">
-      {/* Background */}
-      <div className="absolute inset-0 z-0">
+      {/* Background with fading mask */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)'
+        }}
+      >
         <Image
           src="/assets/images/products-bg.jpeg"
           alt="Showcase Background"
           fill
           className="object-cover object-center opacity-20 mix-blend-luminosity"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505]" />
         <div className="absolute inset-0 bg-[#050505]/30" />
       </div>
 

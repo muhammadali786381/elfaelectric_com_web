@@ -15,8 +15,14 @@ export default function ProductColorCarousel({ title, images }: Props) {
 
   return (
     <section className="relative w-full overflow-hidden bg-[#050505] py-24 lg:py-36">
-      {/* Background Image with Dark Gradients */}
-      <div className="absolute inset-0 z-0">
+      {/* Background Image fading smoothly via mask */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)'
+        }}
+      >
         <Image
           src="/assets/images/products-bg.jpeg"
           alt="Colors Background"
@@ -24,8 +30,6 @@ export default function ProductColorCarousel({ title, images }: Props) {
           priority
           className="object-cover object-center opacity-30 mix-blend-luminosity"
         />
-        {/* Gradients to fade smoothly into the hero above and sections below */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505]" />
         <div className="absolute inset-0 bg-[#050505]/40" />
       </div>
 
