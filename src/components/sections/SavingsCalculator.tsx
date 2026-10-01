@@ -153,10 +153,10 @@ export default function SavingsCalculator({
     <section className="relative overflow-hidden bg-bg-primary py-20 ">
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/4 rounded-full opacity-10"
+        className="pointer-events-none absolute -right-[15%] top-32 h-[700px] w-[800px] rounded-full opacity-[0.08]"
         style={{
           background:
-            "radial-gradient(ellipse, var(--color-brand-primary) 0%, transparent 70%)",
+            "radial-gradient(circle, var(--color-brand-primary) 0%, transparent 70%)",
         }}
       />
 
