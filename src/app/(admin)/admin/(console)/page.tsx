@@ -27,7 +27,7 @@ export default async function AdminDashboard() {
             Overview
           </h1>
           <p className="mt-2 font-roboto text-sm text-muted-foreground">
-            Store pulse — orders, revenue, and live promos.
+            Store pulse — orders, today’s revenue, and promos.
           </p>
         </div>
         <Button asChild>

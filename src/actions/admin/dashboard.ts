@@ -41,10 +41,25 @@ function formatDate(d: Date) {
   });
 }
 
+/** Start of today in Asia/Karachi (UTC+5, no DST). */
+function startOfTodayKarachi(): Date {
+  const now = new Date();
+  const karachiOffsetMs = 5 * 60 * 60 * 1000;
+  const karachiNow = new Date(now.getTime() + karachiOffsetMs);
+  const y = karachiNow.getUTCFullYear();
+  const m = karachiNow.getUTCMonth();
+  const d = karachiNow.getUTCDate();
+  // Midnight Karachi = 19:00 UTC previous calendar day in UTC terms:
+  // Karachi 00:00 = UTC 19:00 previous day → equivalently Date.UTC(y,m,d) - 5h
+  return new Date(Date.UTC(y, m, d) - karachiOffsetMs);
+}
+
 export async function getDashboardMetrics(): Promise<
   ActionResult<DashboardData>
 > {
   await requireAdmin();
+
+  const todayStart = startOfTodayKarachi();
 
   const [
     revenueAgg,
@@ -55,7 +70,10 @@ export async function getDashboardMetrics(): Promise<
   ] = await Promise.all([
     prisma.order.aggregate({
       _sum: { total: true },
-      where: { status: { not: OrderStatus.CANCELLED } },
+      where: {
+        status: { not: OrderStatus.CANCELLED },
+        createdAt: { gte: todayStart },
+      },
     }),
     prisma.order.count({ where: { status: OrderStatus.PENDING } }),
     prisma.order.count({ where: { status: OrderStatus.DELIVERED } }),
@@ -73,9 +91,9 @@ export async function getDashboardMetrics(): Promise<
     data: {
       metrics: [
         {
-          label: "Total Revenue",
+          label: "Today's Revenue",
           value: formatRs(revenue),
-          hint: "Excludes cancelled orders",
+          hint: "Orders placed today (excl. cancelled)",
           hintTone: "success",
         },
         {
