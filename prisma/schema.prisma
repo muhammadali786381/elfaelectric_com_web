@@ -131,3 +131,44 @@ model OrderItem {
 
   @@index([orderId])
 }
+
+enum WebhookEvent {
+  ORDER_CREATED
+}
+
+/// Outbound webhook target. Admin stores a URL; we POST event payloads here.
+model WebhookEndpoint {
+  id              String       @id @default(cuid())
+  url             String
+  label           String       @default("")
+  event           WebhookEvent @default(ORDER_CREATED)
+  enabled         Boolean      @default(true)
+  lastStatus      String?
+  lastError       String       @default("")
+  lastDeliveredAt DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  deliveries      WebhookDeliveryLog[]
+
+  @@index([enabled, event])
+}
+
+/// Per-delivery attempt log — searchable by order id.
+model WebhookDeliveryLog {
+  id            String           @id @default(cuid())
+  orderId       String
+  endpointId    String?
+  endpointUrl   String
+  endpointLabel String           @default("")
+  event         WebhookEvent
+  success       Boolean
+  httpStatus    Int?
+  error         String           @default("")
+  createdAt     DateTime         @default(now())
+  endpoint      WebhookEndpoint? @relation(fields: [endpointId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+  @@index([createdAt])
+  @@index([success])
+  @@index([endpointId])
+}

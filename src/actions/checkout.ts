@@ -173,6 +173,9 @@ export async function placeOrder(
     return { ok: false, error: "Could not place order. Please try again." };
   }
 
+  const { enqueueOrderCreatedWebhooks } = await import("@/lib/webhooks/dispatch");
+  enqueueOrderCreatedWebhooks(id);
+
   return {
     ok: true,
     data: {

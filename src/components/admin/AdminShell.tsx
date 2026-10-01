@@ -10,6 +10,7 @@ import {
   Ticket,
   LogOut,
   Menu,
+  Webhook,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -26,6 +27,7 @@ const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/orders", label: "Orders", icon: ShoppingCart },
   { href: "/admin/coupons", label: "Coupons", icon: Ticket },
+  { href: "/admin/webhooks", label: "Webhooks", icon: Webhook },
 ];
 
 function NavLinks({

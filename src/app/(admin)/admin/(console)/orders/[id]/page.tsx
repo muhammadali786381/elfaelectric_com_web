@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { OrderStatusBadge } from "@/components/admin/StatusBadge";
 import { getOrder } from "@/actions/admin/orders";
+import { listWebhookLogsForOrder } from "@/actions/admin/webhooks";
 import OrderStatusForm from "@/components/admin/OrderStatusForm";
 import { cn } from "@/lib/utils";
 
@@ -16,8 +17,9 @@ function formatRs(n: number) {
   return `Rs. ${n.toLocaleString("en-PK")}`;
 }
 
-function formatEventTime(d: Date) {
-  return d.toLocaleString("en-US", {
+function formatEventTime(d: Date | string) {
+  const date = typeof d === "string" ? new Date(d) : d;
+  return date.toLocaleString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -25,6 +27,25 @@ function formatEventTime(d: Date) {
     minute: "2-digit",
   });
 }
+
+type TimelineItem =
+  | {
+      kind: "status";
+      id: string;
+      at: Date;
+      status: OrderStatus;
+      note: string;
+    }
+  | {
+      kind: "webhook";
+      id: string;
+      at: Date;
+      success: boolean;
+      label: string;
+      url: string;
+      error: string;
+      httpStatus: number | null;
+    };
 
 function statusDotClass(status: OrderStatus, isLatest: boolean) {
   if (!isLatest) {
@@ -45,12 +66,36 @@ function statusDotClass(status: OrderStatus, isLatest: boolean) {
 
 export default async function OrderDetailsPage({ params }: Props) {
   const { id } = await params;
-  const result = await getOrder(id);
+  const [result, webhookResult] = await Promise.all([
+    getOrder(id),
+    listWebhookLogsForOrder(id),
+  ]);
   if (!result.ok || !result.data) notFound();
 
   const order = result.data;
   const placed = formatEventTime(order.createdAt);
   const events = order.events ?? [];
+  const webhookLogs = webhookResult.ok ? webhookResult.data : [];
+
+  const timeline: TimelineItem[] = [
+    ...events.map((event) => ({
+      kind: "status" as const,
+      id: event.id,
+      at: event.createdAt,
+      status: event.status,
+      note: event.note || `Status set to ${event.status}`,
+    })),
+    ...webhookLogs.map((log) => ({
+      kind: "webhook" as const,
+      id: log.id,
+      at: new Date(log.createdAt),
+      success: log.success,
+      label: log.endpointLabel || log.endpointUrl,
+      url: log.endpointUrl,
+      error: log.error,
+      httpStatus: log.httpStatus,
+    })),
+  ].sort((a, b) => b.at.getTime() - a.at.getTime());
 
   return (
     <div className="flex flex-col gap-8">
@@ -204,20 +249,82 @@ export default async function OrderDetailsPage({ params }: Props) {
             <h2 className="mb-6 font-montserrat text-lg font-semibold">
               Timeline
             </h2>
-            {events.length === 0 ? (
+            {timeline.length === 0 ? (
               <p className="font-roboto text-sm text-muted-foreground">
-                No status events yet.
+                No events yet.
               </p>
             ) : (
               <div className="relative flex flex-col gap-6 before:absolute before:left-[11px] before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-border">
-                {events.map((event, index) => {
+                {timeline.map((item, index) => {
                   const isLatest = index === 0;
+                  if (item.kind === "webhook") {
+                    return (
+                      <div key={item.id} className="relative flex gap-4">
+                        <div
+                          className={cn(
+                            "relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full",
+                            item.success
+                              ? isLatest
+                                ? "bg-emerald-500"
+                                : "border-2 border-emerald-500/40 bg-card"
+                              : isLatest
+                                ? "bg-destructive"
+                                : "border-2 border-destructive/40 bg-card",
+                          )}
+                        >
+                          <div
+                            className={cn(
+                              "h-2 w-2 rounded-full",
+                              isLatest
+                                ? "bg-primary-foreground"
+                                : "bg-muted-foreground",
+                            )}
+                          />
+                        </div>
+                        <div className="pt-0.5">
+                          <p className="font-roboto text-sm font-medium">
+                            {item.success
+                              ? `Webhook notification sent${item.label ? ` · ${item.label}` : ""}`
+                              : `Webhook notification failed${item.label ? ` · ${item.label}` : ""}`}
+                          </p>
+                          <div className="mt-1 flex flex-wrap items-center gap-2">
+                            <Badge
+                              variant="outline"
+                              className={
+                                item.success
+                                  ? "border-emerald-500/40 text-emerald-500"
+                                  : "border-destructive/40 text-destructive"
+                              }
+                            >
+                              {item.success ? "Sent" : "Failed"}
+                            </Badge>
+                            <p className="font-roboto text-xs text-muted-foreground">
+                              {formatEventTime(item.at)}
+                            </p>
+                          </div>
+                          {!item.success && item.error ? (
+                            <p className="mt-1 font-roboto text-xs text-destructive">
+                              {item.error}
+                              {item.httpStatus != null
+                                ? ` (HTTP ${item.httpStatus})`
+                                : ""}
+                            </p>
+                          ) : (
+                            <p className="mt-1 truncate font-mono text-xs text-muted-foreground">
+                              {item.url}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  }
+
                   return (
-                    <div key={event.id} className="relative flex gap-4">
+                    <div key={item.id} className="relative flex gap-4">
                       <div
                         className={cn(
                           "relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full",
-                          statusDotClass(event.status, isLatest),
+                          statusDotClass(item.status, isLatest),
                         )}
                       >
                         <div
@@ -231,12 +338,12 @@ export default async function OrderDetailsPage({ params }: Props) {
                       </div>
                       <div className="pt-0.5">
                         <p className="font-roboto text-sm font-medium">
-                          {event.note || `Status set to ${event.status}`}
+                          {item.note}
                         </p>
                         <div className="mt-1 flex flex-wrap items-center gap-2">
-                          <OrderStatusBadge status={event.status} />
+                          <OrderStatusBadge status={item.status} />
                           <p className="font-roboto text-xs text-muted-foreground">
-                            {formatEventTime(event.createdAt)}
+                            {formatEventTime(item.at)}
                           </p>
                         </div>
                       </div>
