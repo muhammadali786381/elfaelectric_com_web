@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Anton, Montserrat, Poppins, Roboto, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import GlobalLoader from "@/components/layout/GlobalLoader";
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -58,8 +59,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       className={cn(montserrat.variable, roboto.variable, poppins.variable, anton.variable, "font-sans", geist.variable, "overflow-x-clip max-w-full")}
     >
-      <body className="flex min-h-screen max-w-full flex-col overflow-x-clip antialiased">
-        {children}
+      <body className="max-w-full overflow-x-clip antialiased">
+        <GlobalLoader>{children}</GlobalLoader>
       </body>
     </html>
   );

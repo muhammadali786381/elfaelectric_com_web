@@ -153,33 +153,32 @@ const newsItems: NewsItem[] = [
 export default function NewsroomPage() {
   return (
     <main className="flex-1 bg-[#050505] text-white">
-      {/* Massive Hero Section */}
-      <section className="relative flex min-h-[60dvh] items-center justify-center overflow-hidden border-b border-white/10 pt-28 pb-20 lg:min-h-[70dvh] lg:pt-32">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/assets/images/hero4.jpeg"
-            alt="News Hero Background"
-            fill
-            priority
-            className="object-cover opacity-60"
-          />
-          {/* Pinkish/reddish dark overlay to match Joresx */}
-          <div className="absolute inset-0 bg-rose-950/40 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-transparent to-[#050505]" />
-          <div className="absolute inset-0 bg-[#050505]/40" />
-        </div>
+      {/* Standardized Hero Section */}
+      <section className="relative flex min-h-[55dvh] items-end justify-center overflow-hidden pb-16 pt-32 lg:min-h-[60dvh] lg:pb-24 lg:pt-40">
+        <Image
+          src="/assets/images/hero4.jpeg"
+          alt="News Hero Background"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/60 to-[#050505]" />
 
-        <div className="relative z-10 w-full text-center px-4">
+        <div className="relative z-10 w-full max-w-[1200px] px-4 text-center sm:px-6 lg:px-8 mt-10">
           <FadeIn variant="fadeInUp" speed="slow">
-            <h1 className="font-montserrat text-[80px] sm:text-[120px] md:text-[160px] lg:text-[200px] font-normal leading-none tracking-tighter text-white">
-              NEWS©
+            <h1 className="font-montserrat mb-4 text-[56px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[72px] lg:text-[92px]">
+              Latest <span className="text-brand-primary">News</span>
             </h1>
+            <p className="font-roboto mx-auto max-w-2xl text-[16px] font-medium leading-relaxed text-white/70 sm:text-[20px]">
+              Coverage and mentions from Pakistan's leading media outlets
+            </p>
           </FadeIn>
         </div>
       </section>
 
       {/* Wireframe Grid Layout */}
-      <section className="w-full py-16 sm:py-24">
+      <section className="w-full pt-8 pb-16 sm:pt-12 sm:pb-24">
         <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
             {newsItems.map((item, i) => (

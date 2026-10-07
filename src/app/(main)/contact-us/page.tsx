@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import { MapPin, Phone, Mail, Headphones, ChevronRight, ShoppingCart, CalendarCheck, MessageSquare, Plus, Minus } from "lucide-react";
+import { MapPin, Phone, Mail, Headphones, ChevronRight, ShoppingCart, CalendarCheck, MessageSquare } from "lucide-react";
 import SecondaryHero from "@/components/sections/SecondaryHero";
+import FAQ from "@/components/sections/FAQ";
 
 import { FadeIn } from "@/components/motion/FadeIn";
 import FlipButton from "@/components/ui/FlipButton";
@@ -212,7 +213,9 @@ export default function ContactUsPage() {
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
-                      <Phone className="h-5 w-5 text-brand-primary" />
+                      <svg className="h-5 w-5 text-brand-primary" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                      </svg>
                     </div>
                     <a
                       href="https://wa.me/923114863532"
@@ -220,15 +223,15 @@ export default function ContactUsPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      +(92) 311-486-3532 (WhatsApp)
+                      +(92) 311-486-3532
                     </a>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
-                      <Headphones className="h-5 w-5 text-brand-primary" />
+                      <Phone className="h-5 w-5 text-brand-primary" />
                     </div>
                     <a href="tel:02137173532" className="font-roboto pt-2 hover:text-brand-primary transition-colors">
-                      021-37173532 (Office)
+                      021-37173532
                     </a>
                   </li>
                   <li className="flex items-start gap-4">
@@ -278,51 +281,7 @@ export default function ContactUsPage() {
         </section>
 
         {/* FAQ */}
-        <section className="bg-[#050505] py-20 lg:py-32">
-          <div className="mx-auto grid w-full max-w-[1200px] gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.2fr] lg:gap-20 items-start">
-            {/* Left Column: Heading */}
-            <FadeIn variant="fadeInLeft" speed="slow" className="flex flex-col items-start">
-              <p className="text-brand-primary font-montserrat text-[11px] font-bold uppercase tracking-[0.2em] mb-4">
-                Got Questions?
-              </p>
-              <h2 className="font-montserrat text-[48px] sm:text-[64px] lg:text-[72px] font-black leading-[1] text-white tracking-tighter mb-6">
-                Frequently<br />
-                <span className="text-brand-primary">Asked.</span>
-              </h2>
-              <p className="font-roboto text-[15px] leading-relaxed text-white/60 mb-10 max-w-md">
-                Everything you need to know about ordering, charging, warranty, and owning your ELFA electric bike.
-              </p>
-              <FlipButton
-                href="#contact-form"
-                variant="glass"
-                className="px-6 py-3.5 text-[11px] font-bold tracking-[0.15em] text-white/80"
-              >
-                Still have questions?
-              </FlipButton>
-            </FadeIn>
-
-            {/* Right Column: Accordions */}
-            <FadeIn variant="fadeInRight" speed="slow" className="w-full border-t border-white/10 mt-2">
-              {faqs.map((f, i) => (
-                <details
-                  key={f.q}
-                  className="group overflow-hidden border-b border-white/10"
-                >
-                  <summary className="font-roboto flex cursor-pointer list-none items-center justify-between gap-4 py-6 text-left text-[15px] font-medium text-white/90 sm:text-[16px] [&::-webkit-details-marker]:hidden outline-none">
-                    {f.q}
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/20 text-white/50 transition-all group-hover:border-white/40 group-open:bg-brand-primary group-open:border-brand-primary group-open:text-black">
-                      <Plus className="h-4 w-4 group-open:hidden" />
-                      <Minus className="h-4 w-4 hidden group-open:block" />
-                    </div>
-                  </summary>
-                  <div className="pb-6 pr-12">
-                    <div className="font-roboto text-[15px] leading-relaxed text-white/60">{f.a}</div>
-                  </div>
-                </details>
-              ))}
-            </FadeIn>
-          </div>
-        </section>
+        <FAQ items={faqs} className="bg-[#050505] py-20 lg:py-28" />
 
 
       </main>

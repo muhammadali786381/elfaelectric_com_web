@@ -63,7 +63,7 @@ export default function SecondaryHero({
   }
 
   return (
-    <section className="relative flex min-h-[60dvh] items-center justify-center overflow-hidden pt-28 pb-20 lg:min-h-[70dvh] lg:pt-32">
+    <section className="relative flex min-h-[55dvh] items-end justify-center overflow-hidden pb-16 pt-32 lg:min-h-[60dvh] lg:pb-24 lg:pt-40">
       <Image
         src={imageSrc}
         alt={imageAlt}

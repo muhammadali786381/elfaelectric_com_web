@@ -92,7 +92,7 @@ export default function ProductShowcase() {
         </div>
 
         {/* Product Cards Grid */}
-        <div className="mx-auto w-full max-w-[1300px] px-4 sm:px-6">
+        <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
             {products.map((product) => (
               <article
@@ -102,19 +102,19 @@ export default function ProductShowcase() {
                 {/* Top Section */}
                 <div className="px-6 sm:px-10 pt-8 sm:pt-10">
                   {/* Top Labels */}
-                <div className="flex items-center justify-between mb-2">
-                  <p className="font-roboto text-[10px] font-bold uppercase tracking-[2px] text-white/50">
-                    {product.type}
-                  </p>
-                  <div className="rounded-full border border-brand-primary/40 px-3 py-1 text-[11px] font-bold text-brand-primary">
-                    {product.savings}
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="font-roboto text-[10px] font-bold uppercase tracking-[2px] text-white/50">
+                      {product.type}
+                    </p>
+                    <div className="rounded-full border border-brand-primary/40 px-3 py-1 text-[11px] font-bold text-brand-primary">
+                      {product.savings}
+                    </div>
                   </div>
-                </div>
 
-                {/* Product Name */}
-                <h3 className="font-montserrat mb-2 text-[32px] font-bold text-white sm:text-[40px]">
-                  {product.name}
-                </h3>
+                  {/* Product Name */}
+                  <h3 className="font-montserrat mb-2 text-[32px] font-bold text-white sm:text-[40px]">
+                    {product.name}
+                  </h3>
                 </div>
 
                 {/* Product Image - Full Bleed */}
@@ -130,65 +130,65 @@ export default function ProductShowcase() {
 
                 {/* Bottom Section */}
                 <div className="flex flex-1 flex-col px-6 sm:px-10 pb-8 sm:pb-10">
-                {/* Specifications */}
-                <div className="mb-10 grid grid-cols-4 divide-x divide-white/10 pt-4">
-                  {product.specs.map((spec) => {
-                    const Icon = icons[spec.icon];
-                    return (
-                      <div key={spec.label} className="flex flex-col items-center text-center px-1 sm:px-2">
-                        <div className="mb-3 text-white/60">
-                          <Icon />
+                  {/* Specifications */}
+                  <div className="mb-10 grid grid-cols-4 divide-x divide-white/10 pt-4">
+                    {product.specs.map((spec) => {
+                      const Icon = icons[spec.icon];
+                      return (
+                        <div key={spec.label} className="flex flex-col items-center text-center px-1 sm:px-2">
+                          <div className="mb-3 text-white/60">
+                            <Icon />
+                          </div>
+                          <p className="font-montserrat mb-1 text-[12px] sm:text-[14px] font-bold text-white">
+                            {spec.value}
+                          </p>
+                          <p className="font-roboto text-[9px] sm:text-[10px] font-semibold tracking-[1px] uppercase text-white/40">
+                            {spec.label}
+                          </p>
                         </div>
-                        <p className="font-montserrat mb-1 text-[12px] sm:text-[14px] font-bold text-white">
-                          {spec.value}
-                        </p>
-                        <p className="font-roboto text-[9px] sm:text-[10px] font-semibold tracking-[1px] uppercase text-white/40">
-                          {spec.label}
-                        </p>
+                      );
+                    })}
+                  </div>
+
+                  {/* Price and Action Buttons */}
+                  <div className="mt-auto flex flex-col gap-6">
+                    {/* Price Block */}
+                    <div>
+                      <div className="relative mb-1 inline-block">
+                        <span className="font-montserrat text-[14px] font-medium text-white/40">
+                          {product.oldPrice}
+                        </span>
+                        {/* Red Strike */}
+                        <div className="absolute inset-x-0 top-[45%] h-px w-[110%] -left-[5%] -rotate-6 bg-red-500" />
                       </div>
-                    );
-                  })}
-                </div>
-
-                {/* Price and Action Buttons */}
-                <div className="mt-auto flex flex-col gap-6">
-                  {/* Price Block */}
-                  <div>
-                    <div className="relative mb-1 inline-block">
-                      <span className="font-montserrat text-[14px] font-medium text-white/40">
-                        {product.oldPrice}
-                      </span>
-                      {/* Red Strike */}
-                      <div className="absolute inset-x-0 top-[45%] h-px w-[110%] -left-[5%] -rotate-6 bg-red-500" />
+                      <div className="font-montserrat text-[32px] sm:text-[38px] font-bold leading-none text-white">
+                        {product.price}{" "}
+                        <span className="ml-1 text-[13px] font-medium text-white/40">
+                          + tax
+                        </span>
+                      </div>
                     </div>
-                    <div className="font-montserrat text-[32px] sm:text-[38px] font-bold leading-none text-white">
-                      {product.price}{" "}
-                      <span className="ml-1 text-[13px] font-medium text-white/40">
-                        + tax
-                      </span>
+
+                    {/* Buttons */}
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                      <Link
+                        href={product.exploreHref}
+                        className="inline-flex h-[44px] items-center justify-center gap-2 rounded-full bg-[#00FF85] px-6 text-[14px] font-bold text-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                      >
+                        Explore model <ArrowRight className="h-4 w-4" />
+                      </Link>
+
+                      <Link
+                        href={product.buyHref}
+                        className="group inline-flex items-center gap-2 text-[13px] font-bold text-white transition-colors hover:text-white/80"
+                      >
+                        <span className="border-b border-white pb-0.5 group-hover:border-white/80">
+                          Book a test ride
+                        </span>
+                        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                      </Link>
                     </div>
                   </div>
-
-                  {/* Buttons */}
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-                    <Link
-                      href={product.exploreHref}
-                      className="inline-flex h-[44px] items-center justify-center gap-2 rounded-full bg-[#00FF85] px-6 text-[14px] font-bold text-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
-                    >
-                      Explore model <ArrowRight className="h-4 w-4" />
-                    </Link>
-
-                    <Link
-                      href={product.buyHref}
-                      className="group inline-flex items-center gap-2 text-[13px] font-bold text-white transition-colors hover:text-white/80"
-                    >
-                      <span className="border-b border-white pb-0.5 group-hover:border-white/80">
-                        Book a test ride
-                      </span>
-                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                    </Link>
-                  </div>
-                </div>
                 </div>
               </article>
             ))}

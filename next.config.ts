@@ -16,15 +16,15 @@ const securityHeaders = [
       "form-action 'self'",
       "frame-ancestors 'none'",
       "object-src 'none'",
-      // Next.js hydration + Leaflet CDN + Digistartup form embeds
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://app.digistartup.io https://app.digistartupgroup.com",
+      // Next.js hydration + Leaflet CDN + Digistartup form embeds + Call Center Studio Click2Connect
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://app.digistartup.io https://app.digistartupgroup.com https://elfa.callcenterstudio.com",
       "style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
       "connect-src 'self' https:",
       "worker-src 'self' blob:",
-      // Contact/booking forms, Google Maps, YouTube embeds
-      "frame-src 'self' https://app.digistartup.io https://app.digistartupgroup.com https://maps.google.com https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com",
+      // Contact/booking forms, Google Maps, YouTube embeds, Call Center Studio
+      "frame-src 'self' https://app.digistartup.io https://app.digistartupgroup.com https://maps.google.com https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com https://elfa.callcenterstudio.com https://click2connect.tech",
     ].join("; "),
   },
   ...(process.env.NODE_ENV === "production"

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight, Plus, Minus } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import SecondaryHero from "@/components/sections/SecondaryHero";
 import { FadeIn } from "@/components/motion/FadeIn";
-import FlipButton from "@/components/ui/FlipButton";
+import FAQ from "@/components/sections/FAQ";
 
 export const metadata: Metadata = {
   title: "Electric Bike Prices - ELFA Electric",
@@ -301,49 +301,8 @@ export default function ElectricBikePricesPage() {
           </div>
         </section>
 
-        <section className="bg-[#050505] py-20 lg:py-32">
-          <div className="mx-auto grid w-full max-w-[1200px] gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.2fr] lg:gap-20 items-start">
-            <FadeIn variant="fadeInLeft" speed="slow" className="flex flex-col items-start">
-              <p className="text-brand-primary font-montserrat text-[11px] font-bold uppercase tracking-[0.2em] mb-4">
-                Got Questions?
-              </p>
-              <h2 className="font-montserrat text-[48px] sm:text-[64px] lg:text-[72px] font-black leading-[1] text-white tracking-tighter mb-6">
-                Frequently<br />
-                <span className="text-brand-primary">Asked.</span>
-              </h2>
-              <p className="font-roboto text-[15px] leading-relaxed text-white/60 mb-10 max-w-md">
-                Find answers to common questions about our electric bike prices, features, and financing options.
-              </p>
-              <FlipButton
-                href="/contact-us"
-                variant="glass"
-                className="px-6 py-3.5 text-[11px] font-bold tracking-[0.15em] text-white/80"
-              >
-                Still have questions?
-              </FlipButton>
-            </FadeIn>
-
-            <FadeIn variant="fadeInRight" speed="slow" className="w-full border-t border-white/10 mt-2">
-              {faqs.map((f, i) => (
-                <details
-                  key={f.q}
-                  className="group overflow-hidden border-b border-white/10"
-                >
-                  <summary className="font-roboto flex cursor-pointer list-none items-center justify-between gap-4 py-6 text-left text-[15px] font-medium text-white/90 sm:text-[16px] [&::-webkit-details-marker]:hidden outline-none">
-                    {f.q}
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/20 text-white/50 transition-all group-hover:border-white/40 group-open:bg-brand-primary group-open:border-brand-primary group-open:text-black">
-                      <Plus className="h-4 w-4 group-open:hidden" />
-                      <Minus className="h-4 w-4 hidden group-open:block" />
-                    </div>
-                  </summary>
-                  <div className="pb-6 pr-12">
-                    <div className="font-roboto text-[15px] leading-relaxed text-white/60">{f.a}</div>
-                  </div>
-                </details>
-              ))}
-            </FadeIn>
-          </div>
-        </section>
+        {/* FAQ */}
+        <FAQ items={faqs} className="bg-[#050505] py-20 lg:py-28" />
       </main>
     </>
   );

@@ -165,12 +165,12 @@ export default function SavingsCalculator({
         className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-4 sm:px-6"
       >
         <div className="flex flex-col items-center gap-4 text-center lg:items-start lg:text-left">
-          <Badge
+          {/* <Badge
             variant="outline"
             className="h-7 px-3 text-brand-primary border-brand-primary/20 bg-brand-primary/5 uppercase tracking-wider font-roboto"
           >
             Calculate your savings
-          </Badge>
+          </Badge> */}
           <h2 className="font-montserrat max-w-xl text-4xl font-bold tracking-tighter text-white sm:text-[44px]">
             See what you save
             <br />

@@ -1,6 +1,6 @@
 "use client";
 
-import Script from "next/script";
+import { useEffect } from "react";
 
 /** Same embed as https://elfaelectric.com — Call Center Studio Click2Connect */
 const CLICK2CONNECT_SRC =
@@ -14,15 +14,31 @@ declare global {
 
 /** Loads the Contact Us chat pill (bottom-right) used on the live WordPress site. */
 export default function Click2Connect() {
-  return (
-    <Script
-      src={CLICK2CONNECT_SRC}
-      strategy="afterInteractive"
-      onLoad={() => {
+  useEffect(() => {
+    // Check if the script is already in the document
+    let script = document.querySelector(`script[src="${CLICK2CONNECT_SRC}"]`) as HTMLScriptElement;
+
+    if (!script) {
+      // Create and inject the script
+      script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = CLICK2CONNECT_SRC;
+      script.async = true;
+      document.body.appendChild(script);
+
+      script.onload = () => {
+        // Once loaded, initialize the widget just like the raw HTML snippet
         if (typeof window.startWidget === "function") {
           window.startWidget();
         }
-      }}
-    />
-  );
+      };
+    } else {
+      // If it already exists (e.g. strict mode or navigating back), just call it if available
+      if (typeof window.startWidget === "function") {
+        window.startWidget();
+      }
+    }
+  }, []);
+
+  return null;
 }

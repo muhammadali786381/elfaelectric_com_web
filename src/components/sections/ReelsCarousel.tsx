@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, X, Video } from "lucide-react";
 
@@ -74,6 +74,14 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
     if (diff < -n / 2) diff += n;
     return diff;
   };
+
+  useEffect(() => {
+    if (activeVideo) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % items.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [activeVideo, items.length]);
 
   const variants = {
     center: { x: "0%", scale: 1, zIndex: 10, opacity: 1 },

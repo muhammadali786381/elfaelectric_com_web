@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Play, ChevronLeft, ChevronRight, TrendingUp } from "lucide-react";
 
@@ -98,6 +98,22 @@ export default function ScootyMetaSection() {
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!scrollRef.current) return;
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      
+      // If reached the end, scroll back to start
+      if (scrollLeft + clientWidth >= scrollWidth - 10) {
+        scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        scrollRef.current.scrollBy({ left: 340, behavior: "smooth" });
+      }
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="bg-[#050505] py-20 lg:py-28">

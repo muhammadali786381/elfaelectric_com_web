@@ -6,9 +6,9 @@ import Link from "next/link";
 import { Menu, X, ChevronDown, Calendar, User, Search, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import FlipButton from "@/components/ui/FlipButton";
+import GlassSurface from "@/components/ui/GlassSurface";
 
 const navLinks = [
-  { label: "Home", href: "/" },
   {
     label: "Products",
     href: "#",
@@ -124,8 +124,12 @@ export default function Header() {
         setMaxVisible(7);
       } else if (window.innerWidth >= 1280) {
         setMaxVisible(6);
-      } else {
+      } else if (window.innerWidth >= 1180) {
         setMaxVisible(5);
+      } else if (window.innerWidth >= 1100) {
+        setMaxVisible(4);
+      } else {
+        setMaxVisible(3);
       }
     };
     handleResize();
@@ -149,11 +153,34 @@ export default function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-[9999] flex w-full justify-center pointer-events-none px-3 sm:px-6">
       <div
-        className={`relative flex items-center justify-between pointer-events-auto transition-all duration-300 ease-out ${isScrolled
-            ? "w-full max-w-[1000px] h-14 sm:h-16 xl:h-[72px] mt-3 sm:mt-4 rounded-full border border-white/12 bg-[#0a0a0c]/80 backdrop-blur-2xl shadow-[0_16px_40px_rgba(0,0,0,0.5)] px-4 sm:px-6 xl:px-6"
-            : "w-full max-w-[1000px] xl:max-w-[1600px] h-14 sm:h-16 xl:h-[96px] mt-3 sm:mt-4 xl:mt-0 rounded-full xl:rounded-none border border-white/12 xl:border-transparent bg-[#0a0a0c]/80 xl:bg-transparent backdrop-blur-2xl xl:backdrop-blur-none shadow-[0_16px_40px_rgba(0,0,0,0.5)] xl:shadow-none px-4 sm:px-6 xl:px-8"
+        style={{ maxWidth: isScrolled ? "1000px" : undefined }}
+        className={`relative flex items-center justify-between pointer-events-auto rounded-full transition-all duration-300 ease-out ${isScrolled
+          ? "w-full h-16 sm:h-[68px] lg:h-[80px] mt-3 sm:mt-4 border border-transparent px-4 sm:px-6 lg:px-6"
+          : "w-full max-w-[1000px] lg:max-w-[1600px] h-14 sm:h-16 lg:h-[96px] mt-3 sm:mt-4 lg:mt-0 lg:rounded-none border border-transparent bg-transparent shadow-none px-4 sm:px-6 lg:px-8"
           }`}
       >
+        <div 
+          className={`absolute inset-0 z-0 pointer-events-none transition-opacity duration-300 ease-out ${
+            isScrolled ? "opacity-100" : "opacity-100 lg:opacity-0"
+          }`}
+        >
+          <GlassSurface
+            width="100%"
+            height="100%"
+            borderRadius={40}
+            borderWidth={0.07}
+            blur={10}
+            displace={0.38}
+            distortionScale={210}
+            redOffset={0}
+            greenOffset={0}
+            blueOffset={0}
+            brightness={50}
+            opacity={1}
+            backgroundOpacity={0}
+          />
+        </div>
+
         {/* Content Layer */}
         <div className="relative z-10 flex w-full items-center justify-between">
           <Link href="/" className="flex shrink-0 items-center" onClick={closeMobile}>
@@ -168,7 +195,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex xl:gap-2">
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex lg:gap-2">
             <AnimatePresence mode="popLayout">
               {visibleLinks.map((link) => (
                 <motion.div
@@ -185,10 +212,8 @@ export default function Header() {
                   {link.hasDropdown ? (
                     <button
                       type="button"
-                      className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-white/5 hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary xl:px-4 xl:text-[13px]"
+                      className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary lg:px-4 lg:text-[13px]"
                       style={{
-                        backdropFilter: "blur(12px)",
-                        WebkitBackdropFilter: "blur(12px)",
                         border: "1px solid rgba(255,255,255,0.05)",
                       }}
                       aria-expanded={isProductsOpen}
@@ -199,10 +224,8 @@ export default function Header() {
                   ) : (
                     <Link
                       href={link.href}
-                      className="font-roboto flex items-center whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-white/5 hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary xl:px-4 xl:text-[13px]"
+                      className="font-roboto flex items-center whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary lg:px-4 lg:text-[13px]"
                       style={{
-                        backdropFilter: "blur(12px)",
-                        WebkitBackdropFilter: "blur(12px)",
                         border: "1px solid rgba(255,255,255,0.05)",
                       }}
                     >
@@ -254,10 +277,8 @@ export default function Header() {
                 >
                   <button
                     type="button"
-                    className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-white/5 hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary xl:px-4 xl:text-[13px]"
+                    className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary lg:px-4 lg:text-[13px]"
                     style={{
-                      backdropFilter: "blur(12px)",
-                      WebkitBackdropFilter: "blur(12px)",
                       border: "1px solid rgba(255,255,255,0.05)",
                     }}
                     aria-expanded={isMoreOpen}
@@ -293,12 +314,12 @@ export default function Header() {
           </nav>
 
           {/* Right side Actions */}
-          <div className="flex shrink-0 items-center gap-2 pl-4 xl:gap-3 xl:pl-6">
+          <div className="flex shrink-0 items-center gap-2 pl-4 lg:gap-3 lg:pl-6">
             <FlipButton
               href="https://webapp.elfaelectric.com/login"
-              variant="glass"
+              variant="dark"
               icon={<User className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />}
-              className="font-roboto hidden h-9 whitespace-nowrap px-4 text-[11px] font-semibold tracking-[1px] xl:inline-flex 2xl:h-10 2xl:text-[12px]"
+              className="font-roboto hidden h-9 whitespace-nowrap !bg-[#1a1a1a] px-4 text-[11px] font-semibold tracking-[1px] lg:inline-flex 2xl:h-10 2xl:text-[12px] border border-white/5"
             >
               Login
             </FlipButton>
@@ -307,7 +328,7 @@ export default function Header() {
               href="/book-a-test-ride"
               variant="primary"
               icon={<Calendar className="h-3.5 w-3.5 shrink-0" strokeWidth={2.5} />}
-              className="font-roboto hidden h-9 whitespace-nowrap px-4 text-[11px] tracking-[1px] xl:inline-flex 2xl:h-10 2xl:text-[12px]"
+              className="font-roboto hidden h-9 whitespace-nowrap px-4 text-[11px] tracking-[1px] lg:inline-flex 2xl:h-10 2xl:text-[12px]"
             >
               Book a test ride
             </FlipButton>
@@ -315,7 +336,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-text-primary transition-all hover:bg-white/10 2xl:h-10 2xl:w-10"
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1a1a1a] border border-white/5 text-text-primary transition-all hover:bg-white/10 2xl:h-10 2xl:w-10"
               aria-label="Search"
             >
               <Search className="h-3.5 w-3.5 2xl:h-4 2xl:w-4" strokeWidth={2.5} />
@@ -324,7 +345,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((v) => !v)}
-              className="relative z-50 ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-text-primary transition-all hover:bg-white/10 xl:hidden"
+              className="relative z-50 ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-text-primary transition-all hover:bg-white/10 lg:hidden"
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
             >
@@ -342,7 +363,7 @@ export default function Header() {
             animate={{ opacity: 1, y: "0%" }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[10000] flex flex-col overflow-y-auto bg-[#00E573] p-6 xl:hidden pointer-events-auto"
+            className="fixed inset-0 z-[10000] flex flex-col overflow-y-auto bg-[#00E573] p-6 lg:hidden pointer-events-auto"
           >
             {/* Top bar inside menu */}
             <div className="flex items-center justify-between pb-8 pt-4">

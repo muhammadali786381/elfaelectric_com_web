@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, MapPin, Headset, Mail } from "lucide-react";
+import { STORE_BADGES } from "@/data/products/types";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -107,6 +108,37 @@ export default function Footer() {
                   {s.icon}
                 </a>
               ))}
+            </div>
+
+            <div className="mt-8 flex flex-row items-center gap-3 w-full max-w-[320px]">
+              <a
+                href="https://play.google.com/store/apps/details?id=com.elfaelectric.webapp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative flex-1 aspect-[190/60] transition-transform hover:scale-105"
+              >
+                <Image
+                  src={STORE_BADGES.googlePlay}
+                  alt="Get it on Google Play"
+                  fill
+                  className="object-contain object-left"
+                  sizes="(max-width: 640px) 140px, 190px"
+                />
+              </a>
+              <a
+                href="https://apps.apple.com/pk/app/elfa-electric/id6744618877"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative flex-1 aspect-[190/60] transition-transform hover:scale-105"
+              >
+                <Image
+                  src={STORE_BADGES.appStore}
+                  alt="Download on the App Store"
+                  fill
+                  className="object-contain object-left"
+                  sizes="(max-width: 640px) 140px, 190px"
+                />
+              </a>
             </div>
           </div>
 

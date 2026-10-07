@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import SecondaryHero from "@/components/sections/SecondaryHero";
+import Image from "next/image";
+import { FadeIn } from "@/components/motion/FadeIn";
 import BlogPostsGrid from "@/components/blog/BlogPostsGrid";
 import { BLOG_PER_PAGE } from "@/lib/blog/types";
 import { getBlogPosts } from "@/lib/blog/wordpress";
@@ -27,12 +28,31 @@ export default async function BlogPage() {
 
   return (
     <main className="flex-1 bg-[#050505]">
-      <SecondaryHero
-        layout="split"
-        titleLine1="Automotive"
-        titleLine2="Insights & Tips"
-        description="Insights, stories, and trends from the world of electric mobility."
-      />
+      {/* Standardized Blog Hero */}
+      <section className="relative flex min-h-[55dvh] items-end justify-center overflow-hidden pb-16 pt-32 lg:min-h-[60dvh] lg:pb-24 lg:pt-40">
+        <Image
+          src="/assets/images/hero4.jpeg"
+          alt="Blog Hero Background"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/60 to-[#050505]" />
+
+        <div className="relative z-10 w-full max-w-[1200px] px-4 text-center sm:px-6 lg:px-8 mt-10">
+          <FadeIn variant="fadeInUp" speed="slow">
+            <h1 className="font-montserrat mb-4 text-[56px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[72px] lg:text-[92px]">
+              Automotive <span className="text-brand-primary">Insights</span>
+            </h1>
+            <p className="font-roboto mx-auto max-w-2xl text-[16px] font-medium leading-relaxed text-white/70 sm:text-[20px]">
+              Insights, stories, and trends from the world of electric mobility
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      <div className="pt-8 sm:pt-12">
 
       {posts.length > 0 ? (
         <BlogPostsGrid
@@ -45,6 +65,7 @@ export default async function BlogPage() {
           Blog posts are temporarily unavailable. Please check back soon.
         </p>
       )}
+      </div>
     </main>
   );
 }
