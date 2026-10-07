@@ -174,7 +174,7 @@ export default function SavingsCalculator({
           <h2 className="font-montserrat max-w-xl text-4xl font-bold tracking-tighter text-white sm:text-[44px]">
             See what you save
             <br />
-            <span className="text-brand-primary">With ELFA.</span>
+            <span className="text-brand-primary">With ELFA</span>
           </h2>
         </div>
 

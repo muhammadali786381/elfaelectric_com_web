@@ -142,7 +142,7 @@ export default function Footer() {
                   <p className="font-poppins text-[14px] font-medium leading-5 text-text-inverse">
                     Office Location
                   </p>
-                  <p className="font-poppins mt-1 text-[14px] font-normal leading-relaxed text-text-primary/90">
+                  <p className="font-poppins transition-all hover:text-brand-primary mt-1 text-[14px] font-normal leading-relaxed text-text-primary/90">
                     C3i GA-70-A3, Korangi Creek Industrial Park
                     <br />
                     Korangi, Karachi, Sindh

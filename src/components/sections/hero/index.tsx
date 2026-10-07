@@ -62,14 +62,14 @@ function WaveText({
               reducedMotion
                 ? { y: 0, scale: 1, textShadow: restingShadow }
                 : {
-                    y: [0, -3, 0],
-                    scale: [1, 1.04, 1],
-                    textShadow: [
-                      restingShadow,
-                      activeShadow,
-                      restingShadow,
-                    ],
-                  }
+                  y: [0, -3, 0],
+                  scale: [1, 1.04, 1],
+                  textShadow: [
+                    restingShadow,
+                    activeShadow,
+                    restingShadow,
+                  ],
+                }
             }
             transition={{
               duration: pulseDuration,
@@ -132,9 +132,9 @@ export default function Hero() {
 
           <WaveText
             offset={"MOVE INTO".length}
-            className="text-brand-primary"
+            className=""
           >
-            THE FUTURE.
+            THE FUTURE
           </WaveText>
         </h1>
 
