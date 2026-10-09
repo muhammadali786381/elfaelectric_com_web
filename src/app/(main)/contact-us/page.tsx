@@ -9,6 +9,7 @@ import FAQ from "@/components/sections/FAQ";
 import { FadeIn } from "@/components/motion/FadeIn";
 import FlipButton from "@/components/ui/FlipButton";
 import BuyNowTrigger from "./BuyNowTrigger";
+import ContactMap from "./ContactMap";
 
 export const metadata: Metadata = {
   title: "Contact ELFA Electric Motorcycle Pakistan",
@@ -207,9 +208,14 @@ export default function ContactUsPage() {
                     <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
                       <MapPin className="h-5 w-5 text-brand-primary" />
                     </div>
-                    <span className="font-roboto pt-2">
-                      C3i GA-70-A3, Korangi Creek Industrial Park Korangi, Karachi, Sindh
-                    </span>
+                    <a
+                      href="https://maps.google.com/?q=Plot+1-A,+Shahra-e-Faisal,+PECHS+Extension+Block+6,+Karachi+74400"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-roboto pt-2 hover:text-brand-primary transition-colors cursor-pointer"
+                    >
+                      Plot 1-A, Shahra-e-Faisal, PECHS Extension Block 6, Karachi 74400
+                    </a>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
@@ -252,7 +258,7 @@ export default function ContactUsPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white transition-all hover:bg-brand-primary hover:border-brand-primary hover:text-black"
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white transition-all hover:bg-[#CC5500] hover:border-[#CC5500] hover:text-white"
                     >
                       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d={s.path} />
@@ -265,18 +271,9 @@ export default function ContactUsPage() {
           </div>
         </section>
 
-        {/* Map */}
         <section className="w-full bg-[#050505]">
           <FadeIn variant="fadeInUp" speed="slow" className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8 pb-16 lg:pb-24">
-            <div className="rounded-[24px] overflow-hidden border border-white/10 relative z-10 bg-white/5">
-              <iframe
-                title="ELFA Electric office location"
-                src="https://maps.google.com/maps?q=C3i%20GA-70-A3%2C%20Korangi%20Creek%20Industrial%20Park%20Korangi%2C%20Karachi%2C%20Sindh&t=m&z=14&output=embed&iwloc=near"
-                className="h-[350px] w-full border-0 sm:h-[420px] lg:h-[520px]"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
+            <ContactMap />
           </FadeIn>
         </section>
 

@@ -25,6 +25,7 @@ interface Reel {
   id: number;
   url: string;
   thumbnail: string;
+  originalUrl?: string;
 }
 
 interface ReelsCarouselProps {

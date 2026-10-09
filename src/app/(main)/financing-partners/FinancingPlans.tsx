@@ -511,9 +511,14 @@ export default function FinancingPlans() {
               <ul className="flex flex-col gap-6 text-[16px] text-white/80">
                 <li className="flex items-start gap-4">
                   <MapPin className="mt-1 h-5 w-5 shrink-0 text-brand-primary" />
-                  <span className="font-roboto leading-relaxed">
-                    C3i GA-70-A3, Korangi Creek Industrial Park Korangi, Karachi, Sindh
-                  </span>
+                  <a
+                    href="https://maps.google.com/?q=Plot+1-A,+Shahra-e-Faisal,+PECHS+Extension+Block+6,+Karachi+74400"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-roboto leading-relaxed hover:text-brand-primary transition-colors cursor-pointer"
+                  >
+                    Plot 1-A, Shahra-e-Faisal, PECHS Extension Block 6, Karachi 74400
+                  </a>
                 </li>
                 <li className="flex items-center gap-4">
                   <Phone className="h-5 w-5 shrink-0 text-brand-primary" />
@@ -542,7 +547,7 @@ export default function FinancingPlans() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white transition-all duration-300 hover:bg-brand-primary hover:border-brand-primary hover:text-black hover:scale-110"
+                    className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white transition-all duration-300 hover:bg-[#CC5500] hover:border-[#CC5500] hover:text-white hover:scale-110"
                   >
                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d={s.path} />

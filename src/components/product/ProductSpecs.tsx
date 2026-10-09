@@ -32,22 +32,22 @@ export default function ProductSpecs({ groups }: { groups: ProductSpecGroup[] })
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
               className="group relative flex flex-col items-start gap-4 transition-all duration-300"
             >
-              <div className="relative flex h-16 w-16 shrink-0 items-center justify-center transition-transform duration-500 group-hover:scale-110">
+              <div className="relative flex h-16 w-16 shrink-0 items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_12px_rgba(0,200,83,0.4)]">
                 <Image src={g.icon} alt="" fill className="object-contain" sizes="64px" />
               </div>
 
-              <h3 className="font-montserrat text-left text-[22px] font-bold tracking-wide text-white">
+              <h3 className="font-montserrat text-left text-[22px] font-bold tracking-wide text-white transition-colors duration-300 group-hover:text-brand-primary">
                 {g.title}
               </h3>
 
               <ul className="font-roboto mt-2 flex w-full flex-col gap-3 text-[15px] font-medium text-white/70">
                 {g.items.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
+                  <li key={item} className="group/item flex items-start gap-3 cursor-default">
                     <span
-                      className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-primary"
+                      className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-primary transition-transform duration-300 group-hover/item:scale-150"
                       aria-hidden
                     />
-                    <span className="leading-snug">{item}</span>
+                    <span className="leading-snug transition-colors duration-300 group-hover/item:text-white">{item}</span>
                   </li>
                 ))}
               </ul>

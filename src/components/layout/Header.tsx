@@ -212,7 +212,7 @@ export default function Header() {
                   {link.hasDropdown ? (
                     <button
                       type="button"
-                      className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary lg:px-4 lg:text-[13px]"
+                      className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-[#CC5500] hover:text-white hover:border-[#CC5500] lg:px-4 lg:text-[13px]"
                       style={{
                         border: "1px solid rgba(255,255,255,0.05)",
                       }}
@@ -224,7 +224,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={link.href}
-                      className="font-roboto flex items-center whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary lg:px-4 lg:text-[13px]"
+                      className="font-roboto flex items-center whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-[#CC5500] hover:text-white hover:border-[#CC5500] lg:px-4 lg:text-[13px]"
                       style={{
                         border: "1px solid rgba(255,255,255,0.05)",
                       }}
@@ -277,7 +277,7 @@ export default function Header() {
                 >
                   <button
                     type="button"
-                    className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary lg:px-4 lg:text-[13px]"
+                    className="font-roboto flex items-center gap-[2px] whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-[#CC5500] hover:text-white hover:border-[#CC5500] lg:px-4 lg:text-[13px]"
                     style={{
                       border: "1px solid rgba(255,255,255,0.05)",
                     }}
@@ -314,7 +314,7 @@ export default function Header() {
 
             <Link
               href="/contact-us"
-              className="font-roboto flex items-center whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary lg:px-4 lg:text-[13px]"
+              className="font-roboto flex items-center whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-[#CC5500] hover:text-white hover:border-[#CC5500] lg:px-4 lg:text-[13px]"
               style={{
                 border: "1px solid rgba(255,255,255,0.05)",
               }}

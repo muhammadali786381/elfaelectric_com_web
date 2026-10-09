@@ -1,6 +1,6 @@
 import type { Product } from "@/data/products/types";
 import ScootyHero from "@/components/scooty/ScootyHero";
-import ScootyShowcase from "@/components/scooty/ScootyShowcase";
+import ScootyHighlight from "@/components/scooty/ScootyHighlight";
 import ProductCoreFeatures from "@/components/product/ProductCoreFeatures";
 import ProductAdvancedFeatures from "@/components/product/ProductAdvancedFeatures";
 import ProductSpecs from "@/components/product/ProductSpecs";
@@ -20,12 +20,8 @@ export default function ScootyPage({ product }: { product: Product }) {
       {/* Hero: larger scooty, no partition, urban grid bg */}
       <ScootyHero product={product} />
 
-      {/* Scooty Showcase: clean full-width view, replaces color comparison slider */}
-      <ScootyShowcase
-        image={product.colorImages[0]}
-        title={product.colorTitle}
-        productName={product.name}
-      />
+      {/* Scooty Highlight Section */}
+      <ScootyHighlight />
 
       {/* Savings Calculator */}
       <SavingsCalculator productId={product.calculatorId} />
@@ -62,7 +58,7 @@ export default function ScootyPage({ product }: { product: Product }) {
       <AdventureCTA buyHref={product.buyHref} />
 
       {/* Marquee */}
-      
+
     </main>
   );
 }

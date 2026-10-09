@@ -63,7 +63,7 @@ export default function SecondaryHero({
   }
 
   return (
-    <section className="relative flex min-h-[55dvh] items-end justify-center overflow-hidden pb-16 pt-32 lg:min-h-[60dvh] lg:pb-24 lg:pt-40">
+    <section className="relative flex min-h-[45dvh] items-center justify-center overflow-hidden pt-20 lg:min-h-[50dvh]">
       <Image
         src={imageSrc}
         alt={imageAlt}
@@ -74,15 +74,12 @@ export default function SecondaryHero({
       />
       <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/60 to-[#050505]" />
 
-      <div className="relative z-10 w-full max-w-[1200px] px-4 text-center sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full max-w-[1200px] px-4 text-center sm:px-6 lg:px-8 mt-10">
         <FadeIn variant="fadeInUp" speed="slow">
-          <h1 className="font-montserrat mb-6 text-[48px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[64px] lg:text-[80px]">
+          <h1 className="font-montserrat mb-4 text-[56px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[72px] lg:text-[92px]">
             {titleLine1}{" "}
             {titleLine2 && (
-              <>
-                <br className="hidden sm:block" />
-                <span className="text-brand-primary">{titleLine2}</span>
-              </>
+              <span className="text-brand-primary">{titleLine2}</span>
             )}
           </h1>
           <p className="font-roboto mx-auto max-w-2xl text-[16px] font-medium leading-relaxed text-white/70 sm:text-[18px]">

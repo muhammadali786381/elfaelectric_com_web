@@ -103,7 +103,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="text-text-inverse transition-colors hover:text-brand-primary"
+                  className="text-text-inverse transition-colors hover:text-[#CC5500]"
                 >
                   {s.icon}
                 </a>

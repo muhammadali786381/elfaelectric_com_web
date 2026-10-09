@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -12,8 +11,8 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function ProductHero({ product }: { product: Product }) {
   return (
-    <section className="relative flex min-h-[100dvh] w-full flex-col justify-between overflow-hidden bg-[#050505] px-4 pb-12 pt-28 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-      {/* Background Image fading smoothly via mask */}
+    <section className="relative flex min-h-[100dvh] w-full flex-col items-center justify-between overflow-hidden bg-[#050505] px-4 pb-24 pt-24 sm:px-6 sm:pb-12 sm:pt-28 lg:px-12 xl:px-16 2xl:px-24">
+      {/* Background fading via mask */}
       <div 
         className="absolute inset-0 z-0 bg-[#050505]"
         style={{
@@ -23,15 +22,15 @@ export default function ProductHero({ product }: { product: Product }) {
       >
         <Image
           src="/assets/images/newhero3.jpeg"
-          alt={`${product.name} background`}
+          alt="Background"
           fill
           priority
-          className="object-cover object-center opacity-40 mix-blend-luminosity"
+          className="object-cover object-center opacity-25 mix-blend-luminosity"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/80 via-transparent to-[#050505]/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/60 via-transparent to-[#050505]/60" />
         {/* Subtle urban grid lines */}
         <div
-          className="absolute inset-0 opacity-[0.07]"
+          className="absolute inset-0 opacity-[0.035]"
           style={{
             backgroundImage: "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
             backgroundSize: "60px 60px",
@@ -39,34 +38,35 @@ export default function ProductHero({ product }: { product: Product }) {
         />
       </div>
 
-      {/* Foreground Content */}
-      <div className="relative z-10 flex flex-1 w-full max-w-[1600px] mx-auto flex-col justify-between pointer-events-none">
+      {/* Main Container */}
+      <div className="relative z-10 flex h-full w-full max-w-[1500px] mx-auto flex-col justify-between flex-1 pt-8 lg:pt-0">
 
-        {/* Top Section: Title */}
-        <div className="pointer-events-auto flex flex-col items-start gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-0">
+        <div className="flex flex-col lg:flex-row lg:items-center w-full flex-1 gap-10 lg:gap-0 lg:pl-4">
 
-          <div className="flex flex-col items-start gap-4 lg:gap-6">
+          {/* Left: Header Section */}
+          <div className="flex w-full lg:w-[45%] xl:w-[40%] flex-col items-center lg:items-start text-center lg:text-left z-20 shrink-0">
             {product.offerBadge && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease }}
+                className="mb-4 lg:mb-6"
               >
-                <Badge variant="outline" className="h-7 border-brand-primary/30 bg-brand-primary/5 px-3 font-roboto text-[11px] font-bold uppercase tracking-widest text-brand-primary backdrop-blur-md">
+                <Badge variant="outline" className="h-7 border-brand-primary/30 bg-brand-primary/5 px-4 font-roboto text-[11px] font-bold uppercase tracking-widest text-brand-primary backdrop-blur-md">
                   <span className="mr-2 h-1.5 w-1.5 rounded-full bg-brand-primary animate-pulse" />
                   {product.offerBadge}
                 </Badge>
               </motion.div>
             )}
 
-            <h1 className="flex flex-wrap overflow-hidden font-montserrat text-[48px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[64px] lg:text-[100px] xl:text-[120px]">
+            <h1 className="font-montserrat flex flex-wrap justify-center lg:justify-start text-[48px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[64px] lg:text-[100px] xl:text-[120px]">
               {product.title.split(" ").map((word, i) => (
                 <motion.span
                   key={i}
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.8, delay: i * 0.15, ease }}
-                  className="mr-[0.3em] inline-block"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: i * 0.12, ease }}
+                  className="inline-block mr-[0.25em] last:mr-0"
                 >
                   {word}
                 </motion.span>
@@ -74,111 +74,98 @@ export default function ProductHero({ product }: { product: Product }) {
             </h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease }}
-              className="font-roboto max-w-[420px] text-[15px] font-medium leading-relaxed text-white/60 sm:text-[17px] lg:text-[19px]"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease }}
+              className="font-roboto mt-5 max-w-[480px] text-[15px] font-medium leading-relaxed text-white/60 sm:text-[17px] lg:text-[19px]"
             >
               {product.subtitle}
             </motion.p>
           </div>
 
-          {/* Specs (Horizontal on mobile, Vertical on lg/xl) */}
-          <div className="flex flex-wrap items-center gap-6 sm:gap-10 lg:absolute lg:right-0 lg:top-[45%] lg:-translate-y-1/2 lg:flex-col lg:items-start lg:gap-6 xl:gap-8 lg:pr-4 xl:pr-0 z-30 mt-6 lg:mt-0">
-            {product.heroSpecs.map((spec, i) => (
-              <motion.div
-                key={spec.label}
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 + i * 0.15, ease }}
-                className="flex items-center gap-4 lg:flex-col lg:items-end lg:text-right"
-              >
-                <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/5 lg:h-14 lg:w-14 xl:h-16 xl:w-16 2xl:h-20 2xl:w-20 lg:border lg:border-white/10 lg:bg-[#111]/60 lg:backdrop-blur-md">
-                  <div className="relative h-6 w-6 lg:h-7 lg:w-7 xl:h-8 xl:w-8 2xl:h-10 2xl:w-10">
-                    <Image src={spec.icon} alt="" fill className="object-contain opacity-80" sizes="40px" />
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-montserrat text-[15px] font-bold uppercase tracking-wide text-white lg:text-[14px] xl:text-[16px] 2xl:text-[20px]">
-                    {spec.label}
-                  </span>
-                  <span className="font-roboto text-[12px] font-medium text-brand-primary lg:text-[11px] xl:text-[13px] 2xl:text-[15px]">
-                    {spec.value}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+          {/* Right: Huge Bike */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, x: -150 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 1.2, delay: 0.2, ease }}
+            className="relative flex-1 w-full lg:w-[55%] xl:w-[60%] max-w-[700px] lg:max-w-none mx-auto lg:mx-0 min-h-[220px] sm:min-h-[300px] lg:min-h-[500px] z-10 flex items-center justify-center"
+          >
+            {/* Decorative glow behind bike */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-brand-primary/15 blur-[100px] rounded-full pointer-events-none" />
 
-        {/* Massive Bike Image */}
-        <motion.div
-          initial={{ opacity: 0, x: -50, scale: 0.95 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.2, ease }}
-          className="relative flex-1 w-full min-h-[300px] my-6 z-[5] pointer-events-none lg:absolute lg:inset-0 lg:my-0 lg:pb-[140px] lg:pt-[120px] lg:flex lg:items-center lg:justify-center 2xl:translate-x-[5%]"
-        >
-          <div className="relative  w-full h-[300px] sm:h-[400px] lg:h-full lg:max-w-[55vw] 2xl:max-w-[900px] lg:scale-[1.05] lg:mt-12  xl:scale-[0.9] 2xl:scale-[1] ">
             <Image
               src={product.heroImage}
               alt={product.name}
               fill
               priority
               className="object-contain object-center drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
-              sizes="(max-width: 1024px) 100vw, 900px"
+              sizes="(max-width: 1024px) 100vw, 1000px"
             />
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
-        {/* Bottom Section: Pricing & CTAs */}
+        {/* Bottom: Specs (Left/Center) & Pricing/CTAs (Right) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease }}
-          className="pointer-events-auto relative z-20 flex flex-col items-start justify-between gap-8 border-t border-white/10 pt-8 lg:mt-16 lg:flex-row lg:items-center lg:gap-0 lg:pt-10"
+          transition={{ duration: 0.8, delay: 0.5, ease }}
+          className="flex w-full shrink-0 flex-col gap-6 border-t border-white/10 pt-4 lg:flex-row lg:items-end lg:justify-between lg:gap-0 lg:pt-6 z-20"
         >
-          <div className="flex flex-col gap-1">
-            {product.priceTagline && (
-              <p className="font-roboto text-[12px] font-semibold uppercase tracking-widest text-white/50">
-                {product.priceTagline}
-              </p>
-            )}
-            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              {product.priceOriginal && (
-                <p className="font-montserrat text-[18px] font-medium text-white/30 line-through decoration-white/40">
-                  {product.priceOriginal}
-                </p>
-              )}
-              <div className="font-montserrat flex items-baseline gap-2 text-[32px] font-bold tracking-tight text-white sm:text-[40px]">
-                <span className="text-[20px] font-medium text-white/60">Only in</span>
-                <span className="text-brand-primary">{product.priceCurrent}</span>
+          {/* Horizontal Specs */}
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 lg:justify-start">
+            {product.heroSpecs.map((spec) => (
+              <div key={spec.label} className="flex items-center gap-2 lg:gap-3">
+                <div className="relative h-8 w-8 shrink-0 lg:h-10 lg:w-10">
+                  <Image src={spec.icon} alt="" fill className="object-contain opacity-90" sizes="40px" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-montserrat text-[9px] font-bold uppercase tracking-widest text-white/40 lg:text-[10px]">
+                    {spec.label}
+                  </span>
+                  <span className="font-montserrat text-[16px] font-black text-white lg:text-[18px]">
+                    {spec.value}
+                  </span>
+                </div>
               </div>
-              {product.priceTaxNote && (
-                <span className="font-roboto ml-1 text-[13px] font-medium text-white/40">
-                  {product.priceTaxNote}
-                </span>
-              )}
-            </div>
+            ))}
           </div>
 
-          <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto lg:gap-4">
-            <FlipButton
-              href={product.buyHref}
-              variant="primary"
-              className="h-[56px] w-full rounded-none px-10 text-[14px] lg:w-auto"
-            >
-              Buy Now
-            </FlipButton>
-            <FlipButton
-              href={product.bookHref}
-              variant="outline"
-              icon={<Calendar className="h-[18px] w-[18px]" strokeWidth={2} />}
-              className="h-[56px] w-full rounded-none border-white/20 px-10 text-[14px] text-white hover:border-brand-primary hover:bg-transparent hover:text-brand-primary lg:w-auto"
-            >
-              Book a test ride
-            </FlipButton>
+          {/* Pricing & CTAs */}
+          <div className="flex flex-col items-center gap-4 lg:items-end">
+            <div className="flex flex-col items-center lg:items-end">
+              <div className="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 lg:justify-end">
+                {product.priceOriginal && (
+                  <p className="font-montserrat text-[14px] font-medium text-white/30 line-through decoration-white/40">
+                    {product.priceOriginal}
+                  </p>
+                )}
+                <div className="font-montserrat flex items-baseline gap-2 text-[24px] font-bold tracking-tight text-white sm:text-[28px]">
+                  <span className="text-[14px] font-medium text-white/60">Only in</span>
+                  <span className="text-brand-primary">{product.priceCurrent}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:w-auto lg:justify-end lg:gap-3">
+              <FlipButton
+                href={product.buyHref}
+                variant="primary"
+                className="h-[46px] w-full rounded-none px-8 text-[12px] sm:w-auto"
+              >
+                Buy Now
+              </FlipButton>
+              <FlipButton
+                href={product.bookHref}
+                variant="outline"
+                icon={<Calendar className="h-[14px] w-[14px]" strokeWidth={2} />}
+                className="h-[46px] w-full rounded-none border-white/20 px-8 text-[12px] text-white hover:border-brand-primary hover:bg-transparent hover:text-brand-primary sm:w-auto"
+              >
+                Book a Test Ride
+              </FlipButton>
+            </div>
           </div>
         </motion.div>
+
       </div>
     </section>
   );

@@ -154,7 +154,7 @@ export default function NewsroomPage() {
   return (
     <main className="flex-1 bg-[#050505] text-white">
       {/* Standardized Hero Section */}
-      <section className="relative flex min-h-[55dvh] items-end justify-center overflow-hidden pb-16 pt-32 lg:min-h-[60dvh] lg:pb-24 lg:pt-40">
+      <section className="relative flex min-h-[45dvh] items-center justify-center overflow-hidden pt-20 lg:min-h-[50dvh]">
         <Image
           src="/assets/images/hero4.jpeg"
           alt="News Hero Background"
