@@ -19,8 +19,8 @@ const navLinks = [
     ],
   },
   { label: "Locations", href: "/our-locations" },
-  { label: "About", href: "/about-us" },
   { label: "Financing", href: "/financing-partners" },
+  { label: "About", href: "/about-us" },
   { label: "PAVE", href: "/pave-scheme" },
   { label: "Education", href: "/ev-education" },
   { label: "News", href: "/newsroom" },
@@ -118,18 +118,17 @@ export default function Header() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1536) {
+      const w = window.innerWidth;
+      if (w >= 1440) {
         setMaxVisible(navLinks.length);
-      } else if (window.innerWidth >= 1361) {
-        setMaxVisible(7);
-      } else if (window.innerWidth >= 1280) {
-        setMaxVisible(6);
-      } else if (window.innerWidth >= 1180) {
+      } else if (w >= 1280) {
         setMaxVisible(5);
-      } else if (window.innerWidth >= 1100) {
-        setMaxVisible(4);
-      } else {
+      } else if (w >= 1150) {
         setMaxVisible(3);
+      } else if (w >= 1024) {
+        setMaxVisible(1);
+      } else {
+        setMaxVisible(1);
       }
     };
     handleResize();
@@ -146,14 +145,15 @@ export default function Header() {
     setIsMobileProductsOpen(false);
   };
 
-  const currentMax = isScrolled ? 3 : maxVisible;
-  const visibleLinks = navLinks.slice(0, currentMax);
-  const moreLinks = navLinks.slice(currentMax);
+  const desktopNavLinks = navLinks.filter(l => l.label !== "Contact");
+  const currentMax = isScrolled ? Math.min(3, maxVisible) : maxVisible;
+  const visibleLinks = desktopNavLinks.slice(0, currentMax);
+  const moreLinks = desktopNavLinks.slice(currentMax);
 
   return (
     <header className="fixed inset-x-0 top-0 z-[9999] flex w-full justify-center pointer-events-none px-3 sm:px-6">
       <div
-        style={{ maxWidth: isScrolled ? "1000px" : undefined }}
+        style={{ maxWidth: isScrolled ? "1150px" : undefined }}
         className={`relative flex items-center justify-between pointer-events-auto rounded-full transition-all duration-300 ease-out ${isScrolled
           ? "w-full h-16 sm:h-[68px] lg:h-[80px] mt-3 sm:mt-4 border border-transparent px-4 sm:px-6 lg:px-6"
           : "w-full max-w-[1000px] lg:max-w-[1600px] h-14 sm:h-16 lg:h-[96px] mt-3 sm:mt-4 lg:mt-0 lg:rounded-none border border-transparent bg-transparent shadow-none px-4 sm:px-6 lg:px-8"
@@ -311,6 +311,16 @@ export default function Header() {
                 </motion.div>
               )}
             </AnimatePresence>
+
+            <Link
+              href="/contact-us"
+              className="font-roboto flex items-center whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold tracking-[0.3px] text-white transition-all duration-300 bg-[#1a1a1a] hover:bg-brand-primary/90 hover:text-black hover:border-brand-primary lg:px-4 lg:text-[13px]"
+              style={{
+                border: "1px solid rgba(255,255,255,0.05)",
+              }}
+            >
+              Contact
+            </Link>
           </nav>
 
           {/* Right side Actions */}

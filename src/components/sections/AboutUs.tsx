@@ -7,62 +7,48 @@ import FlipButton from "@/components/ui/FlipButton";
 
 export default function AboutUs() {
   return (
-    <section className="bg-bg-primary py-16 lg:py-24">
-      <div className="mx-auto w-full max-w-container px-4 sm:px-6">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+    <section className="relative overflow-hidden bg-bg-primary pt-0 pb-20 lg:pt-0 lg:pb-32">
+      {/* Subtle background glow to prevent it from looking like an empty void */}
+      <div 
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[800px] rounded-full opacity-[0.05]"
+        style={{ background: 'radial-gradient(circle, var(--color-brand-primary) 0%, transparent 70%)' }}
+      />
 
-          {/* Left — Product image with dark gradient overlay */}
-          <FadeIn variant="fadeInLeft" speed="slow">
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
-              <Image
-                src="/assets/images/ne-a.webp"
-                alt="ELFA Electric Solutions"
-                fill
-                className="object-contain object-center scale-[1.1] sm:scale-100"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              {/* Dark gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-bg-primary/80 via-bg-primary/40 to-transparent" />
-              {/* Bottom fade */}
-              <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/60 via-transparent to-transparent" />
-            </div>
-          </FadeIn>
+      <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center justify-center px-4 sm:px-6">
+        <FadeIn variant="fadeInUp" speed="slow" className="flex flex-col items-center text-center">
+          
+          {/* Subtle accent line */}
+          <div className="mb-8 h-1 w-12 rounded-full bg-brand-primary" />
 
-          {/* Right — Text content */}
-          <FadeIn variant="fadeInRight" speed="slow">
-            <div className="flex flex-col gap-6">
-              <p className="font-roboto text-[13px] font-semibold uppercase tracking-[2px] text-brand-primary">
-                Our Story
-              </p>
-              <h2 className="font-montserrat text-[32px] font-bold leading-tight text-text-primary sm:text-[38px] lg:text-[44px]">
-                About <span className="text-brand-primary">ELFA</span> Electric
-              </h2>
-              <div className="flex flex-col gap-4">
-                <p className="font-roboto text-[15px] leading-relaxed text-text-secondary sm:text-[16px]">
-                  ELFA Electric, born under EV Technologies at Wavetec, is driven by a passion for building
-                  an electric future with sustainable, affordable, and innovative solutions powered by clean
-                  technology.
-                </p>
-                <p className="font-roboto text-[15px] leading-relaxed text-text-secondary sm:text-[16px]">
-                  At ELFA Electric, we believe that every person and every detail matters. Our electric
-                  motorcycles are meticulously designed, engineered, and rigorously tested for the local
-                  rider, using top-quality components.
-                </p>
-              </div>
-              <div className="mt-2">
-                <FlipButton
-                  href="/about-us"
-                  variant="primary"
-                  icon={<ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
-                  className="font-roboto h-[48px] px-8 text-[13px] tracking-[1.5px]"
-                >
-                  Discover More
-                </FlipButton>
-              </div>
-            </div>
-          </FadeIn>
-
-        </div>
+          <h2 className="font-montserrat mb-8 text-[38px] font-bold leading-tight text-white sm:text-[48px] lg:text-[56px] text-balance">
+            About <span className="text-brand-primary">ELFA</span> Electric
+          </h2>
+          
+          <div className="mb-10 flex flex-col gap-6 px-4">
+            {/* Lead paragraph: larger and brighter */}
+            <p className="font-roboto text-[18px] leading-[1.6] text-white/90 sm:text-[20px] lg:text-[22px] text-balance">
+              ELFA Electric, born under EV Technologies at Wavetec, is driven by a passion for building
+              an electric future with sustainable, affordable, and innovative solutions powered by clean
+              technology.
+            </p>
+            {/* Supporting paragraph: smaller and dimmer */}
+            <p className="font-roboto text-[15px] leading-relaxed text-white/60 sm:text-[16px] text-balance">
+              At ELFA Electric, we believe that every person and every detail matters. Our electric
+              motorcycles are meticulously designed, engineered, and rigorously tested for the local
+              rider, using top-quality components.
+            </p>
+          </div>
+          
+          <FlipButton
+            href="/about-us"
+            variant="primary"
+            icon={<ArrowRight className="h-5 w-5" strokeWidth={2.5} />}
+            className="font-roboto h-[52px] rounded-full px-10 text-[14px] tracking-[1.5px] uppercase font-bold"
+          >
+            Discover More
+          </FlipButton>
+        </FadeIn>
       </div>
     </section>
   );

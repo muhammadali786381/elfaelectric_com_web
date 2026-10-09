@@ -112,20 +112,26 @@ export default function Testimonials() {
       `}</style>
 
       <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 relative">
-        {/* Heading */}
+        {/* Header section with split layout */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-12 text-center"
+          className="mb-12 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6"
         >
-          <p className="font-roboto mb-3 text-[12px] font-semibold uppercase tracking-[2px] text-brand-primary">
-            Real riders, real results
-          </p>
-          <h2 className="font-montserrat text-[32px] font-bold text-white sm:text-[40px] lg:text-[48px]">
-            Our Happy Customers
+          <h2 className="font-montserrat text-[32px] font-bold text-white sm:text-[40px] lg:text-[48px] leading-tight">
+            Happy Customers
           </h2>
+
+          <FlipButton
+            href="/video-testimonials"
+            variant="outline"
+            icon={<Play className="h-5 w-5 fill-current" strokeWidth={2} />}
+            className="font-roboto h-[48px] rounded-full px-6 text-[13px] tracking-[1px] uppercase font-bold border-white/20 hover:border-brand-primary shrink-0"
+          >
+            Watch Video Testimonials
+          </FlipButton>
         </motion.div>
 
         {/* Swiper Container */}
@@ -134,7 +140,7 @@ export default function Testimonials() {
           <button className="swiper-button-prev-custom absolute left-0 sm:-left-4 lg:-left-6 top-1/2 z-10 -translate-y-1/2 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-white/10 bg-black/50 text-white backdrop-blur-md transition-all hover:bg-brand-primary hover:text-black hover:border-brand-primary shadow-xl">
             <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
-          
+
           <button className="swiper-button-next-custom absolute right-0 sm:-right-4 lg:-right-6 top-1/2 z-10 -translate-y-1/2 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-white/10 bg-black/50 text-white backdrop-blur-md transition-all hover:bg-brand-primary hover:text-black hover:border-brand-primary shadow-xl">
             <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
@@ -172,15 +178,15 @@ export default function Testimonials() {
                     {/* Gradient overlay from bottom */}
                     <div className="absolute bottom-0 z-10 h-32 w-full bg-gradient-to-t from-[#0a0a0c] to-transparent pointer-events-none"></div>
                   </div>
-                  
+
                   {/* Content Container */}
                   <div className="flex flex-1 flex-col px-6 pb-8 pt-2">
                     <StarRating rating={t.rating} />
-                    
+
                     <p className="font-roboto text-[15px] font-medium leading-relaxed text-white/90 border-b border-white/10 pb-6 flex-1">
                       "{t.text}"
                     </p>
-                    
+
                     <div className="mt-6">
                       <p className="font-montserrat text-[16px] font-semibold text-white">
                         — {t.name}
@@ -188,31 +194,15 @@ export default function Testimonials() {
                       <p className="font-roboto mt-1 text-[13px] font-normal text-white/50">
                         {t.city}
                       </p>
-                      <p className="font-roboto mt-3 inline-block rounded-full bg-brand-primary/10 border border-brand-primary/20 px-3 py-1 text-[12px] font-semibold text-brand-primary uppercase tracking-wide">
+                      {/* <p className="font-roboto mt-3 inline-block rounded-full bg-brand-primary/10 border border-brand-primary/20 px-3 py-1 text-[12px] font-semibold text-brand-primary uppercase tracking-wide">
                         {t.model}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
-
-        {/* Video Testimonials CTA */}
-        <div className="mt-12 text-center flex justify-center">
-          <Link
-            href="/video-testimonials"
-            className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-brand-primary to-brand-secondary px-8 py-4 font-montserrat text-[15px] sm:text-[16px] font-bold tracking-[1px] text-bg-primary transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(97,206,112,0.4)]"
-          >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-bg-primary/20 backdrop-blur-sm transition-transform duration-300 group-hover:scale-110">
-              <Play className="h-4 w-4 fill-bg-primary text-bg-primary" />
-            </div>
-            WATCH VIDEO TESTIMONIALS
-            
-            {/* Ambient glow behind button */}
-            <div className="absolute inset-0 -z-10 rounded-full bg-brand-primary opacity-40 blur-xl transition-opacity duration-300 group-hover:opacity-60" />
-          </Link>
         </div>
       </div>
     </section>

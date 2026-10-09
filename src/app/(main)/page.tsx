@@ -1,5 +1,6 @@
 import Hero from "@/components/sections/hero";
 import CityMarquee from "@/components/sections/CityMarquee";
+import SpinningBolt from "@/components/sections/SpinningBolt";
 import AboutUs from "@/components/sections/AboutUs";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import ProductShowcase from "@/components/sections/ProductShowcase";
@@ -9,6 +10,8 @@ import Testimonials from "@/components/sections/Testimonials";
 import Welcome from "@/components/sections/Welcome";
 import FAQ from "@/components/sections/FAQ";
 import AdventureCTA from "@/components/sections/AdventureCTA";
+import { dummyVideoLinks } from "@/data/video-links";
+import ReelsCarousel from "@/components/sections/ReelsCarousel";
 
 // Static page — fully pre-rendered at build time for maximum performance
 export const dynamic = "force-static";
@@ -16,19 +19,21 @@ export const dynamic = "force-static";
 export default function Home() {
   return (
     <>
-            <main className="flex-1">
+      <main className="flex-1">
         <Hero />
         <CityMarquee />
+        <SpinningBolt />
         <AboutUs />
         <WhyChooseUs />
         <ProductShowcase />
         <Solutions />
         <SavingsCalculator />
         <Testimonials />
+        <ReelsCarousel reels={dummyVideoLinks} />
         {/* <Welcome /> */}
         <FAQ />
         <AdventureCTA />
       </main>
-          </>
+    </>
   );
 }

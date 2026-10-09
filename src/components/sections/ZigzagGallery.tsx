@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
-import { Play, X } from "lucide-react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { motion, useMotionValue, useAnimationFrame, animate, AnimatePresence } from "framer-motion";
+import { Play, X, ChevronLeft, ChevronRight } from "lucide-react";
+import PlayButton from "@/components/ui/PlayButton";
 
 interface VideoCard {
   id: number;
@@ -11,9 +12,10 @@ interface VideoCard {
   city: string;
   model: string;
   duration: string;
-  thumbnail: string; // gradient fallback or url()
-  thumbnailUrl?: string; // direct image url
+  thumbnail: string;
+  thumbnailUrl?: string;
   videoSrc: string;
+  originalUrl?: string;
 }
 
 const videoTestimonials: VideoCard[] = [
@@ -79,6 +81,17 @@ const videoTestimonials: VideoCard[] = [
   },
 ];
 
+// Card dimensions + gap
+const CARD_W = 380;
+const CARD_GAP = 24;
+const CARD_STRIDE = CARD_W + CARD_GAP;
+
+// Zig-zag Y amplitude (px above/below baseline)
+const ZZ_AMP = 0;
+
+// Auto-slide speed (px per second)
+const AUTO_SPEED = 60;
+
 interface ZigzagGalleryProps {
   headingLine1?: string;
   headingLine2?: string;
@@ -92,161 +105,195 @@ export default function ZigzagGallery({
   subtitle = "Real ELFA riders share their experience — from daily commutes to zero fuel bills. Watch and be inspired.",
   videoLinks,
 }: ZigzagGalleryProps = {}) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [scrollRange, setScrollRange] = useState(0);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const displayCards: VideoCard[] = videoLinks
+  // Build card list from props or defaults
+  const baseCards: VideoCard[] = videoLinks
     ? videoLinks.map((url, i) => {
         let embedUrl = url;
-        let thumbUrl = "";
-        let isShorts = false;
+        let thumbUrl: string | undefined;
 
         if (url.includes("youtube.com") || url.includes("youtu.be")) {
-          let videoId = "";
-          if (url.includes("shorts/")) {
-            videoId = url.split("shorts/")[1]?.split("?")[0];
-            isShorts = true;
-          } else if (url.includes("v=")) {
-            videoId = url.split("v=")[1]?.split("&")[0];
-          } else if (url.includes("youtu.be/")) {
-            videoId = url.split("youtu.be/")[1]?.split("?")[0];
-          }
-
+          const videoId =
+            url.match(/[?&]v=([^&]+)/)?.[1] ||
+            url.match(/youtu\.be\/([^?]+)/)?.[1] ||
+            url.match(/shorts\/([^?]+)/)?.[1];
           if (videoId) {
             embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            if (url.includes("shorts/")) embedUrl += "&isShort=1";
             thumbUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
           }
         } else if (url.includes("instagram.com/reel/")) {
           const id = url.split("reel/")[1]?.split("/")[0];
-          if (id) {
-            embedUrl = `https://www.instagram.com/p/${id}/embed/`;
-            isShorts = true;
-          }
+          if (id) embedUrl = `https://www.instagram.com/p/${id}/embed/`;
         } else if (url.includes("tiktok.com")) {
           const id = url.split("video/")[1]?.split("?")[0];
-          if (id) {
-            embedUrl = `https://www.tiktok.com/embed/v2/${id}`;
-            isShorts = true;
-          }
+          if (id) embedUrl = `https://www.tiktok.com/embed/v2/${id}`;
         }
 
         return {
-          id: i + 1,
+          id: i,
           title: `Rider Story ${i + 1}`,
           customer: "ELFA Rider",
           city: "Pakistan",
           model: "EV Bike",
-          duration: isShorts ? "Shorts" : "Video",
+          duration: "Shorts",
           thumbnail: `linear-gradient(135deg, #050505, #002200, #00451a)`,
           thumbnailUrl: thumbUrl,
           videoSrc: embedUrl,
+          originalUrl: url,
         };
       })
     : videoTestimonials;
 
+  // Triplicate for seamless infinite loop
+  const cards = [...baseCards, ...baseCards, ...baseCards];
+  const totalW = baseCards.length * CARD_STRIDE;
+
+  // Motion value drives the entire strip
+  const x = useMotionValue(-totalW); // start at the middle copy
+  const isPausedRef = useRef(false);
+  const isAnimatingRef = useRef(false);
+  const lastTimeRef = useRef<number | null>(null);
+
+  // Auto-advance
+  useAnimationFrame((t) => {
+    if (isPausedRef.current || activeVideo || isAnimatingRef.current) {
+      lastTimeRef.current = null;
+      return;
+    }
+    if (lastTimeRef.current === null) {
+      lastTimeRef.current = t;
+      return;
+    }
+    const delta = (t - lastTimeRef.current) / 1000;
+    lastTimeRef.current = t;
+
+    let next = x.get() - AUTO_SPEED * delta;
+
+    // Wrap: once we've scrolled one full copy, reset to the middle copy start
+    if (next < -totalW * 2) next += totalW;
+
+    x.set(next);
+  });
+
+  // Pause on hover
   useEffect(() => {
-    const updateRange = () => {
-      if (scrollContainerRef.current) {
-        // Add a small buffer (e.g. 40px) so the right padding isn't completely flush
-        const range = scrollContainerRef.current.scrollWidth - window.innerWidth + 40;
-        setScrollRange(range > 0 ? range : 0);
+    isPausedRef.current = isHovered;
+  }, [isHovered]);
+
+  // Button: slide left/right by one card
+  const slide = useCallback(
+    (dir: 1 | -1) => {
+      if (isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
+      
+      let current = x.get();
+      
+      // Before animating, check boundaries to maintain infinite illusion
+      // Middle block is between -totalW*2 and -totalW
+      if (dir === 1 && current <= -totalW * 2 + 1) {
+         current += totalW;
+         x.set(current);
+      } else if (dir === -1 && current >= -totalW - 1) {
+         current -= totalW;
+         x.set(current);
       }
-    };
-    
-    updateRange();
-    window.addEventListener("resize", updateRange);
-    return () => window.removeEventListener("resize", updateRange);
-  }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start start", "end end"],
-  });
+      const target = current - dir * CARD_STRIDE;
+      animate(x, target, { 
+        type: "tween", 
+        duration: 0.45, 
+        ease: [0.4, 0, 0.2, 1],
+        onComplete: () => {
+          isAnimatingRef.current = false;
+        }
+      });
+    },
+    [x, totalW]
+  );
 
-  // Smooth spring for buttery scroll feel
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 20,
-    restDelta: 0.001,
-  });
+  // Compute zig-zag Y for each card based on its absolute index
+  const zigzagY = (absIdx: number) => (absIdx % 2 === 0 ? -ZZ_AMP : ZZ_AMP);
 
-  // Map vertical scroll → dynamic horizontal translation in pixels
-  const x = useTransform(smoothProgress, [0, 1], [0, -scrollRange]);
+  const renderCard = (card: VideoCard, absIdx: number) => {
+    const baseX = absIdx * CARD_STRIDE;
+    const yTarget = zigzagY(absIdx);
 
-  // Stagger effect: cards slowly stagger apart over the entire scroll
-  const yEven = useTransform(smoothProgress, [0, 1], [0, -15]);
-  const yOdd = useTransform(smoothProgress, [0, 1], [0, 15]);
-
-  const renderCard = (card: VideoCard, idx: number, isDesktop: boolean = false) => {
-    const isEven = idx % 2 === 0;
     return (
       <motion.div
-        key={card.id + (isDesktop ? "-desktop" : "-mobile")}
-        onClick={() => setActiveVideo(card.videoSrc)}
-        style={isDesktop ? { y: isEven ? yEven : yOdd } : {}}
-        className={`group relative shrink-0 overflow-hidden cursor-pointer rounded-2xl border border-neutral-800 ${
-          isDesktop
-            ? "w-[400px] h-[500px]"
-            : "w-[80vw] sm:w-[360px] h-[440px] sm:h-[500px] snap-center first:ml-6 last:mr-6"
-        }`}
+        key={`${card.id}-${absIdx}`}
+        className="absolute top-0"
+        style={{
+          left: baseX,
+          width: CARD_W,
+          y: yTarget,
+        }}
+        transition={{ duration: 0 }}
       >
-        {/* Thumbnail / gradient bg */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ background: card.thumbnail }}
+          onClick={() => setActiveVideo(card.videoSrc)}
+          className="group relative cursor-pointer overflow-hidden rounded-2xl border border-neutral-800 shadow-2xl"
+          style={{ width: CARD_W, height: 500 }}
         >
-          {card.thumbnailUrl ? (
-            <img src={card.thumbnailUrl} alt="" className="h-full w-full object-cover" />
-          ) : card.videoSrc.includes("instagram.com") || card.videoSrc.includes("tiktok.com") ? (
-            <iframe
-              src={card.videoSrc}
-              className="pointer-events-none h-full w-full border-0 object-cover"
-              allow="autoplay; encrypted-media; fullscreen"
-              tabIndex={-1}
-            />
-          ) : null}
-        </div>
-
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/10" />
-
-        {/* Play button */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#00E573]/90 shadow-[0_0_40px_rgba(0,229,115,0.5)] transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_60px_rgba(0,229,115,0.7)]">
-            <Play className="ml-1 h-6 w-6 fill-zinc-950 text-zinc-950" />
+          {/* Thumbnail / gradient bg */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ background: card.thumbnail }}
+          >
+            {card.thumbnailUrl ? (
+              <img
+                src={card.thumbnailUrl}
+                alt=""
+                className="h-full w-full object-cover"
+              />
+            ) : card.videoSrc.includes("instagram.com") ||
+              card.videoSrc.includes("tiktok.com") ? (
+              <iframe
+                src={card.videoSrc}
+                className="pointer-events-none h-full w-full border-0 object-cover"
+                allow="autoplay; encrypted-media; fullscreen"
+                tabIndex={-1}
+              />
+            ) : null}
           </div>
-        </div>
 
-        {/* Duration badge */}
-        <div className="absolute top-4 right-4 rounded-full bg-black/60 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
-          {card.duration}
-        </div>
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/10" />
 
-        {/* Card number */}
-        <div className="absolute top-4 left-4 font-black text-[64px] leading-none text-white/5 select-none">
-          {String(idx + 1).padStart(2, "0")}
-        </div>
+          {/* Play button */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <PlayButton />
+          </div>
 
-        {/* Bottom info */}
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-5 pb-5 pt-14">
-          <h3 className="font-montserrat font-bold text-[16px] leading-tight text-white mb-2">
-            {card.title}
-          </h3>
-          <div className="flex items-center gap-2">
-            <div className="h-7 w-7 rounded-full bg-[#00E573]/20 flex items-center justify-center border border-[#00E573]/30">
-              <span className="text-[10px] font-bold text-[#00E573]">
-                {card.customer.charAt(0)}
-              </span>
-            </div>
-            <div className="font-roboto">
-              <p className="text-[12px] font-semibold text-white">
-                {card.customer}
-              </p>
-              <p className="text-[10px] text-white/50">
-                {card.city} · {card.model}
-              </p>
+          {/* Duration badge */}
+          <div className="absolute top-4 right-4 rounded-full bg-black/60 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+            {card.duration}
+          </div>
+
+          {/* Card number */}
+          <div className="absolute top-4 left-4 font-black text-[60px] leading-none text-white/5 select-none">
+            {String((card.id % baseCards.length) + 1).padStart(2, "0")}
+          </div>
+
+          {/* Bottom info */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-4 pb-4 pt-12">
+            <h3 className="font-montserrat font-bold text-[14px] leading-tight text-white mb-2">
+              {card.title}
+            </h3>
+            <div className="flex items-center gap-2">
+              <div className="h-6 w-6 rounded-full bg-[#00E573]/20 flex items-center justify-center border border-[#00E573]/30 shrink-0">
+                <span className="text-[9px] font-bold text-[#00E573]">
+                  {card.customer.charAt(0)}
+                </span>
+              </div>
+              <div className="font-roboto min-w-0">
+                <p className="text-[11px] font-semibold text-white truncate">{card.customer}</p>
+                <p className="text-[10px] text-white/50 truncate">
+                  {card.city} · {card.model}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -256,59 +303,101 @@ export default function ZigzagGallery({
 
   return (
     <>
-      {/* DESKTOP VIEW (gsap/framer scroll-tied) */}
-      <div ref={trackRef} className="hidden lg:block relative h-[320vh] mt-8 mb-48">
-        <div className="sticky top-0 h-screen overflow-hidden">
-          <div className="flex items-start justify-between px-8 pt-24 pb-0 sm:px-12 lg:px-20">
-            <h2
-              className="max-w-[520px] font-black leading-[0.92] tracking-tighter text-white"
-              style={{ fontSize: "clamp(1.4rem, 4vw, 4.5rem)" }}
-            >
-              {headingLine1}
-              <br />
-              <span className="text-[#00E573]">{headingLine2}</span>
-            </h2>
-            <p className="max-w-[280px] pt-3 text-[15px] leading-relaxed text-white/50 block">
-              {subtitle}
-            </p>
-          </div>
-
-          <motion.div
-            ref={scrollContainerRef}
-            style={{ x }}
-            className="mt-10 flex items-center gap-6 px-8 sm:px-12 lg:px-20 will-change-transform w-max"
+      <div className="relative mt-8 mb-12 overflow-hidden">
+        {/* Heading */}
+        <div className="flex items-start justify-between px-8 pt-16 pb-0 sm:px-12 lg:px-20 mb-10">
+          <h2
+            className="max-w-[520px] font-black leading-[0.92] tracking-tighter text-white"
+            style={{ fontSize: "clamp(1.4rem, 4vw, 4.5rem)" }}
           >
-            {displayCards.map((card, idx) => renderCard(card, idx, true))}
-          </motion.div>
-
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30">
-            <div className="h-10 w-px bg-gradient-to-b from-transparent to-white/20" />
-            <span className="text-[10px] uppercase tracking-[3px]">Scroll</span>
-          </div>
-        </div>
-      </div>
-
-      {/* MOBILE/TABLET VIEW (native horizontal scroll) */}
-      <div className="block lg:hidden relative pt-24 mt-8 mb-24 overflow-hidden">
-        <div className="px-6 mb-8 text-left">
-          <h2 className="font-black leading-[0.92] tracking-tighter text-white text-[40px] sm:text-[48px]">
             {headingLine1}
             <br />
             <span className="text-[#00E573]">{headingLine2}</span>
           </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-white/50 max-w-sm">
+          <p className="max-w-[280px] pt-3 text-[15px] leading-relaxed text-white/50 hidden sm:block">
             {subtitle}
           </p>
         </div>
 
-        {/* Native scroll container */}
-        <div className="flex items-center gap-4 overflow-x-auto snap-x snap-mandatory pb-8 no-scrollbar w-full">
-          {displayCards.map((card, idx) => renderCard(card, idx, false))}
+        {/* Carousel viewport */}
+        <div
+          className="relative"
+          style={{ height: 500 + ZZ_AMP * 2 + 8 }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Sliding strip */}
+          <motion.div
+            className="absolute inset-0"
+            style={{ x, paddingTop: ZZ_AMP }}
+          >
+            <div className="relative" style={{ height: 500 + ZZ_AMP * 2 }}>
+              {cards.map((card, i) => renderCard(card, i))}
+            </div>
+          </motion.div>
+
+          {/* LEFT blurred edge + button */}
+          <div
+            className="absolute left-0 top-0 bottom-0 z-20 flex items-center"
+            style={{ width: 100 }}
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(5,5,5,0.95) 30%, rgba(5,5,5,0) 100%)",
+                backdropFilter: "blur(2px)",
+                WebkitBackdropFilter: "blur(2px)",
+                maskImage: "linear-gradient(to right, black 40%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to right, black 40%, transparent 100%)",
+              }}
+            />
+            <button
+              onClick={() => slide(-1)}
+              className="relative z-10 ml-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-md transition-all duration-200 hover:bg-[#00E573] hover:text-black hover:border-[#00E573] hover:scale-110 shadow-xl"
+              aria-label="Previous"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* RIGHT blurred edge + button */}
+          <div
+            className="absolute right-0 top-0 bottom-0 z-20 flex items-center justify-end"
+            style={{ width: 100 }}
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to left, rgba(5,5,5,0.95) 30%, rgba(5,5,5,0) 100%)",
+                backdropFilter: "blur(2px)",
+                WebkitBackdropFilter: "blur(2px)",
+                maskImage: "linear-gradient(to left, black 40%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to left, black 40%, transparent 100%)",
+              }}
+            />
+            <button
+              onClick={() => slide(1)}
+              className="relative z-10 mr-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-md transition-all duration-200 hover:bg-[#00E573] hover:text-black hover:border-[#00E573] hover:scale-110 shadow-xl"
+              aria-label="Next"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
         </div>
+
+        {/* Pause indicator */}
+        {isHovered && (
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center gap-1.5 py-1 px-3 rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-[10px] text-white/40 tracking-widest uppercase">
+            <span className="w-1 h-2.5 bg-white/40 rounded-sm" />
+            <span className="w-1 h-2.5 bg-white/40 rounded-sm" />
+            <span className="ml-1">paused</span>
+          </div>
+        )}
       </div>
 
-      {/* Video Player Modal */}
+      {/* Video Modal */}
       <AnimatePresence>
         {activeVideo && (
           <motion.div
@@ -324,7 +413,7 @@ export default function ZigzagGallery({
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
               className={`relative w-full overflow-hidden rounded-2xl bg-black shadow-2xl ${
-                activeVideo.includes("youtube.com/embed") && activeVideo.includes("shorts")
+                activeVideo.includes("youtube.com/embed") && activeVideo.includes("isShort")
                   ? "aspect-[9/16] max-w-[400px] max-h-[85vh]"
                   : activeVideo.includes("instagram.com") || activeVideo.includes("tiktok.com")
                   ? "aspect-[9/16] max-w-[400px] max-h-[85vh]"

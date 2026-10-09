@@ -2,20 +2,22 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Play, X, Video } from "lucide-react";
-
+import { ChevronLeft, ChevronRight, Play, Video } from "lucide-react";
+import PlayButton from "@/components/ui/PlayButton";
+import VideoModal from "@/components/ui/VideoModal";
+import { FaPlay } from "react-icons/fa";
 const InstagramIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
   </svg>
 );
 
 const YoutubeIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M2.25 8.6014C2.25 8.6014 2.115 12.0128 2.25 15.3986C2.385 18.7844 3.75 19.5 3.75 19.5C5.25 20.25 12 20.25 12 20.25C12 20.25 18.75 20.25 20.25 19.5C20.25 19.5 21.615 18.7844 21.75 15.3986C21.885 12.0128 21.75 8.6014 21.75 8.6014C21.75 8.6014 21.615 5.2156 20.25 4.5C18.75 3.75 12 3.75 12 3.75C12 3.75 5.25 3.75 3.75 4.5C3.75 4.5 2.385 5.2156 2.25 8.6014Z"/>
-    <path d="M9.75 15.75L15.75 12L9.75 8.25V15.75Z" fill="currentColor"/>
+    <path d="M2.25 8.6014C2.25 8.6014 2.115 12.0128 2.25 15.3986C2.385 18.7844 3.75 19.5 3.75 19.5C5.25 20.25 12 20.25 12 20.25C12 20.25 18.75 20.25 20.25 19.5C20.25 19.5 21.615 18.7844 21.75 15.3986C21.885 12.0128 21.75 8.6014 21.75 8.6014C21.75 8.6014 21.615 5.2156 20.25 4.5C18.75 3.75 12 3.75 12 3.75C12 3.75 5.25 3.75 3.75 4.5C3.75 4.5 2.385 5.2156 2.25 8.6014Z" />
+    <path d="M9.75 15.75L15.75 12L9.75 8.25V15.75Z" fill="currentColor" />
   </svg>
 );
 
@@ -32,6 +34,7 @@ interface ReelsCarouselProps {
 export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Parse thumbnails and IDs
   const items: Reel[] = reels.map((reelItem, i) => {
@@ -47,6 +50,7 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
 
       if (videoId) {
         embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        if (url.includes("shorts/")) embedUrl += "&isShort=1";
         if (!thumb) thumb = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
       }
     } else if (url.includes("instagram.com/reel/")) {
@@ -60,6 +64,7 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
     return {
       id: i,
       url: embedUrl,
+      originalUrl: url,
       thumbnail: thumb,
     };
   });
@@ -76,12 +81,12 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
   };
 
   useEffect(() => {
-    if (activeVideo) return;
+    if (activeVideo || isHovered) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length);
     }, 3500);
     return () => clearInterval(interval);
-  }, [activeVideo, items.length]);
+  }, [activeVideo, items.length, isHovered]);
 
   const variants = {
     center: { x: "0%", scale: 1, zIndex: 10, opacity: 1 },
@@ -102,16 +107,20 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
   if (!items || items.length === 0) return null;
 
   return (
-    <section className="relative overflow-hidden bg-[#050505] py-20 lg:py-32">
+    <section className="relative overflow-hidden bg-[#050505] py-5">
       <div className="mx-auto max-w-[1400px] px-6 text-center">
         <h2 className="mb-4 font-montserrat text-3xl font-bold tracking-tight text-white sm:text-5xl">
-          Top Performing on <span className="text-[#00E573]">Meta</span>
+          Explore Our <span className="text-[#00E573]">Socials</span>
         </h2>
         <p className="mx-auto mb-16 max-w-2xl font-roboto text-sm text-white/50 sm:text-base">
           See how audiences are engaging with ELFA across Instagram and TikTok.
         </p>
 
-        <div className="relative mx-auto flex h-[220px] w-full max-w-[1200px] items-center justify-center sm:h-[350px] lg:h-[450px]">
+        <div
+          className="relative mx-auto flex h-[220px] w-full max-w-[1200px] items-center justify-center sm:h-[350px] lg:h-[450px]"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <AnimatePresence initial={false}>
             {items.map((item, i) => {
               const diff = getDiff(i);
@@ -127,7 +136,13 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
                   className="absolute aspect-video w-[85%] sm:w-[65%] lg:w-[55%] overflow-hidden rounded-[20px] border border-white/5 bg-neutral-900 shadow-2xl cursor-pointer"
                   style={{ originX: 0.5, originY: 0.5 }}
                   onClick={() => {
-                    if (isCenter) setActiveVideo(item.url);
+                    if (isCenter) {
+                      if (item.url.includes("instagram.com")) {
+                        window.open(item.originalUrl || item.url, "_blank");
+                      } else {
+                        setActiveVideo(item.url);
+                      }
+                    }
                     else if (diff > 0) setCurrentIndex((prev) => (prev + diff) % items.length);
                     else if (diff < 0) setCurrentIndex((prev) => (prev + diff + items.length) % items.length);
                   }}
@@ -160,20 +175,13 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
 
                   {isCenter && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <motion.div
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="flex h-16 w-16 items-center justify-center rounded-full bg-[#00E573]/90 shadow-[0_0_40px_rgba(0,229,115,0.4)] backdrop-blur-md transition-transform hover:scale-110"
-                      >
-                        {item.url.includes("instagram.com") ? (
-                          <InstagramIcon className="h-7 w-7 text-black" />
-                        ) : item.url.includes("youtube.com") || item.url.includes("youtu.be") ? (
-                          <YoutubeIcon className="h-7 w-7 text-black" />
-                        ) : (
-                          <Video className="h-7 w-7 text-black" />
-                        )}
-                      </motion.div>
+                      <PlayButton
+                        icon={
+                          item.url.includes("instagram.com") ? (
+                            <InstagramIcon className="h-6 w-6 text-white" />
+                          ) : undefined
+                        }
+                      />
                     </div>
                   )}
 
@@ -197,13 +205,13 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
             <ChevronRight className="h-6 w-6" />
           </button>
         </div>
-        
-        <div className="mt-8 text-center sm:mt-12">
+
+        {/* <div className="mt-8 text-center sm:mt-12">
           {(() => {
             const centerItem = items[currentIndex];
             let ctaText = "Follow ELFA on Instagram";
             let ctaLink = "https://www.instagram.com/elfaelectric";
-            
+
             if (centerItem?.url.includes("youtube") || centerItem?.url.includes("youtu.be")) {
               ctaText = "Subscribe on YouTube";
               ctaLink = "https://www.youtube.com/@ElfaElectric";
@@ -224,47 +232,16 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
               </a>
             );
           })()}
-        </div>
+        </div> */}
       </div>
 
       {/* Video Modal */}
       <AnimatePresence>
-        {activeVideo && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveVideo(null)}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md sm:p-6"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className={`relative w-full overflow-hidden rounded-2xl bg-black shadow-2xl ${
-                activeVideo.includes("youtube.com/embed") && activeVideo.includes("shorts")
-                  ? "aspect-[9/16] max-h-[85vh] max-w-[400px]"
-                  : activeVideo.includes("instagram.com") || activeVideo.includes("tiktok.com")
-                  ? "aspect-[9/16] max-h-[85vh] max-w-[400px]"
-                  : "aspect-video max-w-[1000px]"
-              }`}
-            >
-              <button
-                onClick={() => setActiveVideo(null)}
-                className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white transition-colors hover:bg-black/80"
-              >
-                <X className="h-6 w-6" />
-              </button>
-              <iframe
-                src={activeVideo}
-                className="h-full w-full border-0"
-                allow="autoplay; encrypted-media; fullscreen"
-                allowFullScreen
-              />
-            </motion.div>
-          </motion.div>
-        )}
+        <VideoModal
+          isOpen={!!activeVideo}
+          onClose={() => setActiveVideo(null)}
+          videoUrl={activeVideo}
+        />
       </AnimatePresence>
     </section>
   );

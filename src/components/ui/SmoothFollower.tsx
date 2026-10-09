@@ -81,8 +81,8 @@ export default function SmoothFollower() {
         transition={{
           type: "spring",
           damping: 40,
-          stiffness: 150,
-          mass: 1,
+          stiffness: 250,
+          mass: 0.8,
         }}
       />
 
@@ -103,8 +103,8 @@ export default function SmoothFollower() {
         transition={{
           type: "spring",
           damping: 30,
-          stiffness: 200,
-          mass: 0.8,
+          stiffness: 400,
+          mass: 0.5,
         }}
       />
 
@@ -123,9 +123,9 @@ export default function SmoothFollower() {
         }}
         transition={{
           type: "spring",
-          damping: 20,
-          stiffness: 400,
-          mass: 0.5,
+          damping: 35,
+          stiffness: 800,
+          mass: 0.1,
         }}
       />
     </div>

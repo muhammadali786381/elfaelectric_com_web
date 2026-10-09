@@ -65,7 +65,7 @@ function FeatureItem({
 
 export default function WhyChooseUs() {
   return (
-    <section className="relative z-10 overflow-hidden bg-bg-primary py-16 lg:py-24">
+    <section className="relative z-10 overflow-hidden bg-bg-primary py-12 lg:py-16">
       {/* Full-section background image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -84,25 +84,12 @@ export default function WhyChooseUs() {
       {/* Content overlaid on top */}
       <div className="relative z-10 mx-auto w-full max-w-container px-4 sm:px-6">
 
-        {/* Heading */}
-        <FadeIn variant="fadeIn" speed="slow" className="mb-16">
-          <div className="text-center">
-            <p className="font-roboto mb-3 text-[12px] font-semibold uppercase tracking-[2px] text-brand-primary">
-              Built Different
-            </p>
-            <h2 className="font-montserrat text-[28px] font-bold text-white sm:text-[36px] lg:text-[44px]">
-              The Smarter <span className="text-brand-primary">Way to Ride</span>
-
-            </h2>
-          </div>
-        </FadeIn>
-
         {/* Why Choose Us Grid */}
         <FadeIn variant="fadeIn" speed="slow">
           <div className="mb-12">
-            <h3 className="font-montserrat mb-8  text-[18px] font-bold uppercase tracking-[2px] text-brand-primary text-left">
+            <h2 className="font-montserrat mb-8 text-center text-[18px] font-bold uppercase tracking-[2px] text-brand-primary">
               Why Choose Us
-            </h3>
+            </h2>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
               {whyChooseUs.map((item) => (
                 <FeatureItem key={item.label} item={item} />
@@ -117,9 +104,9 @@ export default function WhyChooseUs() {
         {/* What Sets Us Apart Grid */}
         <FadeIn variant="fadeIn" speed="slow">
           <div>
-            <h3 className="font-montserrat mb-8  text-[18px] font-bold uppercase tracking-[2px] text-brand-primary text-left">
+            <h2 className="font-montserrat mb-8 text-center text-[18px] font-bold uppercase tracking-[2px] text-brand-primary">
               What Sets Us Apart
-            </h3>
+            </h2>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
               {whatSetsUsApart.map((item) => (
                 <FeatureItem key={item.label} item={item} />

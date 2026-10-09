@@ -45,7 +45,7 @@ export default function CityMarquee() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div ref={marqueeRef} className="flex w-max animate-marquee" style={{ animationDuration: '45s' }}>
+        <div ref={marqueeRef} className="flex w-max animate-marquee" style={{ animationDuration: '90s' }}>
           {[0, 1, 2, 3].map((dup) => (
             <div
               key={dup}
@@ -54,7 +54,7 @@ export default function CityMarquee() {
               {cities.map((city) => (
                 <span
                   key={`${dup}-${city.name}`}
-                  className="flex items-center gap-2 px-2 lg:gap-3 lg:px-4"
+                  className="flex items-center  px-2 lg:px-4"
                 >
                   <span className="relative flex h-11 w-11 shrink-0  sm:h-16 sm:w-16">
                     <Image

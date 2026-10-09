@@ -59,7 +59,7 @@ const products = [
     id: "ev1",
     type: "ELECTRIC SCOOTER",
     name: "EV-1 Scooty",
-    image: "/assets/images/products/newproductshwscooty.png",
+    image: "/assets/images/products/newproductscooty-1.png",
     specs: [
       { value: "64V / 30Ah", label: "BATTERY", icon: "battery" as keyof typeof icons },
       { value: "60 km/h", label: "TOP SPEED", icon: "speed" as keyof typeof icons },
@@ -79,16 +79,10 @@ export default function ProductShowcase() {
     <section className="bg-[#050505] py-16 lg:py-20 flex flex-col justify-center">
       <FadeIn variant="fadeInUp" speed="slow">
         {/* Header Area */}
-        <div className="mx-auto w-full max-w-[1300px] px-4 sm:px-6 mb-8 lg:mb-10">
-          <p className="font-roboto mb-2 text-[10px] font-bold uppercase tracking-[3px] text-brand-primary">
-            THE ELFA LINEUP
-          </p>
-          <h2 className="font-montserrat mb-1 text-[32px] font-bold leading-tight text-white sm:text-[40px] lg:text-[48px]">
-            Find your electric ride.
+        <div className="mx-auto w-full max-w-[1300px] px-4 sm:px-6 mb-8 lg:mb-10 text-center">
+          <h2 className="font-montserrat text-[32px] font-bold leading-tight text-white sm:text-[40px] lg:text-[48px]">
+            Our Products
           </h2>
-          <p className="font-roboto text-[14px] font-medium text-white/50 sm:text-[16px]">
-            Two ways to move. One electric future.
-          </p>
         </div>
 
         {/* Product Cards Grid */}

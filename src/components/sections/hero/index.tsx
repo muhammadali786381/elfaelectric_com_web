@@ -3,6 +3,14 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import FlipButton from "@/components/ui/FlipButton";
+import { Russo_One } from "next/font/google";
+
+const heroFont = Russo_One({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
 
 const specs = [
   { value: "72V / 30Ah", label: "BATTERY CAPACITY" },
@@ -97,11 +105,11 @@ export default function Hero() {
       {/* Background with user-provided image and gradient overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/assets/images/heronew.jpeg"
+          src="/assets/images/hero/Emerald light trails over charcoal studio floor.png"
           alt="Hero Background"
           fill
           priority
-          className="object-cover object-center opacity-20"
+          className="object-cover object-center"
         />
         {/* Gradients adjusted to let the background show through more clearly */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/70 to-transparent lg:w-[60%]" />
@@ -121,21 +129,24 @@ export default function Hero() {
 
         <h1
           aria-label="Move into the future."
-          className="font-montserrat mb-4 flex flex-col items-center
-            text-[36px] min-[400px]:text-[40px] font-black
-            leading-[0.95] tracking-tight text-white
-            sm:text-[50px] lg:items-start lg:text-[70px] xl:text-[80px]"
+          className={`${heroFont.className} mb-7 flex flex-col items-center font-normal not-italic uppercase tracking-[-0.025em] text-white text-[34px] min-[400px]:text-[42px] sm:text-[58px] lg:text-[76px] xl:text-[96px] 2xl:text-[112px] lg:items-start`}
+          style={{ transform: "skewX(-12deg)", transformOrigin: "left center" }}
         >
-          <WaveText>
+          <WaveText className="text-[0.76em] leading-[0.9]">
             MOVE INTO
           </WaveText>
-
-          <WaveText
-            offset={"MOVE INTO".length}
-            className=""
-          >
-            THE FUTURE
-          </WaveText>
+          <span className="mt-1 flex items-baseline whitespace-nowrap leading-[0.9]">
+            <WaveText offset={"MOVE INTO".length}>
+              THE FUTURE
+            </WaveText>
+            <motion.span
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 2, duration: 0.5, type: "spring" }}
+              aria-hidden="true"
+              className="ml-[0.12em] inline-block h-[0.72em] w-[0.16em] shrink-0 bg-[#00df83]"
+            />
+          </span>
         </h1>
 
         <motion.p
@@ -183,14 +194,32 @@ export default function Hero() {
           }}
           className="relative aspect-[4/3] w-[90%] max-w-[500px] lg:aspect-auto lg:h-[80%] lg:w-[130%] lg:max-w-none lg:translate-x-[-5%]"
         >
-          <Image
-            src="/assets/images/herobikes.png"
-            alt="EV-125 Bike"
-            fill
-            priority
-            className="object-contain object-center lg:object-right-bottom"
-            sizes="(max-width: 1024px) 90vw, 55vw"
-          />
+          {/* Hit area centered on the bike */}
+          <div className="peer absolute inset-x-[15%] inset-y-[20%] z-50 cursor-crosshair rounded-full" />
+
+          {/* Bike (Default State) */}
+          <div className="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 peer-hover:opacity-0 pointer-events-none">
+            <Image
+              src="/assets/images/hero/ELFA EV-125 motorcycle with soft ground shadow-1.png"
+              alt="EV-125 Bike"
+              fill
+              priority
+              className="object-contain object-center lg:object-right-bottom drop-shadow-2xl"
+              sizes="(max-width: 1024px) 90vw, 55vw"
+            />
+          </div>
+
+          {/* Red Bike (Hover State) */}
+          <div className="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 peer-hover:opacity-100 pointer-events-none">
+            <Image
+              src="/assets/images/hero/Metallic red ELFA EV-125 motorcycle.png"
+              alt="EV-125 Red Bike"
+              fill
+              priority
+              className="object-contain object-center lg:object-right-bottom drop-shadow-2xl"
+              sizes="(max-width: 1024px) 90vw, 55vw"
+            />
+          </div>
         </motion.div>
       </div>
 

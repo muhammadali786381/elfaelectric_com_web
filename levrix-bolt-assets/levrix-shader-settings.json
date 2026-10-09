@@ -1,0 +1,23 @@
+{
+  "u_angle": 20,
+  "u_bend": 0.24,
+  "u_colorBack": "rgba(0, 0, 0, 0)",
+  "u_colors": [
+    "#ffffff",
+    "#0f0f0f",
+    "#db0404",
+    "#ffffff"
+  ],
+  "u_contour": 0.8,
+  "u_image": "levrix-mark-original.svg",
+  "u_motionMode": 0,
+  "u_pushAmount": 8,
+  "u_pushRadius": 1.5,
+  "u_scale": 1.2,
+  "u_seed": 6,
+  "u_speed": 0.6,
+  "u_turbAmp": 0.21,
+  "u_turbFreq": 1.15,
+  "u_turbIter": 7,
+  "u_waveFreq": 2.4
+}

@@ -12,7 +12,6 @@ import {
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/input-group";
-import { Slider } from "@/components/ui/slider";
 import FlipButton from "@/components/ui/FlipButton";
 
 type ModelConfig = {
@@ -80,52 +79,73 @@ type SliderPatternProps = {
 };
 
 function SliderPattern({ value, setValue }: SliderPatternProps) {
+  const min = 5;
   const max = 200;
-  const skipInterval = 50;
-  const ticks = Array.from({ length: 5 }, (_, i) => i * 50);
+  const pct = ((value - min) / (max - min)) * 100;
+  const ticks = [0, 50, 100, 150, 200];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(Number(e.target.value));
+  };
 
   return (
-    <div className="mx-auto grid w-full gap-4">
-      <Slider
-        value={[value]}
-        onValueChange={(val) =>
-          setValue(Array.isArray(val) ? (val[0] ?? 0) : val)
-        }
-        max={max}
-        min={5}
-        step={5}
-        className="cursor-grab active:cursor-grabbing **:data-[slot=slider-thumb]:h-6 **:data-[slot=slider-thumb]:w-6 **:data-[slot=slider-thumb]:border-4 **:data-[slot=slider-thumb]:border-solid **:data-[slot=slider-thumb]:border-bg-primary **:data-[slot=slider-thumb]:bg-brand-primary **:data-[slot=slider-thumb]:ring-0 **:data-[slot=slider-thumb]:hover:ring-0 **:data-[slot=slider-thumb]:focus-visible:ring-0 **:data-[slot=slider-thumb]:active:ring-0 **:data-[slot=slider-track]:h-2.5 **:data-[slot=slider-track]:bg-white/10"
-      />
+    <div className="mx-auto grid w-full gap-3 sm:gap-4">
+      {/* Pill capsule track */}
+      <div className="relative h-12 sm:h-14 w-full rounded-full bg-white/[0.07] border border-white/10 shadow-inner overflow-hidden">
+        {/* Growing green fill with embedded bolt */}
+        <div
+          className="absolute inset-y-0 left-0 rounded-full flex items-center justify-end pr-3"
+          style={{
+            width: `max(56px, ${pct}%)`,
+            background: "#61ce70",
+            transition: "width 0ms",
+          }}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            className="h-8 w-8 text-white shrink-0"
+            aria-hidden
+          >
+            <path
+              d="M13 2 4.5 13.5H11L10 22l9.5-11.5H13.5L13 2z"
+              fill="currentColor"
+              stroke="currentColor"
+              strokeWidth="0.5"
+            />
+          </svg>
+        </div>
+
+        {/* Invisible range input for interaction */}
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={5}
+          value={value}
+          onChange={handleChange}
+          className="absolute inset-0 h-full w-full opacity-0 cursor-grab active:cursor-grabbing"
+          aria-label="Daily km"
+          style={{ zIndex: 20 }}
+        />
+      </div>
+
+      {/* Tick labels */}
       <span
         aria-hidden="true"
-        className="flex w-full items-center justify-between gap-1 px-3 text-xs font-medium text-white/50"
+        className="flex w-full items-center justify-between gap-1 px-1 text-xs font-medium text-white/40"
       >
         {ticks.map((tick) => (
-          <span
-            key={tick}
-            className="flex w-0 flex-col items-center justify-center gap-2"
-          >
-            <span
-              className={cn(
-                "w-px bg-white/30",
-                tick % skipInterval === 0 ? "h-2" : "h-1",
-              )}
-            />
-            <span
-              className={cn(
-                "text-white/70",
-                tick % skipInterval !== 0 && "opacity-0",
-              )}
-            >
-              {tick}
-              {tick === max && "+"}
-            </span>
+          <span key={tick} className="flex flex-col items-center gap-1">
+            <span className="h-1 w-px bg-white/20" />
+            <span>{tick === max ? `${tick}+` : tick}</span>
           </span>
         ))}
       </span>
     </div>
   );
 }
+
 
 export default function SavingsCalculator({
   productId,
@@ -150,94 +170,79 @@ export default function SavingsCalculator({
   const savingsChars = Math.round(savings).toLocaleString("en-US").split("");
 
   return (
-    <section className="relative overflow-hidden bg-bg-primary py-20 ">
+    <section className="relative overflow-hidden bg-bg-primary py-8 sm:py-12">
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-[15%] top-32 h-[700px] w-[800px] rounded-full opacity-[0.08]"
-        style={{
-          background:
-            "radial-gradient(circle, var(--color-brand-primary) 0%, transparent 70%)",
-        }}
+        className="pointer-events-none absolute -right-[14%] top-22 h-[500px] w-[600px] rounded-full opacity-[0.08]"
+      // style={{
+      //   background:
+      //     "radial-gradient(circle, var(--color-brand-primary) 0%, transparent 70%)",
+      // }}
       />
 
       <div
         aria-label="Savings Calculator"
-        className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-4 sm:px-6"
+        className="mx-auto flex w-full max-w-5xl flex-col gap-6 sm:gap-8 px-4 sm:px-6"
       >
-        <div className="flex flex-col items-center gap-4 text-center lg:items-start lg:text-left">
-          {/* <Badge
-            variant="outline"
-            className="h-7 px-3 text-brand-primary border-brand-primary/20 bg-brand-primary/5 uppercase tracking-wider font-roboto"
-          >
-            Calculate your savings
-          </Badge> */}
-          <h2 className="font-montserrat max-w-xl text-4xl font-bold tracking-tighter text-white sm:text-[44px]">
-            See what you save
-            <br />
-            <span className="text-brand-primary">With ELFA</span>
-          </h2>
-        </div>
-
-        {!locked && (
-          <div className="flex justify-center lg:justify-start">
-            <div className="inline-flex gap-1 rounded-full border border-white/10 bg-white/5 p-1">
-              {models.map((m) => {
-                const active = activeId === m.id;
-                return (
-                  <button
-                    key={m.id}
-                    type="button"
-                    onClick={() => setActiveId(m.id)}
-                    className={cn(
-                      "font-roboto relative inline-flex min-h-11 items-center gap-2 rounded-full px-4 py-2 text-[12px] font-semibold uppercase tracking-[1px] transition-all duration-300 sm:px-5",
-                      active
-                        ? "bg-brand-primary text-bg-primary shadow-[0_0_16px_rgba(97,206,112,0.4)]"
-                        : "text-white/50 hover:text-white/80",
-                    )}
-                  >
-                    <Image
-                      src={active ? m.iconDark : m.iconLight}
-                      alt=""
-                      width={28}
-                      height={28}
-                      className="h-6 w-6 object-contain sm:h-7 sm:w-7"
-                      aria-hidden
-                    />
-                    {m.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
         <div className="flex w-full flex-col gap-2 rounded-[2rem] bg-white/[0.02] p-1 shadow-lg border border-white/[0.06] lg:flex-row backdrop-blur-md">
-          <div className="flex flex-1 flex-col gap-8 lg:gap-12 p-6 sm:p-8 lg:p-10">
-            <div className="flex flex-col gap-8 lg:gap-10">
-              <p className="font-roboto text-center text-[16px] leading-relaxed text-white/50 lg:text-left">
-                Adjust your daily routine to see how much you could save with an
-                electric bike compared to petrol.
-              </p>
-
-              <div className="flex flex-col gap-6 lg:gap-8">
-                <div className="font-montserrat flex items-center justify-center gap-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-                  <span>{dailyKm}</span>
-                  <span className="text-xl text-white/40 sm:text-2xl">
-                    km / day
-                  </span>
+          <div className="flex flex-1 flex-col justify-between p-5 sm:p-6 lg:p-8">
+            <div className="flex flex-col xl:flex-row items-center justify-between gap-4">
+              <h3 className="font-montserrat text-lg font-bold text-white sm:text-xl">
+                Calculate Savings
+              </h3>
+              {!locked && (
+                <div className="relative inline-flex h-10 sm:h-12 shrink-0 items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1 backdrop-blur-md">
+                  {models.map((m) => {
+                    const active = activeId === m.id;
+                    return (
+                      <button
+                        key={m.id}
+                        type="button"
+                        onClick={() => setActiveId(m.id)}
+                        className={cn(
+                          "relative flex h-full items-center justify-center gap-2 rounded-full px-4 sm:px-5 transition-all duration-500 ease-out",
+                          active
+                            ? "bg-brand-primary text-black shadow-sm"
+                            : "text-white/50 hover:bg-white/5 hover:text-white",
+                        )}
+                      >
+                        <Image
+                          src={active ? m.iconDark : m.iconLight}
+                          alt=""
+                          width={24}
+                          height={24}
+                          className={cn(
+                            "h-5 w-5 object-contain transition-transform duration-500",
+                            active && "scale-110"
+                          )}
+                          aria-hidden
+                        />
+                        <span className="font-roboto whitespace-nowrap text-[11px] font-bold uppercase tracking-widest sm:text-[12px]">
+                          {m.short}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
-                <SliderPattern value={dailyKm} setValue={setDailyKm} />
-              </div>
+              )}
             </div>
 
-            <div className="h-px w-full bg-white/[0.06]" />
+            <div className="flex flex-col justify-center flex-1 py-8 sm:py-10 lg:py-12 gap-5 lg:gap-6">
+              <div className="font-montserrat flex items-center justify-center gap-2 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+                <span>{dailyKm}</span>
+                <span className="text-lg text-white/40 sm:text-xl lg:text-2xl">
+                  km / day
+                </span>
+              </div>
+              <SliderPattern value={dailyKm} setValue={setDailyKm} />
+            </div>
 
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <p className="font-roboto text-[14px] font-medium text-white/80">
+            <div className="flex flex-col gap-4 sm:gap-5 border-t border-white/[0.06] pt-5 sm:pt-6">
+              <div className="flex flex-row items-center justify-between gap-2 sm:gap-3">
+                <p className="font-roboto text-[13px] sm:text-[14px] font-medium text-white/80 max-w-[140px] sm:max-w-none leading-tight">
                   Average petrol price per litre?
                 </p>
-                <InputGroup className="h-11 w-fit border-white/10 bg-white/5 text-white shadow-none">
+                <InputGroup className="h-10 sm:h-11 w-fit border-white/10 bg-white/5 text-white shadow-none">
                   <InputGroupAddon>
                     <InputGroupText className="font-medium text-white/40">
                       Rs
@@ -261,11 +266,11 @@ export default function SavingsCalculator({
                 </InputGroup>
               </div>
 
-              <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <p className="font-roboto text-[14px] font-medium text-white/80">
+              <div className="flex flex-row items-center justify-between gap-2 sm:gap-3">
+                <p className="font-roboto text-[13px] sm:text-[14px] font-medium text-white/80 max-w-[140px] sm:max-w-none leading-tight">
                   Average electricity cost per unit?
                 </p>
-                <InputGroup className="h-11 w-fit border-white/10 bg-white/5 text-white shadow-none">
+                <InputGroup className="h-10 sm:h-11 w-fit border-white/10 bg-white/5 text-white shadow-none">
                   <InputGroupAddon>
                     <InputGroupText className="font-medium text-white/40">
                       Rs
@@ -289,13 +294,13 @@ export default function SavingsCalculator({
             </div>
           </div>
 
-          <div className="flex w-full flex-col items-center justify-between gap-8 rounded-[1.8rem] border border-white/5 bg-[#050505] p-8 lg:w-[28rem] lg:p-10">
+          <div className="flex w-full flex-col items-center justify-between gap-6 rounded-[1.8rem] border border-white/5 bg-[#050505] p-6 lg:w-[28rem] lg:p-8">
             <div className="flex w-full flex-col items-center gap-2 text-center">
-              <h3 className="font-roboto font-medium tracking-wide text-white/80">
+              <h3 className="font-roboto font-medium tracking-wide text-white/80 text-[14px] sm:text-[16px]">
                 Annual Cost Savings
               </h3>
-              <div className="font-montserrat mt-2 flex items-baseline gap-1 text-[56px] font-bold leading-none tracking-tighter text-brand-primary">
-                <span className="mr-1 text-3xl text-brand-primary/80">Rs</span>
+              <div className="font-montserrat mt-2 flex items-baseline gap-1 text-[42px] sm:text-[48px] lg:text-[56px] font-bold leading-none tracking-tighter text-brand-primary">
+                <span className="mr-1 text-2xl sm:text-3xl text-brand-primary/80">Rs</span>
                 <AnimatePresence mode="popLayout">
                   {savingsChars.map((char, idx) => (
                     <motion.span
@@ -318,14 +323,14 @@ export default function SavingsCalculator({
               <FlipButton
                 href={model.buyHref}
                 variant="primary"
-                className="mt-8 h-12 w-full rounded-md text-[14px]"
+                className="mt-6 sm:mt-8 h-10 sm:h-12 w-full rounded-md text-[13px] sm:text-[14px]"
               >
                 Buy Now
               </FlipButton>
             </div>
 
-            <div className="flex w-full flex-col gap-4 font-roboto text-[14px]">
-              <p className="text-[11px] font-semibold uppercase tracking-widest text-white/30">
+            <div className="flex w-full flex-col gap-3 sm:gap-4 font-roboto text-[13px] sm:text-[14px]">
+              <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-widest text-white/30">
                 Breakdown
               </p>
               <div className="flex items-center justify-between">
