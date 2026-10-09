@@ -81,16 +81,10 @@ const videoTestimonials: VideoCard[] = [
   },
 ];
 
-// Card dimensions + gap
-const CARD_W = 380;
-const CARD_GAP = 24;
-const CARD_STRIDE = CARD_W + CARD_GAP;
-
-// Zig-zag Y amplitude (px above/below baseline)
-const ZZ_AMP = 0;
-
 // Auto-slide speed (px per second)
 const AUTO_SPEED = 60;
+// Zig-zag Y amplitude (px above/below baseline)
+const ZZ_AMP = 0;
 
 interface ZigzagGalleryProps {
   headingLine1?: string;
@@ -107,6 +101,30 @@ export default function ZigzagGallery({
 }: ZigzagGalleryProps = {}) {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [screenSize, setScreenSize] = useState({ w: 1200, h: 800 });
+
+  useEffect(() => {
+    const handleResize = () => setScreenSize({ w: window.innerWidth, h: window.innerHeight });
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = screenSize.w < 640;
+  
+  // Base targets
+  const targetH = isMobile ? 420 : 500;
+  
+  // Cap at ~65% of screen height so it doesn't overwhelm short screens
+  const maxH = Math.max(320, screenSize.h * 0.65);
+  const CARD_H = Math.min(targetH, maxH);
+  
+  // Maintain aspect ratio
+  const aspectRatio = isMobile ? (300 / 420) : (380 / 500);
+  const CARD_W = CARD_H * aspectRatio;
+  
+  const CARD_GAP = isMobile ? 16 : 24;
+  const CARD_STRIDE = CARD_W + CARD_GAP;
 
   // Build card list from props or defaults
   const baseCards: VideoCard[] = videoLinks
@@ -156,6 +174,11 @@ export default function ZigzagGallery({
   const isPausedRef = useRef(false);
   const isAnimatingRef = useRef(false);
   const lastTimeRef = useRef<number | null>(null);
+
+  // Adjust x when totalW changes (e.g. resize between mobile/desktop)
+  useEffect(() => {
+    x.set(-totalW);
+  }, [totalW, x]);
 
   // Auto-advance
   useAnimationFrame((t) => {
@@ -235,7 +258,7 @@ export default function ZigzagGallery({
         <div
           onClick={() => setActiveVideo(card.videoSrc)}
           className="group relative cursor-pointer overflow-hidden rounded-2xl border border-neutral-800 shadow-2xl"
-          style={{ width: CARD_W, height: 500 }}
+          style={{ width: CARD_W, height: CARD_H }}
         >
           {/* Thumbnail / gradient bg */}
           <div
@@ -322,16 +345,16 @@ export default function ZigzagGallery({
         {/* Carousel viewport */}
         <div
           className="relative"
-          style={{ height: 500 + ZZ_AMP * 2 + 8 }}
+          style={{ height: CARD_H + ZZ_AMP * 2 + 40 }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           {/* Sliding strip */}
           <motion.div
             className="absolute inset-0"
-            style={{ x, paddingTop: ZZ_AMP }}
+            style={{ x, paddingTop: ZZ_AMP + 20 }}
           >
-            <div className="relative" style={{ height: 500 + ZZ_AMP * 2 }}>
+            <div className="relative" style={{ height: CARD_H + ZZ_AMP * 2 }}>
               {cards.map((card, i) => renderCard(card, i))}
             </div>
           </motion.div>
