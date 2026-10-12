@@ -360,3 +360,10 @@ iframe[src*="digistartup.io"]::-webkit-scrollbar {
 .ghl-form-wrapper {
   overflow: hidden !important;
 }
+
+@media (pointer: fine) {
+  .hide-cursor,
+  .hide-cursor * {
+    cursor: none !important;
+  }
+}

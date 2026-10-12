@@ -28,7 +28,7 @@ const solutions = [
 
 export default function Solutions() {
   return (
-    <section className="relative overflow-hidden bg-[#050505] pt-16 pb-0 lg:py-20 min-h-[auto] lg:max-h-[90vh] flex flex-col justify-center">
+    <section className="relative overflow-hidden bg-[#050505] py-16 lg:py-24">
       {/* Floating bike — right-pinned, fades out at bottom */}
       <div
         className="pointer-events-none absolute right-0 top-0 hidden h-full w-[40%] lg:block"
@@ -52,24 +52,13 @@ export default function Solutions() {
             src="/assets/images/solutions.webp"
             alt="ELFA EV-1 Scooty"
             fill
-            className="object-contain object-right-top opacity-50"
+            className="object-contain object-right-top opacity-100 brightness-110"
             sizes="40vw"
           />
         </motion.div>
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6">
-        {/* Eyebrow */}
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-          className="font-roboto mb-4 text-[11px] font-bold uppercase tracking-[3px] text-brand-primary"
-        >
-          What We've Built
-        </motion.p>
-
         {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
@@ -98,15 +87,15 @@ export default function Solutions() {
               {/* Full-width rule */}
               <div className="h-px w-full bg-white/10" />
 
-              <div className="flex items-start gap-6 py-5">
+              <div className="group flex items-start gap-6 py-5 transition-colors duration-300 hover:bg-white/[0.02] cursor-default">
                 {/* Number */}
-                <span className="font-montserrat shrink-0 text-[11px] font-bold tabular-nums tracking-widest text-white/25 mt-1">
+                <span className="font-montserrat shrink-0 text-[11px] font-bold tabular-nums tracking-widest text-white/25 mt-1 transition-colors duration-300 group-hover:text-brand-primary/50">
                   {s.num}
                 </span>
 
                 {/* Text */}
                 <div className="flex flex-col">
-                  <h3 className="font-montserrat mb-1.5 text-[16px] font-semibold leading-snug text-white sm:text-[18px]">
+                  <h3 className="font-montserrat mb-1.5 text-[16px] font-semibold leading-snug text-white/50 transition-colors duration-300 group-hover:text-brand-primary sm:text-[18px]">
                     {s.title}
                   </h3>
                   <p className="font-roboto text-[14px] leading-relaxed text-white/55">
@@ -137,7 +126,7 @@ export default function Solutions() {
             alt="ELFA EV-1 Scooty"
             width={500}
             height={662}
-            className="h-auto w-full max-w-[420px] object-contain opacity-90"
+            className="h-auto w-full max-w-[420px] object-contain opacity-100 brightness-110"
           />
         </motion.div>
       </div>

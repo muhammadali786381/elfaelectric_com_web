@@ -45,58 +45,60 @@ export default function JoinRevolutionCTA({
 
   return (
     <>
-      <section className="relative w-full overflow-hidden bg-brand-primary py-16 lg:py-24">
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(45deg,rgba(0,0,0,0.1)_25%,transparent_25%,transparent_50%,rgba(0,0,0,0.1)_50%,rgba(0,0,0,0.1)_75%,transparent_75%,transparent)] bg-[length:40px_40px] opacity-10" />
+      <section className="relative w-full overflow-hidden bg-[#050505] py-12 lg:py-16">
+        {/* Subtle top/bottom border accents */}
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-primary/30 to-transparent" />
 
-        <div className="relative z-10 mx-auto max-w-[1400px] px-6 text-center">
-          <FadeIn variant="fadeInUp" speed="slow">
-            <h2 className="font-montserrat mb-6 text-[40px] font-black uppercase italic leading-[0.85] tracking-tighter text-black sm:text-[56px] lg:text-[72px]">
+        <div className="relative z-10 mx-auto flex max-w-[1100px] flex-col items-center gap-6 px-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+          {/* Left: compact heading */}
+          <div className="text-center sm:text-left">
+            <h2 className="font-montserrat text-[28px] font-black italic uppercase leading-[0.95] tracking-tighter text-white sm:text-[36px] lg:text-[44px]">
               {title || (
                 <>
-                  Join The <br className="hidden sm:block" /> Revolution
+                  Join The <span className="text-brand-primary">Revolution</span>
                 </>
               )}
             </h2>
             {subtitle && (
-              <p className="font-roboto mx-auto mb-10 max-w-lg text-[16px] font-medium text-black/80 sm:text-[18px]">
+              <p className="font-roboto mt-2 text-[14px] font-medium text-white/50 sm:text-[15px] max-w-md">
                 {subtitle}
               </p>
             )}
+          </div>
 
-            <div
-              className={`flex flex-col sm:flex-row flex-wrap items-stretch justify-center gap-4 ${subtitle ? "" : "mt-12"}`}
-            >
-              {secondaryButtonText ? (
+          {/* Right: buttons */}
+          <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center">
+            {primaryButtonText ? (
+              useHref ? (
                 <FlipButton
-                  href={secondaryButtonHref}
-                  variant="outline"
-                  className="h-[56px] w-full sm:w-auto rounded-[4px] border-black px-10 text-[16px] font-bold text-black hover:bg-black hover:text-brand-primary"
+                  href={primaryButtonHref}
+                  variant="primary"
+                  className="h-[48px] w-full rounded-[4px] px-8 text-[13px] font-bold sm:w-auto"
                 >
-                  {secondaryButtonText}
+                  {primaryButtonText}
                 </FlipButton>
-              ) : null}
-              {primaryButtonText ? (
-                useHref ? (
-                  <FlipButton
-                    href={primaryButtonHref}
-                    variant="primary"
-                    className="h-[56px] w-full sm:w-auto rounded-[4px] border-none bg-black px-10 text-[16px] font-bold text-brand-primary hover:bg-white hover:text-black"
-                  >
-                    {primaryButtonText}
-                  </FlipButton>
-                ) : (
-                  <FlipButton
-                    onClick={handlePrimary}
-                    type="button"
-                    variant="primary"
-                    className="h-[56px] w-full sm:w-auto rounded-[4px] border-none bg-black px-10 text-[16px] font-bold text-brand-primary hover:bg-white hover:text-black"
-                  >
-                    {primaryButtonText}
-                  </FlipButton>
-                )
-              ) : null}
-            </div>
-          </FadeIn>
+              ) : (
+                <FlipButton
+                  onClick={handlePrimary}
+                  type="button"
+                  variant="primary"
+                  className="h-[48px] w-full rounded-[4px] px-8 text-[13px] font-bold sm:w-auto"
+                >
+                  {primaryButtonText}
+                </FlipButton>
+              )
+            ) : null}
+            {secondaryButtonText ? (
+              <FlipButton
+                href={secondaryButtonHref}
+                variant="outline"
+                className="h-[48px] w-full rounded-[4px] border-white/20 px-8 text-[13px] font-bold text-white hover:border-[#CC5500] hover:bg-[#CC5500] hover:text-white sm:w-auto"
+              >
+                {secondaryButtonText}
+              </FlipButton>
+            ) : null}
+          </div>
         </div>
       </section>
 

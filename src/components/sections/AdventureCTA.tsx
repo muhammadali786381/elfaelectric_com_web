@@ -1,19 +1,20 @@
 "use client";
 
 import JoinRevolutionCTA from "@/components/sections/JoinRevolutionCTA";
+import { ArrowRight } from "lucide-react";
 
 export default function AdventureCTA({ buyHref }: { buyHref?: string }) {
   return (
     <JoinRevolutionCTA
       title={
         <>
-          Boost-Up Your <br className="hidden sm:block" /> Adventure
+          Ready to <span className="text-brand-primary">Ride?</span>
         </>
       }
-      subtitle="Enjoy every ride like never before! Our powerful, eco-friendly Electric Motorcycle offer smooth, exciting drives — perfect for city trips or outdoor adventures."
+      subtitle="Experience the future of mobility today."
       primaryButtonText="Buy Now"
       primaryButtonHref={buyHref}
-      secondaryButtonText="Book A Test Ride"
+      secondaryButtonText="Book a Test Ride"
       secondaryButtonHref="/book-a-test-ride"
     />
   );

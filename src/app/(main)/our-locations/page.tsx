@@ -27,16 +27,32 @@ export default function OurDealersPage() {
   return (
     <>
       <main className="flex-1">
-        <SecondaryHero
-          titleLine1="Our"
-          titleLine2="Locations"
-          description="Find your nearest locations across Pakistan"
-          imageSrc="/assets/images/hero4.jpeg"
-          imageAlt="ELFA Electric Motorcycle"
-        />
+        {/* Custom Locations Hero */}
+        <section className="relative flex min-h-[55dvh] items-end justify-center overflow-hidden pb-16 pt-32 lg:min-h-[60dvh] lg:pb-24 lg:pt-40">
+          <Image
+            src="/assets/images/hero4.jpeg"
+            alt="ELFA Electric Motorcycle"
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/60 to-[#050505]" />
+
+          <div className="relative z-10 w-full max-w-[1200px] px-4 text-center sm:px-6 lg:px-8 mt-10">
+            <FadeIn variant="fadeInUp" speed="slow">
+              <h1 className="font-montserrat mb-4 text-[56px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[72px] lg:text-[92px]">
+                Our <span className="text-brand-primary">Locations</span>
+              </h1>
+              <p className="font-roboto mx-auto max-w-2xl text-[16px] font-medium leading-relaxed text-white/70 sm:text-[20px]">
+                Find your nearest locations across Pakistan
+              </p>
+            </FadeIn>
+          </div>
+        </section>
 
         {/* Bike from left · card from right */}
-        <section className="bg-bg-primary py-10 lg:py-14">
+        <section className="bg-bg-primary pt-6 pb-10 lg:pt-8 lg:pb-14">
           <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
             <FadeIn
               variant="fadeInRight"

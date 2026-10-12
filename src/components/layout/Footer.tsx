@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, MapPin, Headset, Mail } from "lucide-react";
+import { STORE_BADGES } from "@/data/products/types";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -102,11 +103,42 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="text-text-inverse transition-colors hover:text-brand-primary"
+                  className="text-text-inverse transition-colors hover:text-[#CC5500]"
                 >
                   {s.icon}
                 </a>
               ))}
+            </div>
+
+            <div className="mt-8 flex flex-row items-center gap-3 w-full max-w-[320px]">
+              <a
+                href="https://play.google.com/store/apps/details?id=com.elfaelectric.webapp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative flex-1 aspect-[190/60] transition-transform hover:scale-105"
+              >
+                <Image
+                  src={STORE_BADGES.googlePlay}
+                  alt="Get it on Google Play"
+                  fill
+                  className="object-contain object-left"
+                  sizes="(max-width: 640px) 140px, 190px"
+                />
+              </a>
+              <a
+                href="https://apps.apple.com/pk/app/elfa-electric/id6744618877"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative flex-1 aspect-[190/60] transition-transform hover:scale-105"
+              >
+                <Image
+                  src={STORE_BADGES.appStore}
+                  alt="Download on the App Store"
+                  fill
+                  className="object-contain object-left"
+                  sizes="(max-width: 640px) 140px, 190px"
+                />
+              </a>
             </div>
           </div>
 
@@ -142,7 +174,7 @@ export default function Footer() {
                   <p className="font-poppins text-[14px] font-medium leading-5 text-text-inverse">
                     Office Location
                   </p>
-                  <p className="font-poppins mt-1 text-[14px] font-normal leading-relaxed text-text-primary/90">
+                  <p className="font-poppins transition-all hover:text-brand-primary mt-1 text-[14px] font-normal leading-relaxed text-text-primary/90">
                     C3i GA-70-A3, Korangi Creek Industrial Park
                     <br />
                     Korangi, Karachi, Sindh

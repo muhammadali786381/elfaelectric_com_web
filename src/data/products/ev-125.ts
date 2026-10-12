@@ -17,7 +17,7 @@ export const ev125: Product = {
   priceTaxNote: "+ Tax Rs. 3,350",
   priceTagline: "Luxury Living, Smartly Priced",
   heroBackground: "/assets/images/Hero-Banner-Background.webp",
-  heroImage: `${IMG}/bike.png`,
+  heroImage: `${IMG}/newbikehero.png`,
   heroSpecs: [
     { label: "Motor Power", value: "2,000 W", icon: `${IMG}/motor-icon.png` },
     { label: "Top Speed", value: "Up To 75 Km/h", icon: `${IMG}/speed-icon.png` },
@@ -33,19 +33,19 @@ export const ev125: Product = {
     `${IMG}/silver-bike.png`,
   ],
   calculatorId: "ev125",
-  coreFeatureImage: `${IMG}/core-bike.png`,
+  coreFeatureImage: "/assets/images/corefeatures.png",
   // Left: Motor / Range / Top Speed — Right: Capacity / Charging / Frame
   coreFeatures: [
     { title: "Motor Power", description: "2,000 W", icon: `${IMG}/motor-icon.png` },
+    { title: "Capacity", description: "72V / 30Ah", icon: `${IMG}/batter-icon.png` },
     {
       title: "Range",
-      description: "100+ KM of real-world range per charge",
+      description: "100+ km\nPer charge",
       icon: `${IMG}/meter.png`,
     },
-    { title: "Top Speed", description: "Up To 75 Km/h", icon: `${IMG}/speed-icon.png` },
-    { title: "Capacity", description: "72V/30Ah", icon: `${IMG}/batter-icon.png` },
-    { title: "Charging", description: "Time: 2-3 Hours", icon: `${IMG}/battery-icon.png` },
-    { title: "Frame", description: "Durable High-Frame", icon: `${IMG}/frame-icon.png` },
+    { title: "Charging", description: "2-3 hours", icon: `${IMG}/battery-icon.png` },
+    { title: "Top Speed", description: "75 km/h\nUp to", icon: `${IMG}/speed-icon.png` },
+    { title: "Frame", description: "High-frame\nBuilt for durability", icon: `${IMG}/frame-icon.png` },
   ],
   advancedFeatures: [
     {

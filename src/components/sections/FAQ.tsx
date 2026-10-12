@@ -4,9 +4,13 @@ import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/components/motion/FadeIn";
-import FlipButton from "@/components/ui/FlipButton";
 
-const faqs = [
+export interface FAQItem {
+  q: string;
+  a: React.ReactNode;
+}
+
+const defaultFaqs: FAQItem[] = [
   {
     q: "How do I maintain my EV bike?",
     a: "Maintaining an EV bike is simple and hassle-free. Keep your bike clean, ensure the battery is charged, and avoid exposing it to wet areas while charging. Unlike traditional engine bikes, EV bikes have fewer moving parts and require minimal care. Just check tyre pressure, brake condition, and battery health periodically.",
@@ -45,13 +49,13 @@ const faqs = [
   },
 ];
 
-function AccordionItem({
+export function AccordionItem({
   faq,
   open,
   onToggle,
   index,
 }: {
-  faq: { q: string; a: string };
+  faq: FAQItem;
   open: boolean;
   onToggle: () => void;
   index: number;
@@ -65,18 +69,16 @@ function AccordionItem({
         className="group flex w-full items-center justify-between gap-6 py-5 text-left transition-colors hover:text-brand-primary"
       >
         <span
-          className={`font-roboto text-[15px] font-medium leading-snug transition-colors duration-200 sm:text-[16px] ${
-            open ? "text-brand-primary" : "text-white/80 group-hover:text-brand-primary"
-          }`}
+          className={`font-roboto text-[15px] font-medium leading-snug transition-colors duration-200 sm:text-[16px] ${open ? "text-brand-primary" : "text-white/80 group-hover:text-brand-primary"
+            }`}
         >
           {faq.q}
         </span>
         <span
-          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
-            open
+          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${open
               ? "border-brand-primary bg-brand-primary text-bg-primary"
               : "border-white/20 text-white/50 group-hover:border-brand-primary/50 group-hover:text-brand-primary"
-          }`}
+            }`}
         >
           {open ? (
             <Minus className="h-3.5 w-3.5" strokeWidth={2.5} />
@@ -106,57 +108,57 @@ function AccordionItem({
   );
 }
 
-export default function FAQ() {
-  const [open, setOpen] = useState<number | null>(null);
+interface FAQProps {
+  items?: FAQItem[];
+  title?: React.ReactNode;
+  hideTitle?: boolean;
+  className?: string;
+  defaultOpenIndex?: number | null;
+}
+
+export default function FAQ({
+  items,
+  title,
+  hideTitle = false,
+  className = "bg-bg-primary py-20 lg:py-28",
+  defaultOpenIndex = null,
+}: FAQProps) {
+  const faqList = items || defaultFaqs;
+  const [open, setOpen] = useState<number | null>(defaultOpenIndex);
   const toggle = (i: number) => setOpen(open === i ? null : i);
 
   return (
-    <section id="faq" className="bg-bg-primary py-20 lg:py-28">
-      <div className="mx-auto w-full max-w-container px-4 sm:px-6">
+    <section id="faq" className={className}>
+      <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
 
-        {/* Split layout: left editorial col + right accordion */}
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[2fr_3fr] lg:gap-20">
-
-          {/* ── Left: editorial headline block ── */}
-          <FadeIn variant="fadeInLeft" speed="slow">
-            <div className="lg:sticky lg:top-32 lg:self-start">
-              <p className="font-roboto mb-4 text-[11px] font-semibold uppercase tracking-[2.5px] text-brand-primary">
-                Got Questions?
-              </p>
-              <h2 className="font-montserrat mb-5 text-[40px] font-black leading-[0.95] tracking-tight text-white sm:text-[52px] lg:text-[64px]">
-                Frequently
-                <br />
-                <span className="text-brand-primary">Asked.</span>
-              </h2>
-              <p className="font-roboto mb-8 max-w-[360px] text-[14px] leading-relaxed text-white/40 sm:text-[15px]">
-                Everything you need to know about ordering, charging, warranty, and owning your ELFA electric bike.
-              </p>
-              <FlipButton
-                href="/contact-us"
-                variant="glass"
-                className="font-roboto h-11 px-6 text-[12px] font-semibold tracking-[1.5px] text-white/50 hover:border-brand-primary/40 hover:bg-brand-primary/10 hover:text-brand-primary"
-              >
-                Still have questions?
-              </FlipButton>
+        {/* ── Headline ── */}
+        {!hideTitle && (
+          <FadeIn variant="fadeInUp" speed="slow">
+            <div className="mb-12 text-center lg:mb-16">
+              {title || (
+                <h2 className="font-montserrat text-[32px] font-black leading-tight tracking-tight text-white sm:text-[40px] lg:text-[48px]">
+                  Frequently Asked <span className="text-brand-primary">Questions</span>
+                </h2>
+              )}
             </div>
           </FadeIn>
+        )}
 
-          {/* ── Right: accordion list ── */}
-          <FadeIn variant="fadeInRight" speed="slow">
-            <div className="border-t border-white/[0.08]">
-              {faqs.map((faq, i) => (
-                <AccordionItem
-                  key={i}
-                  index={i}
-                  faq={faq}
-                  open={open === i}
-                  onToggle={() => toggle(i)}
-                />
-              ))}
-            </div>
-          </FadeIn>
+        {/* ── Accordion list ── */}
+        <FadeIn variant="fadeInUp" speed="slow">
+          <div className="border-t border-white/[0.08]">
+            {faqList.map((faq, i) => (
+              <AccordionItem
+                key={faq.q || i}
+                index={i}
+                faq={faq}
+                open={open === i}
+                onToggle={() => toggle(i)}
+              />
+            ))}
+          </div>
+        </FadeIn>
 
-        </div>
       </div>
     </section>
   );

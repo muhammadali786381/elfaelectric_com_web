@@ -6,11 +6,13 @@ import {
   useMotionValue,
   useTransform,
   animate,
+  useMotionValueEvent,
   type PanInfo,
   type MotionValue,
 } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export interface Slide {
   image: string;
@@ -67,8 +69,14 @@ export default function CarouselStacked({ slides }: { slides: Slide[] }) {
   const scrollProgress = useMotionValue(0);
   const startProgress = React.useRef(0);
   const [windowWidth, setWindowWidth] = React.useState(0);
+  const [activeIndex, setActiveIndex] = React.useState(0);
 
   const total = slides.length;
+
+  useMotionValueEvent(scrollProgress, "change", (latest) => {
+    const normalized = Math.round(latest) % total;
+    setActiveIndex(normalized < 0 ? normalized + total : normalized);
+  });
 
   React.useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -81,6 +89,28 @@ export default function CarouselStacked({ slides }: { slides: Slide[] }) {
     () => getCarouselConfig(windowWidth),
     [windowWidth],
   );
+
+  const scrollToTarget = React.useCallback((target: number) => {
+    animate(scrollProgress, target, {
+      type: "spring",
+      stiffness: 200,
+      damping: 30,
+      mass: 1,
+    });
+  }, [scrollProgress]);
+
+  const nextSlide = React.useCallback(() => {
+    scrollToTarget(Math.round(scrollProgress.get()) + 1);
+  }, [scrollProgress, scrollToTarget]);
+
+  const prevSlide = React.useCallback(() => {
+    scrollToTarget(Math.round(scrollProgress.get()) - 1);
+  }, [scrollProgress, scrollToTarget]);
+
+  React.useEffect(() => {
+    const interval = setInterval(nextSlide, 3500); // 3.5 seconds
+    return () => clearInterval(interval);
+  }, [nextSlide]);
 
   const handleDragStart = () => {
     startProgress.current = scrollProgress.get();
@@ -101,17 +131,13 @@ export default function CarouselStacked({ slides }: { slides: Slide[] }) {
 
     const target = Math.round(startProgress.current) + totalShift;
 
-    animate(scrollProgress, target, {
-      type: "spring",
-      stiffness: 200,
-      damping: 30,
-      mass: 1,
-    });
+    scrollToTarget(target);
   };
 
   return (
     <div className="flex flex-col items-center justify-center w-full py-10 overflow-hidden select-none">
-      <div className="relative w-full max-w-7xl h-80 sm:h-112 lg:h-128 flex items-center justify-center">
+      <div className="relative w-full max-w-7xl h-80 sm:h-112 lg:h-128 flex items-center justify-center mb-10">
+
         {/* Transparent Drag Surface */}
         <motion.div
           drag="x"
@@ -135,6 +161,51 @@ export default function CarouselStacked({ slides }: { slides: Slide[] }) {
             config={config}
           />
         ))}
+      </div>
+
+      {/* Navigation Controls */}
+      <div className="flex items-center justify-center gap-4 sm:gap-6 z-[60]">
+        <div className="group relative flex items-center justify-center p-1.5 rounded-full border border-white/10 hover:border-white/20 transition-all">
+          <button
+            onClick={prevSlide}
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#161616] border border-white/5 text-white/80 transition-all group-hover:bg-[#222] group-hover:text-white active:scale-95 pointer-events-auto"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
+          </button>
+        </div>
+
+        {/* Dots */}
+        <div className="flex items-center gap-3 mx-2">
+          {Array.from({ length: total }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                const current = Math.round(scrollProgress.get());
+                const currentMod = ((current % total) + total) % total;
+                let diff = i - currentMod;
+                if (diff > total / 2) diff -= total;
+                if (diff < -total / 2) diff += total;
+                scrollToTarget(current + diff);
+              }}
+              className={cn(
+                "h-2 w-2 rounded-full transition-all duration-300 pointer-events-auto",
+                activeIndex === i ? "bg-white scale-125" : "bg-white/20 hover:bg-white/40"
+              )}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+
+        <div className="group relative flex items-center justify-center p-1.5 rounded-full border border-white/10 hover:border-white/20 transition-all">
+          <button
+            onClick={nextSlide}
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#161616] border border-white/5 text-white/80 transition-all group-hover:bg-[#222] group-hover:text-white active:scale-95 pointer-events-auto"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
+          </button>
+        </div>
       </div>
     </div>
   );

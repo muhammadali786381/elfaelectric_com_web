@@ -38,10 +38,10 @@ export default function ProductPage({ product }: { product: Product }) {
         buyHref={product.buyHref}
         images={product.galleryImages}
       />
-      <ReelsCarousel reels={dummyVideoLinks} />
+      {/* <ReelsCarousel reels={dummyVideoLinks} /> */}
       <Testimonials />
       <AdventureCTA buyHref={product.buyHref} />
-      
+
     </main>
   );
 }

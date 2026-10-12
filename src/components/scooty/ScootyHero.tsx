@@ -11,7 +11,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function ScootyHero({ product }: { product: Product }) {
   return (
-    <section className="relative flex min-h-[100dvh] w-full flex-col items-center justify-between overflow-hidden bg-[#050505] px-4 pb-12 pt-28 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
+    <section className="relative flex min-h-[100dvh] w-full flex-col items-center justify-between overflow-hidden bg-[#050505] px-4 pb-24 pt-24 sm:px-6 sm:pb-12 sm:pt-28 lg:px-12 xl:px-16 2xl:px-24">
       {/* Background fading via mask */}
       <div 
         className="absolute inset-0 z-0 bg-[#050505]"
@@ -88,7 +88,7 @@ export default function ScootyHero({ product }: { product: Product }) {
             initial={{ opacity: 0, scale: 0.8, x: -150 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.2, ease }}
-            className="relative flex-1 w-full lg:w-[55%] xl:w-[60%] max-w-[700px] lg:max-w-none mx-auto lg:mx-0 min-h-[300px] lg:min-h-[500px] z-10 scale-[1.1] lg:-mr-10 xl:-mr-20"
+            className="relative flex-1 w-full lg:w-[55%] xl:w-[60%] max-w-[700px] lg:max-w-none mx-auto lg:mx-0 min-h-[220px] sm:min-h-[300px] lg:min-h-[500px] z-10 scale-[1.1] lg:-mr-10 xl:-mr-20 flex items-center justify-center"
           >
             {/* Decorative glow behind scooty */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-brand-primary/15 blur-[100px] rounded-full pointer-events-none" />

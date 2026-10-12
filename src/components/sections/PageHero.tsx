@@ -206,23 +206,27 @@ export default function PageHero({
             )}
           </div>
         ) : (
-          <>
-            <h1 className="font-montserrat mx-auto max-w-[820px] text-center text-[32px] font-bold uppercase leading-tight text-text-inverse sm:text-[46px] lg:mx-0 lg:text-left lg:text-[60px]">
-              {title}
-            </h1>
-            {subtitle && (
-              <p className="font-roboto mx-auto mt-4 max-w-[640px] text-center text-[16px] leading-relaxed text-text-inverse/85 lg:mx-0 lg:text-left">
-                {subtitle}
-              </p>
-            )}
-            <div className="mt-5 flex items-center justify-center gap-2 text-[16px] text-text-inverse lg:justify-start">
-              <Link href="/" className="transition-colors hover:text-brand-primary">
-                Home
-              </Link>
-              <span className="text-text-inverse/70">|</span>
-              <span>{breadcrumb}</span>
-            </div>
-          </>
+          <div className="flex flex-col items-center text-center mt-10">
+            <FadeIn variant="fadeInUp" speed="slow">
+              <h1 className="font-montserrat mx-auto max-w-[1000px] text-[56px] font-black italic uppercase leading-[0.9] tracking-tighter text-text-inverse sm:text-[72px] lg:text-[92px]">
+                {title}
+              </h1>
+              {subtitle && (
+                <p className="font-roboto mx-auto mt-4 max-w-[640px] text-[16px] font-medium leading-relaxed text-text-inverse/70 sm:text-[20px]">
+                  {subtitle}
+                </p>
+              )}
+            </FadeIn>
+            <FadeIn variant="fadeInUp" speed="slow" delay={0.1}>
+              <div className="mt-6 flex items-center justify-center gap-2 text-[16px] text-text-inverse">
+                <Link href="/" className="transition-colors hover:text-brand-primary">
+                  Home
+                </Link>
+                <span className="text-text-inverse/70">|</span>
+                <span>{breadcrumb}</span>
+              </div>
+            </FadeIn>
+          </div>
         )}
       </div>
     </section>
