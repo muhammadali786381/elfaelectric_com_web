@@ -191,7 +191,7 @@ export default function SavingsCalculator({
                 Calculate Savings
               </h3>
               {!locked && (
-                <div className="relative inline-flex h-10 sm:h-12 shrink-0 items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1 backdrop-blur-md">
+                <div className="relative flex w-full sm:w-auto h-11 sm:h-12 shrink-0 items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1 backdrop-blur-md">
                   {models.map((m) => {
                     const active = activeId === m.id;
                     return (
@@ -200,7 +200,7 @@ export default function SavingsCalculator({
                         type="button"
                         onClick={() => setActiveId(m.id)}
                         className={cn(
-                          "relative flex h-full items-center justify-center gap-2 rounded-full px-4 sm:px-5 transition-all duration-500 ease-out",
+                          "relative flex flex-1 sm:flex-initial h-full items-center justify-center gap-2 rounded-full px-3 sm:px-5 transition-all duration-500 ease-out",
                           active
                             ? "bg-brand-primary text-black shadow-sm"
                             : "text-white/50 hover:bg-white/5 hover:text-white",

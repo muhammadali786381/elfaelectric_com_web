@@ -139,13 +139,6 @@ export default function Hero() {
             <WaveText offset={"MOVE INTO".length}>
               THE FUTURE
             </WaveText>
-            <motion.span
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 2, duration: 0.5, type: "spring" }}
-              aria-hidden="true"
-              className="ml-[0.12em] inline-block h-[0.72em] w-[0.16em] shrink-0 bg-[#00df83]"
-            />
           </span>
         </h1>
 

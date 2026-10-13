@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { motion } from "framer-motion";
-import FlipButton from "@/components/ui/FlipButton";
+import BookmarkButton from "@/components/ui/BookmarkButton";
 
 const testimonials = [
   {
@@ -124,14 +124,12 @@ export default function Testimonials() {
             Happy Customers
           </h2>
 
-          <FlipButton
+          <BookmarkButton
             href="/video-testimonials"
-            variant="outline"
-            icon={<Play className="h-5 w-5 fill-current" strokeWidth={2} />}
-            className="font-roboto h-[48px] rounded-full px-6 text-[13px] tracking-[1px] uppercase font-bold border-white/20 hover:border-brand-primary shrink-0"
+            icon={<Play className="icon fill-current" strokeWidth={0} />}
           >
             Watch Video Testimonials
-          </FlipButton>
+          </BookmarkButton>
         </motion.div>
 
         {/* Swiper Container */}

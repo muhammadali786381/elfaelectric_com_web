@@ -46,7 +46,7 @@ export default function ScootyPage({ product }: { product: Product }) {
         images={product.galleryImages}
       />
 
-      <ReelsCarousel reels={dummyVideoLinks} />
+      {/* <ReelsCarousel reels={dummyVideoLinks} /> */}
 
       {/* Top Performing on Meta
       <ScootyMetaSection /> */}
