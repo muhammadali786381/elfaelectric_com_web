@@ -23,8 +23,8 @@ const securityHeaders = [
       "img-src 'self' data: blob: https:",
       "connect-src 'self' https:",
       "worker-src 'self' blob:",
-      // Contact/booking forms, Google Maps, YouTube embeds, Call Center Studio
-      "frame-src 'self' https://app.digistartup.io https://app.digistartupgroup.com https://maps.google.com https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com https://elfa.callcenterstudio.com https://click2connect.tech",
+      // Contact/booking forms, Google Maps, YouTube/TikTok players, Call Center Studio
+      "frame-src 'self' https://app.digistartup.io https://app.digistartupgroup.com https://maps.google.com https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com/player/v1/ https://elfa.callcenterstudio.com https://click2connect.tech",
     ].join("; "),
   },
   ...(process.env.NODE_ENV === "production"

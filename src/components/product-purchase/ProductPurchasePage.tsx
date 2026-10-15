@@ -4,7 +4,7 @@ import ProductPurchaseFeatures from "@/components/product-purchase/ProductPurcha
 import ProductGallery from "@/components/product/ProductGallery";
 import ReelsCarousel from "@/components/sections/ReelsCarousel";
 import Testimonials from "@/components/sections/Testimonials";
-import { dummyVideoLinks } from "@/data/video-links";
+import { videoLinks } from "@/data/video-links";
 
 
 /** Shared buy / product-detail page — gallery + testimonials reused from marketing pages. */
@@ -14,7 +14,7 @@ export default function ProductPurchasePage({ product }: { product: ProductPurch
       <ProductPurchaseDetail product={product} />
       <ProductPurchaseFeatures features={product.features} />
       <ProductGallery shortName={product.galleryShortName} images={product.galleryImages} />
-      <ReelsCarousel reels={dummyVideoLinks} />
+      <ReelsCarousel reels={videoLinks} />
       <Testimonials />
     </main>
   );

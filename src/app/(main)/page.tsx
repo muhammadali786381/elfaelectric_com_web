@@ -10,7 +10,7 @@ import Testimonials from "@/components/sections/Testimonials";
 import Welcome from "@/components/sections/Welcome";
 import FAQ from "@/components/sections/FAQ";
 import AdventureCTA from "@/components/sections/AdventureCTA";
-import { dummyVideoLinks } from "@/data/video-links";
+import { videoLinks } from "@/data/video-links";
 import ReelsCarousel from "@/components/sections/ReelsCarousel";
 
 // Static page — fully pre-rendered at build time for maximum performance
@@ -29,7 +29,7 @@ export default function Home() {
         <Solutions />
         <SavingsCalculator />
         <Testimonials />
-        <ReelsCarousel reels={dummyVideoLinks} />
+        <ReelsCarousel reels={videoLinks} />
         {/* <Welcome /> */}
         <FAQ />
         <AdventureCTA />

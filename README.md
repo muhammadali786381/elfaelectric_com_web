@@ -1,5 +1,24 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Social carousel posts
+
+Add posts to `dummyVideoLinks` in `src/data/video-links.ts`. Each entry accepts a URL string or `{ url, thumbnail }`; no carousel component changes are needed. The `videoLinks` export is an alias of this same list.
+
+```ts
+{ url: "https://www.youtube.com/watch?v=VIDEO_ID" }, // automatic thumbnail
+{ url: "https://www.instagram.com/reel/POST_ID/", thumbnail: "/assets/images/my-instagram-post.jpg" },
+{ url: "https://www.linkedin.com/posts/POST_ID", thumbnail: "/assets/images/my-linkedin-post.jpg" },
+{ url: "https://www.tiktok.com/@ACCOUNT/video/VIDEO_ID", thumbnail: "/assets/images/my-tiktok-post.jpg" },
+```
+
+Paths starting with `/assets/` refer to files under `public/assets/`. Instagram, LinkedIn, and TikTok thumbnails can be supplied this way. YouTube thumbnails are generated automatically; an explicit thumbnail overrides them. Without a thumbnail, a platform icon appears.
+
+Thumbnails fill the card. Add `thumbnailPosition: "center top"` (or a percentage such as `"center 24%"`) to an entry to keep faces or text in view when cropping a portrait image.
+
+Platform icons and actions are detected from the URL. YouTube watch, Shorts, embed, and short links play in the modal. TikTok video links use TikTok's official player, with a “Watch on TikTok” link available if playback is restricted. TikTok short links without a video ID, Instagram, LinkedIn, and other links open externally. Invalid URLs are skipped.
+
+Run parser regression checks with `npx tsx --test src/lib/social-reels.test.ts`.
+
 ## Getting Started
 
 First, run the development server:

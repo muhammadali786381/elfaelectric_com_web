@@ -8,12 +8,14 @@ interface PlayButtonProps {
   onClick?: () => void;
   className?: string;
   icon?: React.ReactNode;
+  ariaLabel?: string;
 }
 
-export default function PlayButton({ onClick, className, icon }: PlayButtonProps) {
+export default function PlayButton({ onClick, className, icon, ariaLabel = "Play video" }: PlayButtonProps) {
   return (
     <motion.button
       type="button"
+      aria-label={ariaLabel}
       onClick={(e) => {
         if (onClick) {
           e.stopPropagation();
