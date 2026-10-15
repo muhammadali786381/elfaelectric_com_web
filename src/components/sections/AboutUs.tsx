@@ -21,7 +21,7 @@ export default function AboutUs() {
           {/* Subtle accent line */}
           <div className="mb-8 h-1 w-12 rounded-full bg-brand-primary" />
 
-          <h2 className="font-montserrat mb-8 text-[38px] font-bold leading-tight text-white sm:text-[48px] lg:text-[56px] text-balance">
+          <h2 className="section-heading mb-8 text-white text-balance">
             About <span className="text-brand-primary">ELFA</span> Electric
           </h2>
           

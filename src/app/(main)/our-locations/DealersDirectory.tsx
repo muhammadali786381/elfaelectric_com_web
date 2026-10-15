@@ -259,6 +259,7 @@ function DealerCard({
       {/* Action buttons */}
       <div className="mt-1 flex flex-wrap gap-2">
         <FlipButton
+          shape="cut"
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
@@ -270,6 +271,7 @@ function DealerCard({
           Directions
         </FlipButton>
         <FlipButton
+          shape="cut"
           href="/book-a-test-ride"
           onClick={(e) => e.stopPropagation()}
           variant="primary"
@@ -279,6 +281,7 @@ function DealerCard({
           Test Ride
         </FlipButton>
         <FlipButton
+          shape="cut"
           href={`https://wa.me/${whatsappNum}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -291,6 +294,7 @@ function DealerCard({
         </FlipButton>
         {dealer.email && (
           <FlipButton
+            shape="cut"
             href={`mailto:${dealer.email}`}
             onClick={(e) => e.stopPropagation()}
             variant="outline"

@@ -346,6 +346,7 @@ function PlanCard({ plan }: { plan: Plan }) {
       </div>
 
       <FlipButton
+        shape="cut"
         type="button"
         onClick={() => {
           document.getElementById('get-started')?.scrollIntoView({ behavior: 'smooth' });

@@ -125,6 +125,10 @@ summary {
 }
 
 /* Custom utility classes */
+.section-heading {
+  @apply font-montserrat text-[32px] font-bold leading-tight sm:text-[40px] lg:text-[48px];
+}
+
 .section-padding {
   padding-top: 5rem;
   padding-bottom: 5rem;

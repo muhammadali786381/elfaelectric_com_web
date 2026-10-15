@@ -72,6 +72,7 @@ export default function JoinRevolutionCTA({
             {primaryButtonText ? (
               useHref ? (
                 <FlipButton
+                  shape="cut"
                   href={primaryButtonHref}
                   variant="primary"
                   className="h-[48px] w-full rounded-[4px] px-8 text-[13px] font-bold sm:w-auto"
@@ -80,6 +81,7 @@ export default function JoinRevolutionCTA({
                 </FlipButton>
               ) : (
                 <FlipButton
+                  shape="cut"
                   onClick={handlePrimary}
                   type="button"
                   variant="primary"
@@ -91,6 +93,7 @@ export default function JoinRevolutionCTA({
             ) : null}
             {secondaryButtonText ? (
               <FlipButton
+                shape="cut"
                 href={secondaryButtonHref}
                 variant="outline"
                 className="h-[48px] w-full rounded-[4px] border-white/20 px-8 text-[13px] font-bold text-white hover:border-[#CC5500] hover:bg-[#CC5500] hover:text-white sm:w-auto"

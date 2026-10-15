@@ -16,6 +16,7 @@ export default function FinalCTA() {
             </h2>
             <div className="flex shrink-0 flex-wrap items-center justify-center gap-3 sm:justify-start">
               <FlipButton
+                shape="cut"
                 href="/products"
                 variant="primary"
                 className="rounded-[3px] h-11 px-5 text-[13px]"
