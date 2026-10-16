@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { waslEv125Regions, type WaslEv125Region } from "@/data/wasl-ev125-plans";
 
 type ProviderId = "asaan-ghar" | "qist-baazar" | "wasl" | "tmf";
 type TmfOption = "with-advance" | "without-advance";
@@ -9,12 +10,12 @@ type PlanNumbers = {
   downPayment: number;
   monthly: number;
   months: number;
-  total: number;
+  total?: number;
 };
 
 /** Scraped from https://elfaelectric.com/financing-partners/ Payment Calculator */
 const PLAN_DATA: Record<
-  Exclude<ProviderId, "tmf">,
+  Exclude<ProviderId, "tmf" | "wasl">,
   Record<string, PlanNumbers>
 > & {
   tmf: Record<string, Record<TmfOption, PlanNumbers>>;
@@ -29,11 +30,6 @@ const PLAN_DATA: Record<
     "1": { downPayment: 99900, monthly: 14000, months: 24, total: 435900 },
     "2": { downPayment: 99900, monthly: 17400, months: 18, total: 413100 },
     "3": { downPayment: 87900, monthly: 24000, months: 12, total: 375900 },
-  },
-  wasl: {
-    "1": { downPayment: 70000, monthly: 17700, months: 24, total: 494800 },
-    "2": { downPayment: 70000, monthly: 21500, months: 18, total: 457000 },
-    "3": { downPayment: 70000, monthly: 29400, months: 12, total: 431300 },
   },
   tmf: {
     "1": {
@@ -69,18 +65,24 @@ export default function PaymentCalculator() {
   const [provider, setProvider] = useState<ProviderId>("asaan-ghar");
   const [plan, setPlan] = useState("1");
   const [tmfOption, setTmfOption] = useState<TmfOption>("with-advance");
+  const [region, setRegion] = useState<WaslEv125Region>("sindh");
+  const waslRegion = waslEv125Regions.find(item => item.id === region)!;
 
   const planIds = useMemo(() => {
     if (provider === "tmf") return Object.keys(PLAN_DATA.tmf);
+    if (provider === "wasl") return waslRegion.plans.map(item => item.id);
     return Object.keys(PLAN_DATA[provider]);
-  }, [provider]);
+  }, [provider, waslRegion]);
 
   const summary = useMemo((): PlanNumbers | null => {
     if (provider === "tmf") {
       return PLAN_DATA.tmf[plan]?.[tmfOption] ?? null;
     }
+    if (provider === "wasl") {
+      return waslRegion.plans.find(item => item.id === plan) ?? null;
+    }
     return PLAN_DATA[provider][plan] ?? null;
-  }, [provider, plan, tmfOption]);
+  }, [provider, plan, tmfOption, waslRegion]);
 
   function onProviderChange(next: ProviderId) {
     setProvider(next);
@@ -93,15 +95,15 @@ export default function PaymentCalculator() {
       { label: "Down Payment", value: formatRs(summary.downPayment) },
       { label: "Monthly Payment", value: formatRs(summary.monthly) },
       { label: "Payment Period", value: `${summary.months} Months` },
-      { label: "Total Amount", value: formatRs(summary.total) },
+      ...(summary.total !== undefined ? [{ label: "Total Amount", value: formatRs(summary.total) }] : []),
     ]
     : [];
 
   return (
-    <section className="bg-[#050505] py-16 lg:py-24">
+    <section className="bg-[#050505] pt-8 pb-16 lg:pt-10 lg:pb-24">
       <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6">
       <div
-        className="relative mt-10 rounded-[24px] border border-white/10 bg-[#080808]/80    backdrop-blur-2xl p-8 sm:p-12 shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden"
+        className="relative rounded-[24px] border border-white/10 bg-[#080808]/80    backdrop-blur-2xl p-8 sm:p-12 shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden"
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/40 to-transparent" />
 
@@ -146,6 +148,24 @@ export default function PaymentCalculator() {
             </select>
           </label>
 
+          {provider === "wasl" && (
+            <label className="flex flex-col gap-2 sm:col-span-2 sm:max-w-md mx-auto w-full">
+              <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest text-center">
+                Province
+              </span>
+              <select
+                value={region}
+                onChange={(event) => { setRegion(event.target.value as WaslEv125Region); setPlan("1"); }}
+                className={selectClass}
+                aria-label="Province"
+              >
+                {waslEv125Regions.map(item => (
+                  <option key={item.id} value={item.id} className="bg-black text-white">{item.name}</option>
+                ))}
+              </select>
+            </label>
+          )}
+
           {provider === "tmf" ? (
             <label className="flex flex-col gap-2 sm:col-span-2 sm:max-w-md mx-auto w-full">
               <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest text-center">
@@ -169,7 +189,7 @@ export default function PaymentCalculator() {
             Payment Summary
           </h3>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${cards.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
             {cards.map((card) => (
               <div
                 key={card.label}

@@ -7,6 +7,7 @@ import { Check, MapPin, Phone, Headphones, Mail } from "lucide-react";
 import FlipButton from "@/components/ui/FlipButton";
 import { FadeIn } from "@/components/motion/FadeIn";
 import PaymentCalculator from "@/components/financing/PaymentCalculator";
+import { waslEv125Regions } from "@/data/wasl-ev125-plans";
 
 const SPARK =
   "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
@@ -38,7 +39,7 @@ function formatRs(n: number) {
 }
 
 /** Scraped from https://elfaelectric.com/financing-partners/ */
-const ev125Plans: Record<ProviderId, Plan[]> = {
+const ev125Plans: Record<Exclude<ProviderId, "wasl">, Plan[]> = {
   "asaan-ghar": [
     {
       id: "1",
@@ -138,52 +139,21 @@ const ev125Plans: Record<ProviderId, Plan[]> = {
       ],
     },
   ],
-  wasl: [
-    {
-      id: "1",
-      title: "Plan 1",
-      months: 24,
-      downPayment: 70000,
-      perMonth: 17700,
-      total: 494800,
-      details: [
-        { label: "Registration", value: "Free" },
-        { label: "Down Payment", value: "Rs. 70,000" },
-        { label: "Monthly Installment", value: "Rs. 17,700" },
-        { label: "Total Months", value: "24" },
-      ],
-    },
-    {
-      id: "2",
-      title: "Plan 2",
-      months: 18,
-      downPayment: 70000,
-      perMonth: 21500,
-      total: 457000,
-      details: [
-        { label: "Registration", value: "Free" },
-        { label: "Down Payment", value: "Rs. 70,000" },
-        { label: "Monthly Installment", value: "Rs. 21,500" },
-        { label: "Total Months", value: "18" },
-      ],
-    },
-    {
-      id: "3",
-      title: "Plan 3",
-      months: 12,
-      downPayment: 70000,
-      perMonth: 29400,
-      total: 431300,
-      details: [
-        { label: "Registration", value: "Rs. 8,500" },
-        { label: "Down Payment", value: "Rs. 70,000" },
-        { label: "Monthly Installment", value: "Rs. 29,400" },
-        { label: "Total Months", value: "12" },
-      ],
-    },
-  ],
   tmf: [], // handled separately via tmfWith / tmfWithout
 };
+
+const waslRegionalPlans = waslEv125Regions.map(region => ({
+  ...region,
+  plans: region.plans.map(plan => ({
+    id: plan.id,
+    title: `Plan ${plan.id}`,
+    months: plan.months,
+    downPayment: plan.downPayment,
+    perMonth: plan.monthly,
+    total: 0, // No total cost was supplied; the card omits this row.
+    details: [{ label: "Down Payment", value: formatRs(plan.downPayment) }],
+  } satisfies Plan)),
+}));
 
 const tmfWithAdvance: Plan[] = [
   {
@@ -377,6 +347,7 @@ export default function FinancingPlans() {
   const [partner, setPartner] = useState("");
 
   const plans = useMemo(() => {
+    if (provider === "wasl") return [];
     if (provider === "tmf") {
       return tmfOption === "with" ? tmfWithAdvance : tmfWithoutAdvance;
     }
@@ -393,7 +364,7 @@ export default function FinancingPlans() {
 
   return (
     <>
-      <section className="relative w-full py-20 lg:py-32 overflow-hidden">
+      <section className="relative w-full pt-20 pb-8 lg:pt-32 lg:pb-10 overflow-hidden">
         {/* Background Image & Dark Overlay for Glass Effect */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -412,7 +383,7 @@ export default function FinancingPlans() {
               Choose Your <span className="text-brand-primary">Plan</span>
             </h2>
             <p className="font-roboto max-w-xl mx-auto text-[16px] text-white/60">
-              Select one of our trusted financing partners to view all available installment plans for the EV-125 and EV-1.
+              Select one of our trusted financing partners to view all available installment plans for the EV-125.
             </p>
           </FadeIn>
 
@@ -451,6 +422,21 @@ export default function FinancingPlans() {
                     ))}
                   </div>
                 </div>
+              </div>
+            ) : provider === "wasl" ? (
+              <div className="space-y-14 lg:space-y-16">
+                {waslRegionalPlans.map(region => (
+                  <section key={region.id} aria-labelledby={`wasl-ev125-${region.id}`} className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
+                    <h3 id={`wasl-ev125-${region.id}`} className="font-montserrat mb-8 border-b border-brand-primary/40 pb-5 text-center text-[24px] font-semibold text-white sm:text-[28px]">
+                      {region.name}
+                    </h3>
+                    <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                      {region.plans.map(plan => (
+                        <PlanCard key={`${region.id}-${plan.id}`} plan={plan} />
+                      ))}
+                    </div>
+                  </section>
+                ))}
               </div>
             ) : (
               <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">

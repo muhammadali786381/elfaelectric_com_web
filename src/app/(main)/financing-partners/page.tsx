@@ -7,7 +7,7 @@ import SecondaryHero from "@/components/sections/SecondaryHero";
 export const metadata: Metadata = {
   title: "ELFA Financing Partners | Easy Electric Bike Installments",
   description:
-    "Explore ELFA EV-125 and EV-1 installment plans with Asaan Ghar, Qist Baazar, WASL, and TMF financing partners.",
+    "Explore ELFA EV-125 installment plans with Asaan Ghar, Qist Baazar, WASL, and TMF financing partners.",
 };
 
 export default function FinancingPartnersPage() {
@@ -17,7 +17,7 @@ export default function FinancingPartnersPage() {
         <SecondaryHero 
           titleLine1="Financing"
           titleLine2="Partners"
-          description="Explore ELFA EV-125 and EV-1 installment plans with our trusted financing partners. Zero hassle, instant approvals."
+          description="Explore ELFA EV-125 installment plans with our trusted financing partners. Zero hassle, instant approvals."
           imageSrc="/assets/images/hero4.jpeg"
           imageAlt="Financing Partners"
         />
