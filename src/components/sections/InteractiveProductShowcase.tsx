@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Battery, Cog, Gauge, Route } from "lucide-react";
 import FlipButton from "@/components/ui/FlipButton";
 import { productCardData } from "./ProductShowcase";
@@ -23,22 +23,33 @@ const moveEase = [0.77, 0, 0.175, 1] as const;
 const fadeEase = [0.23, 1, 0.32, 1] as const;
 type Product = (typeof products)[number];
 type Origin = { x: number; y: number; scale: number };
+type ProductTextProps = { product: Product; itemVariants: Variants };
 
-function ProductDetails({ product }: { product: Product }) {
+function TextReveal({ children, variants }: { children: ReactNode; variants: Variants }) {
+  return (
+    <div className={styles.revealMask}>
+      <motion.div variants={variants} data-product-text-item>{children}</motion.div>
+    </div>
+  );
+}
+
+function ProductDetails({ product, itemVariants }: ProductTextProps) {
   return (
     <>
-      <h3 className={styles.name}>{product.name}</h3>
-      <p className={styles.category}>{product.type}</p>
+      <TextReveal variants={itemVariants}><h3 className={styles.name}>{product.name}</h3></TextReveal>
+      <TextReveal variants={itemVariants}><p className={styles.category}>{product.type}</p></TextReveal>
       <dl className={styles.specs}>
         {product.specs.map(spec => {
           const Icon = icons[spec.icon];
           return (
-            <div className={styles.spec} key={spec.label}>
-              <Icon size={20} strokeWidth={1.5} aria-hidden="true" />
-              <div>
-                <dt>{spec.label}</dt>
-                <dd>{spec.value}</dd>
-              </div>
+            <div className={styles.revealMask} key={spec.label}>
+              <motion.div className={styles.spec} variants={itemVariants} data-product-text-item>
+                <Icon size={20} strokeWidth={1.5} aria-hidden="true" />
+                <div>
+                  <dt>{spec.label}</dt>
+                  <dd>{spec.value}</dd>
+                </div>
+              </motion.div>
             </div>
           );
         })}
@@ -47,21 +58,23 @@ function ProductDetails({ product }: { product: Product }) {
   );
 }
 
-function ProductPricing({ product }: { product: Product }) {
+function ProductPricing({ product, itemVariants }: ProductTextProps) {
   return (
     <>
-      {product.oldPrice && <del className={styles.oldPrice}>{product.oldPrice}</del>}
-      <p className={styles.price}>{product.price}</p>
-      <p className={styles.tax}>+ tax</p>
-      <p className={styles.savings}>{product.savings}</p>
-      <div className={styles.actions}>
+      {product.oldPrice && <TextReveal variants={itemVariants}><del className={styles.oldPrice}>{product.oldPrice}</del></TextReveal>}
+      <TextReveal variants={itemVariants}>
+        <p className={styles.price}>{product.price}</p>
+        <p className={styles.tax}>+ tax</p>
+      </TextReveal>
+      <TextReveal variants={itemVariants}><p className={styles.savings}>{product.savings}</p></TextReveal>
+      <motion.div className={styles.actions} variants={itemVariants}>
         <FlipButton href={product.exploreHref} shape="cut" className={styles.explore}>
           Explore model
         </FlipButton>
         <Link href={product.buyHref} className={styles.testRide}>
           Book a test ride <ArrowUpRight size={16} aria-hidden="true" />
         </Link>
-      </div>
+      </motion.div>
     </>
   );
 }
@@ -106,11 +119,21 @@ export default function InteractiveProductShowcase() {
     setSelected(index => (index + 1) % products.length);
   };
 
-  const infoMotion = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
-    transition: { duration: reducedMotion ? 0.1 : 0.18, ease: fadeEase },
+  const textGroupVariants: Variants = {
+    hidden: {},
+    visible: { transition: { delayChildren: reducedMotion ? 0 : 0.02, staggerChildren: reducedMotion ? 0 : 0.045 } },
+    exit: { transition: { staggerChildren: 0 } },
+  };
+  const textItemVariants: Variants = {
+    hidden: { opacity: 0, transform: reducedMotion ? "none" : "translate3d(0, 100%, 0)" },
+    visible: {
+      opacity: 1, transform: reducedMotion ? "none" : "translate3d(0, 0%, 0)",
+      transition: { duration: reducedMotion ? 0.1 : 0.36, ease: fadeEase },
+    },
+    exit: {
+      opacity: 0, transform: reducedMotion ? "none" : "translate3d(0, -25%, 0)",
+      transition: { duration: reducedMotion ? 0.1 : 0.12, ease: fadeEase },
+    },
   };
 
   return (
@@ -122,8 +145,8 @@ export default function InteractiveProductShowcase() {
         <div id="interactive-product-display" className={styles.showcase} data-active-product={active.id}>
           <div className={styles.details}>
             <AnimatePresence mode="wait" initial={false}>
-              <motion.div key={active.id} {...infoMotion}>
-                <ProductDetails product={active} />
+              <motion.div key={active.id} variants={textGroupVariants} initial="hidden" animate="visible" exit="exit">
+                <ProductDetails product={active} itemVariants={textItemVariants} />
               </motion.div>
             </AnimatePresence>
           </div>
@@ -140,7 +163,7 @@ export default function InteractiveProductShowcase() {
                   }}
                   animate={{ opacity: 1, transform: "translate3d(0px, 0px, 0) scale(1)" }}
                   exit={reducedMotion ? { opacity: 0 } : {
-                    opacity: 0, transform: "translate3d(0px, -85%, 0) scale(0.9)",
+                    opacity: 0, transform: "translate3d(-28%, -80%, 0) scale(0.32)",
                   }}
                   transition={{ duration: reducedMotion ? 0.15 : swapDuration, ease: moveEase }}
                   onAnimationComplete={finishSwitch}
@@ -153,8 +176,8 @@ export default function InteractiveProductShowcase() {
 
           <div className={styles.pricing}>
             <AnimatePresence mode="wait" initial={false}>
-              <motion.div key={active.id} {...infoMotion}>
-                <ProductPricing product={active} />
+              <motion.div key={active.id} variants={textGroupVariants} initial="hidden" animate="visible" exit="exit">
+                <ProductPricing product={active} itemVariants={textItemVariants} />
               </motion.div>
             </AnimatePresence>
           </div>

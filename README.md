@@ -25,7 +25,7 @@ Video dialogs use the native cursor so embedded players remain usable. The site'
 
 The homepage uses `InteractiveProductShowcase.tsx` and its CSS module for the EV-125 / EV-1 preview switch. It reuses `productCardData` from `ProductShowcase.tsx`; the original card component and its rendering are preserved. Each model uses one existing transparent image, with the black EV-125 image shared with the homepage hero. The background stays dark throughout.
 
-Click or keyboard-activate the bottom-right preview to promote that product and update its specifications, pricing and links. A swap lasts 720ms; repeated activation is ignored until it finishes. Reduced motion uses a short fade. Both images share responsive image sizes so the preview warms the main image cache. The section keeps a stable height while switching.
+Click or keyboard-activate the bottom-right preview to promote that product and update its specifications, pricing and links. The outgoing product shrinks toward the upper-left as the preview expands into the centre. The title, category, specification rows and pricing rise through individual masks with a short stagger. A swap lasts 720ms; repeated activation is ignored until it finishes. Reduced motion uses a short fade without movement or staggering. Both images share responsive image sizes so the preview warms the main image cache. The section keeps a stable height while switching.
 
 ## Getting Started
 
