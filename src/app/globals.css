@@ -4,6 +4,30 @@
 
 @custom-variant dark (&:is(.dark *));
 
+:root {
+  /* Loader palette: change the surface here to compare colour variations. */
+  --loader-background: var(--color-loder-green);
+  --loader-text: var(--color-text-inverse);
+  --loader-line: var(--color-text-inverse);
+  --loader-gap: 0.2px;
+}
+
+/* Keep page width identical before, during and after scroll locking. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Cover the reserved scrollbar edge with the loader palette without removing
+   its space. The normal scrollbar colours return when the overlay unmounts. */
+html:has([data-elfa-loader]) {
+  background-color: var(--loader-background);
+  scrollbar-color: var(--loader-background) var(--loader-background);
+}
+html:has([data-elfa-loader])::-webkit-scrollbar,
+html:has([data-elfa-loader])::-webkit-scrollbar-thumb {
+  background-color: var(--loader-background);
+}
+
 @theme inline {
   --font-montserrat: "Montserrat", sans-serif;
   --font-roboto: "Roboto", sans-serif;
@@ -17,6 +41,7 @@
   --color-elfa-text: #333333;
   --color-elfa-yellow: #ffc107;
 
+  --color-loder-green: #2e742b;
   /* Global Theme Variables - Premium Dark Mode */
   --color-bg-primary: #050505; /* Pitch black matching footer */
   --color-bg-secondary: #111111; /* Slightly lighter */

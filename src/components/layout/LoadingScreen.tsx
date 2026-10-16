@@ -1,55 +1,96 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, type CSSProperties } from "react";
+import { useAnimate, type AnimationSequence } from "framer-motion";
+import { PRELOADER } from "./preloader-config";
 import styles from "./LoadingScreen.module.css";
 
-export type LoaderTone = "forest" | "midnight";
-
-export default function LoadingScreen({ tone = "midnight", still = false, onComplete }: {
-  tone?: LoaderTone;
+type LoadingScreenProps = {
   still?: boolean;
+  sessionBound?: boolean;
+  onReveal?: () => void;
   onComplete?: () => void;
-}) {
-  const [exiting, setExiting] = useState(false);
-  const [imageState, setImageState] = useState<"pending" | "ready" | "unavailable">("pending");
+};
+
+export default function LoadingScreen({ still = false, sessionBound = false, onReveal, onComplete }: LoadingScreenProps) {
+  const [scope, animate] = useAnimate<HTMLDivElement>();
 
   useEffect(() => {
-    // A slow or failed image must never hold the site indefinitely.
-    const fallback = window.setTimeout(() => {
-      setImageState((state) => state === "pending" ? "unavailable" : state);
-    }, 1000);
-    return () => window.clearTimeout(fallback);
-  }, []);
-
-  useEffect(() => {
-    if (still || imageState === "pending") return;
+    if (still || !scope.current) return;
+    let cancelled = false;
+    let completed = false;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // A brief brand intro, not a simulated download or progress percentage.
-    const hold = reduced ? 500 : 1150;
-    const exitTimer = window.setTimeout(() => setExiting(true), hold);
-    const completeTimer = window.setTimeout(() => onComplete?.(), hold + (reduced ? 200 : 650));
-    return () => {
-      window.clearTimeout(exitTimer);
-      window.clearTimeout(completeTimer);
+    const root = scope.current;
+    const finish = () => {
+      if (cancelled || completed) return;
+      completed = true;
+      onComplete?.();
     };
-  }, [still, onComplete, imageState]);
+    const sequence: AnimationSequence = [];
+
+    if (reduced) {
+      sequence.push([root, { opacity: [1, 0] }, {
+        at: PRELOADER.reducedHold, duration: PRELOADER.reducedFade,
+      }]);
+    } else {
+      const text = root.querySelector<HTMLElement>("[data-loader-text]")!;
+      const letters = root.querySelectorAll<HTMLElement>("[data-loader-letter]");
+      const line = root.querySelector<HTMLElement>("[data-loader-line]")!;
+      const blinds = root.querySelectorAll<HTMLElement>("[data-loader-blind]");
+
+      letters.forEach((letter, index) => {
+        sequence.push([letter, { opacity: [0, 1], transform: ["translateY(100%)", "translateY(0%)"] }, {
+          at: PRELOADER.textEnterAt + index * PRELOADER.letterStagger,
+          duration: PRELOADER.textEnterDuration, ease: [...PRELOADER.entranceEasing],
+        }]);
+      });
+      sequence.push([line, { transform: ["scaleX(0)", "scaleX(1)"] }, {
+        at: PRELOADER.lineStart, duration: PRELOADER.lineDuration,
+        ease: [...PRELOADER.entranceEasing],
+      }]);
+      sequence.push([text, { opacity: [1, 0] }, {
+        at: PRELOADER.textFadeAt, duration: PRELOADER.textFadeDuration,
+      }]);
+      sequence.push([line, { opacity: [1, 0] }, {
+        at: PRELOADER.lineFadeAt, duration: PRELOADER.lineFadeDuration,
+      }]);
+      blinds.forEach((blind, index) => {
+        sequence.push([blind, { transform: ["translateY(0%)", `translateY(${index === 0 ? "-100%" : "100%"})`] }, {
+          at: PRELOADER.panelStart, duration: PRELOADER.panelDuration,
+          ease: [...PRELOADER.panelEasing],
+        }]);
+      });
+    }
+
+    const revealTimer = window.setTimeout(() => {
+      if (!cancelled) onReveal?.();
+    }, (reduced ? PRELOADER.reducedHold : PRELOADER.panelStart) * 1000);
+    const fallback = window.setTimeout(finish, PRELOADER.fallbackMs);
+    const controls = animate(sequence);
+    // Cancellation guards prevent Strict Mode's discarded run completing.
+    controls.then(finish, finish);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(revealTimer);
+      window.clearTimeout(fallback);
+      controls.stop();
+    };
+  }, [animate, scope, still, onReveal, onComplete]);
 
   return (
-    <div className={styles.screen} data-tone={tone} data-ready={imageState !== "pending"} data-exiting={exiting} data-still={still} role="status" aria-label="Loading ELFA Electric">
-      <div className={styles.panels} aria-hidden="true">
-        {[0, 1, 2, 3, 4].map((panel) => <div key={panel} className={styles.panel} />)}
-      </div>
-      <div className={styles.composition} aria-hidden="true">
-        <div className={styles.logo} hidden={imageState === "unavailable"}>
-          <Image src="/assets/images/logo-full.png" alt="" width={1024} height={250}
-            sizes="230px" loading="eager" fetchPriority="high" className={styles.logoImage}
-            onLoad={() => setImageState((state) => state === "pending" ? "ready" : state)}
-            onError={() => setImageState("unavailable")} />
-        </div>
-        <div className={styles.titleMask}>
-          <p className={styles.title}>MOVE <span>SMARTER</span></p>
-        </div>
+    <div ref={scope} className={styles.screen} data-elfa-loader data-loader-session={sessionBound ? "" : undefined}
+      data-still={still} aria-hidden="true" style={{ "--loader-fallback": `${PRELOADER.fallbackMs}ms` } as CSSProperties}>
+      <div className={`${styles.blind} ${styles.topBlind}`} data-loader-blind />
+      <div className={`${styles.blind} ${styles.bottomBlind}`} data-loader-blind />
+      <div className={styles.brand}>
+        <p className={styles.name} data-loader-text>
+          {Array.from(PRELOADER.label).map((letter, index) => (
+            <span className={styles.letterWindow} key={index}>
+              <span className={styles.letter} data-loader-letter>{letter === " " ? "\u00a0" : letter}</span>
+            </span>
+          ))}
+        </p>
+        <div className={styles.line} data-loader-line />
       </div>
     </div>
   );

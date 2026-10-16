@@ -23,7 +23,13 @@ Video dialogs use the native cursor so embedded players remain usable. The site'
 
 ## Getting Started
 
-Loader concept review: open `/loader-preview` during development to compare forest and midnight green and replay the logo/tagline reveal with the five-panel exit. This preview is unavailable in production. The proposed visual is in `src/components/layout/LoadingScreen.tsx`; the existing live loader remains in `GlobalLoader.tsx` pending design review.
+The live preloader reveals white “ELFA ELECTRIC” upward letter by letter at the viewport centre. The short underline starts drawing from left to right immediately after the final letter finishes. Two horizontal panels then open simultaneously in opposite directions. The real transparent centre opening is configurable with `--loader-gap` in `src/app/globals.css` (default `0.2px`). The overlay wrapper stays transparent; only the panels have opaque backgrounds. The underline is independent of this seam.
+
+The intro runs on the first visit in a tab and on every full reload, while normal client-side navigation skips it. It lasts about 2.4 seconds with a four-second fallback. Reduced motion uses a static brand name and a brief fade. Hero entrances start as the panels open. The scrollbar gutter remains reserved so page width does not jump on exit.
+
+Loader colours in `src/app/globals.css` use `--loader-background` (60% of the current brand primary mixed with black for a darker shade), plus white `--loader-text` and `--loader-line`. Wording, timing, easing and replay settings are in `src/components/layout/preloader-config.ts`; the underline start time is derived from the last letter's completion. The root-layout bootstrap prevents repeat-visit flashes without changing hydrated markup.
+
+Open `/loader-preview` in development for a still frame or replay; this review route is unavailable in production. Reload the page to replay the live intro in the same tab. Run bootstrap regression checks with `npx tsx --test src/components/layout/preloader-config.test.ts`.
 
 First, run the development server:
 
