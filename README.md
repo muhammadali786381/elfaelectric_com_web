@@ -21,6 +21,12 @@ Run parser regression checks with `npx tsx --test src/lib/social-reels.test.ts`.
 
 Video dialogs use the native cursor so embedded players remain usable. The site's custom cursor returns when the dialog closes.
 
+## Homepage product showcase
+
+The homepage uses `InteractiveProductShowcase.tsx` and its CSS module for the EV-125 / EV-1 preview switch. It reuses `productCardData` from `ProductShowcase.tsx`; the original card component and its rendering are preserved. Each model uses one existing transparent image, with the black EV-125 image shared with the homepage hero. The background stays dark throughout.
+
+Click or keyboard-activate the bottom-right preview to promote that product and update its specifications, pricing and links. A swap lasts 720ms; repeated activation is ignored until it finishes. Reduced motion uses a short fade. Both images share responsive image sizes so the preview warms the main image cache. The section keeps a stable height while switching.
+
 ## Getting Started
 
 The live preloader reveals white “ELFA ELECTRIC” upward letter by letter at the viewport centre. It shares the homepage hero’s Russo One font (400), tight tracking and 12° forward slant, using the shared font definition in `src/lib/fonts.ts`. The underline spans the full text width and grows from its centre immediately after the final letter finishes, then fades out at full width over 160ms as the panels start opening. It does not shrink. Two horizontal panels meet seamlessly, with no centre gap, then open simultaneously in opposite directions. The gap remains configurable with `--loader-gap` in `src/app/globals.css` (default `0px`). The overlay wrapper stays transparent; only the panels have opaque backgrounds.

@@ -3,7 +3,7 @@ import CityMarquee from "@/components/sections/CityMarquee";
 import SpinningBolt from "@/components/sections/SpinningBolt";
 import AboutUs from "@/components/sections/AboutUs";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
-import ProductShowcase from "@/components/sections/ProductShowcase";
+import InteractiveProductShowcase from "@/components/sections/InteractiveProductShowcase";
 import Solutions from "@/components/sections/Solutions";
 import SavingsCalculator from "@/components/sections/SavingsCalculator";
 import Testimonials from "@/components/sections/Testimonials";
@@ -25,7 +25,7 @@ export default function Home() {
         <SpinningBolt />
         <AboutUs />
         <WhyChooseUs />
-        <ProductShowcase />
+        <InteractiveProductShowcase />
         <Solutions />
         <SavingsCalculator />
         <Testimonials />
