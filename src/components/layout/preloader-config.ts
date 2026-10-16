@@ -8,6 +8,8 @@ const lineStart = textEnterAt + (Array.from(label).length - 1) * letterStagger +
 const lineDuration = 0.4;
 const textFadeAt = lineStart + lineDuration + 0.1;
 const textFadeDuration = 0.12;
+const panelStart = textFadeAt + textFadeDuration;
+const panelDuration = 0.9;
 
 export const PRELOADER = {
   label,
@@ -18,10 +20,11 @@ export const PRELOADER = {
   lineDuration,
   textFadeAt,
   textFadeDuration,
-  lineFadeAt: textFadeAt,
-  lineFadeDuration: textFadeDuration,
-  panelStart: textFadeAt + textFadeDuration,
-  panelDuration: 0.9,
+  // Fade at full width as the reveal starts; do not retract the line.
+  lineExitAt: panelStart,
+  lineExitDuration: 0.16,
+  panelStart,
+  panelDuration,
   reducedHold: 0.55,
   reducedFade: 0.2,
   fallbackMs: 4000,

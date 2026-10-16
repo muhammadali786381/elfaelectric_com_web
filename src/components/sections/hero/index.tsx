@@ -3,14 +3,8 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import FlipButton from "@/components/ui/FlipButton";
-import { Russo_One } from "next/font/google";
+import { heroFont } from "@/lib/fonts";
 import { useLoaderReady } from "@/components/layout/GlobalLoader";
-
-const heroFont = Russo_One({
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
 
 
 const specs = [

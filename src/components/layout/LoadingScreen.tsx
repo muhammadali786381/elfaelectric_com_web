@@ -3,6 +3,7 @@
 import { useEffect, type CSSProperties } from "react";
 import { useAnimate, type AnimationSequence } from "framer-motion";
 import { PRELOADER } from "./preloader-config";
+import { heroFont } from "@/lib/fonts";
 import styles from "./LoadingScreen.module.css";
 
 type LoadingScreenProps = {
@@ -52,7 +53,8 @@ export default function LoadingScreen({ still = false, sessionBound = false, onR
         at: PRELOADER.textFadeAt, duration: PRELOADER.textFadeDuration,
       }]);
       sequence.push([line, { opacity: [1, 0] }, {
-        at: PRELOADER.lineFadeAt, duration: PRELOADER.lineFadeDuration,
+        at: PRELOADER.lineExitAt, duration: PRELOADER.lineExitDuration,
+        ease: [...PRELOADER.entranceEasing],
       }]);
       blinds.forEach((blind, index) => {
         sequence.push([blind, { transform: ["translateY(0%)", `translateY(${index === 0 ? "-100%" : "100%"})`] }, {
@@ -83,7 +85,7 @@ export default function LoadingScreen({ still = false, sessionBound = false, onR
       <div className={`${styles.blind} ${styles.topBlind}`} data-loader-blind />
       <div className={`${styles.blind} ${styles.bottomBlind}`} data-loader-blind />
       <div className={styles.brand}>
-        <p className={styles.name} data-loader-text>
+        <p className={`${heroFont.className} ${styles.name}`} data-loader-text>
           {Array.from(PRELOADER.label).map((letter, index) => (
             <span className={styles.letterWindow} key={index}>
               <span className={styles.letter} data-loader-letter>{letter === " " ? "\u00a0" : letter}</span>

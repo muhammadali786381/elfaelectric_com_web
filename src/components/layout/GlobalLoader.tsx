@@ -41,17 +41,28 @@ export default function GlobalLoader({ children }: { children: React.ReactNode }
   const isLoading = phase !== "done";
   useEffect(() => {
     if (!isLoading || window.__elfaPreloader?.skip) return;
-    const root = document.documentElement;
-    const body = document.body;
-    const saved = [root, body].flatMap(element => ["overflow-x", "overflow-y"].map(property => ({
-      element, property, value: element.style.getPropertyValue(property), priority: element.style.getPropertyPriority(property),
-    })));
-    for (const { element, property } of saved) element.style.setProperty(property, "hidden");
-    return () => {
-      for (const { element, property, value, priority } of saved) {
-        if (value) element.style.setProperty(property, value, priority);
-        else element.style.removeProperty(property);
+    // Preserve the native scrollbar and page width while preventing movement.
+    const { scrollX, scrollY } = window;
+    const preventScroll = (event: Event) => event.preventDefault();
+    const preventScrollKeys = (event: KeyboardEvent) => {
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) {
+        event.preventDefault();
       }
+    };
+    const restorePosition = () => {
+      if (window.scrollX !== scrollX || window.scrollY !== scrollY) {
+        window.scrollTo({ left: scrollX, top: scrollY, behavior: "instant" });
+      }
+    };
+    window.addEventListener("wheel", preventScroll, { passive: false });
+    window.addEventListener("touchmove", preventScroll, { passive: false });
+    window.addEventListener("keydown", preventScrollKeys);
+    window.addEventListener("scroll", restorePosition);
+    return () => {
+      window.removeEventListener("wheel", preventScroll);
+      window.removeEventListener("touchmove", preventScroll);
+      window.removeEventListener("keydown", preventScrollKeys);
+      window.removeEventListener("scroll", restorePosition);
     };
   }, [isLoading]);
 
