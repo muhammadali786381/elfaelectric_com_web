@@ -19,6 +19,8 @@ Platform icons and actions are detected from the URL. YouTube watch, Shorts, emb
 
 Run parser regression checks with `npx tsx --test src/lib/social-reels.test.ts`.
 
+Video dialogs use the native cursor so embedded players remain usable. The site's custom cursor returns when the dialog closes.
+
 ## Getting Started
 
 Loader concept review: open `/loader-preview` during development to compare forest and midnight green and replay the logo/tagline reveal with the five-panel exit. This preview is unavailable in production. The proposed visual is in `src/components/layout/LoadingScreen.tsx`; the existing live loader remains in `GlobalLoader.tsx` pending design review.

@@ -51,6 +51,7 @@ export default function VideoModal({ isOpen, onClose, videoUrl, sourceUrl, sourc
           exit={{ opacity: 0 }}
           onClick={onClose}
           role="dialog"
+          data-native-cursor
           aria-modal="true"
           aria-label="Video player"
           className="fixed inset-0 z-[10001] flex flex-col items-center justify-center gap-3 bg-black/90 p-4 backdrop-blur-md sm:p-6"

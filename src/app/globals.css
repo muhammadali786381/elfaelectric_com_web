@@ -372,6 +372,22 @@ iframe[src*="digistartup.io"]::-webkit-scrollbar {
   }
 }
 
+/* Cross-origin players do not forward pointer movement to our follower.
+   Use the native cursor throughout the video dialog, including its controls. */
+.hide-cursor [data-native-cursor],
+.hide-cursor [data-native-cursor] * {
+  cursor: auto !important;
+}
+.hide-cursor [data-native-cursor] a,
+.hide-cursor [data-native-cursor] a *,
+.hide-cursor [data-native-cursor] button,
+.hide-cursor [data-native-cursor] button * {
+  cursor: pointer !important;
+}
+.hide-cursor:has([data-native-cursor]) [data-custom-cursor] {
+  display: none;
+}
+
 /* ==========================================================================
    Bookmark / Expandable Pill Button
    ========================================================================== */

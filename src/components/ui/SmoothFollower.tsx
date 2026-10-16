@@ -11,6 +11,7 @@ export default function SmoothFollower() {
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     setPosition({ x: e.clientX, y: e.clientY });
+    setIsVisible(true);
   }, []);
 
   const handleMouseDown = () => setIsClicking(true);
@@ -38,7 +39,6 @@ export default function SmoothFollower() {
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
-    setIsVisible(true);
 
     // Hide default cursor globally when this component mounts
     document.documentElement.classList.add("hide-cursor");
@@ -62,7 +62,7 @@ export default function SmoothFollower() {
   if (typeof window === "undefined" || !isVisible) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[99999] overflow-hidden">
+    <div data-custom-cursor aria-hidden="true" className="pointer-events-none fixed inset-0 z-[99999] overflow-hidden">
       {/* Outer glow */}
       <motion.div
         className="absolute rounded-full mix-blend-screen pointer-events-none"
