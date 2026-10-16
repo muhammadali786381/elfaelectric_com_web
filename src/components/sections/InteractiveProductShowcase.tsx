@@ -36,7 +36,13 @@ function TextReveal({ children, variants }: { children: ReactNode; variants: Var
 function ProductDetails({ product, itemVariants }: ProductTextProps) {
   return (
     <>
-      <TextReveal variants={itemVariants}><h3 className={styles.name}>{product.name}</h3></TextReveal>
+      <TextReveal variants={itemVariants}>
+        <h3 className={styles.name}>
+          {product.name.split(/(\d+)/).map((part, index) => index % 2
+            ? <span className="text-brand-primary" key={index}>{part}</span>
+            : part)}
+        </h3>
+      </TextReveal>
       <TextReveal variants={itemVariants}><p className={styles.category}>{product.type}</p></TextReveal>
       <dl className={styles.specs}>
         {product.specs.map(spec => {

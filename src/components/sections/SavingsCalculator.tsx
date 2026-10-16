@@ -323,7 +323,8 @@ export default function SavingsCalculator({
               <FlipButton
                 href={model.buyHref}
                 variant="primary"
-                className="mt-6 sm:mt-8 h-10 sm:h-12 w-full rounded-md text-[13px] sm:text-[14px]"
+                shape="cut"
+                className="mt-6 sm:mt-8 h-10 sm:h-12 w-full text-[13px] sm:text-[14px]"
               >
                 Buy Now
               </FlipButton>

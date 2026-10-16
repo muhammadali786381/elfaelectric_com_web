@@ -9,11 +9,11 @@ export default function SpinningBolt() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="flex w-full items-center justify-center bg-bg-primary pt-24 pb-8 lg:pt-32 lg:pb-28">
+    <section className="flex w-full items-center justify-center bg-bg-primary py-24 lg:py-32">
       <div style={{ perspective: 1000 }}>
         <motion.div
           className="relative isolate aspect-[2/3] w-12 sm:w-16"
-          animate={{ rotateY: reduceMotion ? 0 : 360 }}
+          animate={{ rotateY: reduceMotion ? 0 : -360 }}
           transition={{
             duration: 3,
             repeat: Infinity,

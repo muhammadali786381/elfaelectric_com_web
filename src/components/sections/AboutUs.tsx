@@ -43,8 +43,9 @@ export default function AboutUs() {
           <FlipButton
             href="/about-us"
             variant="primary"
-            icon={<ArrowRight className="h-5 w-5" strokeWidth={2.5} />}
-            className="font-roboto h-[52px] rounded-full px-10 text-[14px] tracking-[1.5px] uppercase font-bold"
+            shape="cut"
+            icon={<ArrowRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />}
+            className="font-roboto h-[52px] flex-row-reverse px-10 text-[14px] tracking-[1.5px] uppercase font-bold"
           >
             Discover More
           </FlipButton>
