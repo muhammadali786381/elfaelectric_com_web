@@ -3,14 +3,14 @@ import CityMarquee from "@/components/sections/CityMarquee";
 import SpinningBolt from "@/components/sections/SpinningBolt";
 import AboutUs from "@/components/sections/AboutUs";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
-import ProductShowcase from "@/components/sections/ProductShowcase";
+import InteractiveProductShowcase from "@/components/sections/InteractiveProductShowcase";
 import Solutions from "@/components/sections/Solutions";
 import SavingsCalculator from "@/components/sections/SavingsCalculator";
 import Testimonials from "@/components/sections/Testimonials";
 import Welcome from "@/components/sections/Welcome";
 import FAQ from "@/components/sections/FAQ";
 import AdventureCTA from "@/components/sections/AdventureCTA";
-import { dummyVideoLinks } from "@/data/video-links";
+import { videoLinks } from "@/data/video-links";
 import ReelsCarousel from "@/components/sections/ReelsCarousel";
 
 // Static page — fully pre-rendered at build time for maximum performance
@@ -25,11 +25,11 @@ export default function Home() {
         <SpinningBolt />
         <AboutUs />
         <WhyChooseUs />
-        <ProductShowcase />
+        <InteractiveProductShowcase />
         <Solutions />
         <SavingsCalculator />
         <Testimonials />
-        <ReelsCarousel reels={dummyVideoLinks} />
+        <ReelsCarousel reels={videoLinks} />
         {/* <Welcome /> */}
         <FAQ />
         <AdventureCTA />

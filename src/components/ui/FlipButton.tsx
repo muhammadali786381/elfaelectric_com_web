@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import styles from "./FlipButton.module.css";
 
 const DURATION = 0.25;
 const STAGGER = 0.025;
@@ -13,6 +14,7 @@ interface FlipButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElem
   href?: string;
   className?: string;
   variant?: "primary" | "dark" | "outline" | "glass" | "light";
+  shape?: "pill" | "cut";
   icon?: React.ReactNode;
   target?: React.HTMLAttributeAnchorTarget;
   rel?: string;
@@ -25,6 +27,7 @@ export default function FlipButton({
   href,
   className = "",
   variant = "primary",
+  shape = "pill",
   icon,
   target,
   rel,
@@ -44,7 +47,7 @@ export default function FlipButton({
       "backdrop-blur-md bg-white/5 border border-white/10 text-white hover:bg-white/10",
   };
 
-  const combinedClasses = cn(baseClasses, variants[variant], className);
+  const combinedClasses = cn(baseClasses, variants[variant], className, shape === "cut" && styles.cut, shape === "cut" && variant === "outline" && styles.cutOutline);
 
   /**
    * Inner content — both text layers live inside a single
@@ -53,6 +56,11 @@ export default function FlipButton({
    */
   const Content = () => (
     <>
+      {shape === "cut" && variant === "outline" && (
+        <svg className={styles.outline} viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M 0.5 0.5 H 187.5 L 199.5 12.5 V 49.5 H 12.5 L 0.5 37.5 Z" fill="none" stroke="currentColor" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        </svg>
+      )}
       {icon && <span className="relative shrink-0">{icon}</span>}
 
       {/* Clip container — this is what prevents the overflow */}

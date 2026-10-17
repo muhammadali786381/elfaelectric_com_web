@@ -8,30 +8,22 @@ function formatRs(n: string) {
   return `Rs. ${n}`;
 }
 
-const plans = [
+const regionalPlans = [
   {
-    id: 1,
-    title: "Plan 1",
-    percent: "20%",
-    downPayment: "50,000",
-    rental: "13,200",
-    months: 24,
+    id: "sindh",
+    name: "Sindh",
+    plans: [
+      { id: 1, title: "Plan 1", downPayment: "78,780", rental: "12,000", months: 24 },
+      { id: 2, title: "Plan 2", downPayment: "78,780", rental: "20,000", months: 12 },
+    ],
   },
   {
-    id: 2,
-    title: "Plan 2",
-    percent: "20%",
-    downPayment: "50,000",
-    rental: "16,000",
-    months: 18,
-  },
-  {
-    id: 3,
-    title: "Plan 3",
-    percent: "20%",
-    downPayment: "50,000",
-    rental: "21,900",
-    months: 12,
+    id: "punjab",
+    name: "Punjab",
+    plans: [
+      { id: 1, title: "Plan 1", downPayment: "78,780", rental: "12,000", months: 24 },
+      { id: 2, title: "Plan 2", downPayment: "78,780", rental: "19,500", months: 12 },
+    ],
   },
 ];
 
@@ -68,41 +60,50 @@ export default function ScootyInstallmentPlans() {
               <span className="text-brand-primary">WASL</span> <span className="text-white">Plans</span>
             </h2>
 
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">
-              {plans.map((plan) => (
-                <div
-                  key={plan.id}
-                  className="relative flex flex-col rounded-[24px] border border-white/10 bg-white/10 backdrop-blur-xl p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transform-gpu"
-                >
-                  <div className="mb-8 border-b border-white/10 pb-6">
-                    <h3 className="font-roboto text-[16px] font-bold uppercase tracking-widest text-white mb-4">
-                      {plan.title}
-                    </h3>
-                    <div className="flex items-baseline gap-2">
-                      <span className="font-montserrat text-[48px] font-black tracking-tighter text-white">
-                        {formatRs(plan.rental)}
-                      </span>
-                      <span className="font-roboto text-[15px] font-medium text-white/50 uppercase tracking-widest">/mo</span>
-                    </div>
-                  </div>
+            <div className="space-y-14 lg:space-y-16">
+              {regionalPlans.map((region) => (
+                <section key={region.id} aria-labelledby={`scooty-wasl-${region.id}`}>
+                  <h3 id={`scooty-wasl-${region.id}`} className="font-montserrat mb-8 border-b border-brand-primary/40 pb-5 text-center text-[24px] font-semibold text-white sm:text-[28px]">
+                    {region.name}
+                  </h3>
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+                    {region.plans.map((plan) => (
+                      <div
+                        key={plan.id}
+                        className="relative flex flex-col rounded-[24px] border border-white/10 bg-white/10 backdrop-blur-xl p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transform-gpu"
+                      >
+                        <div className="mb-8 border-b border-white/10 pb-6">
+                          <h4 className="font-roboto text-[16px] font-bold uppercase tracking-widest text-white mb-4">
+                            {plan.title}
+                          </h4>
+                          <div className="flex items-baseline gap-2">
+                            <span className="font-montserrat text-[32px] font-black tracking-tighter text-white sm:text-[40px] lg:text-[48px]">
+                              {formatRs(plan.rental)}
+                            </span>
+                            <span className="font-roboto text-[12px] font-medium text-white/50 uppercase tracking-widest sm:text-[15px]">/mo</span>
+                          </div>
+                        </div>
 
-                  <div className="flex-1 space-y-4 mb-10">
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 shrink-0 text-brand-primary" />
-                      <div className="flex flex-1 items-center justify-between font-roboto text-[15px]">
-                        <span className="text-white/60">Term Length</span>
-                        <span className="font-bold text-white">{plan.months} Months</span>
+                        <div className="flex-1 space-y-4 mb-10">
+                          <div className="flex items-center gap-3">
+                            <Check className="h-5 w-5 shrink-0 text-brand-primary" />
+                            <div className="flex flex-1 items-center justify-between font-roboto text-[15px]">
+                              <span className="text-white/60">Term Length</span>
+                              <span className="font-bold text-white">{plan.months} Months</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Check className="h-5 w-5 shrink-0 text-brand-primary" />
+                            <div className="flex flex-1 items-center justify-between font-roboto text-[15px]">
+                              <span className="text-white/60">Down Payment</span>
+                              <span className="font-bold text-white">Rs. {plan.downPayment}</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 shrink-0 text-brand-primary" />
-                      <div className="flex flex-1 items-center justify-between font-roboto text-[15px]">
-                        <span className="text-white/60">Down Payment ({plan.percent})</span>
-                        <span className="font-bold text-white">Rs. {plan.downPayment}</span>
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                </div>
+                </section>
               ))}
             </div>
           </FadeIn>

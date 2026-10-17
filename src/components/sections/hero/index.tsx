@@ -3,13 +3,8 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import FlipButton from "@/components/ui/FlipButton";
-import { Russo_One } from "next/font/google";
-
-const heroFont = Russo_One({
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
+import { heroFont } from "@/lib/fonts";
+import { useLoaderReady } from "@/components/layout/GlobalLoader";
 
 
 const specs = [
@@ -31,6 +26,7 @@ function WaveText({
   className = "",
 }: WaveTextProps) {
   const reducedMotion = useReducedMotion();
+  const ready = useLoaderReady();
 
   const stagger = 0.1;
   const pulseDuration = 0.9;
@@ -67,7 +63,7 @@ function WaveText({
             className="inline-block origin-bottom"
             initial={false}
             animate={
-              reducedMotion
+              reducedMotion || !ready
                 ? { y: 0, scale: 1, textShadow: restingShadow }
                 : {
                   y: [0, -3, 0],
@@ -97,11 +93,12 @@ function WaveText({
 }
 
 export default function Hero() {
+  const ready = useLoaderReady();
   const duration = 0.8;
   const ease = [0.16, 1, 0.3, 1] as const;
 
   return (
-    <section className="relative flex min-h-[100dvh] w-full flex-col overflow-hidden bg-[#050505] pt-20 lg:flex-row lg:items-center lg:pt-0">
+    <section data-hero-ready={ready} className="relative flex min-h-[100dvh] w-full flex-col overflow-hidden bg-[#050505] pt-20 lg:flex-row lg:items-center lg:pt-0">
       {/* Background with user-provided image and gradient overlay */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -120,7 +117,7 @@ export default function Hero() {
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pt-4 pb-8 text-center sm:px-10 lg:h-full lg:w-[50%] lg:flex-none lg:items-start lg:pb-32 lg:pl-16 lg:text-left xl:pl-24 2xl:pl-[100px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration, ease }}
           className="font-roboto mb-3 text-[11px] font-bold uppercase tracking-[3px] text-brand-primary lg:text-[13px]"
         >
@@ -139,19 +136,12 @@ export default function Hero() {
             <WaveText offset={"MOVE INTO".length}>
               THE FUTURE
             </WaveText>
-            <motion.span
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 2, duration: 0.5, type: "spring" }}
-              aria-hidden="true"
-              className="ml-[0.12em] inline-block h-[0.72em] w-[0.16em] shrink-0 bg-[#00df83]"
-            />
           </span>
         </h1>
 
         <motion.p
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: ready ? 1 : 0 }}
           transition={{ duration: 1.2, delay: 0.25, ease }}
           className="font-roboto mb-8 max-w-[380px] text-[15px] font-medium leading-relaxed text-white/70 sm:text-[17px] lg:text-[19px]"
         >
@@ -160,13 +150,14 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           transition={{ duration, delay: 0.4, ease }}
           className="flex w-full max-w-[300px] flex-col items-stretch gap-3 sm:max-w-none sm:w-auto sm:flex-row sm:items-center sm:gap-4 lg:mx-0"
         >
           <FlipButton
             href="/ev-125"
             variant="primary"
+            shape="cut"
             className="rounded-none h-12 sm:h-[50px] px-6 sm:px-8 text-[13px] w-full sm:w-auto"
           >
             Explore Bikes
@@ -174,6 +165,7 @@ export default function Hero() {
           <FlipButton
             href="/book-a-test-ride"
             variant="outline"
+            shape="cut"
             className="rounded-none h-12 sm:h-[50px] px-6 sm:px-8 text-[13px] border-white/20 text-white hover:border-brand-primary hover:bg-transparent hover:text-brand-primary w-full sm:w-auto"
           >
             Book a test ride
@@ -185,7 +177,7 @@ export default function Hero() {
       <div className="relative z-10 flex flex-1 items-center justify-center px-4 pb-20 sm:px-10 lg:absolute lg:inset-y-0 lg:right-0 lg:w-[55%] lg:items-end lg:pb-[60px] lg:pr-4">
         <motion.div
           initial={{ opacity: 0, x: "20vw" }}
-          animate={{ opacity: 1, x: 0 }}
+          animate={ready ? { opacity: 1, x: 0 } : { opacity: 0, x: "20vw" }}
           transition={{
             delay: 0.2,
             type: "spring",
@@ -226,7 +218,7 @@ export default function Hero() {
       {/* Bottom Specs Bar */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration, delay: 0.6, ease }}
         className="absolute bottom-4 left-0 right-0 z-20 flex w-full items-center justify-center px-2 lg:bottom-10"
       >

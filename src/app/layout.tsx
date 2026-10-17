@@ -3,6 +3,7 @@ import { Anton, Montserrat, Poppins, Roboto, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import GlobalLoader from "@/components/layout/GlobalLoader";
+import { PRELOADER_BOOTSTRAP, PRELOADER_BOOT_STYLE_ID } from "@/components/layout/preloader-config";
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -59,6 +60,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       className={cn(montserrat.variable, roboto.variable, poppins.variable, anton.variable, "font-sans", geist.variable, "overflow-x-clip max-w-full")}
     >
+      <head>
+        <style id={PRELOADER_BOOT_STYLE_ID}>{"/* Session visibility is set through CSSOM before first paint. */"}</style>
+        <script id="elfa-preloader-init" dangerouslySetInnerHTML={{ __html: PRELOADER_BOOTSTRAP }} />
+        <noscript><style>{"[data-elfa-loader]{display:none!important}"}</style></noscript>
+      </head>
       <body className="max-w-full overflow-x-clip antialiased">
         <GlobalLoader>{children}</GlobalLoader>
       </body>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Menu, X, ChevronDown, Calendar, User, Search, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import FlipButton from "@/components/ui/FlipButton";
+import BookmarkButton from "@/components/ui/BookmarkButton";
 import GlassSurface from "@/components/ui/GlassSurface";
 
 const navLinks = [
@@ -334,14 +335,14 @@ export default function Header() {
               Login
             </FlipButton>
 
-            <FlipButton
+            <BookmarkButton
               href="/book-a-test-ride"
-              variant="primary"
-              icon={<Calendar className="h-3.5 w-3.5 shrink-0" strokeWidth={2.5} />}
-              className="font-roboto hidden h-9 whitespace-nowrap px-4 text-[11px] tracking-[1px] lg:inline-flex 2xl:h-10 2xl:text-[12px]"
+              size="sm"
+              icon={<Calendar className="icon" strokeWidth={2.5} />}
+              className="hidden lg:inline-flex"
             >
               Book a test ride
-            </FlipButton>
+            </BookmarkButton>
 
             <button
               type="button"

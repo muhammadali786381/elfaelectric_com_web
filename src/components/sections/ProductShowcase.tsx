@@ -74,6 +74,9 @@ const products = [
   },
 ];
 
+// Shared with the interactive showcase; the original cards remain available.
+export { products as productCardData };
+
 export default function ProductShowcase() {
   return (
     <section className="bg-[#050505] py-16 lg:py-20 flex flex-col justify-center">

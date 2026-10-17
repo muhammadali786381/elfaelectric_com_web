@@ -189,6 +189,7 @@ export default function ReferralPage() {
                 </p>
                 <div className="flex">
                   <FlipButton
+                    shape="cut"
                     href="/contact-us"
                     variant="primary"
                     icon={<Mail className="h-5 w-5" strokeWidth={2} />}

@@ -148,6 +148,7 @@ export default function ProductHero({ product }: { product: Product }) {
 
             <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:w-auto lg:justify-end lg:gap-3">
               <FlipButton
+                shape="cut"
                 href={product.buyHref}
                 variant="primary"
                 className="h-[46px] w-full rounded-none px-8 text-[12px] sm:w-auto"
@@ -155,6 +156,7 @@ export default function ProductHero({ product }: { product: Product }) {
                 Buy Now
               </FlipButton>
               <FlipButton
+                shape="cut"
                 href={product.bookHref}
                 variant="outline"
                 icon={<Calendar className="h-[14px] w-[14px]" strokeWidth={2} />}

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Play, Video } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { FaLinkedinIn, FaTiktok } from "react-icons/fa6";
 import PlayButton from "@/components/ui/PlayButton";
 import VideoModal from "@/components/ui/VideoModal";
-import { FaPlay } from "react-icons/fa";
+import { resolveSocialReel, type ReelPlatform, type SocialReel, type VideoLink } from "@/lib/social-reels";
 const InstagramIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
@@ -14,67 +15,33 @@ const InstagramIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const YoutubeIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M2.25 8.6014C2.25 8.6014 2.115 12.0128 2.25 15.3986C2.385 18.7844 3.75 19.5 3.75 19.5C5.25 20.25 12 20.25 12 20.25C12 20.25 18.75 20.25 20.25 19.5C20.25 19.5 21.615 18.7844 21.75 15.3986C21.885 12.0128 21.75 8.6014 21.75 8.6014C21.75 8.6014 21.615 5.2156 20.25 4.5C18.75 3.75 12 3.75 12 3.75C12 3.75 5.25 3.75 3.75 4.5C3.75 4.5 2.385 5.2156 2.25 8.6014Z" />
-    <path d="M9.75 15.75L15.75 12L9.75 8.25V15.75Z" fill="currentColor" />
-  </svg>
-);
-
-interface Reel {
-  id: number;
-  url: string;
-  thumbnail: string;
-  originalUrl?: string;
-}
+const platformPresentation: Record<ReelPlatform, { label: string; icon?: ReactNode }> = {
+  youtube: { label: "YouTube" },
+  instagram: { label: "Instagram", icon: <InstagramIcon className="h-6 w-6 text-white" /> },
+  linkedin: { label: "LinkedIn", icon: <FaLinkedinIn className="h-6 w-6 text-white" /> },
+  tiktok: { label: "TikTok", icon: <FaTiktok className="h-6 w-6 text-white" /> },
+  other: { label: "Social" },
+};
 
 interface ReelsCarouselProps {
-  reels: (string | { url: string; thumbnail?: string })[];
+  reels: readonly VideoLink[];
 }
 
 export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [activeVideo, setActiveVideo] = useState<SocialReel | null>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  // Parse thumbnails and IDs
-  const items: Reel[] = reels.map((reelItem, i) => {
-    const url = typeof reelItem === 'string' ? reelItem : reelItem.url;
-    let embedUrl = url;
-    let thumb = typeof reelItem === 'string' ? "" : (reelItem.thumbnail || "");
-
-    if (url.includes("youtube.com") || url.includes("youtu.be")) {
-      let videoId = "";
-      if (url.includes("shorts/")) videoId = url.split("shorts/")[1]?.split("?")[0];
-      else if (url.includes("v=")) videoId = url.split("v=")[1]?.split("&")[0];
-      else if (url.includes("youtu.be/")) videoId = url.split("youtu.be/")[1]?.split("?")[0];
-
-      if (videoId) {
-        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-        if (url.includes("shorts/")) embedUrl += "&isShort=1";
-        if (!thumb) thumb = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-      }
-    } else if (url.includes("instagram.com/reel/")) {
-      const id = url.split("reel/")[1]?.split("/")[0];
-      if (id) embedUrl = `https://www.instagram.com/p/${id}/embed/`;
-    } else if (url.includes("tiktok.com")) {
-      const id = url.split("video/")[1]?.split("?")[0];
-      if (id) embedUrl = `https://www.tiktok.com/embed/v2/${id}`;
-    }
-
-    return {
-      id: i,
-      url: embedUrl,
-      originalUrl: url,
-      thumbnail: thumb,
-    };
-  });
+  const items = useMemo(
+    () => reels.map(resolveSocialReel).filter((item): item is SocialReel => item !== null),
+    [reels],
+  );
 
   const next = () => setCurrentIndex((prev) => (prev + 1) % items.length);
   const prev = () => setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
 
   const getDiff = (i: number) => {
-    let diff = i - currentIndex;
+    let diff = i - (currentIndex % items.length);
     const n = items.length;
     if (diff > n / 2) diff -= n;
     if (diff < -n / 2) diff += n;
@@ -82,7 +49,7 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
   };
 
   useEffect(() => {
-    if (activeVideo || isHovered) return;
+    if (activeVideo || isHovered || items.length < 2) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length);
     }, 3500);
@@ -105,7 +72,7 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
     return "hiddenRight";
   };
 
-  if (!items || items.length === 0) return null;
+  if (items.length === 0) return null;
 
   return (
     <section className="relative overflow-hidden bg-[#050505] py-5">
@@ -114,7 +81,7 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
           Explore Our <span className="text-[#00E573]">Socials</span>
         </h2>
         <p className="mx-auto mb-16 max-w-2xl font-roboto text-sm text-white/50 sm:text-base">
-          See how audiences are engaging with ELFA across Instagram and TikTok.
+          See how audiences are engaging with ELFA across YouTube, Instagram, LinkedIn and TikTok.
         </p>
 
         <div
@@ -127,10 +94,12 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
               const diff = getDiff(i);
               const variant = getVariant(diff);
               const isCenter = diff === 0;
+              const presentation = platformPresentation[item.platform];
 
               return (
                 <motion.div
-                  key={item.id}
+                  key={`${item.url}-${i}`}
+                  data-platform={item.platform}
                   animate={variant}
                   variants={variants}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -138,10 +107,10 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
                   style={{ originX: 0.5, originY: 0.5 }}
                   onClick={() => {
                     if (isCenter) {
-                      if (item.url.includes("instagram.com")) {
-                        window.open(item.originalUrl || item.url, "_blank");
+                      if (item.embedUrl) {
+                        setActiveVideo(item);
                       } else {
-                        setActiveVideo(item.url);
+                        window.open(item.url, "_blank", "noopener,noreferrer");
                       }
                     }
                     else if (diff > 0) setCurrentIndex((prev) => (prev + diff) % items.length);
@@ -153,23 +122,17 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
                       src={item.thumbnail}
                       alt=""
                       className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                      style={{ objectPosition: item.thumbnailPosition ?? "center" }}
                       onError={(e) => {
                         // Fallback to hqdefault if maxresdefault doesn't exist for this video
-                        if (e.currentTarget.src.includes("maxresdefault")) {
-                          e.currentTarget.src = item.thumbnail.replace("maxresdefault", "hqdefault");
+                        if (item.thumbnailFallback && e.currentTarget.src !== item.thumbnailFallback) {
+                          e.currentTarget.src = item.thumbnailFallback;
                         }
                       }}
                     />
-                  ) : item.url.includes("instagram.com") || item.url.includes("tiktok.com") ? (
-                    <iframe
-                      src={item.url}
-                      className="pointer-events-none h-full w-full border-0 object-cover"
-                      allow="autoplay; encrypted-media; fullscreen"
-                      tabIndex={-1}
-                    />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-neutral-800 to-black text-white/20">
-                      <Play className="h-12 w-12 opacity-50" />
+                    <div className="flex h-full w-full items-center justify-center bg-neutral-900 text-white/60">
+                      {presentation.icon || <Play className="h-12 w-12" />}
                     </div>
                   )}
                   <div className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/0" />
@@ -177,11 +140,11 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
                   {isCenter && (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <PlayButton
-                        icon={
-                          item.url.includes("instagram.com") ? (
-                            <InstagramIcon className="h-6 w-6 text-white" />
-                          ) : undefined
+                        ariaLabel={
+                          item.embedUrl ? `Play ${presentation.label} video`
+                            : `Open ${presentation.label} post (opens in a new tab)`
                         }
+                        icon={presentation.icon}
                       />
                     </div>
                   )}
@@ -194,12 +157,16 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
 
           {/* Navigation Controls */}
           <button
+            type="button"
+            aria-label="Previous post"
             onClick={prev}
             className="absolute left-0 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white backdrop-blur-xl transition-colors hover:bg-white/10 top-1/2 sm:left-4"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
           <button
+            type="button"
+            aria-label="Next post"
             onClick={next}
             className="absolute right-0 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white backdrop-blur-xl transition-colors hover:bg-white/10 top-1/2 sm:right-4"
           >
@@ -207,41 +174,16 @@ export default function ReelsCarousel({ reels }: ReelsCarouselProps) {
           </button>
         </div>
 
-        {/* <div className="mt-8 text-center sm:mt-12">
-          {(() => {
-            const centerItem = items[currentIndex];
-            let ctaText = "Follow ELFA on Instagram";
-            let ctaLink = "https://www.instagram.com/elfaelectric";
-
-            if (centerItem?.url.includes("youtube") || centerItem?.url.includes("youtu.be")) {
-              ctaText = "Subscribe on YouTube";
-              ctaLink = "https://www.youtube.com/@ElfaElectric";
-            } else if (centerItem?.url.includes("tiktok")) {
-              ctaText = "Follow ELFA on TikTok";
-              ctaLink = "https://www.tiktok.com/@elfaelectric";
-            }
-
-            return (
-              <a
-                href={ctaLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[#00E573] px-8 py-3.5 font-montserrat text-sm font-bold text-black shadow-[0_0_20px_rgba(0,229,115,0.3)] transition-all hover:scale-105 hover:bg-[#00c965] hover:shadow-[0_0_30px_rgba(0,229,115,0.5)]"
-              >
-                {ctaText}
-                <ChevronRight className="h-5 w-5" />
-              </a>
-            );
-          })()}
-        </div> */}
       </div>
 
       {/* Video Modal */}
       <AnimatePresence>
         <VideoModal
-          isOpen={!!activeVideo}
+          isOpen={activeVideo !== null}
           onClose={() => setActiveVideo(null)}
-          videoUrl={activeVideo}
+          videoUrl={activeVideo?.embedUrl ?? null}
+          sourceUrl={activeVideo?.url}
+          sourceLabel={activeVideo ? platformPresentation[activeVideo.platform].label : undefined}
         />
       </AnimatePresence>
     </section>

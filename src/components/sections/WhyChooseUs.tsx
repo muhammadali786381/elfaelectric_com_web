@@ -53,7 +53,7 @@ function FeatureItem({
       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary/10">
         <Icon className="h-5 w-5 text-brand-primary" strokeWidth={1.5} />
       </div>
-      <h4 className="font-roboto text-[15px] font-semibold text-white">
+      <h4 className="font-roboto text-[15px] font-medium text-white/60">
         {item.label}
       </h4>
       <p className="font-roboto text-[13px] leading-[1.65] text-white/60">
@@ -87,8 +87,8 @@ export default function WhyChooseUs() {
         {/* Why Choose Us Grid */}
         <FadeIn variant="fadeIn" speed="slow">
           <div className="mb-12">
-            <h2 className="font-montserrat mb-8 text-center text-[18px] font-bold uppercase tracking-[2px] text-brand-primary">
-              Why Choose Us
+            <h2 className="section-heading mb-8 text-center text-white text-balance">
+              Why <span className="text-brand-primary">Choose</span> Us
             </h2>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
               {whyChooseUs.map((item) => (
@@ -104,8 +104,8 @@ export default function WhyChooseUs() {
         {/* What Sets Us Apart Grid */}
         <FadeIn variant="fadeIn" speed="slow">
           <div>
-            <h2 className="font-montserrat mb-8 text-center text-[18px] font-bold uppercase tracking-[2px] text-brand-primary">
-              What Sets Us Apart
+            <h2 className="section-heading mb-8 text-center text-white text-balance">
+              What <span className="text-brand-primary">Sets Us</span> Apart
             </h2>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
               {whatSetsUsApart.map((item) => (
