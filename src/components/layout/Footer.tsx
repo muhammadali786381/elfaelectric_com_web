@@ -229,25 +229,35 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="mx-auto w-full border-t border-bg-primary min-w-[100px] max-w-container px-4 sm:px-6">
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-bg-primary/15 py-5 sm:flex-row">
+      {/* Bottom bar — single subtle brand hairline (not a second stacked rule) */}
+      <div className="mx-auto w-full min-w-[100px] max-w-container border-t border-brand-primary/20 px-4 sm:px-6">
+        <div className="flex flex-col items-center justify-between gap-4 py-5 sm:flex-row sm:gap-6">
           <p className="font-poppins text-[14px] font-normal text-text-inverse sm:text-[16px]">
             Copyright © {new Date().getFullYear()} ELFA. All rights reserved.
           </p>
-          <div className="font-poppins flex flex-wrap justify-center gap-5 text-[14px] font-medium sm:text-[15px]">
-            <Link
-              href="/consent-policy"
-              className="text-text-inverse  decoration-text-inverse/70 decoration-1 underline-offset-4 transition-all hover:text-brand-primary hover:no-underline"
+          <div className="font-poppins flex flex-col items-center gap-3 text-[14px] font-medium sm:flex-row sm:flex-wrap sm:justify-end sm:gap-x-5 sm:gap-y-2 sm:text-[15px]">
+            <div className="flex flex-wrap justify-center gap-x-5 gap-y-2">
+              <Link
+                href="/consent-policy"
+                className="text-text-inverse decoration-text-inverse/70 decoration-1 underline-offset-4 transition-all hover:text-brand-primary hover:no-underline"
+              >
+                Consent &amp; Policy Acknowledgement
+              </Link>
+              <Link
+                href="/privacy-policy"
+                className="text-text-inverse decoration-text-inverse/70 decoration-1 underline-offset-4 transition-all hover:text-brand-primary hover:no-underline"
+              >
+                Privacy Policy
+              </Link>
+            </div>
+            <a
+              href="https://digistartup.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[12px] font-normal tracking-wide text-text-inverse/40 transition-colors hover:text-brand-primary sm:border-l sm:border-white/10 sm:pl-5 sm:text-[13px]"
             >
-              Consent &amp; Policy Acknowledgement
-            </Link>
-            <Link
-              href="/privacy-policy"
-              className="text-text-inverse  decoration-text-inverse/70 decoration-1 underline-offset-4 transition-all hover:text-brand-primary hover:no-underline"
-            >
-              Privacy Policy
-            </Link>
+              Developed by digistartup.io
+            </a>
           </div>
         </div>
       </div>
