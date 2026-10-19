@@ -335,14 +335,16 @@ export default function Header() {
               Login
             </FlipButton>
 
-            <BookmarkButton
-              href="/book-a-test-ride"
-              size="sm"
-              icon={<Calendar className="icon" strokeWidth={2.5} />}
-              className="hidden lg:inline-flex"
-            >
-              Book a test ride
-            </BookmarkButton>
+            {/* Desktop only — mobile CTA is in the hamburger menu */}
+            <div className="hidden lg:block">
+              <BookmarkButton
+                href="/book-a-test-ride"
+                size="sm"
+                icon={<Calendar className="icon" strokeWidth={2.5} />}
+              >
+                Book a test ride
+              </BookmarkButton>
+            </div>
 
             <button
               type="button"
