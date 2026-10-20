@@ -43,7 +43,7 @@ export const ev125: Product = {
       description: "100+ km\nPer charge",
       icon: `${IMG}/meter.png`,
     },
-    { title: "Charging", description: "2-3 hours", icon: `${IMG}/battery-icon.png` },
+    { title: "Charging", description: "2-3\nHours", icon: `${IMG}/battery-icon.png` },
     { title: "Top Speed", description: "75 km/h\nUp to", icon: `${IMG}/speed-icon.png` },
     { title: "Frame", description: "High-frame\nBuilt for durability", icon: `${IMG}/frame-icon.png` },
   ],

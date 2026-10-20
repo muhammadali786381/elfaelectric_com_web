@@ -96,7 +96,7 @@ export default function JoinRevolutionCTA({
                 shape="cut"
                 href={secondaryButtonHref}
                 variant="outline"
-                className="h-[48px] w-full rounded-[4px] border-white/20 px-8 text-[13px] font-bold text-white hover:border-[#CC5500] hover:bg-[#CC5500] hover:text-white sm:w-auto"
+                className="h-[48px] w-full rounded-[4px] border-white/20 px-8 text-[13px] font-bold text-white hover:border-brand-primary hover:bg-brand-primary hover:text-bg-primary sm:w-auto"
               >
                 {secondaryButtonText}
               </FlipButton>

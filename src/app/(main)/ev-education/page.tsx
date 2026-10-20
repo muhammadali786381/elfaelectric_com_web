@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ZigzagGallery from "@/components/sections/ZigzagGallery";
-import ReelsCarousel from "@/components/sections/ReelsCarousel";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 
 export const metadata: Metadata = {
   title: "EV Education – ELFA Electric | Learn About Electric Bikes",
@@ -25,14 +25,21 @@ const videolinks = {
 export default function EVEducationPage() {
   return (
     <main className="flex-1 bg-[#050505]">
+      <SecondaryHero
+        titleLine1={
+          <span className="max-[400px]:text-[46px]">
+            EV <span className="text-brand-primary">Education</span>
+          </span>
+        }
+        description="Learn everything you need to know about charging, maintenance, and the future of electric mobility with ELFA."
+        imageSrc="/assets/images/hero4.jpeg"
+        imageAlt="ELFA EV Education"
+      />
       {/* ── Scroll-linked zigzag horizontal gallery ── */}
       <ZigzagGallery
         videoLinks={Object.values(videolinks)}
-        headingLine1="EV"
-        headingLine2="Education."
-        subtitle="Learn everything you need to know about charging, maintenance, and the future of electric mobility with ELFA."
+        showHeading={false}
       />
-      {/* <ReelsCarousel reels={Object.values(videolinks)} /> */}
     </main>
   );
 }
