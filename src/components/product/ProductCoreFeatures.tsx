@@ -16,9 +16,9 @@ function ColorizedValue({ text }: { text: string }) {
   const parts = text.split(regex);
   
   return (
-    <span className="font-montserrat text-[28px] sm:text-[36px] xl:text-[40px] font-black leading-none text-white tracking-tight whitespace-nowrap">
+    <span className="block w-full min-w-0 max-w-full whitespace-nowrap font-montserrat text-[18px] min-[360px]:text-[20px] min-[400px]:text-[24px] sm:text-[32px] xl:text-[36px] font-black leading-tight text-white tracking-tight">
       {parts.map((part, i) => 
-        regex.test(part) ? (
+        i % 2 === 1 ? (
           <span key={i} className="text-[#00E573]">{part}</span>
         ) : (
           <span key={i}>{part}</span>
@@ -30,7 +30,7 @@ function ColorizedValue({ text }: { text: string }) {
 
 export default function ProductCoreFeatures({ features, centerImage, productName }: Props) {
   return (
-    <section className="relative w-full overflow-hidden bg-[#050505] py-24 lg:py-32">
+    <section className="relative w-full overflow-hidden bg-[#050505] pt-24 pb-10">
       <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6">
         
         <div className="flex flex-col lg:flex-row items-center lg:items-center gap-12 lg:gap-16 xl:gap-24">
@@ -57,7 +57,7 @@ export default function ProductCoreFeatures({ features, centerImage, productName
           </motion.div>
 
           {/* Right Content */}
-          <div className="w-full lg:w-[55%] xl:w-[60%] flex flex-col items-center lg:items-start text-center lg:text-left pt-8 lg:pt-0">
+          <div className="w-full min-w-0 lg:flex-1 flex flex-col items-center lg:items-start text-center lg:text-left pt-8 lg:pt-0">
             
             {/* Title */}
             <motion.h2 
@@ -65,13 +65,13 @@ export default function ProductCoreFeatures({ features, centerImage, productName
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="font-montserrat text-[40px] sm:text-[50px] xl:text-[60px] font-black uppercase leading-[1.1] tracking-tight text-white mb-10 sm:mb-12 whitespace-nowrap"
+              className="max-w-full whitespace-normal text-balance font-montserrat text-[28px] min-[400px]:text-[32px] sm:text-[50px] xl:text-[60px] font-black uppercase leading-[1.1] tracking-tight text-white mb-10 sm:mb-12"
             >
               CORE FEATURES
             </motion.h2>
 
             {/* Features Grid */}
-            <div className="grid grid-cols-2 gap-x-4 sm:gap-x-10 xl:gap-x-16 gap-y-10 sm:gap-y-12 w-full">
+            <div className="grid grid-cols-2 auto-rows-fr gap-x-4 sm:gap-x-10 xl:gap-x-16 gap-y-10 sm:gap-y-12 w-full">
               {features.map((feature, i) => {
                 const [val, sub] = feature.description.split("\n");
                 return (
@@ -81,14 +81,14 @@ export default function ProductCoreFeatures({ features, centerImage, productName
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-center lg:items-start"
+                    className="min-w-0 flex flex-col items-center lg:items-start"
                   >
                     <span className="font-roboto text-[14px] sm:text-[16px] font-medium text-white/50 mb-1 sm:mb-2">
                       {feature.title}
                     </span>
                     <ColorizedValue text={val} />
                     {sub && (
-                      <span className="font-roboto text-[13px] sm:text-[15px] text-white/40 mt-1 sm:mt-2">
+                      <span className="font-roboto text-[14px] sm:text-[15px] leading-5 text-white/50 mt-1 sm:mt-2">
                         {sub}
                       </span>
                     )}

@@ -35,10 +35,10 @@ export const scootyEv1: Product = {
   coreFeatures: [
     { title: "Motor Power", description: "1,500 W", icon: `${IMG}/motor-icon.png` },
     { title: "Range", description: "75 Km", icon: `${IMG}/meter.png` },
-    { title: "Top Speed", description: "Up To 60 Km/h", icon: `${IMG}/speed-icon.png` },
+    { title: "Top Speed", description: "60 Km/h\nUp to", icon: `${IMG}/speed-icon.png` },
     { title: "Capacity", description: "64V/30Ah", icon: `${IMG}/batter-icon.png` },
-    { title: "Charging", description: "Time: 2-3 Hours", icon: `${IMG}/battery-icon.png` },
-    { title: "Frame", description: "Durable High-Frame", icon: `${IMG}/frame-icon.png` },
+    { title: "Charging", description: "2-3\nHours", icon: `${IMG}/battery-icon.png` },
+    { title: "Frame", description: "High-Frame\nDurable", icon: `${IMG}/frame-icon.png` },
   ],
   // Live EV-1 has 3 advanced blocks (no Mobile App)
   advancedFeatures: [
