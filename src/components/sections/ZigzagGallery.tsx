@@ -87,6 +87,7 @@ const AUTO_SPEED = 60;
 const ZZ_AMP = 0;
 
 interface ZigzagGalleryProps {
+  showHeading?: boolean;
   headingLine1?: string;
   headingLine2?: string;
   subtitle?: string;
@@ -94,6 +95,7 @@ interface ZigzagGalleryProps {
 }
 
 export default function ZigzagGallery({
+  showHeading = true,
   headingLine1 = "Customer",
   headingLine2 = "Stories.",
   subtitle = "Real ELFA riders share their experience — from daily commutes to zero fuel bills. Watch and be inspired.",
@@ -328,19 +330,21 @@ export default function ZigzagGallery({
     <>
       <div className="relative mt-8 mb-12 overflow-hidden">
         {/* Heading */}
-        <div className="flex items-start justify-between px-8 pt-16 pb-0 sm:px-12 lg:px-20 mb-10">
-          <h2
-            className="max-w-[520px] font-black leading-[0.92] tracking-tighter text-white"
-            style={{ fontSize: "clamp(1.4rem, 4vw, 4.5rem)" }}
-          >
-            {headingLine1}
-            <br />
-            <span className="text-[#00E573]">{headingLine2}</span>
-          </h2>
-          <p className="max-w-[280px] pt-3 text-[15px] leading-relaxed text-white/50 hidden sm:block">
-            {subtitle}
-          </p>
-        </div>
+        {showHeading && (
+          <div className="flex items-start justify-between px-8 pt-16 pb-0 sm:px-12 lg:px-20 mb-10">
+            <h2
+              className="max-w-[520px] font-black leading-[0.92] tracking-tighter text-white"
+              style={{ fontSize: "clamp(1.4rem, 4vw, 4.5rem)" }}
+            >
+              {headingLine1}
+              <br />
+              <span className="text-[#00E573]">{headingLine2}</span>
+            </h2>
+            <p className="max-w-[280px] pt-3 text-[15px] leading-relaxed text-white/50 hidden sm:block">
+              {subtitle}
+            </p>
+          </div>
+        )}
 
         {/* Carousel viewport */}
         <div

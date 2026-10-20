@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ZigzagGallery from "@/components/sections/ZigzagGallery";
-import Marquee from "@/components/sections/Marquee";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 
 export const metadata: Metadata = {
   title: "Video Testimonials – ELFA Electric | Real Rider Stories",
@@ -21,8 +21,20 @@ export default function VideoTestimonialsPage() {
   return (
     <>
       <main className="flex-1 bg-[#050505]">
-        <ZigzagGallery videoLinks={Object.values(videolinks)} />
-
+        <SecondaryHero
+          titleLine1={
+            <span className="max-[400px]:text-[46px]">
+              Customer <span className="text-brand-primary">Stories.</span>
+            </span>
+          }
+          description="Real ELFA riders share their experience — from daily commutes to zero fuel bills. Watch and be inspired."
+          imageSrc="/assets/images/hero4.jpeg"
+          imageAlt="ELFA Customer Stories"
+        />
+        <ZigzagGallery
+          videoLinks={Object.values(videolinks)}
+          showHeading={false}
+        />
       </main>
     </>
   );
