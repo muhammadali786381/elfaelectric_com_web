@@ -24,10 +24,10 @@ export default function ProductMobileApp({
             className="flex flex-col items-start lg:pr-10 order-2 lg:order-1"
           >
             {/* Eyebrow */}
-            <div className="mb-6 flex items-center gap-3 text-[16px] font-medium tracking-wide text-white">
+            {/* <div className="mb-6 flex items-center gap-3 text-[16px] font-medium tracking-wide text-white">
               <div className="h-2 w-2 rounded-full bg-white" />
               Download now
-            </div>
+            </div> */}
 
             {/* Title */}
             <h2 className="font-montserrat mb-8 text-[48px] font-medium leading-[1.05] tracking-tight text-white lg:text-[72px] xl:text-[80px]">

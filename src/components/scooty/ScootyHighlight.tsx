@@ -8,9 +8,9 @@ export default function ScootyHighlight() {
         {/* Text Content — top on mobile, left on desktop */}
         <div className="relative z-10 flex w-full flex-col justify-center px-8 md:w-1/2 lg:px-16 md:py-20">
           <FadeIn variant="fadeInUp">
-            <span className="font-montserrat mb-3 block text-[11px] font-bold tracking-[3px] uppercase text-[#CC5500]">
+            {/* <span className="font-montserrat mb-3 block text-[11px] font-bold tracking-[3px] uppercase text-[#CC5500]">
               ELFA EV-1
-            </span>
+            </span> */}
             <h2 className="font-montserrat text-[36px] font-black italic uppercase leading-[0.92] tracking-tighter text-white sm:text-[46px] lg:text-[68px]">
               UPGRADE YOUR <br className="hidden sm:block" />
               RIDE WITH <br />
