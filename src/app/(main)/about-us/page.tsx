@@ -3,6 +3,7 @@ import Image from "next/image";
 import Marquee from "@/components/sections/Marquee";
 import { FadeIn } from "@/components/motion/FadeIn";
 import JoinRevolutionCTA from "@/components/sections/JoinRevolutionCTA";
+import styles from "./CoreValues.module.css";
 
 export const metadata: Metadata = {
   title: "About ELFA Electric – Leading Electric Bike Pakistan",
@@ -183,7 +184,8 @@ export default function AboutUsPage() {
                   variant="fadeInUp"
                   delay={i * 0.1}
                   speed="slow"
-                  className="group relative h-[500px] rounded-3xl overflow-hidden cursor-pointer border border-white/5 bg-[#080808]"
+                  tabIndex={0}
+                  className={`${styles.card} group relative h-[500px] rounded-3xl overflow-hidden cursor-pointer border border-white/5 bg-[#080808] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-primary`}
                 >
                   <Image
                     src={value.img}
@@ -193,12 +195,11 @@ export default function AboutUsPage() {
                     sizes="(max-width: 1024px) 100vw, 25vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-60" />
-                  <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                    <h4 className="min-h-[60px] shrink-0 font-montserrat text-[24px] lg:text-[20px] xl:text-[24px] font-bold uppercase italic leading-tight text-white mb-4 transform translate-y-0 lg:translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <div className={styles.content}>
+                    <h4 className="min-h-[60px] font-montserrat text-[24px] lg:text-[20px] xl:text-[24px] font-bold uppercase italic leading-tight text-white">
                       {value.title}
                     </h4>
-                    {/* Reserve equal space so hidden descriptions cannot move the titles. */}
-                    <p className="min-h-[216px] lg:min-h-[270px] xl:min-h-[216px] shrink-0 font-roboto text-[15px] leading-relaxed text-white/60 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-0 lg:translate-y-4 group-hover:translate-y-0">
+                    <p className={`${styles.description} pt-4 font-roboto text-[15px] leading-relaxed text-white/60`}>
                       {value.desc}
                     </p>
                   </div>
