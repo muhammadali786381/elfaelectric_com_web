@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { Calendar } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import FlipButton from "@/components/ui/FlipButton";
 import { heroFont } from "@/lib/fonts";
@@ -166,6 +167,7 @@ export default function Hero() {
             href="/book-a-test-ride"
             variant="outline"
             shape="cut"
+            icon={<Calendar className="h-[14px] w-[14px]" strokeWidth={2} />}
             className="rounded-none h-12 sm:h-[50px] px-6 sm:px-8 text-[13px] border-white/20 text-white hover:border-brand-primary hover:bg-brand-primary hover:text-bg-primary w-full sm:w-auto"
           >
             Book a test ride
