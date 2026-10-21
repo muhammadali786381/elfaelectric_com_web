@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Calendar } from "lucide-react";
 import ProductSelectModal from "@/components/ui/ProductSelectModal";
 import DealershipApplyModal from "@/components/ui/DealershipApplyModal";
 import { FadeIn } from "@/components/motion/FadeIn";
@@ -96,6 +97,7 @@ export default function JoinRevolutionCTA({
                 shape="cut"
                 href={secondaryButtonHref}
                 variant="outline"
+                icon={<Calendar className="h-[14px] w-[14px]" strokeWidth={2} />}
                 className="h-[48px] w-full rounded-[4px] border-white/20 px-8 text-[13px] font-bold text-white hover:border-brand-primary hover:bg-brand-primary hover:text-bg-primary sm:w-auto"
               >
                 {secondaryButtonText}

@@ -160,7 +160,7 @@ export default function ProductHero({ product }: { product: Product }) {
                 href={product.bookHref}
                 variant="outline"
                 icon={<Calendar className="h-[14px] w-[14px]" strokeWidth={2} />}
-                className="h-[46px] w-full rounded-none border-white/20 px-8 text-[12px] text-white hover:border-brand-primary hover:bg-transparent hover:text-brand-primary sm:w-auto"
+                className="h-[46px] w-full rounded-none border-white/20 px-8 text-[12px] text-white hover:border-brand-primary hover:bg-brand-primary hover:text-bg-primary sm:w-auto"
               >
                 Book a Test Ride
               </FlipButton>
