@@ -9,10 +9,10 @@ export default function SpinningBolt() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="flex w-full items-center justify-center bg-bg-primary py-24 lg:py-32">
+    <section className="flex w-full items-center justify-center bg-bg-primary pb:24 lg:pb-34  pt-24 lg:pt-26">
       <div style={{ perspective: 1000 }}>
         <motion.div
-          className="relative isolate aspect-[2/3] w-12 sm:w-16"
+          className="relative isolate aspect-[2/3] w-16 sm:w-20 lg:w-24"
           animate={{ rotateY: reduceMotion ? 0 : -360 }}
           transition={{
             duration: 3,
@@ -24,7 +24,7 @@ export default function SpinningBolt() {
             src={bolt}
             alt="ELFA Bolt"
             fill
-            sizes="(min-width: 640px) 64px, 48px"
+            sizes="(min-width: 1024px) 96px, (min-width: 640px) 80px, 64px"
             className="object-contain"
           />
 

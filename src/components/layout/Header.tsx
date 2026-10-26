@@ -349,7 +349,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1a1a1a] border border-white/5 text-text-primary transition-all hover:bg-white/10 2xl:h-10 2xl:w-10"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/5 bg-[#1a1a1a] text-text-primary transition-all duration-300 hover:border-[#CC5500] hover:bg-[#CC5500] hover:text-white 2xl:h-10 2xl:w-10"
               aria-label="Search"
             >
               <Search className="h-3.5 w-3.5 2xl:h-4 2xl:w-4" strokeWidth={2.5} />
