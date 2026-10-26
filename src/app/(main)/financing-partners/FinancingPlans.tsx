@@ -2,12 +2,24 @@
 
 import { useMemo, useState } from "react";
 import Script from "next/script";
-import Image from "next/image";
 import { Check, MapPin, Phone, Headphones, Mail } from "lucide-react";
 import FlipButton from "@/components/ui/FlipButton";
 import { FadeIn } from "@/components/motion/FadeIn";
 import PaymentCalculator from "@/components/financing/PaymentCalculator";
-import { waslEv125Regions } from "@/data/wasl-ev125-plans";
+import { waslEv125Regions, type WaslEv125Region } from "@/data/wasl-ev125-plans";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const selectTriggerClass =
+  "font-roboto mb-10 h-14 w-full rounded-xl border border-brand-primary/50 bg-black/40 px-4 text-[15px] font-medium text-white shadow-none hover:border-brand-primary hover:bg-black/50 focus-visible:border-brand-primary focus-visible:ring-brand-primary/40 data-[size=default]:h-14 dark:bg-black/40 dark:hover:bg-black/50 [&_svg]:text-white/60";
+
+const selectItemClass =
+  "font-roboto cursor-pointer rounded-lg py-2.5 pl-3 text-[15px] !text-white focus:bg-brand-primary/20 focus:!text-white focus:**:!text-white data-highlighted:bg-brand-primary/20 data-highlighted:!text-white data-highlighted:**:!text-white";
 
 const SPARK =
   "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
@@ -25,21 +37,71 @@ type Plan = {
   total: number;
 };
 
-type ProviderId = "asaan-ghar" | "qist-baazar" | "wasl" | "tmf";
+type ProviderId = "asaan-ghar" | "qist-baazar" | "wasl" | "tmf" | "burj";
 
 const PROVIDERS: { id: ProviderId; label: string }[] = [
   { id: "asaan-ghar", label: "ASAAN GHAR" },
   { id: "qist-baazar", label: "QIST BAAZAR" },
   { id: "wasl", label: "WASL" },
   { id: "tmf", label: "TMF" },
+  { id: "burj", label: "BURJ" },
 ];
+
+const BURJ_TERMS = [12, 18, 24, 36] as const;
+type BurjTerm = (typeof BURJ_TERMS)[number];
 
 function formatRs(n: number) {
   return `Rs. ${n.toLocaleString("en-PK")}`;
 }
 
+function burjPlan(
+  id: string,
+  title: string,
+  months: BurjTerm,
+  downPayment: number,
+  perMonth: number,
+): Plan {
+  return {
+    id,
+    title,
+    months,
+    downPayment,
+    perMonth,
+    total: downPayment + perMonth * months,
+    details: [
+      { label: "Down Payment", value: formatRs(downPayment) },
+      { label: "Monthly Installment", value: formatRs(perMonth) },
+      { label: "Total Months", value: String(months) },
+    ],
+  };
+}
+
+/** Burj EV-125 plans — 12 / 18 / 24 / 36 month terms */
+const burjPlans: Plan[] = [
+  // 12 Months
+  burjPlan("12-a", "Plan A", 12, 47041, 25138),
+  burjPlan("12-b", "Plan B", 12, 62721, 23861),
+  burjPlan("12-c", "Plan C", 12, 78401, 22560),
+  burjPlan("12-d", "Plan D (0% Mark-up)", 12, 78401, 22505),
+  // 18 Months
+  burjPlan("18-a", "Plan A", 18, 47041, 17888),
+  burjPlan("18-b", "Plan B", 18, 62721, 16836),
+  burjPlan("18-c", "Plan C", 18, 78401, 15784),
+  burjPlan("18-d", "Plan D (0% Mark-up)", 18, 143401, 11393),
+  // 24 Months
+  burjPlan("24-a", "Plan A", 24, 47041, 14298),
+  burjPlan("24-b", "Plan B", 24, 62721, 13457),
+  burjPlan("24-c", "Plan C", 24, 78401, 12616),
+  burjPlan("24-d", "Plan D (0% Mark-up)", 24, 190901, 6565),
+  // 36 Months
+  burjPlan("36-a", "Plan A", 36, 47041, 11040),
+  burjPlan("36-b", "Plan B", 36, 62721, 10391),
+  burjPlan("36-c", "Plan C", 36, 78401, 9741),
+  burjPlan("36-d", "Plan D (0% Mark-up)", 36, 242401, 2946),
+];
+
 /** Scraped from https://elfaelectric.com/financing-partners/ */
-const ev125Plans: Record<Exclude<ProviderId, "wasl">, Plan[]> = {
+const ev125Plans: Record<Exclude<ProviderId, "wasl" | "burj">, Plan[]> = {
   "asaan-ghar": [
     {
       id: "1",
@@ -344,19 +406,33 @@ function OptionHeading({ children }: { children: string }) {
 export default function FinancingPlans() {
   const [provider, setProvider] = useState<ProviderId>("asaan-ghar");
   const [tmfOption, setTmfOption] = useState<"with" | "without">("with");
+  const [waslRegion, setWaslRegion] = useState<WaslEv125Region>("sindh");
+  const [burjTerm, setBurjTerm] = useState<BurjTerm>(12);
   const [partner, setPartner] = useState("");
 
   const plans = useMemo(() => {
-    if (provider === "wasl") return [];
+    if (provider === "wasl" || provider === "burj") return [];
     if (provider === "tmf") {
       return tmfOption === "with" ? tmfWithAdvance : tmfWithoutAdvance;
     }
     return ev125Plans[provider];
   }, [provider, tmfOption]);
 
+  const activeWaslRegion = useMemo(
+    () => waslRegionalPlans.find((region) => region.id === waslRegion) ?? waslRegionalPlans[0],
+    [waslRegion],
+  );
+
+  const burjTermPlans = useMemo(
+    () => burjPlans.filter((plan) => plan.months === burjTerm),
+    [burjTerm],
+  );
+
   const switchProvider = (id: ProviderId) => {
     setProvider(id);
     if (id === "tmf") setTmfOption("with");
+    if (id === "wasl") setWaslRegion("sindh");
+    if (id === "burj") setBurjTerm(12);
   };
 
   const inputClass =
@@ -364,18 +440,9 @@ export default function FinancingPlans() {
 
   return (
     <>
-      <section className="relative w-full pt-20 pb-8 lg:pt-32 lg:pb-10 overflow-hidden">
-        {/* Background Image & Dark Overlay for Glass Effect */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/assets/images/hero5.jpeg"
-            alt="Background"
-            fill
-            className="object-cover object-center grayscale  opacity-60"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#050505]/70 to-[#050505]" />
-        </div>
+      <section className="relative w-full bg-bg-primary pt-20 pb-8 lg:pt-32 lg:pb-10 overflow-hidden">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0"
+          style={{ backgroundImage: "radial-gradient(ellipse 65% 42% at 90% 50%, rgba(97,206,112,0.065), transparent 100%)" }} />
 
         <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6">
           <FadeIn variant="fadeInUp" speed="normal" className="mb-16 text-center">
@@ -424,19 +491,96 @@ export default function FinancingPlans() {
                 </div>
               </div>
             ) : provider === "wasl" ? (
-              <div className="space-y-14 lg:space-y-16">
-                {waslRegionalPlans.map(region => (
-                  <section key={region.id} aria-labelledby={`wasl-ev125-${region.id}`} className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
-                    <h3 id={`wasl-ev125-${region.id}`} className="font-montserrat mb-8 border-b border-brand-primary/40 pb-5 text-center text-[24px] font-semibold text-white sm:text-[28px]">
-                      {region.name}
-                    </h3>
-                    <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                      {region.plans.map(plan => (
-                        <PlanCard key={`${region.id}-${plan.id}`} plan={plan} />
-                      ))}
-                    </div>
-                  </section>
-                ))}
+              <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
+                <Select
+                  value={waslRegion}
+                  items={waslRegionalPlans.map((region) => ({
+                    value: region.id,
+                    label: region.name,
+                  }))}
+                  onValueChange={(value) => {
+                    if (value == null) return;
+                    setWaslRegion(value as WaslEv125Region);
+                  }}
+                >
+                  <SelectTrigger
+                    id="wasl-region"
+                    size="default"
+                    aria-label="WASL region"
+                    className={selectTriggerClass}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent
+                    align="start"
+                    className="rounded-xl border border-white/10 bg-[#111] text-white shadow-[0_16px_40px_rgba(0,0,0,0.55)] ring-white/10"
+                  >
+                    {waslRegionalPlans.map((region) => (
+                      <SelectItem
+                        key={region.id}
+                        value={region.id}
+                        className={selectItemClass}
+                      >
+                        {region.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <h3 className="font-montserrat mb-8 border-b border-brand-primary/40 pb-5 text-center text-[24px] font-semibold text-white sm:text-[28px]">
+                  {activeWaslRegion.name}
+                </h3>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                  {activeWaslRegion.plans.map((plan) => (
+                    <PlanCard key={`${activeWaslRegion.id}-${plan.id}`} plan={plan} />
+                  ))}
+                </div>
+              </div>
+            ) : provider === "burj" ? (
+              <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
+                <Select
+                  value={String(burjTerm)}
+                  items={BURJ_TERMS.map((term) => ({
+                    value: String(term),
+                    label: `${term} Months Financing`,
+                  }))}
+                  onValueChange={(value) => {
+                    if (value == null) return;
+                    setBurjTerm(Number(value) as BurjTerm);
+                  }}
+                >
+                  <SelectTrigger
+                    id="burj-term"
+                    size="default"
+                    aria-label="Financing term"
+                    className={selectTriggerClass}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent
+                    align="start"
+                    className="rounded-xl border border-white/10 bg-[#111] text-white shadow-[0_16px_40px_rgba(0,0,0,0.55)] ring-white/10"
+                  >
+                    {BURJ_TERMS.map((term) => (
+                      <SelectItem
+                        key={term}
+                        value={String(term)}
+                        className={selectItemClass}
+                      >
+                        {term} Months Financing
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <h3 className="font-montserrat mb-8 border-b border-brand-primary/40 pb-5 text-center text-[24px] font-semibold text-white sm:text-[28px]">
+                  {burjTerm} Months Financing
+                </h3>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                  {burjTermPlans.map((plan) => (
+                    <PlanCard key={`burj-${plan.id}`} plan={plan} />
+                  ))}
+                </div>
               </div>
             ) : (
               <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">
