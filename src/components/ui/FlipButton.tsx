@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import styles from "./FlipButton.module.css";
@@ -18,6 +18,7 @@ interface FlipButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElem
   icon?: React.ReactNode;
   target?: React.HTMLAttributeAnchorTarget;
   rel?: string;
+  animateLabel?: boolean;
 }
 
 const MotionLink = motion.create(Link);
@@ -31,8 +32,10 @@ export default function FlipButton({
   icon,
   target,
   rel,
+  animateLabel = false,
   ...props
 }: FlipButtonProps) {
+  const reducedMotion = useReducedMotion();
   const baseClasses =
     "relative inline-flex items-center justify-center gap-2 px-8 py-3 text-xs md:text-sm font-bold uppercase tracking-[0.1em] transition-colors duration-300 rounded-full group";
 
@@ -49,22 +52,8 @@ export default function FlipButton({
 
   const combinedClasses = cn(baseClasses, variants[variant], className, shape === "cut" && styles.cut, shape === "cut" && variant === "outline" && styles.cutOutline);
 
-  /**
-   * Inner content — both text layers live inside a single
-   * `overflow-hidden` wrapper so the bottom copy is clipped
-   * until hover slides it up.
-   */
-  const Content = () => (
+  const label = (
     <>
-      {shape === "cut" && variant === "outline" && (
-        <svg className={styles.outline} viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M 0.5 0.5 H 187.5 L 199.5 12.5 V 49.5 H 12.5 L 0.5 37.5 Z" fill="none" stroke="currentColor" strokeWidth="1" vectorEffect="non-scaling-stroke" />
-        </svg>
-      )}
-      {icon && <span className="relative shrink-0">{icon}</span>}
-
-      {/* Clip container — this is what prevents the overflow */}
-      <span className="relative overflow-hidden" style={{ lineHeight: 1 }}>
         {/* Layer 1: visible at rest, slides UP on hover */}
         <span className="flex items-center">
           {children.split("").map((l, i) => (
@@ -109,6 +98,29 @@ export default function FlipButton({
             </motion.span>
           ))}
         </span>
+    </>
+  );
+
+  const content = (
+    <>
+      {shape === "cut" && variant === "outline" && (
+        <svg className={styles.outline} viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M 0.5 0.5 H 187.5 L 199.5 12.5 V 49.5 H 12.5 L 0.5 37.5 Z" fill="none" stroke="currentColor" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        </svg>
+      )}
+      {icon && <span className="relative shrink-0">{icon}</span>}
+      <span className="relative overflow-hidden" style={{ lineHeight: 1 }}>
+        {animateLabel ? (
+          <AnimatePresence initial={false} mode="wait">
+            <motion.span key={children} className="block"
+              initial={{ opacity: 0, transform: reducedMotion ? "none" : "translateY(100%)" }}
+              animate={{ opacity: 1, transform: "translateY(0%)" }}
+              exit={{ opacity: 0, transform: reducedMotion ? "none" : "translateY(-100%)" }}
+              transition={{ duration: reducedMotion ? 0.1 : 0.25, ease: [0.16, 1, 0.3, 1] }}>
+              {label}
+            </motion.span>
+          </AnimatePresence>
+        ) : label}
       </span>
     </>
   );
@@ -123,9 +135,9 @@ export default function FlipButton({
         whileHover="hovered"
         whileTap="hovered"
         className={combinedClasses}
-        {...(props as any)}
+        {...(props as Omit<React.ComponentProps<typeof MotionLink>, "href">)}
       >
-        <Content />
+        {content}
       </MotionLink>
     );
   }
@@ -138,7 +150,7 @@ export default function FlipButton({
       className={combinedClasses}
       {...props}
     >
-      <Content />
+      {content}
     </motion.button>
   );
 }
