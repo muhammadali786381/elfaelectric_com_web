@@ -30,7 +30,7 @@ export default function ProductColorCarousel({ title }: Props) {
   const handlePointerMove = React.useCallback((e: PointerEvent) => {
     if (!dragging || !containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    let x = e.clientX - rect.left;
+    const x = e.clientX - rect.left;
     let newPos = (x / rect.width) * 100;
     
     if (dragging === 1) {
@@ -60,45 +60,30 @@ export default function ProductColorCarousel({ title }: Props) {
   }, [dragging, handlePointerMove, handlePointerUp]);
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#050505] py-24 lg:py-36">
-      {/* Background Image fading smoothly via mask */}
-      <div 
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)'
-        }}
-      >
-        <Image
-          src="/assets/images/products-bg.jpeg"
-          alt="Colors Background"
-          fill
-          priority
-          className="object-cover object-center opacity-30 mix-blend-luminosity"
-        />
-        <div className="absolute inset-0 bg-[#050505]/40" />
-      </div>
+    <section className="relative w-full overflow-hidden bg-bg-primary py-16 lg:py-20">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0"
+        style={{ backgroundImage: "radial-gradient(ellipse 65% 45% at 70% 55%, rgba(97,206,112,0.075), transparent 100%)" }} />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-center px-6">
-        <h2 className="font-montserrat mb-16 text-center text-[36px] font-black italic uppercase leading-none tracking-tighter text-white sm:text-[48px] lg:text-[72px]">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center px-6">
+        <h2 className="font-montserrat mb-10 max-w-6xl text-center text-[36px] font-black italic uppercase leading-none tracking-tighter text-white sm:mb-12 sm:text-[48px] lg:text-[72px]">
           {title}
         </h2>
         
         {/* The Slider Container */}
         <div 
-          className="relative aspect-[4/3] w-full max-w-[900px] overflow-hidden lg:aspect-[16/9]" 
+          className="relative aspect-[4/3] w-full max-w-[1140px] overflow-hidden lg:aspect-[16/9]"
           ref={containerRef} 
           style={{ touchAction: 'none' }}
         >
           {/* Base Image (Left) */}
-          <Image src={images[0]} alt="Black Variant" fill className="object-contain pointer-events-none" />
+          <Image src={images[0]} alt="Black Variant" fill sizes="(min-width: 1280px) 1140px, 100vw" className="object-contain pointer-events-none" />
 
           {/* Middle Image */}
           <div 
             className="absolute inset-0 select-none pointer-events-none"
             style={{ clipPath: `polygon(${pos1}% 0, 100% 0, 100% 100%, ${pos1}% 100%)` }}
           >
-            <Image src={images[1]} alt="Silver Variant" fill className="object-contain" />
+            <Image src={images[1]} alt="Silver Variant" fill sizes="(min-width: 1280px) 1140px, 100vw" className="object-contain" />
           </div>
 
           {/* Right Image */}
@@ -106,7 +91,7 @@ export default function ProductColorCarousel({ title }: Props) {
             className="absolute inset-0 select-none pointer-events-none"
             style={{ clipPath: `polygon(${pos2}% 0, 100% 0, 100% 100%, ${pos2}% 100%)` }}
           >
-            <Image src={images[2]} alt="Red Variant" fill className="object-contain" />
+            <Image src={images[2]} alt="Red Variant" fill sizes="(min-width: 1280px) 1140px, 100vw" className="object-contain" />
           </div>
 
           {/* Handle 1 */}

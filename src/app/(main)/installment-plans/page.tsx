@@ -6,7 +6,7 @@ import FinancingPlans from "@/app/(main)/financing-partners/FinancingPlans";
 export const metadata: Metadata = {
   title: "ELFA Installment Plans | Easy Electric Bike Financing",
   description:
-    "Explore ELFA EV-125 installment plans with Asaan Ghar, Qist Baazar, WASL, and TMF financing partners.",
+    "Explore ELFA EV-125 installment plans with Asaan Ghar, Qist Baazar, WASL, TMF, and Burj financing partners.",
 };
 
 /** Same content as Financing Partners — dedicated route for product-detail CTA. */

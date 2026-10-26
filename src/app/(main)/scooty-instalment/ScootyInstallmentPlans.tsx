@@ -1,28 +1,100 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Script from "next/script";
 import { MapPin, Phone, Headphones, Mail, Check } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-function formatRs(n: string) {
-  return `Rs. ${n}`;
+type ProviderId = "wasl" | "burj";
+type BurjTerm = 12 | 18 | 24 | 36;
+type WaslRegionId = "sindh" | "punjab";
+
+const PROVIDERS: { id: ProviderId; label: string }[] = [
+  { id: "wasl", label: "WASL" },
+  { id: "burj", label: "BURJ" },
+];
+
+const BURJ_TERMS: BurjTerm[] = [12, 18, 24, 36];
+
+const selectTriggerClass =
+  "font-roboto mb-10 h-14 w-full rounded-xl border border-brand-primary/50 bg-black/40 px-4 text-[15px] font-medium text-white shadow-none hover:border-brand-primary hover:bg-black/50 focus-visible:border-brand-primary focus-visible:ring-brand-primary/40 data-[size=default]:h-14 dark:bg-black/40 dark:hover:bg-black/50 [&_svg]:text-white/60";
+
+const selectItemClass =
+  "font-roboto cursor-pointer rounded-lg py-2.5 pl-3 text-[15px] !text-white focus:bg-brand-primary/20 focus:!text-white focus:**:!text-white data-highlighted:bg-brand-primary/20 data-highlighted:!text-white data-highlighted:**:!text-white";
+
+function formatRs(n: number | string) {
+  if (typeof n === "string") return `Rs. ${n}`;
+  return `Rs. ${n.toLocaleString("en-PK")}`;
 }
 
-const regionalPlans = [
+type PlanCardData = {
+  id: string;
+  title: string;
+  months: number;
+  downPayment: number;
+  perMonth: number;
+};
+
+function burjPlan(
+  id: string,
+  title: string,
+  months: BurjTerm,
+  downPayment: number,
+  perMonth: number,
+): PlanCardData {
+  return { id, title, months, downPayment, perMonth };
+}
+
+/** Scooty EV-1 Burj plans */
+const burjPlans: PlanCardData[] = [
+  // 12 Months
+  burjPlan("12-a", "Plan A", 12, 36815, 19674),
+  burjPlan("12-b", "Plan B", 12, 49086, 18674),
+  burjPlan("12-c", "Plan C", 12, 61358, 17655),
+  burjPlan("12-d", "Plan D (0% Mark-up)", 12, 61358, 17613),
+  // 18 Months
+  burjPlan("18-a", "Plan A", 18, 36815, 14000),
+  burjPlan("18-b", "Plan B", 18, 49086, 13176),
+  burjPlan("18-c", "Plan C", 18, 61358, 12353),
+  burjPlan("18-d", "Plan D (0% Mark-up)", 18, 108858, 9103),
+  // 24 Months
+  burjPlan("24-a", "Plan A", 24, 36815, 11190),
+  burjPlan("24-b", "Plan B", 24, 49086, 10531),
+  burjPlan("24-c", "Plan C", 24, 61358, 9873),
+  burjPlan("24-d", "Plan D (0% Mark-up)", 24, 143858, 5369),
+  // 36 Months
+  burjPlan("36-a", "Plan A", 36, 36815, 8640),
+  burjPlan("36-b", "Plan B", 36, 49086, 8132),
+  burjPlan("36-c", "Plan C", 36, 61358, 7624),
+  burjPlan("36-d", "Plan D (0% Mark-up)", 36, 182358, 2510),
+];
+
+const regionalPlans: {
+  id: WaslRegionId;
+  name: string;
+  plans: { id: string; title: string; downPayment: number; perMonth: number; months: number }[];
+}[] = [
   {
     id: "sindh",
     name: "Sindh",
     plans: [
-      { id: 1, title: "Plan 1", downPayment: "78,780", rental: "12,000", months: 24 },
-      { id: 2, title: "Plan 2", downPayment: "78,780", rental: "20,000", months: 12 },
+      { id: "1", title: "Plan 1", downPayment: 78780, perMonth: 12000, months: 24 },
+      { id: "2", title: "Plan 2", downPayment: 78780, perMonth: 20000, months: 12 },
     ],
   },
   {
     id: "punjab",
     name: "Punjab",
     plans: [
-      { id: 1, title: "Plan 1", downPayment: "78,780", rental: "12,000", months: 24 },
-      { id: 2, title: "Plan 2", downPayment: "78,780", rental: "19,500", months: 12 },
+      { id: "1", title: "Plan 1", downPayment: 78780, perMonth: 12000, months: 24 },
+      { id: "2", title: "Plan 2", downPayment: 78780, perMonth: 19500, months: 12 },
     ],
   },
 ];
@@ -50,62 +122,193 @@ const socialLinks = [
   },
 ];
 
+function ScootyPlanCard({ plan }: { plan: PlanCardData }) {
+  return (
+    <div className="relative flex flex-col rounded-[24px] border border-white/10 bg-white/10 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl transition-all duration-500 transform-gpu hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] sm:p-8">
+      <div className="mb-8 border-b border-white/10 pb-6">
+        <h4 className="font-roboto mb-4 text-[16px] font-bold uppercase tracking-widest text-white">
+          {plan.title}
+        </h4>
+        <div className="flex items-baseline gap-2">
+          <span className="font-montserrat text-[32px] font-black tracking-tighter text-white sm:text-[40px] lg:text-[48px]">
+            {formatRs(plan.perMonth)}
+          </span>
+          <span className="font-roboto text-[12px] font-medium uppercase tracking-widest text-white/50 sm:text-[15px]">
+            /mo
+          </span>
+        </div>
+      </div>
+
+      <div className="mb-2 flex-1 space-y-4">
+        <div className="flex items-center gap-3">
+          <Check className="h-5 w-5 shrink-0 text-brand-primary" />
+          <div className="font-roboto flex flex-1 items-center justify-between text-[15px]">
+            <span className="text-white/60">Term Length</span>
+            <span className="font-bold text-white">{plan.months} Months</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <Check className="h-5 w-5 shrink-0 text-brand-primary" />
+          <div className="font-roboto flex flex-1 items-center justify-between text-[15px]">
+            <span className="text-white/60">Down Payment</span>
+            <span className="font-bold text-white">{formatRs(plan.downPayment)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ScootyInstallmentPlans() {
+  const [provider, setProvider] = useState<ProviderId>("wasl");
+  const [waslRegion, setWaslRegion] = useState<WaslRegionId>("sindh");
+  const [burjTerm, setBurjTerm] = useState<BurjTerm>(12);
+
+  const activeWaslRegion = useMemo(
+    () => regionalPlans.find((region) => region.id === waslRegion) ?? regionalPlans[0],
+    [waslRegion],
+  );
+
+  const burjTermPlans = useMemo(
+    () => burjPlans.filter((plan) => plan.months === burjTerm),
+    [burjTerm],
+  );
+
   return (
     <>
-      <section className="bg-bg-primary py-16 lg:py-24 relative">
+      <section className="relative bg-bg-primary py-16 lg:py-24">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
           <FadeIn>
-            <h2 className="font-montserrat mb-12 text-center text-[36px] font-black tracking-tighter sm:text-[48px]">
-              <span className="text-brand-primary">WASL</span> <span className="text-white">Plans</span>
+            <h2 className="font-montserrat mb-10 text-center text-[36px] font-black tracking-tighter sm:text-[48px]">
+              <span className="text-brand-primary">
+                {provider === "wasl" ? "WASL" : "BURJ"}
+              </span>{" "}
+              <span className="text-white">Plans</span>
             </h2>
 
-            <div className="space-y-14 lg:space-y-16">
-              {regionalPlans.map((region) => (
-                <section key={region.id} aria-labelledby={`scooty-wasl-${region.id}`}>
-                  <h3 id={`scooty-wasl-${region.id}`} className="font-montserrat mb-8 border-b border-brand-primary/40 pb-5 text-center text-[24px] font-semibold text-white sm:text-[28px]">
-                    {region.name}
-                  </h3>
-                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-                    {region.plans.map((plan) => (
-                      <div
-                        key={plan.id}
-                        className="relative flex flex-col rounded-[24px] border border-white/10 bg-white/10 backdrop-blur-xl p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transform-gpu"
-                      >
-                        <div className="mb-8 border-b border-white/10 pb-6">
-                          <h4 className="font-roboto text-[16px] font-bold uppercase tracking-widest text-white mb-4">
-                            {plan.title}
-                          </h4>
-                          <div className="flex items-baseline gap-2">
-                            <span className="font-montserrat text-[32px] font-black tracking-tighter text-white sm:text-[40px] lg:text-[48px]">
-                              {formatRs(plan.rental)}
-                            </span>
-                            <span className="font-roboto text-[12px] font-medium text-white/50 uppercase tracking-widest sm:text-[15px]">/mo</span>
-                          </div>
-                        </div>
-
-                        <div className="flex-1 space-y-4 mb-10">
-                          <div className="flex items-center gap-3">
-                            <Check className="h-5 w-5 shrink-0 text-brand-primary" />
-                            <div className="flex flex-1 items-center justify-between font-roboto text-[15px]">
-                              <span className="text-white/60">Term Length</span>
-                              <span className="font-bold text-white">{plan.months} Months</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <Check className="h-5 w-5 shrink-0 text-brand-primary" />
-                            <div className="flex flex-1 items-center justify-between font-roboto text-[15px]">
-                              <span className="text-white/60">Down Payment</span>
-                              <span className="font-bold text-white">Rs. {plan.downPayment}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </section>
+            <div className="mb-12 flex flex-wrap justify-center gap-4">
+              {PROVIDERS.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => {
+                    setProvider(p.id);
+                    if (p.id === "wasl") setWaslRegion("sindh");
+                    if (p.id === "burj") setBurjTerm(12);
+                  }}
+                  className={`font-roboto rounded-full border px-8 py-3 text-[14px] font-bold uppercase tracking-widest transition-all duration-300 ${
+                    provider === p.id
+                      ? "border-brand-primary bg-brand-primary text-black shadow-[0_0_20px_rgba(0,200,83,0.3)]"
+                      : "border-white/20 bg-black/40 text-white backdrop-blur-sm hover:border-white/40 hover:bg-white/10"
+                  }`}
+                >
+                  {p.label}
+                </button>
               ))}
             </div>
+
+            {provider === "wasl" ? (
+              <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
+                <Select
+                  value={waslRegion}
+                  items={regionalPlans.map((region) => ({
+                    value: region.id,
+                    label: region.name,
+                  }))}
+                  onValueChange={(value) => {
+                    if (value == null) return;
+                    setWaslRegion(value as WaslRegionId);
+                  }}
+                >
+                  <SelectTrigger
+                    id="scooty-wasl-region"
+                    size="default"
+                    aria-label="WASL region"
+                    className={selectTriggerClass}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent
+                    align="start"
+                    className="rounded-xl border border-white/10 bg-[#111] text-white shadow-[0_16px_40px_rgba(0,0,0,0.55)] ring-white/10"
+                  >
+                    {regionalPlans.map((region) => (
+                      <SelectItem
+                        key={region.id}
+                        value={region.id}
+                        className={selectItemClass}
+                      >
+                        {region.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <h3 className="font-montserrat mb-8 border-b border-brand-primary/40 pb-5 text-center text-[24px] font-semibold text-white sm:text-[28px]">
+                  {activeWaslRegion.name}
+                </h3>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                  {activeWaslRegion.plans.map((plan) => (
+                    <ScootyPlanCard
+                      key={`${activeWaslRegion.id}-${plan.id}`}
+                      plan={{
+                        id: `${activeWaslRegion.id}-${plan.id}`,
+                        title: plan.title,
+                        months: plan.months,
+                        downPayment: plan.downPayment,
+                        perMonth: plan.perMonth,
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
+                <Select
+                  value={String(burjTerm)}
+                  items={BURJ_TERMS.map((term) => ({
+                    value: String(term),
+                    label: `${term} Months Financing`,
+                  }))}
+                  onValueChange={(value) => {
+                    if (value == null) return;
+                    setBurjTerm(Number(value) as BurjTerm);
+                  }}
+                >
+                  <SelectTrigger
+                    id="scooty-burj-term"
+                    size="default"
+                    aria-label="Financing term"
+                    className={selectTriggerClass}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent
+                    align="start"
+                    className="rounded-xl border border-white/10 bg-[#111] text-white shadow-[0_16px_40px_rgba(0,0,0,0.55)] ring-white/10"
+                  >
+                    {BURJ_TERMS.map((term) => (
+                      <SelectItem
+                        key={term}
+                        value={String(term)}
+                        className={selectItemClass}
+                      >
+                        {term} Months Financing
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <h3 className="font-montserrat mb-8 border-b border-brand-primary/40 pb-5 text-center text-[24px] font-semibold text-white sm:text-[28px]">
+                  {burjTerm} Months Financing
+                </h3>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                  {burjTermPlans.map((plan) => (
+                    <ScootyPlanCard key={`burj-${plan.id}`} plan={plan} />
+                  ))}
+                </div>
+              </div>
+            )}
           </FadeIn>
         </div>
       </section>
@@ -120,16 +323,19 @@ export default function ScootyInstallmentPlans() {
             let’s make it happen!
           </p>
 
-          <div
-            className="grid grid-cols-1 gap-8 rounded-3xl border border-white/10 bg-[#080808]/60 backdrop-blur-xl p-8 sm:p-12 lg:grid-cols-[1.45fr_1fr] lg:gap-16 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_40px_rgba(0,0,0,0.4)] relative overflow-hidden"
-          >
-            {/* Subtle top ambient glow line */}
+          <div className="relative grid grid-cols-1 gap-8 overflow-hidden rounded-3xl border border-white/10 bg-[#080808]/60 p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_40px_rgba(0,0,0,0.4)] backdrop-blur-xl sm:p-12 lg:grid-cols-[1.45fr_1fr] lg:gap-16">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/30 to-transparent" />
 
-            <div className="w-full relative z-10" style={{ height: "100%" }}>
+            <div className="relative z-10 w-full" style={{ height: "100%" }}>
               <iframe
                 src="https://app.digistartup.io/widget/form/gRQ9EuVKch15UDsuAgMT"
-                style={{ width: "100%", height: "100%", border: "none", borderRadius: "0px", overflow: "hidden" }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  border: "none",
+                  borderRadius: "0px",
+                  overflow: "hidden",
+                }}
                 scrolling="no"
                 id="inline-gRQ9EuVKch15UDsuAgMT"
                 data-layout="{'id':'INLINE'}"
@@ -150,7 +356,7 @@ export default function ScootyInstallmentPlans() {
               <Script src="https://app.digistartup.io/js/form_embed.js" strategy="afterInteractive" />
             </div>
 
-            <div className="flex flex-col justify-center relative z-10 lg:pl-10 lg:border-l lg:border-white/10">
+            <div className="relative z-10 flex flex-col justify-center lg:border-l lg:border-white/10 lg:pl-10">
               <h3 className="font-montserrat mb-8 text-[24px] font-bold tracking-tight text-white sm:text-[32px]">
                 Contact Information
               </h3>
@@ -163,19 +369,28 @@ export default function ScootyInstallmentPlans() {
                 </li>
                 <li className="flex items-center gap-4">
                   <Phone className="h-5 w-5 shrink-0 text-brand-primary" />
-                  <a href="https://wa.me/923114863532" className="font-roboto hover:text-brand-primary transition-colors">
+                  <a
+                    href="https://wa.me/923114863532"
+                    className="font-roboto transition-colors hover:text-brand-primary"
+                  >
                     +(92) 311-486-3532
                   </a>
                 </li>
                 <li className="flex items-center gap-4">
                   <Headphones className="h-5 w-5 shrink-0 text-brand-primary" />
-                  <a href="tel:02137173532" className="font-roboto hover:text-brand-primary transition-colors">
+                  <a
+                    href="tel:02137173532"
+                    className="font-roboto transition-colors hover:text-brand-primary"
+                  >
                     021-37173532
                   </a>
                 </li>
                 <li className="flex items-center gap-4">
                   <Mail className="h-5 w-5 shrink-0 text-brand-primary" />
-                  <a href="mailto:info@elfaelectric.com" className="font-roboto hover:text-brand-primary transition-colors">
+                  <a
+                    href="mailto:info@elfaelectric.com"
+                    className="font-roboto transition-colors hover:text-brand-primary"
+                  >
                     info@elfaelectric.com
                   </a>
                 </li>
@@ -188,7 +403,7 @@ export default function ScootyInstallmentPlans() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white transition-all duration-300 hover:bg-brand-primary hover:border-brand-primary hover:text-black hover:scale-110"
+                    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all duration-300 hover:scale-110 hover:border-brand-primary hover:bg-brand-primary hover:text-black"
                   >
                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d={s.path} />

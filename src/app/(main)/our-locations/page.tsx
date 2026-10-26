@@ -51,13 +51,27 @@ export default function OurDealersPage() {
           </div>
         </section>
 
-        {/* Bike from left · card from right */}
-        <section className="bg-bg-primary pt-6 pb-10 lg:pt-8 lg:pb-14">
-          <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
+        {/* Bike · copy — wider image column; intrinsic size (no overflow scale) */}
+        <section className="overflow-hidden bg-bg-primary pt-6 pb-10 lg:pt-8 lg:pb-14">
+          <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] lg:gap-8">
+            <FadeIn
+              variant="fadeInLeft"
+              speed="slow"
+              className="order-2 min-w-0 w-full lg:order-1"
+            >
+              <Image
+                src="/assets/images/dealers/red-bike.png"
+                alt="ELFA EV-125 red electric motorcycle"
+                width={1024}
+                height={768}
+                className="h-auto w-full"
+                sizes="(min-width: 1024px) 55vw, 100vw"
+              />
+            </FadeIn>
             <FadeIn
               variant="fadeInRight"
               speed="slow"
-              className="order-1 flex flex-col justify-center py-8 lg:order-2 lg:pl-10"
+              className="order-1 flex min-w-0 flex-col justify-center py-4 lg:order-2 lg:py-6 lg:pl-4"
             >
               <h2 className="font-montserrat mb-4 text-[28px] font-black italic uppercase leading-none tracking-tight text-white sm:mb-6 sm:text-[40px] lg:text-[48px]">
                 Looking for ELFA Electric dealers in Pakistan?
@@ -69,29 +83,16 @@ export default function OurDealersPage() {
                 covered.
               </p>
             </FadeIn>
-            <FadeIn
-              variant="fadeInLeft"
-              speed="slow"
-              className="relative order-2 mx-auto aspect-square w-full max-w-[360px] sm:max-w-[480px] lg:order-1"
-            >
-              <Image
-                src="/assets/images/dealers/red-bike.png"
-                alt="ELFA EV-125 red electric motorcycle"
-                fill
-                className="object-contain"
-                sizes="480px"
-              />
-            </FadeIn>
           </div>
         </section>
 
-        {/* Card + scooty both from left */}
-        <section className="bg-bg-primary pb-10 lg:pb-14">
-          <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10">
+        {/* Why-buy · scooty — contained, no overflow into neighboring section */}
+        <section className="overflow-hidden bg-bg-primary pb-10 lg:pb-14">
+          <div className="mx-auto grid w-full max-w-container items-center gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:gap-8">
             <FadeIn
               variant="fadeInLeft"
               speed="slow"
-              className="order-1 flex flex-col justify-center py-8 lg:pr-10"
+              className="order-1 flex min-w-0 flex-col justify-center py-4 lg:py-6 lg:pr-4"
             >
               <h2 className="font-montserrat mb-4 text-[28px] font-black italic uppercase leading-none tracking-tight text-white sm:mb-6 sm:text-[40px] lg:text-[48px]">
                 Why Buy From Authorized ELFA Electric Motorcycle Dealers?
@@ -121,14 +122,15 @@ export default function OurDealersPage() {
               variant="fadeInLeft"
               speed="slow"
               delay={0.12}
-              className="relative order-2 mx-auto aspect-square w-full max-w-[360px] sm:max-w-[480px]"
+              className="order-2 min-w-0 w-full"
             >
               <Image
                 src="/assets/images/contact/new-bike-scooty.png"
                 alt="ELFA EV-125 and EV-1 scooty"
-                fill
-                className="object-contain"
-                sizes="480px"
+                width={624}
+                height={753}
+                className="mx-auto h-auto w-full max-w-[480px] lg:max-w-[560px]"
+                sizes="(min-width: 1024px) 50vw, 90vw"
               />
             </FadeIn>
           </div>

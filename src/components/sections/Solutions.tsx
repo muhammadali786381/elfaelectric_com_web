@@ -104,7 +104,7 @@ export default function Solutions() {
                 </div>
 
                 {/* Brand-primary tick on the far right */}
-                <div className="ml-auto shrink-0 mt-1.5 h-1.5 w-1.5 rounded-full bg-brand-primary opacity-70" />
+                {/* <div className="ml-auto shrink-0 mt-1.5 h-1.5 w-1.5 rounded-full bg-brand-primary opacity-70" /> */}
               </div>
             </motion.div>
           ))}
