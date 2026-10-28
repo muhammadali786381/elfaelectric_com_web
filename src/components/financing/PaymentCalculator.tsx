@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { waslEv125Regions, type WaslEv125Region } from "@/data/wasl-ev125-plans";
+import { burjScootyPlans, waslScootyRegions } from "@/data/scooty-financing-plans";
 import {
   BURJ_TERMS,
   FINANCING_PROVIDERS as PROVIDERS,
   burjEv125Plans,
+  defaultFinancingSelection,
   formatFinancingAmount as formatRs,
   type BurjPlan,
   type BurjTerm,
@@ -52,15 +54,17 @@ const PLAN_DATA: Record<
 const selectClass =
   "font-roboto h-14 w-full cursor-pointer rounded-xl border border-white/10 bg-black/40 px-4 text-[15px] font-medium text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-colors hover:border-white/20";
 
-type Props = {
-  selection: FinancingSelection;
-  onChange: (selection: FinancingSelection) => void;
-  onProviderChange: (provider: ProviderId) => void;
-};
-
-export default function PaymentCalculator({ selection, onChange, onProviderChange }: Props) {
+export default function PaymentCalculator({ product = "ev-125", initialSelection }: {
+  product?: "ev-125" | "ev-1";
+  initialSelection?: FinancingSelection;
+}) {
+  const [selection, onChange] = useState<FinancingSelection>(() => initialSelection ?? defaultFinancingSelection(product === "ev-1" ? "wasl" : "asaan-ghar"));
+  const providers = product === "ev-1" ? PROVIDERS.filter(item => item.id === "wasl" || item.id === "burj") : PROVIDERS;
+  const waslRegions = product === "ev-1" ? waslScootyRegions : waslEv125Regions;
+  const burjPlans = product === "ev-1" ? burjScootyPlans : burjEv125Plans;
+  const onProviderChange = (provider: ProviderId) => onChange(defaultFinancingSelection(provider));
   const { provider, plan, tmfOption, region, burjTerm } = selection;
-  const waslRegion = waslEv125Regions.find(item => item.id === region)!;
+  const waslRegion = waslRegions.find(item => item.id === region)!;
 
   const planIds = useMemo(() => {
     if (provider === "burj") return BURJ_TERMS.map(String);
@@ -70,7 +74,7 @@ export default function PaymentCalculator({ selection, onChange, onProviderChang
   }, [provider, waslRegion]);
 
   const summary = useMemo((): PlanNumbers | null => {
-    if (provider === "burj") return burjEv125Plans[burjTerm][plan as BurjPlan] ?? null;
+    if (provider === "burj") return burjPlans[burjTerm][plan as BurjPlan] ?? null;
     if (provider === "tmf") {
       return PLAN_DATA.tmf[plan]?.[tmfOption] ?? null;
     }
@@ -79,7 +83,7 @@ export default function PaymentCalculator({ selection, onChange, onProviderChang
       return numbers ? { ...numbers, total: numbers.downPayment + numbers.monthly * numbers.months } : null;
     }
     return PLAN_DATA[provider][plan] ?? null;
-  }, [provider, plan, tmfOption, waslRegion, burjTerm]);
+  }, [provider, plan, tmfOption, waslRegion, burjTerm, burjPlans]);
 
   const cards = summary
     ? [
@@ -113,7 +117,7 @@ export default function PaymentCalculator({ selection, onChange, onProviderChang
               className={selectClass}
               aria-label="Select Provider"
             >
-              {PROVIDERS.map((p) => (
+              {providers.map((p) => (
                 <option key={p.id} value={p.id} className="bg-black text-white">
                   {p.label}
                 </option>
@@ -145,8 +149,8 @@ export default function PaymentCalculator({ selection, onChange, onProviderChang
           </label>
 
           {provider === "wasl" && (
-            <label className="flex flex-col gap-2 sm:col-span-2 sm:max-w-md mx-auto w-full">
-              <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest text-center">
+            <label className="flex w-full flex-col gap-2">
+              <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest">
                 Province
               </span>
               <select
@@ -155,7 +159,7 @@ export default function PaymentCalculator({ selection, onChange, onProviderChang
                 className={selectClass}
                 aria-label="Province"
               >
-                {waslEv125Regions.map(item => (
+                {waslRegions.map(item => (
                   <option key={item.id} value={item.id} className="bg-black text-white">{item.name}</option>
                 ))}
               </select>
@@ -163,8 +167,8 @@ export default function PaymentCalculator({ selection, onChange, onProviderChang
           )}
 
           {provider === "tmf" ? (
-            <label className="flex flex-col gap-2 sm:col-span-2 sm:max-w-md mx-auto w-full">
-              <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest text-center">
+            <label className="flex w-full flex-col gap-2">
+              <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest">
                 TMF Option
               </span>
               <select
@@ -180,13 +184,13 @@ export default function PaymentCalculator({ selection, onChange, onProviderChang
           ) : null}
 
           {provider === "burj" && (
-            <label className="flex flex-col gap-2 sm:col-span-2 sm:max-w-md mx-auto w-full">
-              <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest text-center">
+            <label className="flex w-full flex-col gap-2">
+              <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest">
                 BURJ Plan
               </span>
               <select value={plan} onChange={(event) => onChange({ ...selection, plan: event.target.value })}
                 className={selectClass} aria-label="BURJ Plan">
-                {Object.keys(burjEv125Plans[burjTerm]).map(id => (
+                {Object.keys(burjPlans[burjTerm]).map(id => (
                   <option key={id} value={id} className="bg-black text-white">Plan {id}</option>
                 ))}
               </select>

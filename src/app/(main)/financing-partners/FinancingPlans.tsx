@@ -558,7 +558,7 @@ export default function FinancingPlans() {
         </div>
       </section>
 
-      <PaymentCalculator selection={selection} onChange={setSelection} onProviderChange={switchProvider} />
+      <PaymentCalculator key={JSON.stringify(selection)} initialSelection={selection} />
 
       <section id="get-started" className="bg-[#050505] pb-14 pt-16 lg:pb-24 lg:pt-20">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">

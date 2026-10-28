@@ -4,6 +4,9 @@ import { useMemo, useState } from "react";
 import Script from "next/script";
 import { MapPin, Phone, Headphones, Mail, Check } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
+import PaymentCalculator from "@/components/financing/PaymentCalculator";
+import { BURJ_TERMS, defaultFinancingSelection, formatFinancingAmount as formatRs, type BurjTerm } from "@/data/financing-plans";
+import { burjScootyPlans, waslScootyRegions } from "@/data/scooty-financing-plans";
 import {
   Select,
   SelectContent,
@@ -13,7 +16,6 @@ import {
 } from "@/components/ui/select";
 
 type ProviderId = "wasl" | "burj";
-type BurjTerm = 12 | 18 | 24 | 36;
 type WaslRegionId = "sindh" | "punjab";
 
 const PROVIDERS: { id: ProviderId; label: string }[] = [
@@ -21,18 +23,12 @@ const PROVIDERS: { id: ProviderId; label: string }[] = [
   { id: "burj", label: "BURJ" },
 ];
 
-const BURJ_TERMS: BurjTerm[] = [12, 18, 24, 36];
 
 const selectTriggerClass =
   "font-roboto mb-10 h-14 w-full rounded-xl border border-brand-primary/50 bg-black/40 px-4 text-[15px] font-medium text-white shadow-none hover:border-brand-primary hover:bg-black/50 focus-visible:border-brand-primary focus-visible:ring-brand-primary/40 data-[size=default]:h-14 dark:bg-black/40 dark:hover:bg-black/50 [&_svg]:text-white/60";
 
 const selectItemClass =
   "font-roboto cursor-pointer rounded-lg py-2.5 pl-3 text-[15px] !text-white focus:bg-brand-primary/20 focus:!text-white focus:**:!text-white data-highlighted:bg-brand-primary/20 data-highlighted:!text-white data-highlighted:**:!text-white";
-
-function formatRs(n: number | string) {
-  if (typeof n === "string") return `Rs. ${n}`;
-  return `Rs. ${n.toLocaleString("en-PK")}`;
-}
 
 type PlanCardData = {
   id: string;
@@ -42,62 +38,20 @@ type PlanCardData = {
   perMonth: number;
 };
 
-function burjPlan(
-  id: string,
-  title: string,
-  months: BurjTerm,
-  downPayment: number,
-  perMonth: number,
-): PlanCardData {
-  return { id, title, months, downPayment, perMonth };
-}
+const burjPlans: PlanCardData[] = BURJ_TERMS.flatMap(term =>
+  Object.entries(burjScootyPlans[term]).map(([id, numbers]) => ({
+    id: `${term}-${id.toLowerCase()}`,
+    title: id === "D" ? "Plan D (0% Mark-up)" : `Plan ${id}`,
+    months: numbers.months,
+    downPayment: numbers.downPayment,
+    perMonth: numbers.monthly,
+  })),
+);
 
-/** Scooty EV-1 Burj plans */
-const burjPlans: PlanCardData[] = [
-  // 12 Months
-  burjPlan("12-a", "Plan A", 12, 36815, 19674),
-  burjPlan("12-b", "Plan B", 12, 49086, 18674),
-  burjPlan("12-c", "Plan C", 12, 61358, 17655),
-  burjPlan("12-d", "Plan D (0% Mark-up)", 12, 61358, 17613),
-  // 18 Months
-  burjPlan("18-a", "Plan A", 18, 36815, 14000),
-  burjPlan("18-b", "Plan B", 18, 49086, 13176),
-  burjPlan("18-c", "Plan C", 18, 61358, 12353),
-  burjPlan("18-d", "Plan D (0% Mark-up)", 18, 108858, 9103),
-  // 24 Months
-  burjPlan("24-a", "Plan A", 24, 36815, 11190),
-  burjPlan("24-b", "Plan B", 24, 49086, 10531),
-  burjPlan("24-c", "Plan C", 24, 61358, 9873),
-  burjPlan("24-d", "Plan D (0% Mark-up)", 24, 143858, 5369),
-  // 36 Months
-  burjPlan("36-a", "Plan A", 36, 36815, 8640),
-  burjPlan("36-b", "Plan B", 36, 49086, 8132),
-  burjPlan("36-c", "Plan C", 36, 61358, 7624),
-  burjPlan("36-d", "Plan D (0% Mark-up)", 36, 182358, 2510),
-];
-
-const regionalPlans: {
-  id: WaslRegionId;
-  name: string;
-  plans: { id: string; title: string; downPayment: number; perMonth: number; months: number }[];
-}[] = [
-  {
-    id: "sindh",
-    name: "Sindh",
-    plans: [
-      { id: "1", title: "Plan 1", downPayment: 78780, perMonth: 12000, months: 24 },
-      { id: "2", title: "Plan 2", downPayment: 78780, perMonth: 20000, months: 12 },
-    ],
-  },
-  {
-    id: "punjab",
-    name: "Punjab",
-    plans: [
-      { id: "1", title: "Plan 1", downPayment: 78780, perMonth: 12000, months: 24 },
-      { id: "2", title: "Plan 2", downPayment: 78780, perMonth: 19500, months: 12 },
-    ],
-  },
-];
+const regionalPlans = waslScootyRegions.map(region => ({
+  ...region,
+  plans: region.plans.map(plan => ({ ...plan, title: `Plan ${plan.id}`, perMonth: plan.monthly })),
+}));
 
 const socialLinks = [
   {
@@ -312,6 +266,12 @@ export default function ScootyInstallmentPlans() {
           </FadeIn>
         </div>
       </section>
+
+      <PaymentCalculator
+        key={`${provider}-${waslRegion}-${burjTerm}`}
+        product="ev-1"
+        initialSelection={{ ...defaultFinancingSelection(provider), region: waslRegion, burjTerm }}
+      />
 
       <section id="get-started" className="bg-[#050505] pb-14 pt-16 lg:pb-24 lg:pt-20">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
