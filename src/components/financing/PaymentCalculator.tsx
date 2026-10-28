@@ -1,21 +1,23 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { waslEv125Regions, type WaslEv125Region } from "@/data/wasl-ev125-plans";
-
-type ProviderId = "asaan-ghar" | "qist-baazar" | "wasl" | "tmf";
-type TmfOption = "with-advance" | "without-advance";
-
-type PlanNumbers = {
-  downPayment: number;
-  monthly: number;
-  months: number;
-  total?: number;
-};
+import {
+  BURJ_TERMS,
+  FINANCING_PROVIDERS as PROVIDERS,
+  burjEv125Plans,
+  formatFinancingAmount as formatRs,
+  type BurjPlan,
+  type BurjTerm,
+  type FinancingNumbers as PlanNumbers,
+  type FinancingSelection,
+  type ProviderId,
+  type TmfOption,
+} from "@/data/financing-plans";
 
 /** Scraped from https://elfaelectric.com/financing-partners/ Payment Calculator */
 const PLAN_DATA: Record<
-  Exclude<ProviderId, "tmf" | "wasl">,
+  Exclude<ProviderId, "tmf" | "wasl" | "burj">,
   Record<string, PlanNumbers>
 > & {
   tmf: Record<string, Record<TmfOption, PlanNumbers>>;
@@ -47,48 +49,37 @@ const PLAN_DATA: Record<
   },
 };
 
-const PROVIDERS: { id: ProviderId; label: string }[] = [
-  { id: "asaan-ghar", label: "ASAAN GHAR" },
-  { id: "qist-baazar", label: "QIST BAAZAR" },
-  { id: "wasl", label: "WASL" },
-  { id: "tmf", label: "TMF" },
-];
-
-function formatRs(n: number) {
-  return `Rs. ${n.toLocaleString("en-PK")}`;
-}
-
 const selectClass =
   "font-roboto h-14 w-full cursor-pointer rounded-xl border border-white/10 bg-black/40 px-4 text-[15px] font-medium text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-colors hover:border-white/20";
 
-export default function PaymentCalculator() {
-  const [provider, setProvider] = useState<ProviderId>("asaan-ghar");
-  const [plan, setPlan] = useState("1");
-  const [tmfOption, setTmfOption] = useState<TmfOption>("with-advance");
-  const [region, setRegion] = useState<WaslEv125Region>("sindh");
+type Props = {
+  selection: FinancingSelection;
+  onChange: (selection: FinancingSelection) => void;
+  onProviderChange: (provider: ProviderId) => void;
+};
+
+export default function PaymentCalculator({ selection, onChange, onProviderChange }: Props) {
+  const { provider, plan, tmfOption, region, burjTerm } = selection;
   const waslRegion = waslEv125Regions.find(item => item.id === region)!;
 
   const planIds = useMemo(() => {
+    if (provider === "burj") return BURJ_TERMS.map(String);
     if (provider === "tmf") return Object.keys(PLAN_DATA.tmf);
     if (provider === "wasl") return waslRegion.plans.map(item => item.id);
     return Object.keys(PLAN_DATA[provider]);
   }, [provider, waslRegion]);
 
   const summary = useMemo((): PlanNumbers | null => {
+    if (provider === "burj") return burjEv125Plans[burjTerm][plan as BurjPlan] ?? null;
     if (provider === "tmf") {
       return PLAN_DATA.tmf[plan]?.[tmfOption] ?? null;
     }
     if (provider === "wasl") {
-      return waslRegion.plans.find(item => item.id === plan) ?? null;
+      const numbers = waslRegion.plans.find(item => item.id === plan);
+      return numbers ? { ...numbers, total: numbers.downPayment + numbers.monthly * numbers.months } : null;
     }
     return PLAN_DATA[provider][plan] ?? null;
-  }, [provider, plan, tmfOption, waslRegion]);
-
-  function onProviderChange(next: ProviderId) {
-    setProvider(next);
-    setPlan("1");
-    if (next === "tmf") setTmfOption("with-advance");
-  }
+  }, [provider, plan, tmfOption, waslRegion, burjTerm]);
 
   const cards = summary
     ? [
@@ -132,17 +123,22 @@ export default function PaymentCalculator() {
 
           <label className="flex flex-col gap-2">
             <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest">
-              Select Plan
+              {provider === "burj" ? "Select Tenure" : "Select Plan"}
             </span>
             <select
-              value={plan}
-              onChange={(e) => setPlan(e.target.value)}
+              value={provider === "burj" ? burjTerm : plan}
+              onChange={(e) => onChange(provider === "burj"
+                ? { ...selection, burjTerm: Number(e.target.value) as BurjTerm }
+                : { ...selection, plan: e.target.value })}
               className={selectClass}
-              aria-label="Select Plan"
+              aria-label={provider === "burj" ? "Select Tenure" : "Select Plan"}
             >
               {planIds.map((id) => (
                 <option key={id} value={id} className="bg-black text-white">
-                  Plan {id}
+                  {provider === "burj" ? `${id} Months`
+                    : provider === "wasl" ? `${waslRegion.plans.find(item => item.id === id)!.months} Months`
+                    : provider === "tmf" ? `${PLAN_DATA.tmf[id][tmfOption].months} Months`
+                    : `Plan ${id}`}
                 </option>
               ))}
             </select>
@@ -155,7 +151,7 @@ export default function PaymentCalculator() {
               </span>
               <select
                 value={region}
-                onChange={(event) => { setRegion(event.target.value as WaslEv125Region); setPlan("1"); }}
+                onChange={(event) => onChange({ ...selection, region: event.target.value as WaslEv125Region })}
                 className={selectClass}
                 aria-label="Province"
               >
@@ -173,7 +169,7 @@ export default function PaymentCalculator() {
               </span>
               <select
                 value={tmfOption}
-                onChange={(e) => setTmfOption(e.target.value as TmfOption)}
+                onChange={(e) => onChange({ ...selection, tmfOption: e.target.value as TmfOption })}
                 className={selectClass}
                 aria-label="TMF Option"
               >
@@ -182,6 +178,20 @@ export default function PaymentCalculator() {
               </select>
             </label>
           ) : null}
+
+          {provider === "burj" && (
+            <label className="flex flex-col gap-2 sm:col-span-2 sm:max-w-md mx-auto w-full">
+              <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest text-center">
+                BURJ Plan
+              </span>
+              <select value={plan} onChange={(event) => onChange({ ...selection, plan: event.target.value })}
+                className={selectClass} aria-label="BURJ Plan">
+                {Object.keys(burjEv125Plans[burjTerm]).map(id => (
+                  <option key={id} value={id} className="bg-black text-white">Plan {id}</option>
+                ))}
+              </select>
+            </label>
+          )}
         </div>
 
         <div className="border-t border-white/10 pt-8 mt-4">

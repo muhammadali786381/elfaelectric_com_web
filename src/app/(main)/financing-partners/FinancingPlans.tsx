@@ -8,6 +8,17 @@ import { FadeIn } from "@/components/motion/FadeIn";
 import PaymentCalculator from "@/components/financing/PaymentCalculator";
 import { waslEv125Regions, type WaslEv125Region } from "@/data/wasl-ev125-plans";
 import {
+  BURJ_TERMS,
+  FINANCING_PROVIDERS as PROVIDERS,
+  burjEv125Plans,
+  defaultFinancingSelection,
+  formatFinancingAmount as formatRs,
+  type BurjTerm,
+  type FinancingSelection,
+  type ProviderId,
+  type TmfOption,
+} from "@/data/financing-plans";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -37,68 +48,21 @@ type Plan = {
   total: number;
 };
 
-type ProviderId = "asaan-ghar" | "qist-baazar" | "wasl" | "tmf" | "burj";
-
-const PROVIDERS: { id: ProviderId; label: string }[] = [
-  { id: "asaan-ghar", label: "ASAAN GHAR" },
-  { id: "qist-baazar", label: "QIST BAAZAR" },
-  { id: "wasl", label: "WASL" },
-  { id: "tmf", label: "TMF" },
-  { id: "burj", label: "BURJ" },
-];
-
-const BURJ_TERMS = [12, 18, 24, 36] as const;
-type BurjTerm = (typeof BURJ_TERMS)[number];
-
-function formatRs(n: number) {
-  return `Rs. ${n.toLocaleString("en-PK")}`;
-}
-
-function burjPlan(
-  id: string,
-  title: string,
-  months: BurjTerm,
-  downPayment: number,
-  perMonth: number,
-): Plan {
-  return {
-    id,
-    title,
-    months,
-    downPayment,
-    perMonth,
-    total: downPayment + perMonth * months,
+const burjPlans: Plan[] = BURJ_TERMS.flatMap(term =>
+  Object.entries(burjEv125Plans[term]).map(([id, numbers]) => ({
+    id: `${term}-${id.toLowerCase()}`,
+    title: id === "D" ? "Plan D (0% Mark-up)" : `Plan ${id}`,
+    months: numbers.months,
+    downPayment: numbers.downPayment,
+    perMonth: numbers.monthly,
+    total: numbers.total,
     details: [
-      { label: "Down Payment", value: formatRs(downPayment) },
-      { label: "Monthly Installment", value: formatRs(perMonth) },
-      { label: "Total Months", value: String(months) },
+      { label: "Down Payment", value: formatRs(numbers.downPayment) },
+      { label: "Monthly Installment", value: formatRs(numbers.monthly) },
+      { label: "Total Months", value: String(numbers.months) },
     ],
-  };
-}
-
-/** Burj EV-125 plans — 12 / 18 / 24 / 36 month terms */
-const burjPlans: Plan[] = [
-  // 12 Months
-  burjPlan("12-a", "Plan A", 12, 47041, 25138),
-  burjPlan("12-b", "Plan B", 12, 62721, 23861),
-  burjPlan("12-c", "Plan C", 12, 78401, 22560),
-  burjPlan("12-d", "Plan D (0% Mark-up)", 12, 78401, 22505),
-  // 18 Months
-  burjPlan("18-a", "Plan A", 18, 47041, 17888),
-  burjPlan("18-b", "Plan B", 18, 62721, 16836),
-  burjPlan("18-c", "Plan C", 18, 78401, 15784),
-  burjPlan("18-d", "Plan D (0% Mark-up)", 18, 143401, 11393),
-  // 24 Months
-  burjPlan("24-a", "Plan A", 24, 47041, 14298),
-  burjPlan("24-b", "Plan B", 24, 62721, 13457),
-  burjPlan("24-c", "Plan C", 24, 78401, 12616),
-  burjPlan("24-d", "Plan D (0% Mark-up)", 24, 190901, 6565),
-  // 36 Months
-  burjPlan("36-a", "Plan A", 36, 47041, 11040),
-  burjPlan("36-b", "Plan B", 36, 62721, 10391),
-  burjPlan("36-c", "Plan C", 36, 78401, 9741),
-  burjPlan("36-d", "Plan D (0% Mark-up)", 36, 242401, 2946),
-];
+  })),
+);
 
 /** Scraped from https://elfaelectric.com/financing-partners/ */
 const ev125Plans: Record<Exclude<ProviderId, "wasl" | "burj">, Plan[]> = {
@@ -332,6 +296,7 @@ const socialLinks = [
 function PlanCard({ plan }: { plan: Plan }) {
   return (
     <div
+      data-plan-id={plan.id}
       className="relative flex flex-col rounded-[24px] border border-white/10 bg-white/10 backdrop-blur-xl p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transform-gpu"
     >
       <div className="mb-8 border-b border-white/10 pb-6">
@@ -404,16 +369,14 @@ function OptionHeading({ children }: { children: string }) {
 }
 
 export default function FinancingPlans() {
-  const [provider, setProvider] = useState<ProviderId>("asaan-ghar");
-  const [tmfOption, setTmfOption] = useState<"with" | "without">("with");
-  const [waslRegion, setWaslRegion] = useState<WaslEv125Region>("sindh");
-  const [burjTerm, setBurjTerm] = useState<BurjTerm>(12);
+  const [selection, setSelection] = useState<FinancingSelection>(() => defaultFinancingSelection());
+  const { provider, tmfOption, region: waslRegion, burjTerm } = selection;
   const [partner, setPartner] = useState("");
 
   const plans = useMemo(() => {
     if (provider === "wasl" || provider === "burj") return [];
     if (provider === "tmf") {
-      return tmfOption === "with" ? tmfWithAdvance : tmfWithoutAdvance;
+      return tmfOption === "with-advance" ? tmfWithAdvance : tmfWithoutAdvance;
     }
     return ev125Plans[provider];
   }, [provider, tmfOption]);
@@ -429,10 +392,7 @@ export default function FinancingPlans() {
   );
 
   const switchProvider = (id: ProviderId) => {
-    setProvider(id);
-    if (id === "tmf") setTmfOption("with");
-    if (id === "wasl") setWaslRegion("sindh");
-    if (id === "burj") setBurjTerm(12);
+    setSelection(defaultFinancingSelection(id));
   };
 
   const inputClass =
@@ -440,7 +400,7 @@ export default function FinancingPlans() {
 
   return (
     <>
-      <section className="relative w-full bg-bg-primary pt-20 pb-8 lg:pt-32 lg:pb-10 overflow-hidden">
+      <section data-financing-plans={provider} className="relative w-full bg-bg-primary pt-20 pb-8 lg:pt-32 lg:pb-10 overflow-hidden">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0"
           style={{ backgroundImage: "radial-gradient(ellipse 65% 42% at 90% 50%, rgba(97,206,112,0.065), transparent 100%)" }} />
 
@@ -459,6 +419,7 @@ export default function FinancingPlans() {
               <button
                 key={p.id}
                 type="button"
+                aria-pressed={provider === p.id}
                 onClick={() => switchProvider(p.id)}
                 className={`font-roboto rounded-full border px-8 py-3 text-[14px] font-bold uppercase tracking-widest transition-all duration-300 ${provider === p.id
                   ? "border-brand-primary bg-brand-primary text-black shadow-[0_0_20px_rgba(0,200,83,0.3)]"
@@ -472,22 +433,26 @@ export default function FinancingPlans() {
 
           <FadeIn variant="fadeInUp" speed="slow">
             {provider === "tmf" ? (
-              <div className="flex flex-col gap-24">
-                <div>
-                  <OptionHeading>Option 1: With Advance</OptionHeading>
-                  <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {tmfWithAdvance.map((plan) => (
-                      <PlanCard key={`with-${plan.id}`} plan={plan} />
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <OptionHeading>Option 2: Without Advance</OptionHeading>
-                  <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {tmfWithoutAdvance.map((plan) => (
-                      <PlanCard key={`without-${plan.id}`} plan={plan} />
-                    ))}
-                  </div>
+              <div>
+                <Select value={tmfOption}
+                  items={[
+                    { value: "with-advance", label: "Option 1: With Advance" },
+                    { value: "without-advance", label: "Option 2: Without Advance" },
+                  ]}
+                  onValueChange={value => {
+                    if (value != null) setSelection(current => ({ ...current, tmfOption: value as TmfOption }));
+                  }}>
+                  <SelectTrigger aria-label="TMF advance option" className={`${selectTriggerClass} mx-auto max-w-md`}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent align="start" className="rounded-xl border border-white/10 bg-[#111] text-white ring-white/10">
+                    <SelectItem value="with-advance" className={selectItemClass}>Option 1: With Advance</SelectItem>
+                    <SelectItem value="without-advance" className={selectItemClass}>Option 2: Without Advance</SelectItem>
+                  </SelectContent>
+                </Select>
+                <OptionHeading>{tmfOption === "with-advance" ? "Option 1: With Advance" : "Option 2: Without Advance"}</OptionHeading>
+                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                  {plans.map(plan => <PlanCard key={`${tmfOption}-${plan.id}`} plan={plan} />)}
                 </div>
               </div>
             ) : provider === "wasl" ? (
@@ -500,7 +465,7 @@ export default function FinancingPlans() {
                   }))}
                   onValueChange={(value) => {
                     if (value == null) return;
-                    setWaslRegion(value as WaslEv125Region);
+                    setSelection(current => ({ ...current, region: value as WaslEv125Region }));
                   }}
                 >
                   <SelectTrigger
@@ -546,7 +511,7 @@ export default function FinancingPlans() {
                   }))}
                   onValueChange={(value) => {
                     if (value == null) return;
-                    setBurjTerm(Number(value) as BurjTerm);
+                    setSelection(current => ({ ...current, burjTerm: Number(value) as BurjTerm }));
                   }}
                 >
                   <SelectTrigger
@@ -593,7 +558,7 @@ export default function FinancingPlans() {
         </div>
       </section>
 
-      <PaymentCalculator />
+      <PaymentCalculator selection={selection} onChange={setSelection} onProviderChange={switchProvider} />
 
       <section id="get-started" className="bg-[#050505] pb-14 pt-16 lg:pb-24 lg:pt-20">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
