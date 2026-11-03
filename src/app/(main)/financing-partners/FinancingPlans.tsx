@@ -400,21 +400,21 @@ export default function FinancingPlans() {
 
   return (
     <>
-      <section data-financing-plans={provider} className="relative w-full bg-bg-primary pt-20 pb-8 lg:pt-32 lg:pb-10 overflow-hidden">
+      <section data-financing-plans={provider} className="relative w-full overflow-hidden bg-bg-primary pt-10 pb-8 sm:pt-12 lg:pt-14 lg:pb-10">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0"
           style={{ backgroundImage: "radial-gradient(ellipse 65% 42% at 90% 50%, rgba(97,206,112,0.065), transparent 100%)" }} />
 
         <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6">
-          <FadeIn variant="fadeInUp" speed="normal" className="mb-16 text-center">
-            <h2 className="font-montserrat text-[32px] sm:text-[48px] font-black uppercase italic tracking-tight text-white mb-4">
+          <FadeIn variant="fadeInUp" speed="normal" className="mb-10 text-center sm:mb-12">
+            <h2 className="font-montserrat mb-3 text-[32px] font-black uppercase italic tracking-tight text-white sm:mb-4 sm:text-[48px]">
               Choose Your <span className="text-brand-primary">Plan</span>
             </h2>
-            <p className="font-roboto max-w-xl mx-auto text-[16px] text-white/60">
+            <p className="font-roboto mx-auto max-w-none px-0 text-[14px] leading-snug text-white/60 sm:text-[16px] sm:whitespace-nowrap">
               Select one of our trusted financing partners to view all available installment plans for the EV-125.
             </p>
           </FadeIn>
 
-          <div className="mb-16 flex flex-wrap justify-center gap-4">
+          <div className="mb-12 flex flex-wrap justify-center gap-3 sm:mb-14 sm:gap-4">
             {PROVIDERS.map((p) => (
               <button
                 key={p.id}
@@ -560,14 +560,13 @@ export default function FinancingPlans() {
 
       <PaymentCalculator key={JSON.stringify(selection)} initialSelection={selection} />
 
-      <section id="get-started" className="bg-[#050505] pb-14 pt-16 lg:pb-24 lg:pt-20">
+      <section id="get-started" className="bg-[#050505] pb-14 pt-10 lg:pb-24 lg:pt-12">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
           <h2 className="font-montserrat mb-4 text-center text-[36px] font-black italic tracking-tighter text-brand-primary sm:text-[48px] lg:text-[60px]">
             Get Started with ELFA
           </h2>
-          <p className="font-roboto mx-auto mb-12 max-w-[720px] text-center text-[16px] leading-relaxed text-white/60">
-            Ready to take the first step towards owning your EV bike? Fill out the form below, and
-            let’s make it happen!
+          <p className="font-roboto mx-auto mb-12 max-w-none px-2 text-center text-[14px] leading-snug text-white/60 sm:text-[16px] sm:whitespace-nowrap">
+            Ready to take the first step towards owning your EV bike? Fill out the form below, and let’s make it happen!
           </p>
 
           <div

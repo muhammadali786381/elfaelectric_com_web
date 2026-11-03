@@ -95,7 +95,7 @@ export default function PaymentCalculator({ product = "ev-125", initialSelection
     : [];
 
   return (
-    <section className="bg-[#050505] pt-8 pb-16 lg:pt-10 lg:pb-24">
+    <section className="bg-[#050505] pt-8 pb-10 lg:pt-10 lg:pb-12">
       <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6">
       <div
         className="relative rounded-[24px] border border-white/10 bg-[#080808]/80    backdrop-blur-2xl p-8 sm:p-12 shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden"

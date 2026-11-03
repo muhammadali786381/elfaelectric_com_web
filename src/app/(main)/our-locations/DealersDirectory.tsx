@@ -86,14 +86,14 @@ export const dealersByCity: Record<City, Dealer[]> = {
     },
     {
       name: "Solàrizè Malir",
-      address: "Shop no1 c43/6 malir tanki, kalaboard Malir",
+      address: "Shop No. 1, C-43/6 Malir Tanki, Kalaboard, Malir",
       phones: ["0333 2236876"],
       email: "Irfanafnan@hotmail.com",
       mapLink: "https://maps.app.goo.gl/kCDiVGtJFEhykhWf7",
     },
     {
       name: "Solàrizè Landhi",
-      address: "Shop 2, House no 60, sector 1-C, jaam nagar, landhi no 1, Karachi",
+      address: "Shop 2, House No. 60, Sector 1-C, Jaam Nagar, Landhi No. 1, Karachi",
       phones: ["0333 2236876"],
       email: "Irfanafnan@hotmail.com",
       mapLink: "https://maps.app.goo.gl/eixgH1rzk6mCyUxw5",
@@ -217,7 +217,7 @@ function DealerCard({
   return (
     <article
       onClick={() => onClick(dealer)}
-      className={`group relative flex cursor-pointer flex-col gap-4 border-b border-white/[0.07] p-5 transition-all duration-200 sm:p-6 ${isActive
+      className={`group relative flex cursor-pointer flex-col gap-2.5 border-b border-white/[0.07] p-4 transition-all duration-200 sm:p-5 ${isActive
         ? "bg-[#0d1a0d] border-l-2 border-l-brand-primary"
         : "hover:bg-[#0a0a0a] hover:border-l-2 hover:border-l-brand-primary/40"
         }`}
@@ -231,26 +231,34 @@ function DealerCard({
       </div>
 
       {/* Name */}
-      <h3 className="font-montserrat -mt-1 text-[17px] font-bold uppercase tracking-wide text-white sm:text-[19px]">
+      <h3 className="font-montserrat text-[17px] font-bold uppercase tracking-wide text-white sm:text-[19px]">
         {dealer.name}
       </h3>
 
       {/* Details */}
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-1.5">
         <div className="flex items-start gap-3">
           <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-white/30" strokeWidth={1.5} />
-          <p className="font-roboto text-[13px] leading-relaxed text-white/60">{dealer.address}</p>
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="font-roboto text-[13px] leading-snug text-white/60 transition-colors hover:text-brand-primary hover:underline"
+          >
+            {dealer.address}
+          </a>
         </div>
 
         <div className="flex items-center gap-3">
           <Phone className="h-4 w-4 shrink-0 text-white/30" strokeWidth={1.5} />
-          <div className="flex flex-wrap gap-x-3 gap-y-1">
+          <div className="flex flex-wrap gap-x-3 gap-y-0.5">
             {dealer.phones.map((p) => (
               <a
                 key={p}
                 href={`tel:${p.replace(/[\s-]/g, "")}`}
                 onClick={(e) => e.stopPropagation()}
-                className="font-roboto text-[13px] font-semibold text-white transition-colors hover:text-brand-primary"
+                className="font-roboto text-[13px] font-semibold leading-snug text-white transition-colors hover:text-brand-primary"
               >
                 {p}
               </a>
@@ -260,7 +268,7 @@ function DealerCard({
 
         <div className="flex items-center gap-3">
           <Clock className="h-4 w-4 shrink-0 text-white/30" strokeWidth={1.5} />
-          <span className="font-roboto text-[13px] text-white/50">Mon – Sat, 11:00 am – 8:00 pm</span>
+          <span className="font-roboto text-[13px] leading-snug text-white/50">Mon – Sat, 11:00 am – 8:00 pm</span>
         </div>
       </div>
 
@@ -382,7 +390,7 @@ export default function DealersDirectory() {
           </div>
 
           {/* Dealer list */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col">
             {filteredDealers.length > 0 ? (
               filteredDealers.map((d, idx) => (
                 <DealerCard

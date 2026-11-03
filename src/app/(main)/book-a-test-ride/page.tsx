@@ -72,17 +72,17 @@ function GlassCard({
     <FadeIn
       variant={from === "left" ? "fadeInLeft" : "fadeInRight"}
       speed="normal"
-      className="flex h-full flex-col rounded-3xl border border-white/5 bg-white/[0.02] p-8 sm:p-10 backdrop-blur-xl transition-colors hover:bg-white/[0.04] hover:border-white/10"
+      className="flex h-full flex-col rounded-3xl border border-white/5 bg-white/[0.02] p-6 sm:p-8 backdrop-blur-xl transition-colors hover:bg-white/[0.04] hover:border-white/10"
     >
-      <h2 className="font-montserrat mb-4 text-[22px] font-bold leading-snug text-white sm:text-[26px]">
+      <h2 className="font-montserrat mb-3 text-[22px] font-bold leading-snug text-white sm:text-[26px]">
         {title}
       </h2>
       {intro && (
-        <p className="font-roboto mb-6 text-[15px] font-normal leading-relaxed text-white/60">
+        <p className="font-roboto mb-4 text-[15px] font-normal leading-relaxed text-white/60">
           {intro}
         </p>
       )}
-      <ul className="font-roboto flex flex-col gap-4 text-[15px] font-normal leading-relaxed text-white/80">
+      <ul className="font-roboto flex flex-col gap-3 text-[15px] font-normal leading-relaxed text-white/80">
         {items.map((item) => (
           <li key={item} className="flex items-start gap-3">
             <span className="mt-[6px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-primary/20 text-brand-primary text-[10px] font-bold">✓</span>
@@ -90,7 +90,7 @@ function GlassCard({
           </li>
         ))}
       </ul>
-      {footer && <div className="mt-8 border-t border-white/10 pt-6">{footer}</div>}
+      {footer && <div className="mt-6 border-t border-white/10 pt-4">{footer}</div>}
     </FadeIn>
   );
 }
@@ -104,10 +104,11 @@ export default function BookTestRidePage() {
         description="Experience ELFA Electric Bike & Scooty in Pakistan"
         imageSrc="/assets/images/hero4.jpeg"
         imageAlt="Book a test ride"
+        compact
       />
 
       {/* Why + How — left / right */}
-      <section className="py-16 sm:py-24">
+      <section className="pt-8 pb-4 sm:pt-12 sm:pb-6">
         <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-6 px-4 sm:px-6 lg:grid-cols-2">
           <GlassCard
             from="left"
@@ -124,14 +125,18 @@ export default function BookTestRidePage() {
         </div>
       </section>
 
-      {/* Intro text */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
-        <div className="mx-auto w-full max-w-4xl text-center">
-          <FadeIn variant="fadeInUp" speed="normal">
-            <h2 className="font-montserrat mb-6 text-[28px] font-bold leading-tight text-white sm:text-[40px]">
+      {/* Minimal text-only bridge between card rows */}
+      <section className="py-16 sm:py-20 lg:py-24">
+        <FadeIn
+          variant="fadeInUp"
+          speed="normal"
+          className="mx-auto w-full max-w-container px-4 sm:px-6"
+        >
+          <div className="mx-auto max-w-3xl text-center lg:max-w-4xl">
+            <h2 className="font-montserrat text-[26px] font-bold leading-snug tracking-tight text-white sm:text-[32px]">
               Book a test ride with an electric bike
             </h2>
-            <div className="font-roboto mx-auto flex flex-col gap-4 text-[16px] sm:text-[18px] font-normal leading-relaxed text-white/60">
+            <div className="font-roboto mt-5 text-[15px] leading-[1.55] text-white/55 sm:mt-6 sm:text-[16px] sm:leading-[1.6] [&_p+_p]:mt-2">
               <p>
                 Book a test ride with an electric bike brand proudly made in Pakistan and
                 experience the future of mobility with ELFA Electric!
@@ -146,12 +151,12 @@ export default function BookTestRidePage() {
                 electric bike and electric scooty brand!
               </p>
             </div>
-          </FadeIn>
-        </div>
+          </div>
+        </FadeIn>
       </section>
 
       {/* Models + Locations — left / right */}
-      <section className="py-16 sm:py-24">
+      <section className="pt-4 pb-8 sm:pt-6 sm:pb-12">
         <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-6 px-4 sm:px-6 lg:grid-cols-2">
           <GlassCard
             from="left"
@@ -168,13 +173,13 @@ export default function BookTestRidePage() {
       </section>
 
       {/* Reach title + booking iframe */}
-      <section id="booking" className="py-20 sm:py-28">
+      <section id="booking" className="py-10 sm:py-14">
         <div className="mx-auto w-full max-w-container px-4 text-center sm:px-6">
           <FadeIn variant="fadeInUp" speed="normal" className="text-center">
             <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-none text-white sm:text-[36px] lg:text-[42px]">
               Reach Our Experts For Support
             </h2>
-            <p className="font-roboto mx-auto max-w-2xl mb-12 text-[16px] font-normal leading-relaxed text-white/60">
+            <p className="font-roboto mx-auto mb-6 max-w-2xl text-[16px] font-normal leading-relaxed text-white/60">
               Experience the thrill of riding our electric bikes firsthand. Book your test ride
               today and feel the power and innovation in every journey!
             </p>
@@ -193,7 +198,7 @@ export default function BookTestRidePage() {
       </section>
 
       {/* Expect + 5 Reasons — left / right */}
-      <section className="py-16 sm:py-24">
+      <section className="py-8 sm:py-12">
         <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-6 px-4 sm:px-6 lg:grid-cols-2">
           <GlassCard
             from="left"

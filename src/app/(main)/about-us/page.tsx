@@ -25,22 +25,22 @@ const coreValues = [
   {
     title: "Sustainable Innovation",
     desc: "We never stop evolving. Through continuous learning and experimentation, we deliver smart, sustainable solutions that adapt quickly to changing needs and emerging technologies.",
-    img: "/assets/images/about/engineering.jpeg",
+    img: "/assets/images/about/aboutassets/core3.jpeg",
   },
   {
     title: "Unwavering Trust",
     desc: "Trust is our foundation. Built on honesty, integrity, and reliability, we promise performance you can count on.",
-    img: "/assets/images/about/team7.jpeg",
+    img: "/assets/images/about/aboutassets/core2.jpeg",
   },
   {
     title: "Customer Obsession",
     desc: "Your journey drives us. We listen closely, understand your needs, and design solutions that fit seamlessly into your life.",
-    img: "/assets/images/about/people3.jpeg",
+    img: "/assets/images/about/aboutassets/core1.jpeg",
   },
   {
     title: "Equitable Progress",
     desc: "We believe progress must be for everyone. That’s why we engineer accessible, fair, and simple solutions that empower people to move forward toward a better future.",
-    img: "/assets/images/about/people6.jpeg",
+    img: "/assets/images/about/aboutassets/core4.jpeg",
   },
 ];
 
@@ -124,7 +124,7 @@ export default function AboutUsPage() {
                 className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden mt-8 grayscale hover:grayscale-0 transition-all duration-1000 border border-white/10"
               >
                 <Image
-                  src="/assets/images/about/engineering.jpeg"
+                  src="/assets/images/about/aboutassets/firstimage.JPG"
                   alt="Engineering"
                   fill
                   className="object-cover"
@@ -185,21 +185,21 @@ export default function AboutUsPage() {
                   delay={i * 0.1}
                   speed="slow"
                   tabIndex={0}
-                  className={`${styles.card} group relative h-[500px] rounded-3xl overflow-hidden cursor-pointer border border-white/5 bg-[#080808] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-primary`}
+                  className={`${styles.card} group relative h-[360px] sm:h-[400px] rounded-2xl overflow-hidden cursor-pointer border border-white/5 bg-[#080808] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-primary`}
                 >
                   <Image
                     src={value.img}
                     alt={value.title}
                     fill
-                    className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-40 mix-blend-luminosity grayscale group-hover:grayscale-0"
+                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
                     sizes="(max-width: 1024px) 100vw, 25vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/55 to-[#050505]/15 transition-colors duration-500 group-hover:from-[#050505] group-hover:via-[#050505]/75 group-hover:to-[#050505]/45" />
                   <div className={styles.content}>
-                    <h4 className="min-h-[60px] font-montserrat text-[24px] lg:text-[20px] xl:text-[24px] font-bold uppercase italic leading-tight text-white">
+                    <h4 className="min-h-[60px] font-montserrat text-[24px] lg:text-[20px] xl:text-[24px] font-bold uppercase italic leading-tight text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.85)]">
                       {value.title}
                     </h4>
-                    <p className={`${styles.description} pt-4 font-roboto text-[15px] leading-relaxed text-white/60`}>
+                    <p className={`${styles.description} pt-4 font-roboto text-[15px] leading-relaxed text-white/90 [text-shadow:0_2px_14px_rgba(0,0,0,0.9)]`}>
                       {value.desc}
                     </p>
                   </div>

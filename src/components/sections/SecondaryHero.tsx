@@ -5,11 +5,12 @@ import type { ReactNode } from "react";
 interface SecondaryHeroProps {
   titleLine1: ReactNode;
   titleLine2?: ReactNode;
-  description: ReactNode;
+  description?: ReactNode;
   imageSrc?: string;
   imageAlt?: string;
   /** Levrix-style: left title + right description on dark field */
   layout?: "centered" | "split";
+  compact?: boolean;
 }
 
 export default function SecondaryHero({
@@ -19,6 +20,7 @@ export default function SecondaryHero({
   imageSrc = "/assets/images/hero4.jpeg",
   imageAlt = "ELFA Electric",
   layout = "centered",
+  compact = false,
 }: SecondaryHeroProps) {
   if (layout === "split") {
     return (
@@ -47,23 +49,25 @@ export default function SecondaryHero({
               ) : null}
             </h1>
           </FadeIn>
-          <FadeIn
-            variant="fadeInUp"
-            speed="normal"
-            delay={0.08}
-            className="lg:col-span-5 lg:pb-2"
-          >
-            <p className="font-roboto max-w-md text-[15px] font-normal leading-relaxed text-white/55 sm:text-[16px] lg:ml-auto lg:text-right">
-              {description}
-            </p>
-          </FadeIn>
+          {description ? (
+            <FadeIn
+              variant="fadeInUp"
+              speed="normal"
+              delay={0.08}
+              className="lg:col-span-5 lg:pb-2"
+            >
+              <p className="font-roboto max-w-md text-[15px] font-normal leading-relaxed text-white/55 sm:text-[16px] lg:ml-auto lg:text-right">
+                {description}
+              </p>
+            </FadeIn>
+          ) : null}
         </div>
       </section>
     );
   }
 
   return (
-    <section className="relative flex min-h-[45dvh] items-center justify-center overflow-hidden pt-20 lg:min-h-[50dvh]">
+    <section className={`relative flex items-center justify-center overflow-hidden pt-20 ${compact ? "min-h-[38dvh] lg:min-h-[42dvh]" : "min-h-[45dvh] lg:min-h-[50dvh]"}`}>
       <Image
         src={imageSrc}
         alt={imageAlt}
@@ -76,15 +80,19 @@ export default function SecondaryHero({
 
       <div className="relative z-10 w-full max-w-[1200px] px-4 text-center sm:px-6 lg:px-8 mt-10">
         <FadeIn variant="fadeInUp" speed="slow">
-          <h1 className="font-montserrat mb-4 text-[56px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[72px] lg:text-[92px]">
+          <h1
+            className={`font-montserrat text-[56px] font-black italic uppercase leading-[0.9] tracking-tighter text-white sm:text-[72px] lg:text-[92px] ${description ? "mb-4" : "mb-0"}`}
+          >
             {titleLine1}{" "}
             {titleLine2 && (
               <span className="text-brand-primary">{titleLine2}</span>
             )}
           </h1>
-          <p className="font-roboto mx-auto max-w-2xl text-[16px] font-medium leading-relaxed text-white/70 sm:text-[18px]">
-            {description}
-          </p>
+          {description ? (
+            <p className="font-roboto mx-auto max-w-2xl text-[16px] font-medium leading-relaxed text-white/70 sm:text-[18px]">
+              {description}
+            </p>
+          ) : null}
         </FadeIn>
       </div>
     </section>
