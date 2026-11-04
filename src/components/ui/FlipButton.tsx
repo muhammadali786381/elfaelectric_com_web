@@ -45,7 +45,7 @@ export default function FlipButton({
     dark: "bg-zinc-950 text-white hover:bg-zinc-900 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]",
     light: "bg-white text-zinc-950 hover:bg-zinc-100",
     outline:
-      "border border-white/25 bg-transparent text-white hover:border-white hover:bg-white hover:text-black",
+      "border border-white/25 bg-transparent text-white hover:border-brand-primary hover:bg-brand-primary hover:text-bg-primary",
     glass:
       "backdrop-blur-md bg-white/5 border border-white/10 text-white hover:bg-white/10",
   };
