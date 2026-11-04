@@ -169,7 +169,7 @@ export default function Hero() {
           style={{ transform: "skewX(-12deg)", transformOrigin: "left center" }}
         >
           <WaveText className="text-[0.76em] leading-[0.9]">
-            MOVE INTO
+            RIDE INTO
           </WaveText>
           <span className="mt-1 flex items-baseline whitespace-nowrap leading-[0.9]">
             <WaveText offset={"MOVE INTO".length}>
