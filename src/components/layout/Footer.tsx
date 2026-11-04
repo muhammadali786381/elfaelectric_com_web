@@ -5,11 +5,11 @@ import { STORE_BADGES } from "@/data/products/types";
 
 const quickLinks = [
   { label: "Home", href: "/" },
-  { label: "Newsroom", href: "/newsroom" },
-  { label: "Blog", href: "/blog" },
+  { label: "News", href: "/newsroom" },
+  { label: "Blogs", href: "/blog" },
   { label: "Referral", href: "/referral" },
   { label: "FAQs", href: "/faqs" },
-  { label: "About us", href: "/about-us" },
+  { label: "About Us", href: "/about-us" },
   { label: "Certified Mechanics", href: "/certified-mechanics" },
   { label: "Contact Us", href: "/contact-us" },
 ];

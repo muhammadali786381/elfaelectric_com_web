@@ -21,12 +21,10 @@ const navLinks = [
   },
   { label: "Locations", href: "/our-locations" },
   { label: "Financing", href: "/financing-partners" },
-  { label: "About", href: "/about-us" },
+  { label: "EV Education", href: "/ev-education" },
+  { label: "About Us", href: "/about-us" },
   { label: "PAVE", href: "/pave-scheme" },
-  { label: "Education", href: "/ev-education" },
-  { label: "News", href: "/newsroom" },
-  { label: "Blogs", href: "/blog" },
-  { label: "Contact", href: "/contact-us" },
+  { label: "Contact Us", href: "/contact-us" },
 ];
 const SEARCH_INDEX = [
   {
@@ -123,7 +121,7 @@ export default function HeaderTransparent() {
       if (w >= 1440) {
         setMaxVisible(navLinks.length);
       } else if (w >= 1280) {
-        setMaxVisible(5);
+        setMaxVisible(4);
       } else if (w >= 1150) {
         setMaxVisible(3);
       } else if (w >= 1024) {
@@ -146,7 +144,7 @@ export default function HeaderTransparent() {
     setIsMobileProductsOpen(false);
   };
 
-  const desktopNavLinks = navLinks.filter(l => l.label !== "Contact");
+  const desktopNavLinks = navLinks.filter(l => l.href !== "/contact-us");
   const currentMax = isScrolled ? Math.min(3, maxVisible) : maxVisible;
   const visibleLinks = desktopNavLinks.slice(0, currentMax);
   const moreLinks = desktopNavLinks.slice(currentMax);
@@ -186,7 +184,7 @@ export default function HeaderTransparent() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex lg:gap-2">
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:ml-6 lg:flex lg:gap-2">
             <AnimatePresence mode="popLayout">
               {visibleLinks.map((link) => (
                 <motion.div
@@ -310,7 +308,7 @@ export default function HeaderTransparent() {
                 border: "1px solid rgba(255,255,255,0.05)",
               }}
             >
-              Contact
+              Contact Us
             </Link>
           </nav>
 
@@ -458,20 +456,20 @@ export default function HeaderTransparent() {
               className="mt-8 flex flex-col gap-4 pb-8"
             >
               <Link
-                href="/book-a-test-ride"
-                onClick={closeMobile}
-                className="font-montserrat flex h-14 w-full items-center justify-center gap-2 rounded-full bg-black px-6 text-[14px] font-bold tracking-[1px] uppercase text-white transition-transform hover:scale-[0.98] active:scale-95 shadow-xl"
-              >
-                <Calendar className="h-5 w-5" />
-                Book a test ride
-              </Link>
-              <Link
                 href="https://webapp.elfaelectric.com/login"
                 onClick={closeMobile}
                 className="font-montserrat flex h-14 w-full items-center justify-center gap-2 rounded-full border-2 border-black px-6 text-[14px] font-bold tracking-[1px] uppercase text-black transition-colors hover:bg-black hover:text-white active:scale-95"
               >
                 <User className="h-5 w-5" />
                 Login
+              </Link>
+              <Link
+                href="/book-a-test-ride"
+                onClick={closeMobile}
+                className="font-montserrat flex h-14 w-full items-center justify-center gap-2 rounded-full bg-black px-6 text-[14px] font-bold tracking-[1px] uppercase text-white transition-transform hover:scale-[0.98] active:scale-95 shadow-xl"
+              >
+                <Calendar className="h-5 w-5" />
+                Book a test ride
               </Link>
             </motion.div>
           </motion.div>
