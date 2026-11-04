@@ -7,36 +7,38 @@ import FlipButton from "@/components/ui/FlipButton";
 
 export default function AboutUs() {
   return (
-    <section className="relative overflow-hidden bg-bg-primary pt-0 pb-20 lg:pt-0 lg:pb-32">
-      {/* Subtle background glow to prevent it from looking like an empty void */}
-      <div 
+    <section className="relative overflow-hidden bg-bg-primary pb-12 pt-0 lg:pb-16">
+      <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[800px] rounded-full opacity-[0.05]"
-        style={{ background: 'radial-gradient(circle, var(--color-brand-primary) 0%, transparent 70%)' }}
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.05]"
+        style={{ background: "radial-gradient(circle, var(--color-brand-primary) 0%, transparent 70%)" }}
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center justify-center px-4 sm:px-6">
-        <FadeIn variant="fadeInUp" speed="slow" className="flex flex-col items-center text-center">
-          
-          {/* Subtle accent line */}
-          <div className="mb-8 h-1 w-12 rounded-full bg-brand-primary" />
+      <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-center justify-center px-4 sm:px-6">
+        <FadeIn variant="fadeInUp" speed="slow" className="flex w-full flex-col items-center text-center">
+          <div className="mb-5 h-1 w-12 rounded-full bg-brand-primary" />
 
-          <h2 className="section-heading mb-8 text-white text-balance">
+          <h2 className="section-heading mb-5 text-balance text-white sm:mb-6">
             About <span className="text-brand-primary">ELFA</span> Electric
           </h2>
-          
-          <div className="mb-10 flex flex-col gap-6 px-4">
-            {/* Lead paragraph: larger and brighter */}
-            <p className="font-roboto text-[18px] leading-[1.6] text-white/90 sm:text-[20px] lg:text-[22px] text-balance">
-              ELFA Electric, born under EV Technologies at Wavetec, is driven by a passion for building
-              an electric future with sustainable, affordable, and innovative solutions powered by clean
-              technology.
+
+          <div className="mb-8 flex w-full max-w-[1120px] flex-col gap-4 sm:mb-9 sm:gap-5">
+            <p className="font-roboto text-[17px] leading-[1.65] text-white/90 sm:text-[18px] lg:text-[19px] lg:leading-[1.7]">
+              <span className="lg:block">
+                ELFA Electric, born under EV Technologies at Wavetec, is driven by a passion for building an
+              </span>{" "}
+              <span className="lg:block">
+                electric future with sustainable, affordable, and innovative solutions powered by clean technology.
+              </span>
             </p>
-            {/* Supporting paragraph: smaller and dimmer */}
-            <p className="font-roboto text-[15px] leading-relaxed text-white/60 sm:text-[16px] text-balance">
-              At ELFA Electric, we believe that every person and every detail matters. Our electric
-              motorcycles are meticulously designed, engineered, and rigorously tested for the local
-              rider, using top-quality components.
+            <p className="font-roboto text-[16px] leading-[1.65] text-white/70 sm:text-[17px] lg:text-[18px] lg:leading-[1.7]">
+              <span className="lg:block">
+                At ELFA Electric, we believe that every person and every detail matters. Our electric motorcycles
+              </span>{" "}
+              <span className="lg:block">
+                are meticulously designed, engineered, and rigorously tested for the local rider, using top-quality
+                components.
+              </span>
             </p>
           </div>
           

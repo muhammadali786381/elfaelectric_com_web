@@ -15,14 +15,31 @@ export default function ProductHero({ product }: { product: Product }) {
         <div className={styles.stage}>
           <span className={styles.backdropTitle} aria-hidden="true">{model}</span>
           <div className={styles.vehicle}>
+            {product.heroHoverImage ? (
+              <div
+                className={`peer ${styles.hit}`}
+                style={{ ["--frame" as string]: product.heroAspect ?? 1.6 }}
+              />
+            ) : null}
             <Image
               src={product.heroImage}
               alt={product.name}
               fill
               priority
-              className="object-contain object-bottom"
+              className={`pointer-events-none object-contain object-bottom transition-opacity duration-700 ease-in-out ${product.heroHoverImage ? "peer-hover:opacity-0" : ""}`}
               sizes="(max-width: 767px) 94vw, (max-width: 1599px) 68vw, 1176px"
             />
+            {product.heroHoverImage ? (
+              <Image
+                src={product.heroHoverImage}
+                alt=""
+                fill
+                loading="eager"
+                aria-hidden
+                className="pointer-events-none object-contain object-bottom opacity-0 transition-opacity duration-700 ease-in-out peer-hover:opacity-100"
+                sizes="(max-width: 767px) 94vw, (max-width: 1599px) 68vw, 1176px"
+              />
+            ) : null}
           </div>
         </div>
 

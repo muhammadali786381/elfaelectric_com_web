@@ -18,6 +18,8 @@ export const ev125: Product = {
   priceTagline: "Luxury Living, Smartly Priced",
   heroBackground: "/assets/images/Hero-Banner-Background.webp",
   heroImage: `${IMG}/newbikehero.png`,
+  heroHoverImage: `${IMG}/125heroelfared.png`,
+  heroAspect: 1642 / 958,
   heroSpecs: [
     { label: "Motor Power", value: "2,000 W", icon: `${IMG}/motor-icon.png` },
     { label: "Top Speed", value: "Up To 75 Km/h", icon: `${IMG}/speed-icon.png` },

@@ -72,7 +72,7 @@ export default function WhyChooseUs() {
           src="/assets/images/sut.webp"
           alt="ELFA Scooty"
           fill
-          className="object-cover object-center"
+          className="object-cover object-top"
           sizes="100vw"
         />
         {/* Very dark overlay so text is readable */}
