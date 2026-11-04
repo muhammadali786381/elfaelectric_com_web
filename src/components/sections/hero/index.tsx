@@ -155,12 +155,12 @@ export default function Hero() {
           transition={{ duration, ease }}
           className="font-roboto mb-3 h-5 overflow-hidden text-[11px] font-bold uppercase tracking-[3px] text-brand-primary lg:text-[13px]"
         >
-          <AnimatePresence initial={false} mode="wait">
+          {/* <AnimatePresence initial={false} mode="wait">
             <motion.div key={product.id} variants={textVariants} initial="enter" animate="visible" exit="exit"
               transition={{ duration: reducedMotion ? 0.1 : 0.3, ease }}>
               THE NEW {product.name}
             </motion.div>
-          </AnimatePresence>
+          </AnimatePresence> */}
         </motion.div>
 
         <h1
