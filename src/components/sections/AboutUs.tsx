@@ -7,7 +7,7 @@ import FlipButton from "@/components/ui/FlipButton";
 
 export default function AboutUs() {
   return (
-    <section className="relative overflow-hidden bg-bg-primary pb-12 pt-0 lg:pb-16">
+    <section className="relative overflow-hidden bg-bg-primary pb-20 pt-0 lg:pb-28">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.05]"
