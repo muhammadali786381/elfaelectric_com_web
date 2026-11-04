@@ -50,7 +50,7 @@ export const ev125: Product = {
   advancedFeatures: [
     {
       title: "3 Different Speed Modes",
-      image: `${IMG}/speed-modes.webp`,
+      image: `/assets/images/products/ev-125/handlerbarnew.png`,
       bullets: [
         {
           label: "Eco",
@@ -68,13 +68,13 @@ export const ev125: Product = {
     },
     {
       title: "lithium iron phosphate (LiFePO4) battery",
-      image: `${IMG}/battery-feature.webp`,
+      image: `${IMG}/batterynew.png`,
       description:
         "With 3,000 battery cycles, 2-3 hours fast charging, and 100+ Km of real-world range per charge, enjoy longer rides with less time spent charging, making it easy for anyone to sustain economic pressure, as ELFA EV-125 covers 1 Km for just 1 rupee.",
     },
     {
       title: "Tubeless Tyres",
-      image: `${IMG}/tire.webp`,
+      image: `${IMG}/chromenew.png`,
       description:
         "Optimized for stability and smooth handling, our bikes feature an 18-inch front wheel and 17-inch rear wheel diameter, ensuring a comfortable ride on challenging roads.",
     },

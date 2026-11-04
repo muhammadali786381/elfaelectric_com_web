@@ -22,13 +22,13 @@ export default function ProductPage({ product }: { product: Product }) {
   return (
     <main className="flex-1">
       <ProductHero product={product} />
-      <ProductColorCarousel title={product.colorTitle} images={product.colorImages} />
-      <SavingsCalculator productId={product.calculatorId} />
+      {/* <ProductColorCarousel title={product.colorTitle} images={product.colorImages} /> */}
       <ProductCoreFeatures
         features={product.coreFeatures}
         centerImage={product.coreFeatureImage}
         productName={product.name}
       />
+      <SavingsCalculator productId={product.calculatorId} />
       <ProductAdvancedFeatures features={otherFeatures} />
       {appFeature && <ProductMobileApp feature={appFeature} />}
       <ProductSpecs groups={product.specs} />
