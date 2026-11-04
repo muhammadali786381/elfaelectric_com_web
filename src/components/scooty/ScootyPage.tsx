@@ -23,15 +23,13 @@ export default function ScootyPage({ product }: { product: Product }) {
       {/* Scooty Highlight Section */}
       <ScootyHighlight />
 
-      {/* Savings Calculator */}
-      <SavingsCalculator productId={product.calculatorId} />
-
       {/* Core Features: animated emerge from scooty */}
       <ProductCoreFeatures
         features={product.coreFeatures}
         centerImage={product.coreFeatureImage}
         productName={product.name}
       />
+      <SavingsCalculator productId={product.calculatorId} />
 
       {/* Advanced Features */}
       <ProductAdvancedFeatures features={product.advancedFeatures} />

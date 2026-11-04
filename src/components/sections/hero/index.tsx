@@ -10,7 +10,8 @@ import { useLoaderReady } from "@/components/layout/GlobalLoader";
 import { productCardData } from "@/components/sections/ProductShowcase";
 
 const imageSizes = "(max-width: 1024px) 90vw, 55vw";
-const scootySrc = "/assets/images/hero/White ELFA EV-1 Side Profile-2.png";
+const scootySrc = "/assets/images/hero/silverscootyheromain.png";
+const scootyHoverSrc = "/assets/images/hero/redscootyheromain.png";
 const { props: scootyPreload } = getImageProps({ src: scootySrc, alt: "", fill: true, sizes: imageSizes });
 const sweepDuration = 0.9;
 const revealMask = "linear-gradient(90deg, black 45%, transparent 55%)";
@@ -154,12 +155,12 @@ export default function Hero() {
           transition={{ duration, ease }}
           className="font-roboto mb-3 h-5 overflow-hidden text-[11px] font-bold uppercase tracking-[3px] text-brand-primary lg:text-[13px]"
         >
-          <AnimatePresence initial={false} mode="wait">
+          {/* <AnimatePresence initial={false} mode="wait">
             <motion.div key={product.id} variants={textVariants} initial="enter" animate="visible" exit="exit"
               transition={{ duration: reducedMotion ? 0.1 : 0.3, ease }}>
               THE NEW {product.name}
             </motion.div>
-          </AnimatePresence>
+          </AnimatePresence> */}
         </motion.div>
 
         <h1
@@ -168,7 +169,7 @@ export default function Hero() {
           style={{ transform: "skewX(-12deg)", transformOrigin: "left center" }}
         >
           <WaveText className="text-[0.76em] leading-[0.9]">
-            MOVE INTO
+            RIDE INTO
           </WaveText>
           <span className="mt-1 flex items-baseline whitespace-nowrap leading-[0.9]">
             <WaveText offset={"MOVE INTO".length}>
@@ -246,11 +247,9 @@ export default function Hero() {
               visibility: active || sweeping ? "visible" : "hidden",
               pointerEvents: sweeping ? "none" : "auto",
             }}>
-          {/* Hit area centered on the bike */}
-          {modelIsBike && <div className="peer absolute inset-x-[15%] inset-y-[20%] z-50 cursor-crosshair rounded-full" />}
+          <div className="peer absolute inset-x-[15%] inset-y-[20%] z-50 cursor-crosshair rounded-full" />
 
-          {/* Bike (Default State) */}
-          <div className="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 peer-hover:opacity-0 pointer-events-none">
+          <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-700 ease-in-out peer-hover:opacity-0">
             <Image
               src={modelIsBike
                 ? "/assets/images/hero/ELFA EV-125 motorcycle with soft ground shadow-1.png"
@@ -259,22 +258,24 @@ export default function Hero() {
               fill
               preload={modelIsBike}
               loading={modelIsBike ? undefined : "eager"}
-              className="object-contain object-center lg:object-right-bottom drop-shadow-2xl"
+              className="object-contain object-center drop-shadow-2xl lg:object-right-bottom"
               sizes={imageSizes}
             />
           </div>
 
-          {/* Red Bike (Hover State) */}
-          {modelIsBike && <div className="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 peer-hover:opacity-100 pointer-events-none">
+          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out peer-hover:opacity-100">
             <Image
-              src="/assets/images/hero/Metallic red ELFA EV-125 motorcycle.png"
-              alt="EV-125 Red Bike"
+              src={modelIsBike
+                ? "/assets/images/hero/Metallic red ELFA EV-125 motorcycle.png"
+                : scootyHoverSrc}
+              alt=""
+              aria-hidden
               fill
               loading="eager"
-              className="object-contain object-center lg:object-right-bottom drop-shadow-2xl"
+              className="object-contain object-center drop-shadow-2xl lg:object-right-bottom"
               sizes={imageSizes}
             />
-          </div>}
+          </div>
           </motion.div>
             );
           })}

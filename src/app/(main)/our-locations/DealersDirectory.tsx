@@ -1,9 +1,17 @@
 "use client";
 
 import { useMemo, useState, useCallback } from "react";
-import { Building2, Phone, MessageCircle, Navigation, Clock, CalendarCheck, MapPin, Search, X, Mail } from "lucide-react";
+import { Building2, Phone, Navigation, Clock, CalendarCheck, MapPin, Search, X, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 import FlipButton from "@/components/ui/FlipButton";
+
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M20.5 3.5A11 11 0 0 0 2.1 17.8L1 23l5.3-1.1A11 11 0 0 0 12 23a11 11 0 0 0 8.5-19.5zM12 21a9 9 0 0 1-4.6-1.3l-.3-.2-3.1.7.7-3-.2-.3A9 9 0 1 1 12 21zm5-6.7c-.3-.1-1.6-.8-1.8-.9s-.4-.1-.6.1-.7.9-.8 1-.3.2-.6.1a7.4 7.4 0 0 1-2.2-1.4 8.2 8.2 0 0 1-1.5-1.9c-.2-.3 0-.4.1-.6l.4-.5.2-.3a.5.5 0 0 0 0-.5c0-.1-.6-1.4-.8-1.9s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.5 4 15 15 0 0 0 1.5.6 3.6 3.6 0 0 0 1.7.1 2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.3-.2-.6-.3z" />
+    </svg>
+  );
+}
 
 export type Dealer = {
   name: string;
@@ -78,14 +86,14 @@ export const dealersByCity: Record<City, Dealer[]> = {
     },
     {
       name: "Solàrizè Malir",
-      address: "Shop no1 c43/6 malir tanki, kalaboard Malir",
+      address: "Shop No. 1, C-43/6 Malir Tanki, Kalaboard, Malir",
       phones: ["0333 2236876"],
       email: "Irfanafnan@hotmail.com",
       mapLink: "https://maps.app.goo.gl/kCDiVGtJFEhykhWf7",
     },
     {
       name: "Solàrizè Landhi",
-      address: "Shop 2, House no 60, sector 1-C, jaam nagar, landhi no 1, Karachi",
+      address: "Shop 2, House No. 60, Sector 1-C, Jaam Nagar, Landhi No. 1, Karachi",
       phones: ["0333 2236876"],
       email: "Irfanafnan@hotmail.com",
       mapLink: "https://maps.app.goo.gl/eixgH1rzk6mCyUxw5",
@@ -209,7 +217,7 @@ function DealerCard({
   return (
     <article
       onClick={() => onClick(dealer)}
-      className={`group relative flex cursor-pointer flex-col gap-4 border-b border-white/[0.07] p-5 transition-all duration-200 sm:p-6 ${isActive
+      className={`group relative flex cursor-pointer flex-col gap-2.5 border-b border-white/[0.07] p-4 transition-all duration-200 sm:p-5 ${isActive
         ? "bg-[#0d1a0d] border-l-2 border-l-brand-primary"
         : "hover:bg-[#0a0a0a] hover:border-l-2 hover:border-l-brand-primary/40"
         }`}
@@ -223,26 +231,34 @@ function DealerCard({
       </div>
 
       {/* Name */}
-      <h3 className="font-montserrat -mt-1 text-[17px] font-bold uppercase tracking-wide text-white sm:text-[19px]">
+      <h3 className="font-montserrat text-[17px] font-bold uppercase tracking-wide text-white sm:text-[19px]">
         {dealer.name}
       </h3>
 
       {/* Details */}
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-1.5">
         <div className="flex items-start gap-3">
           <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-white/30" strokeWidth={1.5} />
-          <p className="font-roboto text-[13px] leading-relaxed text-white/60">{dealer.address}</p>
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="font-roboto text-[13px] leading-snug text-white/60 transition-colors hover:text-brand-primary hover:underline"
+          >
+            {dealer.address}
+          </a>
         </div>
 
         <div className="flex items-center gap-3">
           <Phone className="h-4 w-4 shrink-0 text-white/30" strokeWidth={1.5} />
-          <div className="flex flex-wrap gap-x-3 gap-y-1">
+          <div className="flex flex-wrap gap-x-3 gap-y-0.5">
             {dealer.phones.map((p) => (
               <a
                 key={p}
                 href={`tel:${p.replace(/[\s-]/g, "")}`}
                 onClick={(e) => e.stopPropagation()}
-                className="font-roboto text-[13px] font-semibold text-white transition-colors hover:text-brand-primary"
+                className="font-roboto text-[13px] font-semibold leading-snug text-white transition-colors hover:text-brand-primary"
               >
                 {p}
               </a>
@@ -252,7 +268,7 @@ function DealerCard({
 
         <div className="flex items-center gap-3">
           <Clock className="h-4 w-4 shrink-0 text-white/30" strokeWidth={1.5} />
-          <span className="font-roboto text-[13px] text-white/50">Mon – Sat, 11:00 am – 8:00 pm</span>
+          <span className="font-roboto text-[13px] leading-snug text-white/50">Mon – Sat, 11:00 am – 8:00 pm</span>
         </div>
       </div>
 
@@ -287,8 +303,8 @@ function DealerCard({
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
           variant="outline"
-          icon={<MessageCircle className="h-3 w-3" strokeWidth={2.5} />}
-          className="rounded-[3px] border-white/20 px-3 py-1.5 text-[11px] tracking-wider text-white/70 hover:border-[#25D366] hover:bg-transparent hover:text-[#25D366]"
+          icon={<WhatsAppIcon className="h-3.5 w-3.5" />}
+          className="rounded-[3px] border-white/20 px-3 py-1.5 text-[11px] tracking-wider text-white/70 hover:border-[#CC5500] hover:bg-[#CC5500] hover:text-white"
         >
           WhatsApp
         </FlipButton>
@@ -299,7 +315,7 @@ function DealerCard({
             onClick={(e) => e.stopPropagation()}
             variant="outline"
             icon={<Mail className="h-3 w-3" strokeWidth={2.5} />}
-            className="rounded-[3px] border-white/20 px-3 py-1.5 text-[11px] tracking-wider text-white/70 hover:border-brand-primary hover:bg-transparent hover:text-brand-primary"
+            className="rounded-[3px] border-white/20 px-3 py-1.5 text-[11px] tracking-wider text-white/70 hover:border-[#CC5500] hover:bg-[#CC5500] hover:text-white"
           >
             Mail Now
           </FlipButton>
@@ -374,7 +390,7 @@ export default function DealersDirectory() {
           </div>
 
           {/* Dealer list */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col">
             {filteredDealers.length > 0 ? (
               filteredDealers.map((d, idx) => (
                 <DealerCard

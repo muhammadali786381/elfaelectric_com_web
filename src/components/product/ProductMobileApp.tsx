@@ -11,7 +11,7 @@ export default function ProductMobileApp({
   feature: ProductAdvancedFeature;
 }) {
   return (
-    <section className="bg-[#050505] py-24 lg:py-32 overflow-hidden border-t border-white/5">
+    <section className="overflow-hidden border-t border-white/5 bg-[#050505] pb-24 pt-10 lg:pb-32 lg:pt-14">
       <div className="mx-auto w-full max-w-[1300px] px-6">
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[1fr_1.2fr] lg:gap-24">
 
@@ -21,21 +21,13 @@ export default function ProductMobileApp({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-            className="flex flex-col items-start lg:pr-10 order-2 lg:order-1"
+            className="order-2 flex flex-col items-start lg:order-1 lg:pr-10"
           >
-            {/* Eyebrow */}
-            {/* <div className="mb-6 flex items-center gap-3 text-[16px] font-medium tracking-wide text-white">
-              <div className="h-2 w-2 rounded-full bg-white" />
-              Download now
-            </div> */}
-
-            {/* Title */}
-            <h2 className="font-montserrat mb-8 text-[48px] font-medium leading-[1.05] tracking-tight text-white lg:text-[72px] xl:text-[80px]">
+            <h2 className="font-montserrat mb-6 text-[48px] font-medium leading-[1.05] tracking-tight text-white lg:mb-8 lg:text-[72px] xl:text-[80px]">
               {feature.title}
             </h2>
 
-            {/* Description */}
-            <p className="font-roboto mb-12 text-[18px] font-normal leading-relaxed text-white/60 lg:text-[22px] max-w-[600px]">
+            <p className="font-roboto mb-12 max-w-[600px] text-[18px] font-normal leading-relaxed text-white/60 lg:text-[22px]">
               {feature.description}
             </p>
 

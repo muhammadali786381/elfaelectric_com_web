@@ -25,22 +25,22 @@ const coreValues = [
   {
     title: "Sustainable Innovation",
     desc: "We never stop evolving. Through continuous learning and experimentation, we deliver smart, sustainable solutions that adapt quickly to changing needs and emerging technologies.",
-    img: "/assets/images/about/engineering.jpeg",
+    img: "/assets/images/about/aboutassets/core3.jpeg",
   },
   {
     title: "Unwavering Trust",
     desc: "Trust is our foundation. Built on honesty, integrity, and reliability, we promise performance you can count on.",
-    img: "/assets/images/about/team7.jpeg",
+    img: "/assets/images/about/aboutassets/core2.jpeg",
   },
   {
     title: "Customer Obsession",
     desc: "Your journey drives us. We listen closely, understand your needs, and design solutions that fit seamlessly into your life.",
-    img: "/assets/images/about/people3.jpeg",
+    img: "/assets/images/about/aboutassets/core1.jpeg",
   },
   {
     title: "Equitable Progress",
     desc: "We believe progress must be for everyone. That’s why we engineer accessible, fair, and simple solutions that empower people to move forward toward a better future.",
-    img: "/assets/images/about/people6.jpeg",
+    img: "/assets/images/about/aboutassets/core4.jpeg",
   },
 ];
 
@@ -49,7 +49,7 @@ export default function AboutUsPage() {
     <>
       <main className="flex-1 bg-bg-primary">
         {/* HERO: Cinematic & Minimal */}
-        <section className="relative min-h-[60dvh] lg:min-h-[70dvh] w-full flex items-center justify-center pt-28 pb-20 lg:pt-32">
+        <section className="relative min-h-[46dvh] lg:min-h-[52dvh] w-full flex items-center justify-center pt-28 pb-12 lg:pt-28">
           <div className="absolute inset-0 z-0">
             <Image
               src="/assets/images/about/team2.jpeg"
@@ -68,32 +68,32 @@ export default function AboutUsPage() {
               <p className="font-roboto mb-6 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary">
                 About ELFA Electric
               </p>
-              <h1 className="font-montserrat text-[48px] sm:text-[64px] lg:text-[80px] font-black uppercase italic leading-[0.9] tracking-tighter text-white drop-shadow-2xl">
-                Engineering <br className="hidden sm:block" /> The Future.
+              <h1 className="font-montserrat text-[48px] sm:text-[64px] lg:text-[80px] font-black uppercase italic leading-[1.1] tracking-tighter text-white drop-shadow-2xl xl:whitespace-nowrap">
+                Engineering The Future.
               </h1>
             </FadeIn>
           </div>
         </section>
 
         {/* WHO WE ARE - STICKY SCROLL LAYOUT */}
-        <section className="relative w-full px-6 py-24 sm:py-32 max-w-[1400px] mx-auto border-t border-white/5">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+        <section className="relative w-full px-6 py-12 sm:py-16 max-w-[1200px] mx-auto border-t border-white/5">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-5 lg:sticky lg:top-32">
               <FadeIn variant="fadeInLeft" speed="slow">
-                <h2 className="font-montserrat text-[40px] sm:text-[64px] font-black uppercase italic leading-[0.9] tracking-tighter text-white">
+                <h2 className="font-montserrat text-[40px] sm:text-[52px] lg:text-[56px] font-black uppercase italic leading-[1.1] tracking-tighter text-white">
                   Driven By <br className="hidden lg:block" />
                   <span className="text-brand-primary">Purpose</span>
                 </h2>
-                <p className="mt-8 font-roboto text-[12px] text-white/50 uppercase tracking-widest font-bold">
+                <p className="mt-4 font-roboto text-[12px] text-white/50 uppercase tracking-widest font-bold">
                   Welcome to ELFA
                 </p>
               </FadeIn>
             </div>
-            <div className="lg:col-span-7 flex flex-col gap-12 sm:gap-20">
+            <div className="lg:col-span-7 flex flex-col gap-6">
               <FadeIn
                 variant="fadeInUp"
                 speed="slow"
-                className="text-[20px] sm:text-[32px] font-roboto leading-snug text-white/60"
+                className="text-[17px] sm:text-[20px] font-roboto leading-relaxed text-white/60"
               >
                 <span className="text-white font-medium">ELFA Electric</span>, born under EV
                 Technologies at Wavetec, is driven by a passion for building an electric future with
@@ -102,7 +102,7 @@ export default function AboutUsPage() {
               <FadeIn
                 variant="fadeInUp"
                 speed="slow"
-                className="text-[20px] sm:text-[32px] font-roboto leading-snug text-white/60"
+                className="text-[17px] sm:text-[20px] font-roboto leading-relaxed text-white/60"
               >
                 At ELFA Electric, we believe that every person and every detail matters. Our electric
                 motorcycles are meticulously designed, engineered, and rigorously tested for the
@@ -111,7 +111,7 @@ export default function AboutUsPage() {
               <FadeIn
                 variant="fadeInUp"
                 speed="slow"
-                className="text-[20px] sm:text-[32px] font-roboto leading-snug text-white/60"
+                className="text-[17px] sm:text-[20px] font-roboto leading-relaxed text-white/60"
               >
                 We have studied driving patterns, road conditions, and the needs of different types
                 of riders to determine the optimal specifications. This customer-centric approach is
@@ -121,10 +121,10 @@ export default function AboutUsPage() {
               <FadeIn
                 variant="fadeInUp"
                 speed="slow"
-                className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden mt-8 grayscale hover:grayscale-0 transition-all duration-1000 border border-white/10"
+                className="relative aspect-[16/9] w-full max-w-xl rounded-2xl overflow-hidden mt-2 grayscale hover:grayscale-0 transition-all duration-1000 border border-white/10"
               >
                 <Image
-                  src="/assets/images/about/engineering.jpeg"
+                  src="/assets/images/about/aboutassets/firstimage.JPG"
                   alt="Engineering"
                   fill
                   className="object-cover"
@@ -135,45 +135,40 @@ export default function AboutUsPage() {
           </div>
         </section>
 
-        {/* MISSION & VISION - HUGE TYPOGRAPHY */}
-        <section className="relative w-full py-32 sm:py-48 border-t border-white/5 bg-[#050505] overflow-hidden">
-          {/* Subtle background glow */}
-          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-brand-primary/5 blur-[120px]" />
-
-          <div className="max-w-[1400px] mx-auto px-6 flex flex-col gap-32 relative z-10">
-            <FadeIn variant="fadeInUp" speed="slow" className="max-w-5xl">
-              <p className="font-roboto mb-8 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary/80">
+        {/* Mission and vision share one reading line and type scale. */}
+        <section className="relative w-full border-t border-white/5 bg-[#050505] py-12 sm:py-16">
+          <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 px-6 md:grid-cols-2 md:gap-12">
+            <FadeIn variant="fadeInUp" speed="normal">
+              <h2 className="font-montserrat mb-4 text-[22px] font-bold leading-tight text-white sm:text-[24px]">
                 Our Vision
+              </h2>
+              <p className="font-montserrat max-w-xl text-[24px] font-medium leading-[1.4] tracking-tight text-white/80 lg:text-[28px]">
+                Enable equitable progress through{' '}
+                <span className="font-semibold text-brand-primary">sustainable mobility.</span>
               </p>
-              <h3 className="font-montserrat text-[32px] sm:text-[64px] font-medium leading-[1.1] tracking-tight text-white">
-                Enable equitable progress through <br className="hidden sm:block" />
-                <span className="text-brand-primary font-black italic">sustainable mobility.</span>
-              </h3>
             </FadeIn>
-            <FadeIn variant="fadeInUp" speed="slow" className="max-w-5xl lg:self-end lg:text-right">
-              <p className="font-roboto mb-8 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary/80">
+            <FadeIn variant="fadeInUp" speed="normal" className="border-t border-white/10 pt-8 md:border-t-0 md:border-l md:pt-0 md:pl-12">
+              <h2 className="font-montserrat mb-4 text-[22px] font-bold leading-tight text-white sm:text-[24px]">
                 Our Mission
-              </p>
-              <h3 className="font-montserrat text-[32px] sm:text-[64px] font-medium leading-[1.1] tracking-tight text-white">
-                Deliver accessible, smart, and reliable electric solutions that fuel{" "}
-                <span className="text-brand-primary font-black italic">
-                  everyday productivity
-                </span>{" "}
+              </h2>
+              <p className="font-montserrat max-w-xl text-[24px] font-medium leading-[1.4] tracking-tight text-white/80 lg:text-[28px]">
+                Deliver accessible, smart, and reliable electric solutions that fuel{' '}
+                <span className="font-semibold text-brand-primary">everyday productivity</span>{' '}
                 for everyone.
-              </h3>
+              </p>
             </FadeIn>
           </div>
         </section>
 
         {/* CORE VALUES - IMMERSIVE OVERLAY LIST */}
-        <section className="relative w-full py-24 sm:py-32 border-t border-white/5 bg-bg-primary">
-          <div className="max-w-[1400px] mx-auto px-6">
-            <FadeIn variant="fadeInUp" speed="slow" className="mb-20">
+        <section className="relative w-full py-12 sm:py-16 border-t border-white/5 bg-bg-primary">
+          <div className="max-w-[1200px] mx-auto px-6">
+            <FadeIn variant="fadeInUp" speed="slow" className="mb-8">
               <p className="font-roboto mb-4 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary">
                 Philosophy
               </p>
-              <h2 className="font-montserrat text-[40px] sm:text-[80px] font-black uppercase italic leading-none tracking-tighter text-white">
-                Core <br /> Values
+              <h2 className="font-montserrat text-[32px] sm:text-[44px] font-black uppercase italic leading-none tracking-tighter text-white">
+                Core Values
               </h2>
             </FadeIn>
 
@@ -185,21 +180,21 @@ export default function AboutUsPage() {
                   delay={i * 0.1}
                   speed="slow"
                   tabIndex={0}
-                  className={`${styles.card} group relative h-[500px] rounded-3xl overflow-hidden cursor-pointer border border-white/5 bg-[#080808] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-primary`}
+                  className={`${styles.card} group relative h-[360px] sm:h-[400px] rounded-2xl overflow-hidden cursor-pointer border border-white/5 bg-[#080808] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-primary`}
                 >
                   <Image
                     src={value.img}
                     alt={value.title}
                     fill
-                    className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-40 mix-blend-luminosity grayscale group-hover:grayscale-0"
+                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
                     sizes="(max-width: 1024px) 100vw, 25vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/55 to-[#050505]/15 transition-colors duration-500 group-hover:from-[#050505] group-hover:via-[#050505]/75 group-hover:to-[#050505]/45" />
                   <div className={styles.content}>
-                    <h4 className="min-h-[60px] font-montserrat text-[24px] lg:text-[20px] xl:text-[24px] font-bold uppercase italic leading-tight text-white">
+                    <h4 className="min-h-[60px] font-montserrat text-[20px] lg:text-[18px] xl:text-[20px] font-bold uppercase italic leading-tight text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.85)]">
                       {value.title}
                     </h4>
-                    <p className={`${styles.description} pt-4 font-roboto text-[15px] leading-relaxed text-white/60`}>
+                    <p className={`${styles.description} pt-3 font-roboto text-[14px] leading-relaxed text-white/90 [text-shadow:0_2px_14px_rgba(0,0,0,0.9)]`}>
                       {value.desc}
                     </p>
                   </div>
@@ -210,12 +205,12 @@ export default function AboutUsPage() {
         </section>
 
         {/* WHY CHOOSE US - MINIMALIST SPLIT */}
-        <section className="relative w-full py-24 sm:py-32 border-t border-white/5 bg-[#050505] overflow-hidden">
-          <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+        <section className="relative w-full py-12 sm:py-16 border-t border-white/5 bg-[#050505] overflow-hidden">
+          <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <FadeIn
               variant="fadeInUp"
               speed="slow"
-              className="order-2 lg:order-1 relative h-[500px] lg:h-[700px] w-full"
+              className="order-2 lg:order-1 relative h-[320px] lg:h-[440px] w-full"
             >
               {/* Using EV-125-BIKE-1.png which has a transparent background for a sleek product showcase */}
               <Image
@@ -231,14 +226,14 @@ export default function AboutUsPage() {
                 <p className="font-roboto mb-4 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary">
                   The Edge
                 </p>
-                <h2 className="font-montserrat text-[40px] sm:text-[64px] font-black uppercase italic leading-[0.9] tracking-tighter text-white mb-12">
+                <h2 className="font-montserrat text-[32px] sm:text-[40px] lg:text-[44px] font-black uppercase italic leading-[1.1] tracking-tighter text-white mb-6">
                   The ELFA <br /> <span className="text-brand-primary">Advantage</span>
                 </h2>
-                <ul className="space-y-6">
+                <ul className="space-y-4">
                   {whyChoose.map((item, i) => (
                     <li
                       key={i}
-                      className="flex gap-6 items-start font-roboto text-[16px] sm:text-[18px] text-white/70"
+                      className="flex gap-4 items-start font-roboto text-[15px] sm:text-[16px] text-white/70"
                     >
                       <span className="text-brand-primary font-black mt-0.5">
                         0{i + 1}

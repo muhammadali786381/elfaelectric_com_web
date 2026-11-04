@@ -62,7 +62,7 @@ export default function JoinRevolutionCTA({
               )}
             </h2>
             {subtitle && (
-              <p className="font-roboto mt-2 text-[14px] font-medium text-white/50 sm:text-[15px] max-w-md">
+              <p className="font-roboto mt-2 max-w-none text-[14px] font-medium leading-snug text-white/50 sm:text-[15px] sm:whitespace-nowrap">
                 {subtitle}
               </p>
             )}

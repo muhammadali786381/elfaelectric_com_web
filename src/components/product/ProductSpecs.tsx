@@ -6,10 +6,10 @@ import { motion } from "motion/react";
 
 export default function ProductSpecs({ groups }: { groups: ProductSpecGroup[] }) {
   return (
-    <section className="bg-[#050505] py-24 lg:py-32">
+    <section className="bg-[#050505] py-14 sm:py-16 lg:py-20">
       <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center px-6">
         
-        <div className="mb-20 flex flex-col items-center justify-center text-center">
+        <div className="mb-10 flex flex-col items-center justify-center text-center sm:mb-12 lg:mb-14">
           <motion.h2 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 0.2, y: 0 }}

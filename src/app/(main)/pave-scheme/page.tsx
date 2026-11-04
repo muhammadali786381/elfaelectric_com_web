@@ -240,7 +240,7 @@ export default function PaveSchemePage() {
                     rel="noopener noreferrer"
                     variant="outline"
                     icon={<WhatsAppIcon className="w-5 h-5" />}
-                    className="flex-1 h-auto rounded-xl border-white/20 p-4 text-[14px] hover:border-brand-primary hover:bg-transparent hover:text-white"
+                    className="flex-1 h-auto rounded-xl border-white/20 p-4 text-[14px] hover:border-[#CC5500] hover:bg-[#CC5500] hover:text-white"
                   >
                     Send via WhatsApp
                   </FlipButton>

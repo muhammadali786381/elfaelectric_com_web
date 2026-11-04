@@ -1,0 +1,75 @@
+.hero {
+  position: relative;
+  min-height: max(760px, 100svh);
+  overflow: hidden;
+  background: #050505;
+}
+.content {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(108px, 13svh, 150px) 5vw 0;
+  text-align: center;
+  pointer-events: none;
+}
+.heading {
+  margin: 0;
+  color: white;
+  font-size: clamp(21px, 6vw, 128px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+.description {
+  display: grid;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 20px;
+  color: rgb(255 255 255 / 70%);
+  font-size: 17px;
+  line-height: 1.5;
+}
+.actions {
+  position: absolute;
+  bottom: 112px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  pointer-events: auto;
+}
+.vehicle {
+  position: absolute;
+  top: 29%;
+  bottom: 180px;
+  left: 50%;
+  width: min(76%, 1100px);
+  transform: translateX(-50%);
+  z-index: 10;
+}
+.vehicleFrame { position: relative; width: 100%; height: 100%; }
+.specBar {
+  position: absolute;
+  bottom: 26px;
+  inset-inline: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  padding-inline: 16px;
+}
+@media (max-width: 1023px) {
+  .hero { min-height: 0; padding: 112px 20px 140px; }
+  .content { position: relative; padding: 0; }
+  .description { max-width: 440px; min-height: 3em; margin-top: 20px; font-size: 15px; }
+  .actions { position: static; margin-top: 24px; gap: 12px; }
+  .vehicle { position: relative; inset: auto; width: min(100%, 680px); margin: 24px auto 0; transform: none; }
+  .vehicleFrame { height: auto; aspect-ratio: 3 / 2; }
+  .specBar { bottom: 24px; }
+}
+@media (max-width: 539px) {
+  .actions { flex-direction: column; width: min(100%, 320px); }
+  .actions > a { width: 100%; }
+}

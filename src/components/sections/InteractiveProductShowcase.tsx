@@ -11,9 +11,14 @@ import styles from "./InteractiveProductShowcase.module.css";
 
 const products = productCardData.map(product => ({
   ...product,
-  image: product.id === "ev125"
-    ? "/assets/images/hero/ELFA EV-125 motorcycle with soft ground shadow-1.png"
-    : "/assets/images/hero/White ELFA EV-1 Side Profile-2.png",
+  colors: product.id === "ev125" ? [
+    { name: "Black", swatch: "#202222", image: "/assets/images/hero/ELFA EV-125 motorcycle with soft ground shadow-1.png" },
+    { name: "Red", swatch: "#c61b23", image: "/assets/images/hero/Metallic red ELFA EV-125 motorcycle.png" },
+    { name: "Silver", swatch: "#c9cdcf", image: "/assets/images/hero/Silver EV-125 electric bike.png" },
+  ] : [
+    { name: "Silver", swatch: "#d4d7d9", image: "/assets/images/hero/White ELFA EV-1 Side Profile-2.png" },
+    { name: "Red", swatch: "#c61b23", image: "/assets/images/redscootyheromain.png" },
+  ],
 }));
 
 const icons = { battery: Battery, speed: Gauge, motor: Cog, road: Route };
@@ -64,6 +69,38 @@ function ProductDetails({ product, itemVariants }: ProductTextProps) {
   );
 }
 
+function ColorPicker({
+  product,
+  color,
+  onColorChange,
+  switching,
+}: {
+  product: Product;
+  color: number;
+  onColorChange: (index: number) => void;
+  switching: boolean;
+}) {
+  return (
+    <div className={styles.colors}>
+      <div className={styles.swatches} role="group" aria-label={`${product.name} color`}>
+        {product.colors.map((option, index) => (
+          <button
+            key={option.name}
+            type="button"
+            className={styles.swatch}
+            aria-label={option.name}
+            aria-pressed={color === index}
+            disabled={switching}
+            onClick={() => onColorChange(index)}
+          >
+            <span style={{ backgroundColor: option.swatch }} />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ProductPricing({ product, itemVariants }: ProductTextProps) {
   return (
     <>
@@ -87,6 +124,7 @@ function ProductPricing({ product, itemVariants }: ProductTextProps) {
 
 export default function InteractiveProductShowcase() {
   const [selected, setSelected] = useState(0);
+  const [colors, setColors] = useState<Record<string, number>>({ ev125: 0, ev1: 0 });
   const [origin, setOrigin] = useState<Origin | null>(null);
   const [switching, setSwitching] = useState(false);
   const switchingRef = useRef(false);
@@ -145,7 +183,7 @@ export default function InteractiveProductShowcase() {
   return (
     <section className={styles.section} aria-labelledby="interactive-products-heading" data-product-showcase>
       <div className={styles.container}>
-        <h2 id="interactive-products-heading" className="section-heading text-center">
+        <h2 id="interactive-products-heading" className={styles.heading}>
           Our Products
         </h2>
         <div id="interactive-product-display" className={styles.showcase} data-active-product={active.id}>
@@ -155,6 +193,14 @@ export default function InteractiveProductShowcase() {
                 <ProductDetails product={active} itemVariants={textItemVariants} />
               </motion.div>
             </AnimatePresence>
+            <ColorPicker
+              product={active}
+              color={colors[active.id]}
+              switching={switching}
+              onColorChange={color => {
+                if (!switchingRef.current) setColors(current => ({ ...current, [active.id]: color }));
+              }}
+            />
           </div>
 
           <div className={styles.visual}>
@@ -174,7 +220,15 @@ export default function InteractiveProductShowcase() {
                   transition={{ duration: reducedMotion ? 0.15 : swapDuration, ease: moveEase }}
                   onAnimationComplete={finishSwitch}
                 >
-                  <Image src={active.image} alt={active.name} fill sizes={imageSizes} className={styles.image} />
+                  {active.colors.map((color, index) => (
+                    <motion.div key={color.name} className={styles.colorImage} initial={false}
+                      animate={{ opacity: colors[active.id] === index ? 1 : 0 }}
+                      transition={{ duration: reducedMotion ? 0.1 : 0.45, ease: fadeEase }}
+                      aria-hidden={colors[active.id] !== index}>
+                      <Image src={color.image} alt={`${active.name} in ${color.name}`} fill sizes={imageSizes}
+                        loading="eager" className={styles.image} />
+                    </motion.div>
+                  ))}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -195,7 +249,11 @@ export default function InteractiveProductShowcase() {
                 initial={origin ? { opacity: 0, transform: reducedMotion ? "none" : "translateY(12px)" } : false}
                 animate={{ opacity: 1, transform: "translateY(0px)" }}
                 transition={{ duration: 0.2, delay: switching && !reducedMotion ? 0.45 : 0, ease: fadeEase }}>
-                <Image src={next.image} alt="" fill sizes={imageSizes} className={styles.image} />
+                {next.colors.map((color, index) => (
+                  <span key={color.name} className={styles.colorImage} style={{ opacity: colors[next.id] === index ? 1 : 0 }}>
+                    <Image src={color.image} alt="" fill sizes={imageSizes} loading="eager" className={styles.image} />
+                  </span>
+                ))}
               </motion.span>
             </span>
             <span className={styles.previewLabel}>
@@ -204,7 +262,7 @@ export default function InteractiveProductShowcase() {
             </span>
           </button>
         </div>
-        <p className="sr-only" role="status" aria-live="polite">Showing {active.name}.</p>
+        <p className="sr-only" role="status" aria-live="polite">Showing {active.name} in {active.colors[colors[active.id]].name}.</p>
       </div>
     </section>
   );
