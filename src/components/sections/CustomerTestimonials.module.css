@@ -54,21 +54,29 @@
 .photo { object-fit: cover; object-position: center 25%; }
 .card h3 { font-family: var(--font-montserrat), sans-serif; font-size: 19px; font-weight: 700; line-height: 1.4; }
 .details { margin-top: 4px; color: #bdbdbd; font-size: 12px; line-height: 1.6; }
-.stars { display: flex; justify-content: center; gap: 3px; margin: 12px 0; color: #dedede; }
+.stars { display: flex; justify-content: center; gap: 3px; margin: 12px 0; color: var(--color-brand-primary); }
 .card blockquote { margin: 0; font-size: 18px; line-height: 1.6; color: #eeeeee; }
 .controls { display: flex; justify-content: center; align-items: center; gap: 18px; padding: 0 16px; }
-.controls > button { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #202020; color: #eeeeee; transition: background-color 180ms ease, color 180ms ease; }
+.controls > button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-brand-primary);
+  color: #050505;
+  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
 .dots { display: flex; align-items: center; gap: 0; }
 .dots button { display: grid; place-items: center; width: 28px; height: 40px; }
 .dots button::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #777; transition: transform 200ms ease, background-color 200ms ease; }
-.dots button[aria-current="true"]::after { background: #fff; transform: scale(1.5); }
+.dots button[aria-current="true"]::after { background: var(--color-brand-primary); transform: scale(1.5); }
 .footer { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 24px 48px; padding: 0 24px; }
-.videoLink :global(.IconContainer) { background: #dedede; }
-.videoLink:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
+.videoLink:focus-visible { outline: 2px solid var(--color-brand-primary); outline-offset: 5px; }
 .controls button:focus-visible { outline: 2px solid var(--color-brand-primary); outline-offset: 3px; }
 
 @media (hover: hover) and (pointer: fine) {
-  .controls > button:hover { background: #eee; color: #050505; }
+  .controls > button:hover { background: #4fbf5f; color: #050505; }
 }
 
 @media (max-width: 1279px) {
