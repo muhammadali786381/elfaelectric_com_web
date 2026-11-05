@@ -101,11 +101,14 @@
 .card:focus-visible { outline: 2px solid #00d26a; outline-offset: 5px; }
 
 @media (max-width: 639px) {
-  .section { padding: 64px 0; }
+  .section { padding: 48px 0; }
   .heading p { font-size: 14px; }
   .gallery { margin-top: 8px; }
-  .slide { width: 56vw; }
-  .slider { padding: 44px 0; }
+  .slide { width: clamp(130px, 42vw, 180px); }
+  .slider { padding: 32px 0; }
+  .card { border-radius: 12px; }
+  .play { width: 40px; height: 40px; }
+  .platform { bottom: 12px; left: 12px; font-size: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
