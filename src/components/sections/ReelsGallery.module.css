@@ -98,27 +98,7 @@
   font-weight: 600;
 }
 
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.controls button {
-  display: grid;
-  width: 44px;
-  height: 44px;
-  place-items: center;
-  border: 1px solid #333;
-  border-radius: 50%;
-  background: #151515;
-  cursor: pointer;
-  transition: background 180ms ease;
-}
-
-.controls button:hover { background: #292929; }
-.card:focus-visible, .controls button:focus-visible { outline: 2px solid #00d26a; outline-offset: 5px; }
+.card:focus-visible { outline: 2px solid #00d26a; outline-offset: 5px; }
 
 @media (max-width: 639px) {
   .section { padding: 64px 0; }
@@ -126,9 +106,8 @@
   .gallery { margin-top: 8px; }
   .slide { width: 56vw; }
   .slider { padding: 44px 0; }
-  .controls { margin-top: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .play, .controls button { transition: none; }
+  .play { transition: none; }
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, useInView, useReducedMotion } from "framer-motion";
-import { ChevronLeft, ChevronRight, ExternalLink, Play } from "lucide-react";
+import { ExternalLink, Play } from "lucide-react";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Autoplay, EffectCoverflow } from "swiper/modules";
@@ -28,7 +28,7 @@ export default function ReelsGallery({ reels }: { reels: readonly VideoLink[] })
   const [focused, setFocused] = useState(false);
   const items = useMemo(() => reels.map(resolveSocialReel).filter((item): item is SocialReel => item !== null), [reels]);
   // Enough slides to loop a full-width ribbon without an empty edge.
-  const slides = items.length > 1 ? Array.from({ length: Math.max(2, Math.ceil(12 / items.length)) }, () => items).flat() : items;
+  const slides = items.length > 1 ? Array.from({ length: Math.max(2, Math.ceil(24 / items.length)) }, () => items).flat() : items;
 
   useEffect(() => {
     if (!swiper || swiper.destroyed) return;
@@ -73,6 +73,7 @@ export default function ReelsGallery({ reels }: { reels: readonly VideoLink[] })
           centeredSlides
           spaceBetween={20}
           loop={items.length > 1}
+          loopAdditionalSlides={items.length > 1 ? 4 : 0}
           watchSlidesProgress
           grabCursor
           className={styles.slider}
@@ -118,13 +119,6 @@ export default function ReelsGallery({ reels }: { reels: readonly VideoLink[] })
           ))}
         </Swiper>
       </div>
-
-      {items.length > 1 && (
-        <div className={styles.controls}>
-          <button type="button" aria-label="Previous reel" onClick={() => swiper?.slidePrev(600)}><ChevronLeft size={18} /></button>
-          <button type="button" aria-label="Next reel" onClick={() => swiper?.slideNext(600)}><ChevronRight size={18} /></button>
-        </div>
-      )}
 
       <AnimatePresence>
         <VideoModal isOpen={activeVideo !== null} videoUrl={activeVideo?.embedUrl ?? null}
