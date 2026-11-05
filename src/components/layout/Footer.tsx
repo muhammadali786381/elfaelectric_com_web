@@ -204,10 +204,10 @@ export default function Footer() {
                 <div>
                   <p className="font-poppins text-[14px] font-medium leading-5 text-text-inverse">Call Us</p>
                   <a
-                    href="tel:02137173532"
+                    href="tel:021111113532"
                     className="font-poppins mt-1 inline-block text-[14px] font-normal leading-5 text-text-inverse underline decoration-text-inverse/70 decoration-1 underline-offset-4 transition-all hover:text-brand-primary hover:no-underline"
                   >
-                    021-37173532
+                    021-111-113-532
                   </a>
                 </div>
               </li>

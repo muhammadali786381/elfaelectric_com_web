@@ -339,10 +339,10 @@ export default function ScootyInstallmentPlans() {
                 <li className="flex items-center gap-4">
                   <Headphones className="h-5 w-5 shrink-0 text-brand-primary" />
                   <a
-                    href="tel:02137173532"
+                    href="tel:021111113532"
                     className="font-roboto transition-colors hover:text-brand-primary"
                   >
-                    021-37173532
+                    021-111-113-532
                   </a>
                 </li>
                 <li className="flex items-center gap-4">

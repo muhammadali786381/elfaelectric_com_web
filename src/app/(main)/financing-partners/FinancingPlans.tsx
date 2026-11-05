@@ -623,8 +623,8 @@ export default function FinancingPlans() {
                 </li>
                 <li className="flex items-center gap-4">
                   <Headphones className="h-5 w-5 shrink-0 text-brand-primary" />
-                  <a href="tel:02137173532" className="font-roboto hover:text-brand-primary transition-colors">
-                    021-37173532
+                  <a href="tel:021111113532" className="font-roboto hover:text-brand-primary transition-colors">
+                    021-111-113-532
                   </a>
                 </li>
                 <li className="flex items-center gap-4">

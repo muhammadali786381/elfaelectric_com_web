@@ -38,7 +38,7 @@ export const dealersByCity: Record<City, Dealer[]> = {
     {
       name: "Flagship Store Karachi",
       address: "Plot 1-A, Shahra-e-Faisal, PECHS Extension Block 6, Karachi 74400",
-      phones: ["02137173532"],
+      phones: ["021-111-113-532"],
       mapQuery: "ELFA Electric Flagship Store Shahra-e-Faisal Karachi",
     },
     {
