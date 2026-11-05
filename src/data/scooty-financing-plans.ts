@@ -1,5 +1,11 @@
 import type { BurjTerm, BurjPlan, FinancingNumbers } from "./financing-plans";
 
+// Verified against https://elfaelectric.com/scooty-instalment/ on 2026-11-05.
+export const womenScootyPlans: Record<string, FinancingNumbers> = {
+  "1": { downPayment: 25000, monthly: 22500, months: 12, total: 295000 },
+  "2": { downPayment: 35000, monthly: 11500, months: 24, total: 311000 },
+};
+
 // Verified against https://elfaelectric.com/scooty-instalment/ on 2026-10-28.
 export const waslScootyRegions = [
   { id: "sindh", name: "Sindh", plans: [

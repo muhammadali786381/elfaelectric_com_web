@@ -6,7 +6,7 @@ import { MapPin, Phone, Headphones, Mail, Check } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
 import PaymentCalculator from "@/components/financing/PaymentCalculator";
 import { BURJ_TERMS, defaultFinancingSelection, formatFinancingAmount as formatRs, type BurjTerm } from "@/data/financing-plans";
-import { burjScootyPlans, waslScootyRegions } from "@/data/scooty-financing-plans";
+import { burjScootyPlans, waslScootyRegions, womenScootyPlans } from "@/data/scooty-financing-plans";
 import {
   Select,
   SelectContent,
@@ -15,12 +15,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-type ProviderId = "wasl" | "burj";
+type ProviderId = "wasl" | "burj" | "woman-plan";
 type WaslRegionId = "sindh" | "punjab";
 
 const PROVIDERS: { id: ProviderId; label: string }[] = [
   { id: "wasl", label: "WASL" },
   { id: "burj", label: "BURJ" },
+  { id: "woman-plan", label: "WOMEN PLAN" },
 ];
 
 
@@ -135,7 +136,7 @@ export default function ScootyInstallmentPlans() {
           <FadeIn>
             <h2 className="font-montserrat mb-10 text-center text-[36px] font-black tracking-tighter sm:text-[48px]">
               <span className="text-brand-primary">
-                {provider === "wasl" ? "WASL" : "BURJ"}
+                {PROVIDERS.find(item => item.id === provider)?.label.replace(" PLAN", "")}
               </span>{" "}
               <span className="text-white">Plans</span>
             </h2>
@@ -145,6 +146,7 @@ export default function ScootyInstallmentPlans() {
                 <button
                   key={p.id}
                   type="button"
+                  aria-pressed={provider === p.id}
                   onClick={() => {
                     setProvider(p.id);
                     if (p.id === "wasl") setWaslRegion("sindh");
@@ -161,7 +163,16 @@ export default function ScootyInstallmentPlans() {
               ))}
             </div>
 
-            {provider === "wasl" ? (
+            {provider === "woman-plan" ? (
+              <div className="mx-auto grid w-full max-w-[464px] grid-cols-1 gap-8 md:max-w-[960px] md:grid-cols-2">
+                {Object.entries(womenScootyPlans).map(([id, numbers]) => (
+                  <ScootyPlanCard key={`women-${id}`} plan={{
+                    id, title: `Plan ${id}`, months: numbers.months,
+                    downPayment: numbers.downPayment, perMonth: numbers.monthly,
+                  }} />
+                ))}
+              </div>
+            ) : provider === "wasl" ? (
               <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
                 <Select
                   value={waslRegion}

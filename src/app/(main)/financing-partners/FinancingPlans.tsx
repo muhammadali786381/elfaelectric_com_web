@@ -11,6 +11,7 @@ import {
   BURJ_TERMS,
   FINANCING_PROVIDERS as PROVIDERS,
   burjEv125Plans,
+  womenEv125Plans,
   defaultFinancingSelection,
   formatFinancingAmount as formatRs,
   type BurjTerm,
@@ -66,6 +67,15 @@ const burjPlans: Plan[] = BURJ_TERMS.flatMap(term =>
 
 /** Scraped from https://elfaelectric.com/financing-partners/ */
 const ev125Plans: Record<Exclude<ProviderId, "wasl" | "burj">, Plan[]> = {
+  "woman-plan": Object.entries(womenEv125Plans).map(([id, numbers]) => ({
+    id,
+    title: `Plan ${id}`,
+    months: numbers.months,
+    downPayment: numbers.downPayment,
+    perMonth: numbers.monthly,
+    total: numbers.total,
+    details: [{ label: "Down Payment", value: formatRs(numbers.downPayment) }],
+  })),
   "asaan-ghar": [
     {
       id: "1",
@@ -331,15 +341,6 @@ function PlanCard({ plan }: { plan: Plan }) {
             </div>
           );
         })}
-        {plan.total > 0 && (
-          <div className="flex items-center gap-3 pt-4 mt-2 border-t border-white/10">
-            <Check className="h-5 w-5 shrink-0 text-brand-primary" />
-            <div className="flex flex-1 items-center justify-between font-roboto text-[15px]">
-              <span className="text-white/80 font-bold uppercase text-[12px] tracking-widest">Total Cost</span>
-              <span className="font-bold text-brand-primary">{formatRs(plan.total)}</span>
-            </div>
-          </div>
-        )}
       </div>
 
       <FlipButton
@@ -434,22 +435,24 @@ export default function FinancingPlans() {
           <FadeIn variant="fadeInUp" speed="slow">
             {provider === "tmf" ? (
               <div>
-                <Select value={tmfOption}
-                  items={[
-                    { value: "with-advance", label: "Option 1: With Advance" },
-                    { value: "without-advance", label: "Option 2: Without Advance" },
-                  ]}
-                  onValueChange={value => {
-                    if (value != null) setSelection(current => ({ ...current, tmfOption: value as TmfOption }));
-                  }}>
-                  <SelectTrigger aria-label="TMF advance option" className={`${selectTriggerClass} mx-auto max-w-md`}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent align="start" className="rounded-xl border border-white/10 bg-[#111] text-white ring-white/10">
-                    <SelectItem value="with-advance" className={selectItemClass}>Option 1: With Advance</SelectItem>
-                    <SelectItem value="without-advance" className={selectItemClass}>Option 2: Without Advance</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
+                  <Select value={tmfOption}
+                    items={[
+                      { value: "with-advance", label: "Option 1: With Advance" },
+                      { value: "without-advance", label: "Option 2: Without Advance" },
+                    ]}
+                    onValueChange={value => {
+                      if (value != null) setSelection(current => ({ ...current, tmfOption: value as TmfOption }));
+                    }}>
+                    <SelectTrigger aria-label="TMF advance option" className={selectTriggerClass}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent align="start" className="rounded-xl border border-white/10 bg-[#111] text-white shadow-[0_16px_40px_rgba(0,0,0,0.55)] ring-white/10">
+                      <SelectItem value="with-advance" className={selectItemClass}>Option 1: With Advance</SelectItem>
+                      <SelectItem value="without-advance" className={selectItemClass}>Option 2: Without Advance</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <OptionHeading>{tmfOption === "with-advance" ? "Option 1: With Advance" : "Option 2: Without Advance"}</OptionHeading>
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                   {plans.map(plan => <PlanCard key={`${tmfOption}-${plan.id}`} plan={plan} />)}
@@ -544,6 +547,14 @@ export default function FinancingPlans() {
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                   {burjTermPlans.map((plan) => (
                     <PlanCard key={`burj-${plan.id}`} plan={plan} />
+                  ))}
+                </div>
+              </div>
+            ) : provider === "woman-plan" ? (
+              <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                  {plans.map((plan) => (
+                    <PlanCard key={`woman-plan-${plan.id}`} plan={plan} />
                   ))}
                 </div>
               </div>
