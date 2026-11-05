@@ -3,13 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Play, Star } from "lucide-react";
-import { useInView, useReducedMotion } from "framer-motion";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Autoplay, EffectCoverflow } from "swiper/modules";
-import type { Swiper as SwiperInstance } from "swiper";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import BookmarkButton from "@/components/ui/BookmarkButton";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
 import styles from "./CustomerTestimonials.module.css";
 
 const customers = [
@@ -25,16 +20,17 @@ export default function CustomerTestimonials() {
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef, { amount: 0.25 });
   const reducedMotion = useReducedMotion();
-  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
 
   useEffect(() => {
-    if (!swiper || swiper.destroyed) return;
-    if (inView && !reducedMotion && !hovered && !focused) swiper.autoplay.start();
-    else swiper.autoplay.stop();
-  }, [swiper, inView, reducedMotion, hovered, focused]);
+    if (!inView || reducedMotion || hovered || focused) return;
+    const timer = setTimeout(() => setActive(value => (value + 1) % customers.length), 4800);
+    return () => clearTimeout(timer);
+  }, [active, inView, reducedMotion, hovered, focused]);
+
+  const move = (direction: number) => setActive(value => (value + direction + customers.length) % customers.length);
 
   return (
     <section
@@ -51,26 +47,25 @@ export default function CustomerTestimonials() {
         <h2 id="customer-testimonials-heading">Happy Customers</h2>
       </div>
 
-      <Swiper
-        modules={[A11y, Autoplay, EffectCoverflow]}
-        onSwiper={setSwiper}
-        onSlideChange={(instance) => setActive(instance.realIndex)}
-        effect={reducedMotion ? "slide" : "coverflow"}
-        coverflowEffect={{ rotate: 0, stretch: 80, depth: 0, scale: 0.7, slideShadows: false }}
-        autoplay={{ delay: 4800, disableOnInteraction: false }}
-        speed={reducedMotion ? 0 : 700}
-        slidesPerView="auto"
-        centeredSlides
-        spaceBetween={24}
-        loop
-        grabCursor
+      <motion.div
         className={styles.slider}
+        onPanEnd={(_, info) => { if (Math.abs(info.offset.x) > 40) move(info.offset.x < 0 ? 1 : -1); }}
       >
-        {customers.map((customer, index) => (
-          <SwiperSlide key={customer.name} className={styles.slide}>
+        {customers.map((customer, index) => {
+          let offset = (index - active + customers.length) % customers.length;
+          if (offset > customers.length / 2) offset -= customers.length;
+          return (
+          <motion.div key={customer.name} className={styles.slide}
+            initial={false}
+            data-active={offset === 0}
+            aria-hidden={offset !== 0}
+            animate={{ transform: `translateX(${offset * 90}%) scale(${offset === 0 ? 1 : 0.7})`, opacity: Math.abs(offset) > 1 ? 0 : offset === 0 ? 1 : 0.55 }}
+            transition={{ duration: reducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+            style={{ zIndex: offset === 0 ? 2 : 1, pointerEvents: Math.abs(offset) > 1 ? "none" : "auto" }}
+          >
             <article className={styles.card} aria-label={`Review ${index + 1} of ${customers.length}`}>
               <div className={styles.portrait}>
-                <Image src={customer.img} alt={customer.name} fill sizes="88px" className={styles.photo} />
+                <Image src={customer.img} alt={customer.name} fill sizes="88px" className={styles.photo} draggable={false} />
               </div>
               <h3>{customer.name}</h3>
               <p className={styles.details}>{customer.city}<span aria-hidden="true"> · </span>{customer.model}</p>
@@ -79,19 +74,20 @@ export default function CustomerTestimonials() {
               </div>
               <blockquote>“{customer.text}”</blockquote>
             </article>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+          </motion.div>
+          );
+        })}
+      </motion.div>
 
       <div className={styles.footer}>
       <div className={styles.controls}>
-        <button type="button" onClick={() => swiper?.slidePrev()} aria-label="Previous customer review"><ChevronLeft size={18} /></button>
+        <button type="button" onClick={() => move(-1)} aria-label="Previous customer review"><ChevronLeft size={18} /></button>
         <div className={styles.dots} aria-label="Choose customer review">
           {customers.map((customer, index) => (
-            <button type="button" key={customer.name} onClick={() => swiper?.slideToLoop(index)} aria-label={`Show review by ${customer.name}`} aria-current={active === index ? "true" : undefined} />
+            <button type="button" key={customer.name} onClick={() => setActive(index)} aria-label={`Show review by ${customer.name}`} aria-current={active === index ? "true" : undefined} />
           ))}
         </div>
-        <button type="button" onClick={() => swiper?.slideNext()} aria-label="Next customer review"><ChevronRight size={18} /></button>
+        <button type="button" onClick={() => move(1)} aria-label="Next customer review"><ChevronRight size={18} /></button>
       </div>
         <BookmarkButton className={styles.videoLink} href="/video-testimonials" icon={<Play className="icon fill-current" strokeWidth={0} />}>
           Watch Video Testimonials
