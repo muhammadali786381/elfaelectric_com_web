@@ -75,7 +75,7 @@ export default function SmoothFollower() {
         animate={{
           x: position.x - 30,
           y: position.y - 30,
-          scale: isHovering ? 2 : 1,
+          scale: 1,
           opacity: isHovering ? 0.8 : 0.4,
         }}
         transition={{
@@ -98,7 +98,7 @@ export default function SmoothFollower() {
         animate={{
           x: position.x - 20,
           y: position.y - 20,
-          scale: isHovering ? 1.5 : 1,
+          scale: 1,
         }}
         transition={{
           type: "spring",
@@ -119,7 +119,7 @@ export default function SmoothFollower() {
         animate={{
           x: position.x - 3, // Half of 6
           y: position.y - 3, // Half of 6
-          scale: isClicking ? 0.8 : isHovering ? 1.5 : 1,
+          scale: isClicking ? 0.8 : 1,
         }}
         transition={{
           type: "spring",

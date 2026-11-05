@@ -8,7 +8,7 @@ import ProductGallery from "@/components/product/ProductGallery";
 import ReelsCarousel from "@/components/sections/ReelsCarousel";
 import SavingsCalculator from "@/components/sections/SavingsCalculator";
 import { videoLinks } from "@/data/video-links";
-import Testimonials from "@/components/sections/Testimonials";
+import CustomerTestimonials from "@/components/sections/CustomerTestimonials";
 import AdventureCTA from "@/components/sections/AdventureCTA";
 
 import ScootyMetaSection from "@/components/scooty/ScootyMetaSection";
@@ -49,8 +49,7 @@ export default function ScootyPage({ product }: { product: Product }) {
       {/* Top Performing on Meta
       <ScootyMetaSection /> */}
 
-      {/* Testimonials */}
-      <Testimonials />
+      <CustomerTestimonials />
 
       {/* CTA */}
       <AdventureCTA buyHref={product.buyHref} />

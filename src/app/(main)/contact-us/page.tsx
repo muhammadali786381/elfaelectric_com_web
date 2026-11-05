@@ -236,8 +236,8 @@ export default function ContactUsPage() {
                     <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
                       <Phone className="h-5 w-5 text-brand-primary" />
                     </div>
-                    <a href="tel:02137173532" className="font-roboto pt-2 hover:text-brand-primary transition-colors">
-                      021-37173532
+                    <a href="tel:021111113532" className="font-roboto pt-2 hover:text-brand-primary transition-colors">
+                    021-111-113-532
                     </a>
                   </li>
                   <li className="flex items-start gap-4">

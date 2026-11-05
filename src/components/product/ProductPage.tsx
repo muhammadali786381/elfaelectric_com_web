@@ -9,7 +9,7 @@ import ProductGallery from "@/components/product/ProductGallery";
 import ReelsCarousel from "@/components/sections/ReelsCarousel";
 import SavingsCalculator from "@/components/sections/SavingsCalculator";
 import { videoLinks } from "@/data/video-links";
-import Testimonials from "@/components/sections/Testimonials";
+import CustomerTestimonials from "@/components/sections/CustomerTestimonials";
 import AdventureCTA from "@/components/sections/AdventureCTA";
 
 import FinalCTA from "../sections/FinalCTA";
@@ -39,7 +39,7 @@ export default function ProductPage({ product }: { product: Product }) {
         images={product.galleryImages}
       />
       {/* <ReelsCarousel reels={videoLinks} /> */}
-      <Testimonials />
+      <CustomerTestimonials />
       <AdventureCTA buyHref={product.buyHref} />
 
     </main>

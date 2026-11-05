@@ -1,6 +1,22 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { burjEv125Plans, defaultFinancingSelection, formatFinancingAmount } from "./financing-plans";
+import { burjEv125Plans, defaultFinancingSelection, formatFinancingAmount, womenEv125Plans } from "./financing-plans";
+import { womenScootyPlans } from "./scooty-financing-plans";
+
+test("women's bike and scooty plans match the live cards and calculator totals", () => {
+  assert.deepEqual(Object.values(womenEv125Plans), [
+    { downPayment: 35000, monthly: 29000, months: 12, total: 383000 },
+    { downPayment: 45000, monthly: 14500, months: 24, total: 393000 },
+  ]);
+  assert.deepEqual(Object.values(womenScootyPlans), [
+    { downPayment: 25000, monthly: 22500, months: 12, total: 295000 },
+    { downPayment: 35000, monthly: 11500, months: 24, total: 311000 },
+  ]);
+  for (const plan of [...Object.values(womenEv125Plans), ...Object.values(womenScootyPlans)]) {
+    assert.equal(plan.total, plan.downPayment + plan.monthly * plan.months);
+  }
+  assert.equal(defaultFinancingSelection("woman-plan").plan, "1");
+});
 
 test("Burj uses the published total rather than multiplying rounded installments", () => {
   const plan = burjEv125Plans[12].A;

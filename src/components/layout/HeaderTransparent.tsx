@@ -318,7 +318,7 @@ export default function HeaderTransparent() {
               href="https://webapp.elfaelectric.com/login"
               variant="dark"
               icon={<User className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />}
-              className="font-roboto hidden h-9 whitespace-nowrap !bg-[#1a1a1a] px-4 text-[11px] font-semibold tracking-[1px] lg:inline-flex 2xl:h-10 2xl:text-[12px] border border-white/5"
+              className="font-roboto hidden h-9 whitespace-nowrap !bg-[#1a1a1a] px-4 text-[11px] font-semibold tracking-[1px] lg:inline-flex 2xl:h-10 2xl:text-[12px] border border-white/5 hover:!border-[#CC5500] hover:!bg-[#CC5500] hover:!text-white"
             >
               Login
             </FlipButton>

@@ -1,0 +1,116 @@
+.section {
+  overflow: hidden;
+  padding: 88px 0 80px;
+  background: #050505;
+  color: #fff;
+}
+
+.heading {
+  padding: 0 24px;
+  text-align: center;
+}
+
+.heading h2 {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: clamp(30px, 3.4vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.heading h2 span { color: #00d26a; }
+
+.heading p {
+  max-width: 620px;
+  margin: 18px auto 0;
+  color: #a3a3a3;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.gallery { margin-top: 32px; }
+
+.slider {
+  overflow: visible;
+  padding: 64px 0;
+  perspective: 1000px;
+}
+
+.slider :global(.swiper-wrapper),
+.slide { transition-timing-function: linear !important; }
+
+.slide {
+  width: clamp(160px, 12vw, 230px);
+  height: auto;
+}
+
+.card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #1b1b1b;
+  text-align: left;
+  cursor: pointer;
+  backface-visibility: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 55% 0 0;
+  background: linear-gradient(transparent, rgb(0 0 0 / 70%));
+  pointer-events: none;
+}
+
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 50%);
+  border-radius: 50%;
+  background: rgb(0 0 0 / 40%);
+  transform: translate(-50%, -50%);
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.card:hover .play, .card:focus-visible .play { background: #00d26a; color: #050505; }
+
+.platform {
+  position: absolute;
+  z-index: 1;
+  bottom: 18px;
+  left: 18px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.card:focus-visible { outline: 2px solid #00d26a; outline-offset: 5px; }
+
+@media (max-width: 639px) {
+  .section { padding: 48px 0; }
+  .heading p { font-size: 14px; }
+  .gallery { margin-top: 8px; }
+  .slide { width: clamp(130px, 42vw, 180px); }
+  .slider { padding: 32px 0; }
+  .card { border-radius: 12px; }
+  .play { width: 40px; height: 40px; }
+  .platform { bottom: 12px; left: 12px; font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .play { transition: none; }
+}

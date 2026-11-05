@@ -6,6 +6,7 @@ export const FINANCING_PROVIDERS = [
   { id: "wasl", label: "WASL" },
   { id: "tmf", label: "TMF" },
   { id: "burj", label: "BURJ" },
+  { id: "woman-plan", label: "WOMEN PLAN" },
 ] as const;
 
 export type ProviderId = (typeof FINANCING_PROVIDERS)[number]["id"];
@@ -19,6 +20,12 @@ export type FinancingNumbers = {
   monthly: number;
   months: number;
   total: number;
+};
+
+// Verified against https://elfaelectric.com/financing-partners/ on 2026-11-05.
+export const womenEv125Plans: Record<string, FinancingNumbers> = {
+  "1": { downPayment: 35000, monthly: 29000, months: 12, total: 383000 },
+  "2": { downPayment: 45000, monthly: 14500, months: 24, total: 393000 },
 };
 
 export type FinancingSelection = {
