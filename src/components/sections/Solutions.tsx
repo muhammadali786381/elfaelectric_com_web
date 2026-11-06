@@ -1,134 +1,93 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import styles from "./Solutions.module.css";
 
 const solutions = [
   {
-    num: "01",
     title: "Lithium Iron Phosphate Battery",
     desc: "Proven LFP technology — faster charging, greater durability, higher capacity, and long-lasting performance built for daily use.",
   },
   {
-    num: "02",
     title: "Efficient Motor Power",
     desc: "Optimized for extended range and responsive torque, with enhanced energy efficiency that lowers your running cost per kilometre.",
   },
   {
-    num: "03",
     title: "App Tracking",
     desc: "Monitor location, live statistics, and remotely kill the engine — safety and oversight in the palm of your hand.",
   },
   {
-    num: "04",
-    title: "Advance Features",
+    title: "Advanced Features",
     desc: "High-build body, alloy rims, and tubeless tyres engineered for Pakistan's roads — every detail optimised for durability.",
   },
 ];
 
-export default function Solutions() {
-  return (
-    <section className="relative overflow-hidden bg-[#050505] py-16 lg:py-24">
-      {/* Floating bike — right-pinned, fades out at bottom */}
-      <div
-        className="pointer-events-none absolute right-0 top-0 hidden h-full w-[40%] lg:block"
-        style={{
-          maskImage:
-            "linear-gradient(to bottom, black 40%, transparent 92%), linear-gradient(to left, black 55%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black 40%, transparent 92%), linear-gradient(to left, black 55%, transparent 100%)",
-          maskComposite: "intersect",
-          WebkitMaskComposite: "source-in",
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 1.1, ease: [0.23, 1, 0.32, 1] }}
-          className="relative h-full w-full"
-        >
-          <Image
-            src="/assets/images/solutions.webp"
-            alt="ELFA EV-1 Scooty"
-            fill
-            className="object-contain object-right-top opacity-100 brightness-110"
-            sizes="40vw"
-          />
-        </motion.div>
-      </div>
+const ease = [0.23, 1, 0.32, 1] as const;
 
-      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6">
-        {/* Heading */}
+export default function Solutions() {
+  const reduced = useReducedMotion();
+
+  return (
+    <section className={styles.section} aria-labelledby="solutions-heading">
+      <div className={styles.inner}>
         <motion.h2
-          initial={{ opacity: 0, y: 16 }}
+          id="solutions-heading"
+          className={styles.heading}
+          initial={reduced ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65, ease: [0.23, 1, 0.32, 1], delay: 0.05 }}
-          className="font-montserrat mb-10 text-[28px] font-bold leading-tight tracking-tight text-white sm:text-[38px] lg:text-[44px] lg:mb-12"
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.65, ease }}
         >
-          Solutions We Offer
+          Solutions <span>we offer.</span>
         </motion.h2>
 
-        {/* Feature list — staggered rows, max width keeps clear of bike */}
-        <div className="w-full lg:max-w-[52%]">
-          {solutions.map((s, i) => (
-            <motion.div
-              key={s.num}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.55,
-                ease: [0.23, 1, 0.32, 1],
-                delay: i * 0.07,
-              }}
-            >
-              {/* Full-width rule */}
-              <div className="h-px w-full bg-white/10" />
+        <div className={styles.showroom}>
+          <motion.div
+            className={styles.lineup}
+            initial={reduced ? false : { opacity: 0, scale: 0.82 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.9, ease, delay: 0.08 }}
+          >
+            <Image
+              src="/assets/images/bikelineup.png"
+              alt="ELFA electric lineup: silver EV-1 scooter, front-facing motorcycle, and red EV-125 motorcycle"
+              width={1536}
+              height={1024}
+              className={styles.image}
+              sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) 90vw, 896px"
+            />
+          </motion.div>
 
-              <div className="group flex items-start gap-6 py-5 transition-colors duration-300 hover:bg-white/[0.02] cursor-default">
-                {/* Number */}
-                <span className="font-montserrat shrink-0 text-[11px] font-bold tabular-nums tracking-widest text-white/25 mt-1 transition-colors duration-300 group-hover:text-brand-primary/50">
-                  {s.num}
-                </span>
-
-                {/* Text */}
-                <div className="flex flex-col">
-                  <h3 className="font-montserrat mb-1.5 text-[16px] font-semibold leading-snug text-white/50 transition-colors duration-300 group-hover:text-brand-primary sm:text-[18px]">
-                    {s.title}
-                  </h3>
-                  <p className="font-roboto text-[14px] leading-relaxed text-white/55">
-                    {s.desc}
-                  </p>
-                </div>
-
-                {/* Brand-primary tick on the far right */}
-                {/* <div className="ml-auto shrink-0 mt-1.5 h-1.5 w-1.5 rounded-full bg-brand-primary opacity-70" /> */}
-              </div>
-            </motion.div>
-          ))}
-
-          {/* Closing rule */}
-          <div className="h-px w-full bg-white/10" />
+          <div className={styles.solutions}>
+            {solutions.map((solution, index) => {
+              const fromLeft = index % 2 === 0;
+              return (
+                <motion.article
+                  key={solution.title}
+                  className={styles.solution}
+                  initial={
+                    reduced
+                      ? false
+                      : { opacity: 0, y: 18, x: fromLeft ? -28 : 28 }
+                  }
+                  whileInView={{ opacity: 1, y: 0, x: 0 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{
+                    duration: 0.6,
+                    ease,
+                    delay: 0.2 + index * 0.1,
+                  }}
+                >
+                  <div className={styles.connector} aria-hidden="true" />
+                  <h3>{solution.title}</h3>
+                  <p>{solution.desc}</p>
+                </motion.article>
+              );
+            })}
+          </div>
         </div>
-
-        {/* Mobile-only image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.97 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-          className="mt-10 flex justify-center lg:hidden"
-        >
-          <Image
-            src="/assets/images/solutions.webp"
-            alt="ELFA EV-1 Scooty"
-            width={500}
-            height={662}
-            className="h-auto w-full max-w-[420px] object-contain opacity-100 brightness-110"
-          />
-        </motion.div>
       </div>
     </section>
   );

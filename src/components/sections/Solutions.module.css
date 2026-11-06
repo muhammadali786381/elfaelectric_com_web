@@ -1,0 +1,94 @@
+.section {
+  overflow: hidden;
+  padding: 56px 40px;
+  scroll-margin-top: 96px;
+  background: #050505;
+  color: #fff;
+}
+
+.inner { max-width: 1280px; margin-inline: auto; }
+
+.heading {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: clamp(30px, 3.3vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+
+.heading span { color: var(--color-brand-primary); }
+
+.showroom { position: relative; margin-top: 16px; }
+.lineup { width: 70%; margin-inline: auto; }
+.image { display: block; width: 100%; height: auto; }
+
+.solutions {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 15% 15%;
+  align-content: space-around;
+  justify-content: space-between;
+}
+
+.solution:nth-child(even) { text-align: right; }
+.connector {
+  position: relative;
+  width: 48px;
+  height: 1px;
+  margin-bottom: 16px;
+  background: var(--color-brand-primary);
+}
+.connector::after {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-brand-primary);
+  content: "";
+}
+.solution:nth-child(even) .connector { margin-left: auto; }
+.solution:nth-child(even) .connector::after { right: auto; left: 0; }
+
+.solution h3 {
+  margin: 0 0 10px;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.solution p {
+  margin: 0;
+  color: rgb(255 255 255 / 65%);
+  font-family: var(--font-roboto), sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+@media (max-width: 1199px) {
+  .lineup { width: 100%; max-width: 760px; }
+  .solutions {
+    position: relative;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 40px;
+    margin-top: 16px;
+  }
+  .solution:nth-child(even) { text-align: left; }
+  .solution:nth-child(even) .connector { margin-left: 0; }
+  .solution:nth-child(even) .connector::after { right: 0; left: auto; }
+}
+
+@media (max-width: 767px) {
+  .section { padding: 40px 20px; }
+  .solutions { gap: 24px; }
+}
+
+@media (max-width: 539px) {
+  .solutions { grid-template-columns: 1fr; }
+}

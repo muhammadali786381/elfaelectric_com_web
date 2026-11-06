@@ -41,8 +41,8 @@ export default function Home() {
         <AboutUs />
         <WhyChooseUs />
         <InteractiveProductShowcase />
-        <Solutions />
         <SavingsCalculator />
+        <Solutions />
         <Testimonials />
         <ReelsCarousel reels={videoLinks} />
         {/* <Welcome /> */}
