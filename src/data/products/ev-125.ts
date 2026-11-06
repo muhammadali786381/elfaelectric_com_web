@@ -82,7 +82,7 @@ export const ev125: Product = {
     },
     {
       title: "Mobile App",
-      image: "/assets/images/bikeapp4.png",
+      image: "/assets/images/bikeapp/bikeapp4.png",
       description:
         "Track the performance of your bike’s range, speed mode, distance, carbon emissions reduction, fuel savings, battery status, driver statistics, and much more.",
       showStoreBadges: true,
