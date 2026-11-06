@@ -1,4 +1,5 @@
-import Hero from "@/components/sections/hero";
+import OriginalHero from "@/components/sections/hero";
+import HeroRestyled from "@/components/sections/hero/HeroRestyled";
 import CityMarquee from "@/components/sections/CityMarquee";
 import SpinningBolt from "@/components/sections/SpinningBolt";
 import AboutUs from "@/components/sections/AboutUs";
@@ -17,6 +18,10 @@ import ReelsGallery from "@/components/sections/ReelsGallery";
 
 // Static page — fully pre-rendered at build time for maximum performance
 export const dynamic = "force-static";
+
+// Set to "original" to restore the previous hero layout.
+const heroVariant: "original" | "restyled" = "restyled";
+const Hero = { original: OriginalHero, restyled: HeroRestyled }[heroVariant];
 
 // Set to "original" to restore the previous customer section.
 const testimonialsVariant: "original" | "slider" = "slider";

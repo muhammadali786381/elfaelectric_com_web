@@ -10,7 +10,7 @@ import styles from "./HeroRestyled.module.css";
 import { useLoaderReady } from "@/components/layout/GlobalLoader";
 import { productCardData } from "@/components/sections/ProductShowcase";
 
-const imageSizes = "(max-width: 1023px) 94vw, 1000px";
+const imageSizes = "(max-width: 767px) 100vw, (max-width: 1599px) 88vw, 1400px";
 const scootySrc = "/assets/images/hero/silverscootyheromain.png";
 const scootyHoverSrc = "/assets/images/hero/redscootyheromain.png";
 const { props: scootyPreload } = getImageProps({ src: scootySrc, alt: "", fill: true, sizes: imageSizes });
@@ -148,15 +148,15 @@ export default function HeroRestyled() {
         <div className="absolute inset-0 top-auto bottom-0 h-40 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent" />
       </div>
 
-      <div className={styles.content}>
-        <h1
-          aria-label="Ride into the future."
-          className={`${heroFont.className} ${styles.heading}`}
-          style={{ transform: "skewX(-12deg)", transformOrigin: "center" }}
-        >
-          <WaveText>RIDE INTO THE FUTURE</WaveText>
-        </h1>
+      <h1
+        aria-label="Ride into the future."
+        className={`${heroFont.className} ${styles.heading}`}
+        style={{ transform: "skewX(-12deg)", transformOrigin: "center" }}
+      >
+        <WaveText>RIDE INTO THE FUTURE</WaveText>
+      </h1>
 
+      <div className={styles.content}>
         <div className={styles.description}>
           <AnimatePresence initial={false}>
             <motion.p key={product.id} className="col-start-1 row-start-1"
@@ -197,7 +197,7 @@ export default function HeroRestyled() {
 
       </div>
 
-      {/* Product Image - Right side on desktop */}
+      {/* The vehicle shares the heading's grid row to create depth. */}
       <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
         className={styles.vehicle}>
         <motion.div
