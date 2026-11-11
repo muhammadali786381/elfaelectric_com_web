@@ -20,6 +20,7 @@ const platformLabels: Record<ReelPlatform, string> = {
 export default function ReelsGallery({ reels }: { reels: readonly VideoLink[] }) {
   const sectionRef = useRef<HTMLElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const ignoreFocus = useRef(false);
   const inView = useInView(sectionRef, { amount: 0.2 });
   const reducedMotion = useReducedMotion();
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
@@ -33,6 +34,11 @@ export default function ReelsGallery({ reels }: { reels: readonly VideoLink[] })
   useEffect(() => {
     if (!swiper || swiper.destroyed) return;
     if (inView && !reducedMotion && !hovered && !focused && !activeVideo && items.length > 1) {
+      swiper.slides.forEach((slide) => {
+        slide.style.transitionDuration = "";
+        slide.style.transform = "";
+      });
+      swiper.setTransition(swiper.params.speed ?? 3200);
       swiper.autoplay.start();
     } else {
       const position = swiper.getTranslate();
@@ -59,7 +65,7 @@ export default function ReelsGallery({ reels }: { reels: readonly VideoLink[] })
 
       <div
         className={styles.gallery}
-        onFocusCapture={() => setFocused(true)}
+        onFocusCapture={() => { if (!ignoreFocus.current) setFocused(true); }}
         onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
       >
         <Swiper
@@ -123,7 +129,14 @@ export default function ReelsGallery({ reels }: { reels: readonly VideoLink[] })
       <AnimatePresence>
         <VideoModal isOpen={activeVideo !== null} videoUrl={activeVideo?.embedUrl ?? null}
           sourceUrl={activeVideo?.url} sourceLabel={activeVideo ? platformLabels[activeVideo.platform] : undefined}
-          onClose={() => { setActiveVideo(null); triggerRef.current?.focus({ preventScroll: true }); }} />
+          onClose={() => {
+            setActiveVideo(null);
+            setHovered(false);
+            setFocused(false);
+            ignoreFocus.current = true;
+            triggerRef.current?.focus({ preventScroll: true });
+            ignoreFocus.current = false;
+          }} />
       </AnimatePresence>
     </section>
   );
