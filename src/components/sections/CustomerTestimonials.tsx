@@ -45,6 +45,9 @@ export default function CustomerTestimonials() {
     >
       <div className={styles.heading}>
         <h2 id="customer-testimonials-heading">Happy Customers</h2>
+        <BookmarkButton className={styles.videoLink} href="/video-testimonials" icon={<Play className="icon fill-current" strokeWidth={0} />}>
+          Watch Video Testimonials
+        </BookmarkButton>
       </div>
 
       <motion.div
@@ -80,18 +83,15 @@ export default function CustomerTestimonials() {
       </motion.div>
 
       <div className={styles.footer}>
-      <div className={styles.controls}>
-        <button type="button" onClick={() => move(-1)} aria-label="Previous customer review"><ChevronLeft size={18} /></button>
-        <div className={styles.dots} aria-label="Choose customer review">
-          {customers.map((customer, index) => (
-            <button type="button" key={customer.name} onClick={() => setActive(index)} aria-label={`Show review by ${customer.name}`} aria-current={active === index ? "true" : undefined} />
-          ))}
+        <div className={styles.controls}>
+          <button type="button" onClick={() => move(-1)} aria-label="Previous customer review"><ChevronLeft size={18} /></button>
+          <div className={styles.dots} aria-label="Choose customer review">
+            {customers.map((customer, index) => (
+              <button type="button" key={customer.name} onClick={() => setActive(index)} aria-label={`Show review by ${customer.name}`} aria-current={active === index ? "true" : undefined} />
+            ))}
+          </div>
+          <button type="button" onClick={() => move(1)} aria-label="Next customer review"><ChevronRight size={18} /></button>
         </div>
-        <button type="button" onClick={() => move(1)} aria-label="Next customer review"><ChevronRight size={18} /></button>
-      </div>
-        <BookmarkButton className={styles.videoLink} href="/video-testimonials" icon={<Play className="icon fill-current" strokeWidth={0} />}>
-          Watch Video Testimonials
-        </BookmarkButton>
       </div>
     </section>
   );

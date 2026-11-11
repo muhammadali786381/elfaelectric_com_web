@@ -46,7 +46,7 @@ export const scootyEv1: Product = {
   advancedFeatures: [
     {
       title: "3 Different Speed Modes",
-      image: `${IMG}/speed-modes.png`,
+      image: `${IMG}/scootycontrols.png`,
       bullets: [
         {
           label: "Eco",
@@ -64,13 +64,13 @@ export const scootyEv1: Product = {
     },
     {
       title: "lithium iron phosphate (LiFePO4) battery",
-      image: `${IMG}/battery-feature.png`,
+      image: `${IMG}/scootybattery.png`,
       description:
         "With 2,000 battery cycles, 2-3 hours fast charging, and a range of 75 Km, enjoy longer rides with less time spent charging, making it easy for anyone to sustain economic pressure.",
     },
     {
       title: "Tubeless Tyres",
-      image: `${IMG}/tire.png`,
+      image: `${IMG}/scootytire.png`,
       description:
         "Optimized for stability and smooth handling, our bikes feature an 12-inch front wheel and 12-inch rear wheel diameter, ensuring a comfortable ride on challenging roads.",
     },

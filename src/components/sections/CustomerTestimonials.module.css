@@ -1,4 +1,5 @@
 .section {
+  --card: min(560px, 76vw);
   overflow: hidden;
   padding: 96px 0 88px;
   background: #050505;
@@ -6,23 +7,26 @@
 }
 
 .heading {
-  max-width: 1400px;
+  /* Side cards sit at 90% offset and scale to 0.7, so the row spans 2.5 card widths. */
+  width: min(calc(var(--card) * 2.5), calc(100% - 48px));
   margin: 0 auto 44px;
-  padding: 0 24px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: space-between;
   gap: 24px;
+  text-align: left;
 }
 
 .heading h2 {
+  margin: 0;
   font-family: var(--font-montserrat), sans-serif;
   font-size: clamp(30px, 3.4vw, 48px);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.03em;
 }
+
+.videoLink { flex-shrink: 0; }
 
 .slider {
   display: grid;
@@ -32,7 +36,7 @@
   overflow: visible;
 }
 
-.slide { grid-area: 1 / 1; justify-self: center; width: min(560px, 76vw); min-width: 0; }
+.slide { grid-area: 1 / 1; justify-self: center; width: var(--card); min-width: 0; }
 
 .card {
   position: relative;
@@ -69,7 +73,7 @@
 .dots button { display: grid; place-items: center; width: 28px; height: 40px; }
 .dots button::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #777; transition: transform 200ms ease, background-color 200ms ease; }
 .dots button[aria-current="true"]::after { background: var(--color-brand-primary); transform: scale(1.5); }
-.footer { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 24px 48px; padding: 0 24px; }
+.footer { display: flex; justify-content: center; align-items: center; padding: 0 24px; }
 .videoLink:focus-visible { outline: 2px solid var(--color-brand-primary); outline-offset: 5px; }
 .controls button:focus-visible { outline: 2px solid var(--color-brand-primary); outline-offset: 3px; }
 
@@ -78,13 +82,13 @@
 }
 
 @media (min-width: 1280px) and (max-width: 1399px) {
-  .slide { width: 520px; }
+  .section { --card: 520px; }
 }
 
 @media (max-width: 639px) {
-  .section { padding: 64px 0; }
-  .heading { padding: 0 20px; margin-bottom: 32px; }
-  .slide { width: calc(100vw - 64px); }
+  .section { --card: calc(100vw - 64px); padding: 64px 0; }
+  .heading { width: var(--card); margin-bottom: 32px; flex-wrap: wrap; row-gap: 16px; }
+  .videoLink { margin-left: auto; }
   .slider { padding-bottom: 48px; }
   .card { min-height: 320px; padding: 48px 20px 24px; }
   .card h3 { font-size: 17px; }

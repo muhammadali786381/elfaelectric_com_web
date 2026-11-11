@@ -2,7 +2,7 @@
 
 import Image, { getImageProps } from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Calendar } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import FlipButton from "@/components/ui/FlipButton";
 import { heroFont } from "@/lib/fonts";
@@ -105,6 +105,7 @@ export default function HeroRestyled() {
   const [focused, setFocused] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [sweeping, setSweeping] = useState(false);
+  const [hold, setHold] = useState(0);
   const product = productCardData[selected];
   const isBike = product.id === "ev125";
   const duration = 0.8;
@@ -124,7 +125,13 @@ export default function HeroRestyled() {
       }
     }, 4000);
     return () => window.clearInterval(timer);
-  }, [ready, inView, focused, hovered, reducedMotion]);
+  }, [ready, inView, focused, hovered, reducedMotion, hold]);
+
+  const go = (direction: 1 | -1) => {
+    setSelected(index => (index + direction + productCardData.length) % productCardData.length);
+    setSweeping(true);
+    setHold(value => value + 1);
+  };
 
   return (
     <section ref={sectionRef} data-hero-ready={ready} data-hero-product={product.id}
@@ -158,6 +165,27 @@ export default function HeroRestyled() {
 
       <div className={styles.content}>
         <div className={styles.description}>
+          {productCardData.length > 1 && (
+            <div className={styles.nav}>
+              <button
+                type="button"
+                onClick={() => go(-1)}
+                aria-label="Previous vehicle"
+                className="group grid h-9 w-9 place-items-center text-brand-primary transition-colors hover:text-brand-secondary active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
+              >
+                <ArrowLeft size={22} strokeWidth={2} className="transition-transform duration-300 ease-out group-hover:-translate-x-1.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => go(1)}
+                aria-label="Next vehicle"
+                className="group grid h-9 w-9 place-items-center text-brand-primary transition-colors hover:text-brand-secondary active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
+              >
+                <ArrowRight size={22} strokeWidth={2} className="transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
+              </button>
+            </div>
+          )}
+          <div className={styles.caption}>
           <AnimatePresence initial={false}>
             <motion.p key={product.id} className="col-start-1 row-start-1"
               variants={textVariants} initial="enter" animate={ready ? "visible" : "enter"} exit="exit"
@@ -167,6 +195,7 @@ export default function HeroRestyled() {
                 : "Engineered to thrive on challenging local roads!"}
             </motion.p>
           </AnimatePresence>
+          </div>
         </div>
 
         <motion.div

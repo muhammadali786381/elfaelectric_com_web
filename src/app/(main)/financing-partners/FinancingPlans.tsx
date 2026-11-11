@@ -17,7 +17,6 @@ import {
   type BurjTerm,
   type FinancingSelection,
   type ProviderId,
-  type TmfOption,
 } from "@/data/financing-plans";
 import {
   Select,
@@ -175,7 +174,6 @@ const ev125Plans: Record<Exclude<ProviderId, "wasl" | "burj">, Plan[]> = {
       ],
     },
   ],
-  tmf: [], // handled separately via tmfWith / tmfWithout
 };
 
 const waslRegionalPlans = waslEv125Regions.map(region => ({
@@ -190,90 +188,6 @@ const waslRegionalPlans = waslEv125Regions.map(region => ({
     details: [{ label: "Down Payment", value: formatRs(plan.downPayment) }],
   } satisfies Plan)),
 }));
-
-const tmfWithAdvance: Plan[] = [
-  {
-    id: "1",
-    title: "Plan 1",
-    months: 24,
-    downPayment: 54000,
-    perMonth: 11250,
-    total: 343575,
-    details: [
-      { label: "Advance 20%", value: "Rs. 54,000" },
-      { label: "Advance (after one year)", value: "Rs. 19,575" },
-      { label: "Monthly Installment", value: "Rs. 11,250" },
-      { label: "Total Months", value: "24" },
-    ],
-  },
-  {
-    id: "2",
-    title: "Plan 2",
-    months: 18,
-    downPayment: 54000,
-    perMonth: 15000,
-    total: 337000,
-    details: [
-      { label: "Advance 20%", value: "Rs. 54,000" },
-      { label: "Advance (after one year)", value: "Rs. 13,000" },
-      { label: "Monthly Installment", value: "Rs. 15,000" },
-      { label: "Total Months", value: "18" },
-    ],
-  },
-  {
-    id: "3",
-    title: "Plan 3",
-    months: 12,
-    downPayment: 54000,
-    perMonth: 22500,
-    total: 324000,
-    details: [
-      { label: "Advance 20%", value: "Rs. 54,000" },
-      { label: "Advance", value: "Rs. 0000" },
-      { label: "Monthly Installment", value: "Rs. 22,500" },
-      { label: "Total Months", value: "12" },
-    ],
-  },
-];
-
-const tmfWithoutAdvance: Plan[] = [
-  {
-    id: "1",
-    title: "Plan 1",
-    months: 24,
-    downPayment: 0,
-    perMonth: 17987,
-    total: 431688,
-    details: [
-      { label: "Monthly Installment", value: "Rs. 17,987" },
-      { label: "Total Months", value: "24" },
-    ],
-  },
-  {
-    id: "2",
-    title: "Plan 2",
-    months: 18,
-    downPayment: 0,
-    perMonth: 21594,
-    total: 388692,
-    details: [
-      { label: "Monthly Installment", value: "Rs. 21,594" },
-      { label: "Total Months", value: "18" },
-    ],
-  },
-  {
-    id: "3",
-    title: "Plan 3",
-    months: 12,
-    downPayment: 0,
-    perMonth: 29025,
-    total: 348300,
-    details: [
-      { label: "Monthly Installment", value: "Rs. 29,025" },
-      { label: "Total Months", value: "12" },
-    ],
-  },
-];
 
 const socialLinks = [
   {
@@ -358,29 +272,15 @@ function PlanCard({ plan }: { plan: Plan }) {
   );
 }
 
-function OptionHeading({ children }: { children: string }) {
-  return (
-    <div className="mb-10 text-center relative">
-      <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-      <span className="relative bg-[#080808] px-6 font-roboto text-[13px] font-bold uppercase tracking-[0.2em] text-brand-primary">
-        {children}
-      </span>
-    </div>
-  );
-}
-
 export default function FinancingPlans() {
   const [selection, setSelection] = useState<FinancingSelection>(() => defaultFinancingSelection());
-  const { provider, tmfOption, region: waslRegion, burjTerm } = selection;
+  const { provider, region: waslRegion, burjTerm } = selection;
   const [partner, setPartner] = useState("");
 
   const plans = useMemo(() => {
     if (provider === "wasl" || provider === "burj") return [];
-    if (provider === "tmf") {
-      return tmfOption === "with-advance" ? tmfWithAdvance : tmfWithoutAdvance;
-    }
     return ev125Plans[provider];
-  }, [provider, tmfOption]);
+  }, [provider]);
 
   const activeWaslRegion = useMemo(
     () => waslRegionalPlans.find((region) => region.id === waslRegion) ?? waslRegionalPlans[0],
@@ -433,32 +333,7 @@ export default function FinancingPlans() {
           </div>
 
           <FadeIn variant="fadeInUp" speed="slow">
-            {provider === "tmf" ? (
-              <div>
-                <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
-                  <Select value={tmfOption}
-                    items={[
-                      { value: "with-advance", label: "Option 1: With Advance" },
-                      { value: "without-advance", label: "Option 2: Without Advance" },
-                    ]}
-                    onValueChange={value => {
-                      if (value != null) setSelection(current => ({ ...current, tmfOption: value as TmfOption }));
-                    }}>
-                    <SelectTrigger aria-label="TMF advance option" className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent align="start" className="rounded-xl border border-white/10 bg-[#111] text-white shadow-[0_16px_40px_rgba(0,0,0,0.55)] ring-white/10">
-                      <SelectItem value="with-advance" className={selectItemClass}>Option 1: With Advance</SelectItem>
-                      <SelectItem value="without-advance" className={selectItemClass}>Option 2: Without Advance</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <OptionHeading>{tmfOption === "with-advance" ? "Option 1: With Advance" : "Option 2: Without Advance"}</OptionHeading>
-                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                  {plans.map(plan => <PlanCard key={`${tmfOption}-${plan.id}`} plan={plan} />)}
-                </div>
-              </div>
-            ) : provider === "wasl" ? (
+            {provider === "wasl" ? (
               <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
                 <Select
                   value={waslRegion}

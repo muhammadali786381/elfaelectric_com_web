@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { burjEv125Plans, defaultFinancingSelection, formatFinancingAmount, womenEv125Plans } from "./financing-plans";
+import { FINANCING_PROVIDERS, burjEv125Plans, defaultFinancingSelection, formatFinancingAmount, womenEv125Plans } from "./financing-plans";
 import { womenScootyPlans } from "./scooty-financing-plans";
 
 test("women's bike and scooty plans match the live cards and calculator totals", () => {
@@ -37,7 +37,13 @@ test("provider changes start with a valid plan and provider-specific defaults", 
   assert.equal(defaultFinancingSelection("burj").plan, "A");
   assert.equal(defaultFinancingSelection("wasl").plan, "1");
   assert.equal(defaultFinancingSelection("wasl").region, "sindh");
-  assert.equal(defaultFinancingSelection("tmf").tmfOption, "with-advance");
   assert.equal(defaultFinancingSelection("qist-baazar").plan, "1");
   assert.equal(defaultFinancingSelection("asaan-ghar").plan, "1");
+});
+
+test("available providers exclude TMF and use the updated women's financing label", () => {
+  assert.deepEqual(FINANCING_PROVIDERS.map(provider => provider.id), [
+    "asaan-ghar", "qist-baazar", "wasl", "burj", "woman-plan",
+  ]);
+  assert.equal(FINANCING_PROVIDERS.find(provider => provider.id === "woman-plan")?.label, "FINANCING PLAN FOR WOMEN");
 });

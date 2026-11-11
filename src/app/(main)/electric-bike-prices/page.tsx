@@ -57,7 +57,7 @@ const financingIntro =
 
 const financingItems = [
   "Monthly Installments: Starting from PKR 10,500/month.",
-  "Our Finance Partners: Asan Ghar, Qist Bazar, Thardeep Microfinance Foundation (TMF), WASL Plan and SOLARIZE",
+  "Our Finance Partners: Asan Ghar, Qist Bazar, WASL Plan and SOLARIZE",
 ];
 
 const faqs = [

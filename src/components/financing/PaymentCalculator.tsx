@@ -15,16 +15,13 @@ import {
   type FinancingNumbers as PlanNumbers,
   type FinancingSelection,
   type ProviderId,
-  type TmfOption,
 } from "@/data/financing-plans";
 
 /** Scraped from https://elfaelectric.com/financing-partners/ Payment Calculator */
 const PLAN_DATA: Record<
-  Exclude<ProviderId, "tmf" | "wasl" | "burj" | "woman-plan">,
+  Exclude<ProviderId, "wasl" | "burj" | "woman-plan">,
   Record<string, PlanNumbers>
-> & {
-  tmf: Record<string, Record<TmfOption, PlanNumbers>>;
-} = {
+> = {
   "asaan-ghar": {
     "1": { downPayment: 52268, monthly: 17646, months: 24, total: 475772 },
     "2": { downPayment: 52268, monthly: 21535, months: 18, total: 439898 },
@@ -36,20 +33,7 @@ const PLAN_DATA: Record<
     "2": { downPayment: 99900, monthly: 17400, months: 18, total: 413100 },
     "3": { downPayment: 87900, monthly: 24000, months: 12, total: 375900 },
   },
-  tmf: {
-    "1": {
-      "with-advance": { downPayment: 54000, monthly: 11250, months: 24, total: 343575 },
-      "without-advance": { downPayment: 0, monthly: 17987, months: 24, total: 431688 },
-    },
-    "2": {
-      "with-advance": { downPayment: 54000, monthly: 15000, months: 18, total: 337000 },
-      "without-advance": { downPayment: 0, monthly: 21594, months: 18, total: 388692 },
-    },
-    "3": {
-      "with-advance": { downPayment: 54000, monthly: 22500, months: 12, total: 324000 },
-      "without-advance": { downPayment: 0, monthly: 29025, months: 12, total: 348300 },
-    },
-  },
+
 };
 
 const selectClass =
@@ -65,13 +49,12 @@ export default function PaymentCalculator({ product = "ev-125", initialSelection
   const burjPlans = product === "ev-1" ? burjScootyPlans : burjEv125Plans;
   const womenPlans = product === "ev-1" ? womenScootyPlans : womenEv125Plans;
   const onProviderChange = (provider: ProviderId) => onChange(defaultFinancingSelection(provider));
-  const { provider, plan, tmfOption, region, burjTerm } = selection;
+  const { provider, plan, region, burjTerm } = selection;
   const waslRegion = waslRegions.find(item => item.id === region)!;
 
   const planIds = useMemo(() => {
     if (provider === "woman-plan") return Object.keys(womenPlans);
     if (provider === "burj") return BURJ_TERMS.map(String);
-    if (provider === "tmf") return Object.keys(PLAN_DATA.tmf);
     if (provider === "wasl") return waslRegion.plans.map(item => item.id);
     return Object.keys(PLAN_DATA[provider]);
   }, [provider, waslRegion, womenPlans]);
@@ -79,15 +62,12 @@ export default function PaymentCalculator({ product = "ev-125", initialSelection
   const summary = useMemo((): PlanNumbers | null => {
     if (provider === "woman-plan") return womenPlans[plan] ?? null;
     if (provider === "burj") return burjPlans[burjTerm][plan as BurjPlan] ?? null;
-    if (provider === "tmf") {
-      return PLAN_DATA.tmf[plan]?.[tmfOption] ?? null;
-    }
     if (provider === "wasl") {
       const numbers = waslRegion.plans.find(item => item.id === plan);
       return numbers ? { ...numbers, total: numbers.downPayment + numbers.monthly * numbers.months } : null;
     }
     return PLAN_DATA[provider][plan] ?? null;
-  }, [provider, plan, tmfOption, waslRegion, burjTerm, burjPlans, womenPlans]);
+  }, [provider, plan, waslRegion, burjTerm, burjPlans, womenPlans]);
 
   const cards = summary
     ? [
@@ -146,7 +126,6 @@ export default function PaymentCalculator({ product = "ev-125", initialSelection
                   {provider === "burj" ? `${id} Months`
                     : provider === "woman-plan" ? `${womenPlans[id].months} Months`
                     : provider === "wasl" ? `${waslRegion.plans.find(item => item.id === id)!.months} Months`
-                    : provider === "tmf" ? `${PLAN_DATA.tmf[id][tmfOption].months} Months`
                     : `Plan ${id}`}
                 </option>
               ))}
@@ -170,23 +149,6 @@ export default function PaymentCalculator({ product = "ev-125", initialSelection
               </select>
             </label>
           )}
-
-          {provider === "tmf" ? (
-            <label className="flex w-full flex-col gap-2">
-              <span className="font-roboto text-[13px] font-medium text-white/60 uppercase tracking-widest">
-                TMF Option
-              </span>
-              <select
-                value={tmfOption}
-                onChange={(e) => onChange({ ...selection, tmfOption: e.target.value as TmfOption })}
-                className={selectClass}
-                aria-label="TMF Option"
-              >
-                <option value="with-advance" className="bg-black text-white">With Advance</option>
-                <option value="without-advance" className="bg-black text-white">Without Advance</option>
-              </select>
-            </label>
-          ) : null}
 
           {provider === "burj" && (
             <label className="flex w-full flex-col gap-2">

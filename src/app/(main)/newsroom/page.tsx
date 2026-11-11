@@ -178,11 +178,11 @@ export default function NewsroomPage() {
       </section>
 
       {/* Wireframe Grid Layout */}
-      <section className="w-full pt-8 pb-16 sm:pt-12 sm:pb-24">
+      <section className="w-full pt-8 pb-24 sm:pt-12 sm:pb-28">
         <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          <div className="mx-auto grid w-full grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
             {newsItems.map((item, i) => (
-              <div key={i} className="bg-[#050505] flex flex-col h-full">
+              <div key={i} className="flex h-full flex-col overflow-hidden border border-white/10 bg-[#050505]">
                 <FadeIn variant="fadeInUp" speed="normal" delay={i * 0.1} className="flex-1 flex flex-col h-full">
                   <Link
                     href={item.link}

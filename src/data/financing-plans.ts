@@ -4,13 +4,11 @@ export const FINANCING_PROVIDERS = [
   { id: "asaan-ghar", label: "ASAAN GHAR" },
   { id: "qist-baazar", label: "QIST BAAZAR" },
   { id: "wasl", label: "WASL" },
-  { id: "tmf", label: "TMF" },
   { id: "burj", label: "BURJ" },
-  { id: "woman-plan", label: "WOMEN PLAN" },
+  { id: "woman-plan", label: "FINANCING PLAN FOR WOMEN" },
 ] as const;
 
 export type ProviderId = (typeof FINANCING_PROVIDERS)[number]["id"];
-export type TmfOption = "with-advance" | "without-advance";
 export const BURJ_TERMS = [12, 18, 24, 36] as const;
 export type BurjTerm = (typeof BURJ_TERMS)[number];
 export type BurjPlan = "A" | "B" | "C" | "D";
@@ -31,13 +29,12 @@ export const womenEv125Plans: Record<string, FinancingNumbers> = {
 export type FinancingSelection = {
   provider: ProviderId;
   plan: string;
-  tmfOption: TmfOption;
   region: WaslEv125Region;
   burjTerm: BurjTerm;
 };
 
 export function defaultFinancingSelection(provider: ProviderId = "asaan-ghar"): FinancingSelection {
-  return { provider, plan: provider === "burj" ? "A" : "1", tmfOption: "with-advance", region: "sindh", burjTerm: 12 };
+  return { provider, plan: provider === "burj" ? "A" : "1", region: "sindh", burjTerm: 12 };
 }
 
 export function formatFinancingAmount(amount: number) {

@@ -21,7 +21,7 @@ type WaslRegionId = "sindh" | "punjab";
 const PROVIDERS: { id: ProviderId; label: string }[] = [
   { id: "wasl", label: "WASL" },
   { id: "burj", label: "BURJ" },
-  { id: "woman-plan", label: "WOMEN PLAN" },
+  { id: "woman-plan", label: "FINANCING PLAN FOR WOMEN" },
 ];
 
 
