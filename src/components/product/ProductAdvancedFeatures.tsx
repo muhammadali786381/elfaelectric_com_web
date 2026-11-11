@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import type { ProductAdvancedFeature } from "@/data/products/types";
 import { STORE_BADGES } from "@/data/products/types";
@@ -78,6 +79,9 @@ export default function ProductAdvancedFeatures({ features }: { features: Produc
   const inView = useInView(sectionRef, { amount: 0.25, once: false });
   const [reduced, setReduced] = useState(true);
   const [active, setActive] = useState(0);
+  const [leaving, setLeaving] = useState(0);
+  const [hold, setHold] = useState(0);
+  const activeRef = useRef(0);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -108,7 +112,11 @@ export default function ProductAdvancedFeatures({ features }: { features: Produc
     const tick = () => {
       timeoutId = window.setTimeout(() => {
         if (cancelled) return;
-        setActive((index) => (index + 1) % features.length);
+        const current = activeRef.current;
+        const next = (current + 1) % features.length;
+        activeRef.current = next;
+        setLeaving(current);
+        setActive(next);
         tick();
       }, HOLD_MS);
     };
@@ -119,12 +127,20 @@ export default function ProductAdvancedFeatures({ features }: { features: Produc
       cancelled = true;
       window.clearTimeout(timeoutId);
     };
-  }, [features.length, paused]);
+  }, [features.length, paused, hold]);
+
+  const go = (direction: 1 | -1) => {
+    const current = activeRef.current;
+    const next = (current + direction + features.length) % features.length;
+    activeRef.current = next;
+    setLeaving(current);
+    setActive(next);
+    setHold((value) => value + 1);
+  };
 
   if (!features.length) return null;
-  const previous = (active + features.length - 1) % features.length;
   const stateFor = (index: number): SlideState =>
-    index === active ? "active" : index === previous ? "outgoing" : "waiting";
+    index === active ? "active" : index === leaving ? "outgoing" : "waiting";
 
   const pauseOnMouse = (event: PointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "mouse") setHovered(true);
@@ -194,7 +210,7 @@ export default function ProductAdvancedFeatures({ features }: { features: Produc
             })}
           </div>
 
-          <div className="flex min-w-0 items-center self-stretch">
+          <div className="flex min-w-0 flex-col items-start justify-center self-stretch">
             <div
               className="grid w-full"
               aria-live={paused || reduced ? "polite" : "off"}
@@ -284,6 +300,26 @@ export default function ProductAdvancedFeatures({ features }: { features: Produc
                 </div>
               ))}
             </div>
+            {features.length > 1 && (
+              <div className="mt-8 flex items-center gap-5">
+                <button
+                  type="button"
+                  onClick={() => go(-1)}
+                  aria-label="Previous feature"
+                  className="group grid h-9 w-9 place-items-center text-brand-primary transition-colors hover:text-brand-secondary active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
+                >
+                  <ArrowLeft size={22} strokeWidth={2} className="transition-transform duration-300 ease-out group-hover:-translate-x-1.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => go(1)}
+                  aria-label="Next feature"
+                  className="group grid h-9 w-9 place-items-center text-brand-primary transition-colors hover:text-brand-secondary active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
+                >
+                  <ArrowRight size={22} strokeWidth={2} className="transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
