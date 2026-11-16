@@ -11,6 +11,7 @@ interface SecondaryHeroProps {
   /** Levrix-style: left title + right description on dark field */
   layout?: "centered" | "split";
   compact?: boolean;
+  wideDescription?: boolean;
 }
 
 export default function SecondaryHero({
@@ -21,6 +22,7 @@ export default function SecondaryHero({
   imageAlt = "ELFA Electric",
   layout = "centered",
   compact = false,
+  wideDescription = false,
 }: SecondaryHeroProps) {
   if (layout === "split") {
     return (
@@ -89,7 +91,7 @@ export default function SecondaryHero({
             )}
           </h1>
           {description ? (
-            <p className="font-roboto mx-auto max-w-2xl text-[16px] font-medium leading-relaxed text-white/70 sm:text-[18px]">
+            <p className={`font-roboto mx-auto ${wideDescription ? "max-w-2xl lg:max-w-none" : "max-w-2xl"} text-[16px] font-medium leading-relaxed text-white/70 sm:text-[18px]`}>
               {description}
             </p>
           ) : null}

@@ -25,6 +25,7 @@ export default function ScootyPage({ product }: { product: Product }) {
 
       {/* Core Features: animated emerge from scooty */}
       <ProductCoreFeatures
+        hideImageWhenStacked
         features={product.coreFeatures}
         centerImage={product.coreFeatureImage}
         productName={product.name}
