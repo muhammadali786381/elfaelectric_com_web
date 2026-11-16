@@ -51,9 +51,16 @@ const mechanics = [
     phones: ["+92 311 250 1672"],
     location: "Korangi 5, Sector E",
   },
+  {
+    name: "AMZ Traders",
+    phones: ["+92 315 9692974"],
+    location: "Shop No. 24, Opposite Rana Property Advisor, Main Market, Johar Town, Sahiwal.",
+    mapLink: "https://maps.app.goo.gl/9L2siT9yeew8tc766?g_st=iw",
+  },
 ];
 
-function mapsUrl(location: string) {
+function mapsUrl(location: string, mapLink?: string) {
+  if (mapLink) return mapLink;
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${location}, Karachi`)}`;
 }
 
@@ -108,7 +115,7 @@ export default function CertifiedMechanicsPage() {
                     <div className="flex items-start gap-2.5">
                       <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-primary" strokeWidth={2.5} />
                       <a
-                        href={mapsUrl(m.location)}
+                        href={mapsUrl(m.location, m.mapLink)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="font-roboto text-[15px] leading-snug text-white/70 underline underline-offset-2 transition-colors hover:text-brand-primary sm:text-[16px]"
