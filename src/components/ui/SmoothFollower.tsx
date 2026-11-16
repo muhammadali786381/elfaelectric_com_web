@@ -62,7 +62,7 @@ export default function SmoothFollower() {
   if (typeof window === "undefined" || !isVisible) return null;
 
   return (
-    <div data-custom-cursor aria-hidden="true" className="pointer-events-none fixed inset-0 z-[99999] overflow-hidden">
+    <div data-custom-cursor aria-hidden="true" className="pointer-events-none fixed inset-0 z-[2147483647] overflow-hidden">
       {/* Outer glow */}
       <motion.div
         className="absolute rounded-full mix-blend-screen pointer-events-none"

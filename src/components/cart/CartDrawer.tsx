@@ -31,7 +31,7 @@ export default function CartDrawer() {
           <motion.button
             type="button"
             aria-label="Close cart backdrop"
-            className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[2147483646] bg-black/60 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -42,7 +42,7 @@ export default function CartDrawer() {
             role="dialog"
             aria-modal="true"
             aria-label="Your cart"
-            className="fixed top-0 left-0 z-[75] flex h-full w-full max-w-[520px] flex-col bg-[#050505] border-r border-white/10 shadow-2xl"
+            className="fixed top-0 left-0 z-[2147483647] flex h-full w-full max-w-[520px] flex-col bg-[#050505] border-r border-white/10 shadow-2xl"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
