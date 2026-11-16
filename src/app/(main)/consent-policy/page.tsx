@@ -21,8 +21,13 @@ export default function ConsentPolicyPage() {
             <main className="flex-1 bg-bg-primary">
         <SecondaryHero
           titleLine1="Consent & Policy"
-          titleLine2="Acknowledgement"
+          titleLine2={
+            <span className="block text-[clamp(18px,5.5vw,92px)] leading-tight">
+              Acknowledgement
+            </span>
+          }
           description="Please review our terms and conditions regarding vehicle usage, software updates, and warranty."
+          wideDescription
           imageSrc="/assets/images/hero4.jpeg"
           imageAlt="ELFA Electric Motorcycle"
         />

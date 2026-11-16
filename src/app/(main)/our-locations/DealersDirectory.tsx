@@ -29,7 +29,6 @@ export const CITIES = [
   "Lahore",
   "Rahim Yar Khan",
   "Rawalpindi",
-  "Sahiwal",
 ] as const;
 
 export type City = (typeof CITIES)[number];
@@ -179,14 +178,6 @@ export const dealersByCity: Record<City, Dealer[]> = {
       address: "N-119, North Circular Road, Near Islamiya School No. 2, Waris Khan, Rawalpindi",
       phones: ["0343-5629919", "0333-5559645"],
       mapQuery: "The EV Store Waris Khan Rawalpindi",
-    },
-  ],
-  Sahiwal: [
-    {
-      name: "AMZ Traders",
-      address: "Shop No. 24, Opposite Rana Property Advisor, Main Market, Johar Town, Sahiwal.",
-      phones: ["+92 315 9692974"],
-      mapLink: "https://maps.app.goo.gl/9L2siT9yeew8tc766?g_st=iw",
     },
   ],
 };

@@ -8,6 +8,7 @@ type Props = {
   features: ProductCoreFeature[];
   centerImage: string;
   productName: string;
+  hideImageWhenStacked?: boolean;
 };
 
 function ColorizedValue({ text }: { text: string }) {
@@ -28,7 +29,7 @@ function ColorizedValue({ text }: { text: string }) {
   );
 }
 
-export default function ProductCoreFeatures({ features, centerImage, productName }: Props) {
+export default function ProductCoreFeatures({ features, centerImage, productName, hideImageWhenStacked = false }: Props) {
   return (
     <section className="relative w-full overflow-hidden bg-[#050505] pt-24 pb-10">
       <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6">
@@ -41,7 +42,7 @@ export default function ProductCoreFeatures({ features, centerImage, productName
             whileInView={{ opacity: 1, x: 0, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:w-[45%] xl:w-[40%] relative h-[350px] sm:h-[450px] lg:h-[600px] flex items-center justify-center shrink-0"
+            className={`w-full lg:w-[45%] xl:w-[40%] relative h-[350px] sm:h-[450px] lg:h-[600px] ${hideImageWhenStacked ? "hidden lg:flex" : "flex"} items-center justify-center shrink-0`}
           >
             {/* Soft glow behind the bike */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-brand-primary/10 blur-[120px] rounded-full pointer-events-none" />
