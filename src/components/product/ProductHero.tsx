@@ -6,6 +6,8 @@ import type { Product } from "@/data/products/types";
 import FlipButton from "@/components/ui/FlipButton";
 import styles from "./ProductHero.module.css";
 
+const vehicleSizes = "(max-width: 767px) calc(100vw - 24px), (max-width: 1023px) 90vw, (max-width: 1495px) 83vw, 1162px";
+
 export default function ProductHero({ product }: { product: Product }) {
   const model = product.title.replace(/\s+(bike|scooty)$/i, "");
 
@@ -27,7 +29,7 @@ export default function ProductHero({ product }: { product: Product }) {
               fill
               priority
               className={`pointer-events-none object-contain object-bottom transition-opacity duration-700 ease-in-out ${product.heroHoverImage ? "peer-hover:opacity-0" : ""}`}
-              sizes="(max-width: 767px) 94vw, (max-width: 1599px) 68vw, 1176px"
+              sizes={vehicleSizes}
             />
             {product.heroHoverImage ? (
               <Image
@@ -37,7 +39,7 @@ export default function ProductHero({ product }: { product: Product }) {
                 loading="eager"
                 aria-hidden
                 className="pointer-events-none object-contain object-bottom opacity-0 transition-opacity duration-700 ease-in-out peer-hover:opacity-100"
-                sizes="(max-width: 767px) 94vw, (max-width: 1599px) 68vw, 1176px"
+                sizes={vehicleSizes}
               />
             ) : null}
           </div>
