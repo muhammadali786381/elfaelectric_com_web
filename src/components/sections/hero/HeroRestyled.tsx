@@ -10,7 +10,7 @@ import styles from "./HeroRestyled.module.css";
 import { useLoaderReady } from "@/components/layout/GlobalLoader";
 import { productCardData } from "@/components/sections/ProductShowcase";
 
-const imageSizes = "(max-width: 767px) 100vw, (max-width: 1599px) 88vw, 1400px";
+const imageSizes = "(max-width: 767px) 102vw, (max-width: 1595px) 94vw, 1500px";
 const scootySrc = "/assets/images/hero/silverscootyheromain.png";
 const scootyHoverSrc = "/assets/images/hero/redscootyheromain.png";
 const { props: scootyPreload } = getImageProps({ src: scootySrc, alt: "", fill: true, sizes: imageSizes });

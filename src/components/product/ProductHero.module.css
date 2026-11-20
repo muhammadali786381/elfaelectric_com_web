@@ -159,6 +159,7 @@
 
 @media (min-width: 1024px) {
   .details { padding-inline-start: 40px; }
+  .intro, .subtitle { max-width: none; }
 }
 
 @media (max-width: 1023px) {
