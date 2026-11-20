@@ -229,15 +229,12 @@ export default function AboutUsPage() {
                 <h2 className="font-montserrat text-[32px] sm:text-[40px] lg:text-[44px] font-black uppercase italic leading-[1.1] tracking-tighter text-white mb-6">
                   The ELFA <br /> <span className="text-brand-primary">Advantage</span>
                 </h2>
-                <ul className="space-y-4">
-                  {whyChoose.map((item, i) => (
+                <ul className="list-disc space-y-4 pl-5 marker:text-brand-primary">
+                  {whyChoose.map((item) => (
                     <li
-                      key={i}
-                      className="flex gap-4 items-start font-roboto text-[15px] sm:text-[16px] text-white/70"
+                      key={item}
+                      className="font-roboto text-[15px] sm:text-[16px] text-white/70"
                     >
-                      <span className="text-brand-primary font-black mt-0.5">
-                        0{i + 1}
-                      </span>
                       {item}
                     </li>
                   ))}

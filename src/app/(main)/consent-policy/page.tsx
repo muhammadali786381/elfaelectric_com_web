@@ -33,18 +33,13 @@ export default function ConsentPolicyPage() {
         />
 
         <section className="mx-auto w-full max-w-container px-4 py-12 sm:px-6 lg:py-16">
-          <div className="mx-auto flex max-w-container flex-col gap-8">
-            {terms.map((text, i) => (
-              <div key={i} className="flex  gap-4">
-                <h4 className="font-montserrat text-[16px] font-bold leading-normal text-text-primary">
-                  {i + 1}.
-                </h4>
-                <p className="font-roboto text-[15px] font-normal leading-[25px] text-text-primary">
-                  {text}
-                </p>
-              </div>
+          <ul className="mx-auto max-w-container list-disc space-y-8 pl-5 marker:text-brand-primary">
+            {terms.map((text) => (
+              <li key={text} className="font-roboto text-[15px] font-normal leading-[25px] text-text-primary">
+                {text}
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       </main>
           </>

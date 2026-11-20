@@ -1,4 +1,4 @@
-import type { Product } from "./types";
+  import type { Product } from "./types";
 
 const IMG = "/assets/images/products/ev-125";
 
