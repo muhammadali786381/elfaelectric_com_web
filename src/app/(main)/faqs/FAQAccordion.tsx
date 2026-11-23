@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { AccordionItem } from "@/components/sections/FAQ";
+import { AccordionItem, type FAQItem } from "@/components/sections/FAQ";
 
-export default function FAQAccordion({ faqs }: { faqs: { q: string; a: string }[] }) {
+export default function FAQAccordion({ faqs }: { faqs: FAQItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (

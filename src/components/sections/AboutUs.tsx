@@ -24,21 +24,10 @@ export default function AboutUs() {
 
           <div className="mb-8 flex w-full max-w-[1120px] flex-col gap-4 sm:mb-9 sm:gap-5">
             <p className="font-roboto text-[17px] leading-[1.65] text-white/90 sm:text-[18px] lg:text-[19px] lg:leading-[1.7]">
-              <span className="lg:block">
-                ELFA Electric, born under EV Technologies at Wavetec, is driven by a passion for building an
-              </span>{" "}
-              <span className="lg:block">
-                electric future with sustainable, affordable, and innovative solutions powered by clean technology.
-              </span>
-            </p>
-            <p className="font-roboto text-[16px] leading-[1.65] text-white/70 sm:text-[17px] lg:text-[18px] lg:leading-[1.7]">
-              <span className="lg:block">
-                At ELFA Electric, we believe that every person and every detail matters. Our electric motorcycles
-              </span>{" "}
-              <span className="lg:block">
-                are meticulously designed, engineered, and rigorously tested for the local rider, using top-quality
-                components.
-              </span>
+              Born under EV Technologies at Wavetec, ELFA Electric is committed to making mobility more sustainable,
+              affordable, and accessible through innovative electric solutions. Our electric motorcycles are
+              thoughtfully designed, engineered, and rigorously tested for local roads, combining quality components
+              with reliable performance to make every ride count.
             </p>
           </div>
           
@@ -49,7 +38,7 @@ export default function AboutUs() {
             icon={<ArrowRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />}
             className="font-roboto h-[52px] flex-row-reverse px-10 text-[14px] tracking-[1.5px] uppercase font-bold"
           >
-            Discover More
+            Discover ELFA
           </FlipButton>
         </FadeIn>
       </div>

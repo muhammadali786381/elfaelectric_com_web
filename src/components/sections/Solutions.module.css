@@ -20,7 +20,7 @@
 
 .heading span { color: var(--color-brand-primary); }
 
-.showroom { position: relative; margin-top: 16px; }
+.showroom { position: relative; display: grid; place-items: center; min-height: 720px; margin-top: 16px; }
 .lineup { width: 70%; margin-inline: auto; }
 .image { display: block; width: 100%; height: auto; }
 
@@ -28,7 +28,7 @@
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-columns: 15% 15%;
+  grid-template-columns: 18% 18%;
   align-content: space-around;
   justify-content: space-between;
 }
@@ -72,6 +72,7 @@
 }
 
 @media (max-width: 1199px) {
+  .showroom { display: block; min-height: 0; }
   .lineup { width: 100%; max-width: 760px; }
   .solutions {
     position: relative;

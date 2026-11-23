@@ -9,36 +9,36 @@ import { motion } from "framer-motion";
 const whyChooseUs = [
   {
     icon: Cpu,
-    label: "Advanced Technology",
-    desc: "Powered by a Lithium Iron Phosphate (LiFePO4) battery, efficient motor power and higher battery capacity for superior performance.",
+    label: "Quality You Can Trust",
+    desc: "Built with reliable components and tested for consistent everyday performance.",
   },
   {
     icon: Zap,
-    label: "Affordable Excellence",
-    desc: "Incorporated with latest features, all at an accessible price, delivering exceptional bike riding experience.",
+    label: "Cost-Effective Ownership",
+    desc: "Enjoy modern features, dependable performance and lower running costs.",
   },
   {
     icon: Shield,
-    label: "Customer-Centric Service",
-    desc: "Providing support and assistance at every stage of your journey to meet and exceed your expectations.",
+    label: "After-Sales Support",
+    desc: "Get dedicated assistance throughout your ownership journey.",
   },
 ];
 
 const whatSetsUsApart = [
   {
     icon: Shield,
-    label: "Reliable and Safe",
-    desc: "Built-in app allows you to track your bike's location, and a button to shut your engine, ensuring security and peace of mind.",
+    label: "Smart and Secure",
+    desc: "App-based location tracking and ride replay help you stay informed and in control of your bike.",
   },
   {
     icon: Zap,
-    label: "Budget-Friendly",
-    desc: "Enjoy eco-friendly electric biking solutions that are easy on both the environment and your wallet.",
+    label: "Designed for Pakistani Commutes",
+    desc: "Durable construction, alloy rims and tubeless tyres support stability and comfortable handling.",
   },
   {
     icon: Cpu,
-    label: "Easy and Simple",
-    desc: "Features like reverse mode, a digital meter, and a convenient 8A charger provide fast charging in just 2 hours.",
+    label: "Convenience in Every Ride",
+    desc: "Reverse mode, a digital meter and a 10 A charger make everyday riding easier.",
   },
 ];
 
@@ -88,7 +88,7 @@ export default function WhyChooseUs() {
         <FadeIn variant="fadeIn" speed="slow">
           <div className="mb-12">
             <h2 className="section-heading mb-8 text-center text-white text-balance">
-              Why <span className="text-brand-primary">Choose</span> Us
+              Why <span className="text-brand-primary">Choose</span> ELFA Electric?
             </h2>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
               {whyChooseUs.map((item) => (
@@ -105,7 +105,7 @@ export default function WhyChooseUs() {
         <FadeIn variant="fadeIn" speed="slow">
           <div>
             <h2 className="section-heading mb-8 text-center text-white text-balance">
-              What <span className="text-brand-primary">Sets Us</span> Apart
+              What <span className="text-brand-primary">Makes ELFA</span> Different?
             </h2>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
               {whatSetsUsApart.map((item) => (
