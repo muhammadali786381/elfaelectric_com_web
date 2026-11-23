@@ -1,22 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { FINANCING_PROVIDERS, burjEv125Plans, defaultFinancingSelection, formatFinancingAmount, womenEv125Plans } from "./financing-plans";
-import { womenScootyPlans } from "./scooty-financing-plans";
-
-test("women's bike and scooty plans match the live cards and calculator totals", () => {
-  assert.deepEqual(Object.values(womenEv125Plans), [
-    { downPayment: 35000, monthly: 29000, months: 12, total: 383000 },
-    { downPayment: 45000, monthly: 14500, months: 24, total: 393000 },
-  ]);
-  assert.deepEqual(Object.values(womenScootyPlans), [
-    { downPayment: 25000, monthly: 22500, months: 12, total: 295000 },
-    { downPayment: 35000, monthly: 11500, months: 24, total: 311000 },
-  ]);
-  for (const plan of [...Object.values(womenEv125Plans), ...Object.values(womenScootyPlans)]) {
-    assert.equal(plan.total, plan.downPayment + plan.monthly * plan.months);
-  }
-  assert.equal(defaultFinancingSelection("woman-plan").plan, "1");
-});
+import { FINANCING_PROVIDERS, burjEv125Plans, defaultFinancingSelection, formatFinancingAmount } from "./financing-plans";
 
 test("Burj uses the published total rather than multiplying rounded installments", () => {
   const plan = burjEv125Plans[12].A;
@@ -41,9 +25,8 @@ test("provider changes start with a valid plan and provider-specific defaults", 
   assert.equal(defaultFinancingSelection("asaan-ghar").plan, "1");
 });
 
-test("available providers exclude TMF and use the updated women's financing label", () => {
+test("available providers exclude TMF and the women's plan", () => {
   assert.deepEqual(FINANCING_PROVIDERS.map(provider => provider.id), [
-    "asaan-ghar", "qist-baazar", "wasl", "burj", "woman-plan",
+    "asaan-ghar", "qist-baazar", "wasl", "burj",
   ]);
-  assert.equal(FINANCING_PROVIDERS.find(provider => provider.id === "woman-plan")?.label, "FINANCING PLAN FOR WOMEN");
 });

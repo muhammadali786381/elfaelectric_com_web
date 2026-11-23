@@ -10,13 +10,11 @@ import { waslEv125Regions, type WaslEv125Region } from "@/data/wasl-ev125-plans"
 import {
   burjScootyPlans,
   waslScootyRegions,
-  womenScootyPlans,
 } from "@/data/scooty-financing-plans";
 import {
   BURJ_TERMS,
   FINANCING_PROVIDERS as PROVIDERS,
   burjEv125Plans,
-  womenEv125Plans,
   defaultFinancingSelection,
   formatFinancingAmount as formatRs,
   type BurjTerm,
@@ -68,15 +66,6 @@ const burjPlans: Plan[] = BURJ_TERMS.flatMap(term =>
 
 /** Scraped from https://elfaelectric.com/financing-partners/ */
 const ev125Plans: Record<Exclude<ProviderId, "wasl" | "burj">, Plan[]> = {
-  "woman-plan": Object.entries(womenEv125Plans).map(([id, numbers]) => ({
-    id,
-    title: `Plan ${id}`,
-    months: numbers.months,
-    downPayment: numbers.downPayment,
-    perMonth: numbers.monthly,
-    total: numbers.total,
-    details: [{ label: "Down Payment", value: formatRs(numbers.downPayment) }],
-  })),
   "asaan-ghar": [
     {
       id: "1",
@@ -220,16 +209,6 @@ const waslScootyRegionalPlans = waslScootyRegions.map(region => ({
   } satisfies Plan)),
 }));
 
-const womenScootyPlanList: Plan[] = Object.entries(womenScootyPlans).map(([id, numbers]) => ({
-  id,
-  title: `Plan ${id}`,
-  months: numbers.months,
-  downPayment: numbers.downPayment,
-  perMonth: numbers.monthly,
-  total: numbers.total,
-  details: [{ label: "Down Payment", value: formatRs(numbers.downPayment) }],
-}));
-
 const socialLinks = [
   {
     label: "Facebook",
@@ -328,14 +307,9 @@ export default function FinancingPlans({
   );
   const { provider, region: waslRegion, burjTerm } = selection;
 
-  const availableProviders = useMemo(() => {
-    if (product === "ev-1") {
-      return PROVIDERS.filter(
-        (p) => p.id === "wasl" || p.id === "burj" || p.id === "woman-plan",
-      );
-    }
-    return PROVIDERS;
-  }, [product]);
+  const availableProviders = PROVIDERS.filter(({ id }) => {
+    return product === "ev-125" || id === "wasl" || id === "burj";
+  });
 
   const handleProductChange = (nextProduct: "ev-125" | "ev-1") => {
     if (nextProduct === product) return;
@@ -371,7 +345,6 @@ export default function FinancingPlans({
   const plans = useMemo(() => {
     if (provider === "wasl" || provider === "burj") return [];
     if (product === "ev-1") {
-      if (provider === "woman-plan") return womenScootyPlanList;
       return [];
     }
     return ev125Plans[provider];
@@ -562,17 +535,6 @@ export default function FinancingPlans({
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                   {burjTermPlans.map((plan) => (
                     <PlanCard key={`${product}-burj-${plan.id}`} plan={plan} />
-                  ))}
-                </div>
-              </div>
-            ) : provider === "woman-plan" ? (
-              <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                  {plans.map((plan) => (
-                    <PlanCard
-                      key={`${product}-woman-plan-${plan.id}`}
-                      plan={plan}
-                    />
                   ))}
                 </div>
               </div>
