@@ -12,13 +12,13 @@ export const metadata: Metadata = {
 };
 
 const whyChoose = [
-  "Best electric bike company in Pakistan with a legacy of 30+ years.",
-  "Affordable electric bike options starting at PKR 1/km running cost.",
-  "Eco-friendly transport in Pakistan with zero emissions.",
-  "EV motorcycle in Pakistan designed for local roads and rider needs.",
-  "Sustainable mobility in Pakistan through innovative technology.",
-  "Electric scooty in Pakistan for urban commuting.",
-  "Comprehensive after-sales support for all electric bikes.",
+  { title: "Designed for Local Roads", desc: "Engineered to suit everyday road conditions and riding needs in Pakistan." },
+  { title: "Consistent Performance", desc: "Quality components and advanced technology deliver dependable performance for everyday rides." },
+  { title: "Affordable Running Costs", desc: "Enjoy economical travel with running costs starting at PKR 1/km." },
+  { title: "Everyday Convenience", desc: "Practical features make daily commuting easier and more convenient." },
+  { title: "Rider-Focused Design", desc: "Designed around local riding habits and the needs of different riders." },
+  { title: "Dedicated After-Sales Support", desc: "Get service and assistance throughout your ownership journey." },
+  { title: "Backed by Experience", desc: "Supported by EV Technologies' expertise and Wavetec's 35+ years of R&D experience." },
 ];
 
 const coreValues = [
@@ -95,27 +95,28 @@ export default function AboutUsPage() {
                 speed="slow"
                 className="text-[17px] sm:text-[20px] font-roboto leading-relaxed text-white/60"
               >
-                <span className="text-white font-medium">ELFA Electric</span>, born under EV
-                Technologies at Wavetec, is driven by a passion for building an electric future with
-                sustainable, affordable, and innovative solutions powered by clean technology.
+                <span className="text-white font-medium">ELFA</span>, born under EV Technologies at
+                Wavetec, is driven by a vision to shape a cleaner electric future through sustainable,
+                affordable and innovative solutions powered by clean technology.
               </FadeIn>
               <FadeIn
                 variant="fadeInUp"
                 speed="slow"
                 className="text-[17px] sm:text-[20px] font-roboto leading-relaxed text-white/60"
               >
-                At ELFA Electric, we believe that every person and every detail matters. Our electric
-                motorcycles are meticulously designed, engineered, and rigorously tested for the
-                local rider, using top-quality components.
+                At ELFA Electric, we believe every rider and every detail matters. Our electric
+                motorcycles are thoughtfully designed, carefully engineered and rigorously tested
+                for local riders, using high-quality components.
               </FadeIn>
               <FadeIn
                 variant="fadeInUp"
                 speed="slow"
                 className="text-[17px] sm:text-[20px] font-roboto leading-relaxed text-white/60"
               >
-                We have studied driving patterns, road conditions, and the needs of different types
-                of riders to determine the optimal specifications. This customer-centric approach is
-                backed by EV Technologies expertise and Wavetec&apos;s 30-year legacy of R&amp;D.
+                By understanding local driving patterns, road conditions and the needs of different
+                riders, we develop specifications that best suit everyday journeys. This
+                customer-focused approach is backed by EV Technologies&apos; expertise and
+                Wavetec&apos;s 40-year legacy of research and development.
               </FadeIn>
 
               <FadeIn
@@ -210,14 +211,14 @@ export default function AboutUsPage() {
             <FadeIn
               variant="fadeInUp"
               speed="slow"
-              className="order-2 lg:order-1 relative h-[320px] lg:h-[440px] w-full"
+              className="order-2 lg:order-1 relative h-[360px] sm:h-[440px] lg:h-[600px] w-full"
             >
               {/* Using EV-125-BIKE-1.png which has a transparent background for a sleek product showcase */}
               <Image
                 src="/assets/images/contact/EV-125-BIKE-1.png"
                 alt="ELFA EV-125"
                 fill
-                className="object-contain lg:scale-100 "
+                className="object-contain lg:scale-110"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </FadeIn>
@@ -226,16 +227,16 @@ export default function AboutUsPage() {
                 <p className="font-roboto mb-4 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-primary">
                   The Edge
                 </p>
-                <h2 className="font-montserrat text-[32px] sm:text-[40px] lg:text-[44px] font-black uppercase italic leading-[1.1] tracking-tighter text-white mb-6">
-                  The ELFA <br /> <span className="text-brand-primary">Advantage</span>
+                <h2 className="font-montserrat text-[30px] sm:text-[36px] lg:text-[38px] font-black uppercase italic leading-[1.1] tracking-tighter text-white mb-6">
+                  Built Around <br /> <span className="text-brand-primary">Your Needs</span>
                 </h2>
                 <ul className="list-disc space-y-4 pl-5 marker:text-brand-primary">
                   {whyChoose.map((item) => (
                     <li
-                      key={item}
+                      key={item.title}
                       className="font-roboto text-[15px] sm:text-[16px] text-white/70"
                     >
-                      {item}
+                      <span className="font-semibold text-white">{item.title}</span> – {item.desc}
                     </li>
                   ))}
                 </ul>

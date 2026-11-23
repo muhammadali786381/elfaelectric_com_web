@@ -357,7 +357,7 @@ export default function DealersDirectory() {
           Find Your Nearest Location
         </h2>
         <p className="font-roboto mb-6 text-[15px] leading-relaxed text-white/70 sm:text-[16px]">
-          Find ELFA Electric Motorcycle Dealers in Karachi, Lahore, Rahim Yar Khan, Hyderabad, and Rawalpindi.
+          Explore ELFA Electric locations in Karachi, Lahore, Peshawar, Hyderabad, Rahim Yar Khan, Rawalpindi and other cities.
         </p>
       </div>
 

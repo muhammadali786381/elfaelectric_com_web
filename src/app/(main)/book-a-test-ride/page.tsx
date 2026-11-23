@@ -16,11 +16,10 @@ const BOOKING_IFRAME =
   "https://app.digistartupgroup.com/widget/booking/f0FdDh2Z0n2Zam9VcR4t";
 
 const whyItems = [
-  "2000W motor power for smooth acceleration.",
-  "100Km range on a single charge.",
-  "Smart features like app connectivity and digital dashboards.",
-  "Eco-friendly transport with zero emissions.",
-  "Affordable electric bike performance at PKR 1/Km running cost.",
+  "Responsive Performance: Feel the smooth acceleration and easy handling.",
+  "Smart Technology: Explore the digital display, app connectivity and smart features.",
+  "Versatile Riding Modes: Try different riding modes to find what suits your journey.",
+  "Everyday Comfort: Experience a ride designed to make your daily commute easier.",
 ];
 
 const scheduleItems = [
@@ -101,7 +100,7 @@ export default function BookTestRidePage() {
       <SecondaryHero
         titleLine1="Book a"
         titleLine2="Test Ride"
-        description="Experience ELFA Electric Bike & Scooty in Pakistan"
+        description="Experience the ride before you make it yours. Book a test ride with ELFA."
         imageSrc="/assets/images/hero4.jpeg"
         imageAlt="Book a test ride"
         compact
@@ -112,8 +111,8 @@ export default function BookTestRidePage() {
         <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-6 px-4 sm:px-6 lg:grid-cols-2">
           <GlassCard
             from="left"
-            title="Why Book a Test Ride with ELFA Electric?"
-            intro="Book a test ride with ELFA and feel the difference! Our test rides let you experience:"
+            title="Why Book a Test Ride?"
+            intro="Experience ELFA Electric up close before making your choice. Take a test ride to explore the performance, technology and everyday comfort of our electric bikes."
             items={whyItems}
           />
           <GlassCard

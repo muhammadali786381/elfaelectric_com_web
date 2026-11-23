@@ -166,8 +166,8 @@ export default function ContactUsPage() {
                 Reach Our <span className="text-brand-primary">Experts</span>
               </h2>
               <p className="font-roboto mx-auto max-w-[720px] text-[16px] leading-relaxed text-white/60">
-                Whether you have a question, a suggestion, or just want to say hello, this is the place
-                to do it. We typically respond within 24 hours.
+                Have a question or need assistance? Get in touch with our team for information,
+                feedback, or support. We aim to respond to all enquiries within 24 hours.
               </p>
             </FadeIn>
 
