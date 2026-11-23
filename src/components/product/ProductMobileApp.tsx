@@ -64,7 +64,7 @@ export default function ProductMobileApp({
               {feature.title}
             </h2>
 
-            <p className="font-roboto mb-12 max-w-[600px] text-[18px] font-normal leading-relaxed text-white/60 lg:text-[22px]">
+            <p className="font-roboto mb-12 max-w-[600px] whitespace-pre-line text-[18px] font-normal leading-relaxed text-white/60 lg:text-[22px]">
               {feature.description}
             </p>
 

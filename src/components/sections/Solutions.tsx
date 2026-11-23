@@ -6,20 +6,28 @@ import styles from "./Solutions.module.css";
 
 const solutions = [
   {
-    title: "Lithium Iron Phosphate Battery",
-    desc: "Proven LFP technology — faster charging, greater durability, higher capacity, and long-lasting performance built for daily use.",
+    title: "Advanced LFP Battery",
+    desc: "Lithium Iron Phosphate technology enables fast charging and delivers over 3,000+ charge cycles for long-lasting use.",
   },
   {
-    title: "Efficient Motor Power",
-    desc: "Optimized for extended range and responsive torque, with enhanced energy efficiency that lowers your running cost per kilometre.",
+    title: "Efficient Motor Performance",
+    desc: "Optimised power delivery and torque ensure smooth acceleration and efficient energy use.",
   },
   {
-    title: "App Tracking",
-    desc: "Monitor location, live statistics, and remotely kill the engine — safety and oversight in the palm of your hand.",
+    title: "Cruise Control",
+    desc: "Maintain a steady speed with cruise control for a more relaxed and convenient riding experience.",
   },
   {
-    title: "Advanced Features",
-    desc: "High-build body, alloy rims, and tubeless tyres engineered for Pakistan's roads — every detail optimised for durability.",
+    title: "Digital LED Meter",
+    desc: "Monitor speed, battery status, riding modes and distance at a glance.",
+  },
+  {
+    title: "Disc Brakes",
+    desc: "Enjoy controlled braking and responsive stopping.",
+  },
+  {
+    title: "Water-Resistant Battery",
+    desc: "Designed with an IP rating that provides protection against water and moisture exposure.",
   },
 ];
 
@@ -39,7 +47,7 @@ export default function Solutions() {
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.65, ease }}
         >
-          Solutions <span>we offer.</span>
+          Advanced Features <span>&amp; Technology</span>
         </motion.h2>
 
         <div className={styles.showroom}>

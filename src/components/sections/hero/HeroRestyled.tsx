@@ -10,7 +10,7 @@ import styles from "./HeroRestyled.module.css";
 import { useLoaderReady } from "@/components/layout/GlobalLoader";
 import { productCardData } from "@/components/sections/ProductShowcase";
 
-const imageSizes = "(max-width: 767px) 100vw, (max-width: 1599px) 88vw, 1400px";
+const imageSizes = "(max-width: 767px) 102vw, (max-width: 1595px) 94vw, 1500px";
 const scootySrc = "/assets/images/hero/silverscootyheromain.png";
 const scootyHoverSrc = "/assets/images/hero/redscootyheromain.png";
 const { props: scootyPreload } = getImageProps({ src: scootySrc, alt: "", fill: true, sizes: imageSizes });
@@ -187,12 +187,10 @@ export default function HeroRestyled() {
           )}
           <div className={styles.caption}>
           <AnimatePresence initial={false}>
-            <motion.p key={product.id} className="col-start-1 row-start-1"
+            <motion.p key="home-hero-caption" className="col-start-1 row-start-1"
               variants={textVariants} initial="enter" animate={ready ? "visible" : "enter"} exit="exit"
               transition={{ duration: reducedMotion ? 0.1 : 0.45, ease }}>
-              {isBike
-                ? "Designed to perform on rough and challenging roads."
-                : "Engineered to thrive on challenging local roads!"}
+              Powering your journeys with smarter, cleaner, and more convenient mobility.
             </motion.p>
           </AnimatePresence>
           </div>
@@ -209,9 +207,9 @@ export default function HeroRestyled() {
             variant="primary"
             shape="cut"
             animateLabel
-            className="rounded-none h-12 sm:h-[50px] px-6 sm:px-8 text-[13px] w-full sm:w-52 sm:shrink-0"
+            className="rounded-none h-12 sm:h-[50px] px-6 sm:px-8 text-[13px] w-full sm:w-auto sm:min-w-[250px] sm:shrink-0"
           >
-            {isBike ? "Explore Bikes" : "Explore EV-1"}
+            {isBike ? "Explore Our Bikes" : "Explore Our Scooties"}
           </FlipButton>
           <FlipButton
             href="/book-a-test-ride"
@@ -220,7 +218,7 @@ export default function HeroRestyled() {
             icon={<Calendar className="h-[14px] w-[14px]" strokeWidth={2} />}
             className="rounded-none h-12 sm:h-[50px] px-6 sm:px-8 text-[13px] border-white/20 text-white hover:border-brand-primary hover:bg-brand-primary hover:text-bg-primary w-full sm:w-auto"
           >
-            Book a test ride
+            Book a Test Ride
           </FlipButton>
         </motion.div>
 

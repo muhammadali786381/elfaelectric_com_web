@@ -2,12 +2,11 @@
 
 import { useMemo, useState } from "react";
 import { waslEv125Regions, type WaslEv125Region } from "@/data/wasl-ev125-plans";
-import { burjScootyPlans, waslScootyRegions, womenScootyPlans } from "@/data/scooty-financing-plans";
+import { burjScootyPlans, waslScootyRegions } from "@/data/scooty-financing-plans";
 import {
   BURJ_TERMS,
   FINANCING_PROVIDERS as PROVIDERS,
   burjEv125Plans,
-  womenEv125Plans,
   defaultFinancingSelection,
   formatFinancingAmount as formatRs,
   type BurjPlan,
@@ -19,7 +18,7 @@ import {
 
 /** Scraped from https://elfaelectric.com/financing-partners/ Payment Calculator */
 const PLAN_DATA: Record<
-  Exclude<ProviderId, "wasl" | "burj" | "woman-plan">,
+  Exclude<ProviderId, "wasl" | "burj">,
   Record<string, PlanNumbers>
 > = {
   "asaan-ghar": {
@@ -44,30 +43,29 @@ export default function PaymentCalculator({ product = "ev-125", initialSelection
   initialSelection?: FinancingSelection;
 }) {
   const [selection, onChange] = useState<FinancingSelection>(() => initialSelection ?? defaultFinancingSelection(product === "ev-1" ? "wasl" : "asaan-ghar"));
-  const providers = product === "ev-1" ? PROVIDERS.filter(item => item.id === "wasl" || item.id === "burj" || item.id === "woman-plan") : PROVIDERS;
+  const providers = PROVIDERS.filter(({ id }) => {
+    return product === "ev-125" || id === "wasl" || id === "burj";
+  });
   const waslRegions = product === "ev-1" ? waslScootyRegions : waslEv125Regions;
   const burjPlans = product === "ev-1" ? burjScootyPlans : burjEv125Plans;
-  const womenPlans = product === "ev-1" ? womenScootyPlans : womenEv125Plans;
   const onProviderChange = (provider: ProviderId) => onChange(defaultFinancingSelection(provider));
   const { provider, plan, region, burjTerm } = selection;
   const waslRegion = waslRegions.find(item => item.id === region)!;
 
   const planIds = useMemo(() => {
-    if (provider === "woman-plan") return Object.keys(womenPlans);
     if (provider === "burj") return BURJ_TERMS.map(String);
     if (provider === "wasl") return waslRegion.plans.map(item => item.id);
     return Object.keys(PLAN_DATA[provider]);
-  }, [provider, waslRegion, womenPlans]);
+  }, [provider, waslRegion]);
 
   const summary = useMemo((): PlanNumbers | null => {
-    if (provider === "woman-plan") return womenPlans[plan] ?? null;
     if (provider === "burj") return burjPlans[burjTerm][plan as BurjPlan] ?? null;
     if (provider === "wasl") {
       const numbers = waslRegion.plans.find(item => item.id === plan);
       return numbers ? { ...numbers, total: numbers.downPayment + numbers.monthly * numbers.months } : null;
     }
     return PLAN_DATA[provider][plan] ?? null;
-  }, [provider, plan, waslRegion, burjTerm, burjPlans, womenPlans]);
+  }, [provider, plan, waslRegion, burjTerm, burjPlans]);
 
   const cards = summary
     ? [
@@ -124,7 +122,6 @@ export default function PaymentCalculator({ product = "ev-125", initialSelection
               {planIds.map((id) => (
                 <option key={id} value={id} className="bg-black text-white">
                   {provider === "burj" ? `${id} Months`
-                    : provider === "woman-plan" ? `${womenPlans[id].months} Months`
                     : provider === "wasl" ? `${waslRegion.plans.find(item => item.id === id)!.months} Months`
                     : `Plan ${id}`}
                 </option>

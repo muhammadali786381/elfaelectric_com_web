@@ -11,6 +11,16 @@ import styles from "./InteractiveProductShowcase.module.css";
 
 const products = productCardData.map(product => ({
   ...product,
+  description: product.id === "ev125"
+    ? "Built for everyday performance, comfort and challenging local roads."
+    : "A convenient and comfortable electric ride designed for everyday mobility.",
+  purchaseHref: product.id === "ev125" ? "/product/elfaev125" : "/product/ev1-scooty",
+  specs: [
+    { label: "Battery", value: "72V / 30Ah", icon: "battery" },
+    { label: "Top Speed", value: product.id === "ev125" ? "Up to 75 km/h" : "Up to 60 km/h", icon: "speed" },
+    { label: "Motor Power", value: product.id === "ev125" ? "3,000W" : "2,000W", icon: "motor" },
+    { label: "Range", value: product.id === "ev125" ? "100+ km" : "Up to 80 km", icon: "road" },
+  ] as const,
   colors: product.id === "ev125" ? [
     { name: "Black", swatch: "#202222", image: "/assets/images/hero/ELFA EV-125 motorcycle with soft ground shadow-1.png" },
     { name: "Red", swatch: "#c61b23", image: "/assets/images/hero/Metallic red ELFA EV-125 motorcycle.png" },
@@ -48,7 +58,7 @@ function ProductDetails({ product, itemVariants }: ProductTextProps) {
             : part)}
         </h3>
       </TextReveal>
-      <TextReveal variants={itemVariants}><p className={styles.category}>{product.type}</p></TextReveal>
+      <TextReveal variants={itemVariants}><p className={styles.description}>{product.description}</p></TextReveal>
       <dl className={styles.specs}>
         {product.specs.map(spec => {
           const Icon = icons[spec.icon];
@@ -109,13 +119,15 @@ function ProductPricing({ product, itemVariants }: ProductTextProps) {
         <p className={styles.price}>{product.price}</p>
         <p className={styles.tax}>+ tax</p>
       </TextReveal>
-      <TextReveal variants={itemVariants}><p className={styles.savings}>{product.savings}</p></TextReveal>
       <motion.div className={styles.actions} variants={itemVariants}>
-        <FlipButton href={product.exploreHref} shape="cut" className={styles.explore}>
-          Explore model
+        <FlipButton href={product.purchaseHref} shape="cut" className={styles.buy}>
+          Buy Now
         </FlipButton>
-        <Link href={product.buyHref} className={styles.testRide}>
-          Book a test ride <ArrowUpRight size={16} aria-hidden="true" />
+        <Link href={product.exploreHref} className={styles.actionLink}>
+          Explore Model <ArrowUpRight size={16} aria-hidden="true" />
+        </Link>
+        <Link href={product.buyHref} className={styles.actionLink}>
+          Book a Test Ride <ArrowUpRight size={16} aria-hidden="true" />
         </Link>
       </motion.div>
     </>
@@ -184,7 +196,7 @@ export default function InteractiveProductShowcase() {
     <section className={styles.section} aria-labelledby="interactive-products-heading" data-product-showcase>
       <div className={styles.container}>
         <h2 id="interactive-products-heading" className={styles.heading}>
-          Our Products
+          A Ride That Fits Your Lifestyle
         </h2>
         <div id="interactive-product-display" className={styles.showcase} data-active-product={active.id}>
           <div className={styles.details}>
@@ -240,6 +252,11 @@ export default function InteractiveProductShowcase() {
                 <ProductPricing product={active} itemVariants={textItemVariants} />
               </motion.div>
             </AnimatePresence>
+            <dl className={styles.warranty}>
+              <dt>Warranty</dt>
+              <dd>Battery &amp; motor: 3 years or 50,000 km, whichever occurs first.</dd>
+              <dd>Controller: 6 months.</dd>
+            </dl>
           </div>
 
           <button type="button" className={styles.preview} onClick={switchProduct}

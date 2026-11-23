@@ -4,50 +4,13 @@ import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { faqs as defaultFaqs } from "@/data/faqs";
 
 export interface FAQItem {
   q: string;
   a: React.ReactNode;
+  link?: { href: string; label: string };
 }
-
-const defaultFaqs: FAQItem[] = [
-  {
-    q: "How do I maintain my EV bike?",
-    a: "Maintaining an EV bike is simple and hassle-free. Keep your bike clean, ensure the battery is charged, and avoid exposing it to wet areas while charging. Unlike traditional engine bikes, EV bikes have fewer moving parts and require minimal care. Just check tyre pressure, brake condition, and battery health periodically.",
-  },
-  {
-    q: "How long is the battery warranty?",
-    a: "The battery warranty for ELFA electric bikes is 3 years or 50,000 KM, whichever comes first. This applies to issues specified in the warranty booklet. Any breach of regulations not covered under warranty terms will not be eligible for coverage.",
-  },
-  {
-    q: "How long do I need to charge my electric bike?",
-    a: "Our EV-125 has a 72V/30Ah battery, requiring approximately 2 units of electricity for a full charge. Using the company-provided charger, it charges fully in just 2–3 hours.",
-  },
-  {
-    q: "Is driving an EV bike easy?",
-    a: "Yes — no gear or clutch to manage. Our electric bike offers three speed modes: Eco, City, and Sports, switchable with a single button. Anyone comfortable on a regular bike will feel right at home.",
-  },
-  {
-    q: "What are the key features of the EV-1 Scooty?",
-    a: "The EV-1 features a 1,500W motor, 64V/30Ah lithium-ion battery, tubeless tyres, alloy rims, digital meter, reverse mode, and an 8A fast charger — engineered for every local road.",
-  },
-  {
-    q: "What is the range on a single charge?",
-    a: "The EV-125 offers 100+ km and the EV-1 Scooty delivers 70–80 km per charge, depending on riding mode, rider weight, and terrain conditions.",
-  },
-  {
-    q: "Is the bike water resistant?",
-    a: "Both models are water-resistant and handle light rain and wet roads with confidence. We recommend avoiding full submersion of the bike or battery in standing water.",
-  },
-  {
-    q: "How can I book a test ride?",
-    a: "Visit the 'Book a Test Ride' page on our website or contact your nearest ELFA dealer. Test rides are free, no commitment required.",
-  },
-  {
-    q: "What financing options are available?",
-    a: "ELFA offers flexible installment plans through multiple financing partners. You can explore plans on our Installment Plans page or speak to a dealer for personalised options.",
-  },
-];
 
 export function AccordionItem({
   faq,
@@ -98,8 +61,11 @@ export function AccordionItem({
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <p className="font-roboto pb-5 pr-10 text-[14px] leading-relaxed text-white/45 sm:text-[15px]">
+            <p className="font-roboto whitespace-pre-line pb-5 pr-10 text-[14px] leading-relaxed text-white/45 sm:text-[15px]">
               {faq.a}
+              {faq.link && (
+                <> <a href={faq.link.href} target="_blank" rel="noopener noreferrer" className="text-brand-primary underline underline-offset-2 hover:text-white">{faq.link.label}</a></>
+              )}
             </p>
           </motion.div>
         )}

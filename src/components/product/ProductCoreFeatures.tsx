@@ -89,7 +89,11 @@ export default function ProductCoreFeatures({ features, centerImage, productName
                     </span>
                     <ColorizedValue text={val} />
                     {sub && (
-                      <span className="font-roboto text-[14px] sm:text-[15px] leading-5 text-white/50 mt-1 sm:mt-2">
+                      <span
+                        className={sub === "Design"
+                          ? "font-montserrat text-[18px] min-[400px]:text-[20px] sm:text-[26px] xl:text-[28px] font-black leading-tight tracking-tight text-white"
+                          : "font-roboto text-[14px] sm:text-[15px] leading-5 text-white/50 mt-1 sm:mt-2"}
+                      >
                         {sub}
                       </span>
                     )}

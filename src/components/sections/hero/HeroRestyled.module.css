@@ -69,7 +69,7 @@
   position: relative;
   z-index: 2;
   grid-area: 1 / 1;
-  width: min(88vw, 1400px);
+  width: min(94vw, 1500px);
   justify-self: center;
   margin-top: 24px;
 }
@@ -89,7 +89,7 @@
 @media (min-width: 1024px) {
   .heading { margin-top: 32px; }
   .vehicle {
-    transform: translateY(56px) scale(1.16);
+    transform: translateY(56px) scale(1.25);
     transform-origin: center bottom;
   }
 }
@@ -97,7 +97,7 @@
   .heading { font-size: clamp(123px, 7.7vw, 176px); }
 }
 @media (max-width: 1023px) {
-  .hero { grid-template-rows: minmax(360px, 1fr) auto auto; }
+  .hero { grid-template-rows: minmax(390px, 1fr) auto auto; }
   .content { flex-direction: column; align-items: center; gap: 20px; text-align: center; }
   .description { align-items: center; max-width: none; font-size: 15px; }
   .nav { align-self: center; }
@@ -106,10 +106,10 @@
 @media (max-width: 767px) {
   .hero {
     min-height: auto;
-    grid-template-rows: clamp(250px, 65vw, 460px) auto auto;
+    grid-template-rows: clamp(250px, 68vw, 480px) auto auto;
     padding: 112px 5vw 24px;
   }
-  .vehicle { width: 100vw; margin-top: 8px; }
+  .vehicle { width: 102vw; margin-top: 8px; }
   .content { padding: 16px 0 24px; }
   .description { max-width: 32ch; min-height: 3em; }
   .caption p { white-space: normal; }

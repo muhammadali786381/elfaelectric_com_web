@@ -8,10 +8,13 @@ import { FadeIn } from "@/components/motion/FadeIn";
 import PaymentCalculator from "@/components/financing/PaymentCalculator";
 import { waslEv125Regions, type WaslEv125Region } from "@/data/wasl-ev125-plans";
 import {
+  burjScootyPlans,
+  waslScootyRegions,
+} from "@/data/scooty-financing-plans";
+import {
   BURJ_TERMS,
   FINANCING_PROVIDERS as PROVIDERS,
   burjEv125Plans,
-  womenEv125Plans,
   defaultFinancingSelection,
   formatFinancingAmount as formatRs,
   type BurjTerm,
@@ -31,9 +34,6 @@ const selectTriggerClass =
 
 const selectItemClass =
   "font-roboto cursor-pointer rounded-lg py-2.5 pl-3 text-[15px] !text-white focus:bg-brand-primary/20 focus:!text-white focus:**:!text-white data-highlighted:bg-brand-primary/20 data-highlighted:!text-white data-highlighted:**:!text-white";
-
-const SPARK =
-  "linear-gradient(135deg, #00C853 -110%, #000000 50%, #00C853 190%)";
 
 type Detail = { label: string; value: string };
 
@@ -66,15 +66,6 @@ const burjPlans: Plan[] = BURJ_TERMS.flatMap(term =>
 
 /** Scraped from https://elfaelectric.com/financing-partners/ */
 const ev125Plans: Record<Exclude<ProviderId, "wasl" | "burj">, Plan[]> = {
-  "woman-plan": Object.entries(womenEv125Plans).map(([id, numbers]) => ({
-    id,
-    title: `Plan ${id}`,
-    months: numbers.months,
-    downPayment: numbers.downPayment,
-    perMonth: numbers.monthly,
-    total: numbers.total,
-    details: [{ label: "Down Payment", value: formatRs(numbers.downPayment) }],
-  })),
   "asaan-ghar": [
     {
       id: "1",
@@ -189,6 +180,35 @@ const waslRegionalPlans = waslEv125Regions.map(region => ({
   } satisfies Plan)),
 }));
 
+const burjScootyPlanList: Plan[] = BURJ_TERMS.flatMap(term =>
+  Object.entries(burjScootyPlans[term]).map(([id, numbers]) => ({
+    id: `${term}-${id.toLowerCase()}`,
+    title: id === "D" ? "Plan D (0% Mark-up)" : `Plan ${id}`,
+    months: numbers.months,
+    downPayment: numbers.downPayment,
+    perMonth: numbers.monthly,
+    total: numbers.total,
+    details: [
+      { label: "Down Payment", value: formatRs(numbers.downPayment) },
+      { label: "Monthly Installment", value: formatRs(numbers.monthly) },
+      { label: "Total Months", value: String(numbers.months) },
+    ],
+  })),
+);
+
+const waslScootyRegionalPlans = waslScootyRegions.map(region => ({
+  ...region,
+  plans: region.plans.map(plan => ({
+    id: plan.id,
+    title: `Plan ${plan.id}`,
+    months: plan.months,
+    downPayment: plan.downPayment,
+    perMonth: plan.monthly,
+    total: 0,
+    details: [{ label: "Down Payment", value: formatRs(plan.downPayment) }],
+  } satisfies Plan)),
+}));
+
 const socialLinks = [
   {
     label: "Facebook",
@@ -272,60 +292,144 @@ function PlanCard({ plan }: { plan: Plan }) {
   );
 }
 
-export default function FinancingPlans() {
-  const [selection, setSelection] = useState<FinancingSelection>(() => defaultFinancingSelection());
+export type FinancingPlansProps = {
+  allowProductSwitch?: boolean;
+  defaultProduct?: "ev-125" | "ev-1";
+};
+
+export default function FinancingPlans({
+  allowProductSwitch = false,
+  defaultProduct = "ev-125",
+}: FinancingPlansProps) {
+  const [product, setProduct] = useState<"ev-125" | "ev-1">(defaultProduct);
+  const [selection, setSelection] = useState<FinancingSelection>(() =>
+    defaultFinancingSelection(defaultProduct === "ev-1" ? "wasl" : "asaan-ghar"),
+  );
   const { provider, region: waslRegion, burjTerm } = selection;
-  const [partner, setPartner] = useState("");
+
+  const availableProviders = PROVIDERS.filter(({ id }) => {
+    return product === "ev-125" || id === "wasl" || id === "burj";
+  });
+
+  const handleProductChange = (nextProduct: "ev-125" | "ev-1") => {
+    if (nextProduct === product) return;
+    setProduct(nextProduct);
+    if (
+      nextProduct === "ev-1" &&
+      (selection.provider === "asaan-ghar" || selection.provider === "qist-baazar")
+    ) {
+      setSelection(defaultFinancingSelection("wasl"));
+    }
+  };
+
+  const waslRegionsData = useMemo(() => {
+    return product === "ev-1" ? waslScootyRegionalPlans : waslRegionalPlans;
+  }, [product]);
+
+  const activeWaslRegion = useMemo(
+    () =>
+      waslRegionsData.find((region) => region.id === waslRegion) ??
+      waslRegionsData[0],
+    [waslRegionsData, waslRegion],
+  );
+
+  const burjPlansData = useMemo(() => {
+    return product === "ev-1" ? burjScootyPlanList : burjPlans;
+  }, [product]);
+
+  const burjTermPlans = useMemo(
+    () => burjPlansData.filter((plan) => plan.months === burjTerm),
+    [burjPlansData, burjTerm],
+  );
 
   const plans = useMemo(() => {
     if (provider === "wasl" || provider === "burj") return [];
+    if (product === "ev-1") {
+      return [];
+    }
     return ev125Plans[provider];
-  }, [provider]);
-
-  const activeWaslRegion = useMemo(
-    () => waslRegionalPlans.find((region) => region.id === waslRegion) ?? waslRegionalPlans[0],
-    [waslRegion],
-  );
-
-  const burjTermPlans = useMemo(
-    () => burjPlans.filter((plan) => plan.months === burjTerm),
-    [burjTerm],
-  );
+  }, [product, provider]);
 
   const switchProvider = (id: ProviderId) => {
     setSelection(defaultFinancingSelection(id));
   };
 
-  const inputClass =
-    "font-roboto h-[48px] w-full rounded-[6px] border border-[#d0d0d0] bg-bg-primary px-4 text-[15px] text-text-secondary outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary";
-
   return (
     <>
-      <section data-financing-plans={provider} className="relative w-full overflow-hidden bg-bg-primary pt-10 pb-8 sm:pt-12 lg:pt-14 lg:pb-10">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0"
-          style={{ backgroundImage: "radial-gradient(ellipse 65% 42% at 90% 50%, rgba(97,206,112,0.065), transparent 100%)" }} />
+      <section
+        data-financing-plans={provider}
+        className="relative w-full overflow-hidden bg-bg-primary pt-10 pb-8 sm:pt-12 lg:pt-14 lg:pb-10"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(ellipse 65% 42% at 90% 50%, rgba(97,206,112,0.065), transparent 100%)",
+          }}
+        />
 
         <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6">
-          <FadeIn variant="fadeInUp" speed="normal" className="mb-10 text-center sm:mb-12">
+          <FadeIn variant="fadeInUp" speed="normal" className="mb-8 text-center sm:mb-10">
             <h2 className="font-montserrat mb-3 text-[32px] font-black uppercase italic tracking-tight text-white sm:mb-4 sm:text-[48px]">
               Choose Your <span className="text-brand-primary">Plan</span>
             </h2>
-            <p className="font-roboto mx-auto max-w-none px-0 text-[14px] leading-snug text-white/60 sm:text-[16px] sm:whitespace-nowrap">
-              Select one of our trusted financing partners to view all available installment plans for the EV-125.
+            <p className="font-roboto mx-auto max-w-4xl px-0 text-[14px] leading-snug text-white/60 sm:text-[16px]">
+              {allowProductSwitch
+                ? "Select one of our trusted financing partners to explore available instalment plans for the EV-125 and EV-1."
+                : "Select one of our trusted financing partners to view all available installment plans for the EV-125."}
             </p>
           </FadeIn>
 
+          {allowProductSwitch && (
+            <div className="mb-10 flex justify-center">
+              <div
+                role="tablist"
+                aria-label="Select Vehicle Product"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/60 p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={product === "ev-125"}
+                  onClick={() => handleProductChange("ev-125")}
+                  className={`font-roboto flex items-center justify-center rounded-full px-6 py-2.5 text-[14px] font-bold uppercase tracking-wider transition-all duration-300 sm:px-8 sm:py-3 ${
+                    product === "ev-125"
+                      ? "border border-brand-primary bg-brand-primary text-black shadow-[0_0_24px_rgba(0,200,83,0.35)]"
+                      : "border border-transparent text-white/60 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  EV-125 Bike
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={product === "ev-1"}
+                  onClick={() => handleProductChange("ev-1")}
+                  className={`font-roboto flex items-center justify-center rounded-full px-6 py-2.5 text-[14px] font-bold uppercase tracking-wider transition-all duration-300 sm:px-8 sm:py-3 ${
+                    product === "ev-1"
+                      ? "border border-brand-primary bg-brand-primary text-black shadow-[0_0_24px_rgba(0,200,83,0.35)]"
+                      : "border border-transparent text-white/60 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  EV-1 Scooty
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="mb-12 flex flex-wrap justify-center gap-3 sm:mb-14 sm:gap-4">
-            {PROVIDERS.map((p) => (
+            {availableProviders.map((p) => (
               <button
                 key={p.id}
                 type="button"
                 aria-pressed={provider === p.id}
                 onClick={() => switchProvider(p.id)}
-                className={`font-roboto rounded-full border px-8 py-3 text-[14px] font-bold uppercase tracking-widest transition-all duration-300 ${provider === p.id
-                  ? "border-brand-primary bg-brand-primary text-black shadow-[0_0_20px_rgba(0,200,83,0.3)]"
-                  : "border-white/20 bg-black/40 text-white backdrop-blur-sm hover:border-white/40 hover:bg-white/10"
-                  }`}
+                className={`font-roboto rounded-full border px-8 py-3 text-[14px] font-bold uppercase tracking-widest transition-all duration-300 ${
+                  provider === p.id
+                    ? "border-brand-primary bg-brand-primary text-black shadow-[0_0_20px_rgba(0,200,83,0.3)]"
+                    : "border-white/20 bg-black/40 text-white backdrop-blur-sm hover:border-white/40 hover:bg-white/10"
+                }`}
               >
                 {p.label}
               </button>
@@ -337,13 +441,16 @@ export default function FinancingPlans() {
               <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
                 <Select
                   value={waslRegion}
-                  items={waslRegionalPlans.map((region) => ({
+                  items={waslRegionsData.map((region) => ({
                     value: region.id,
                     label: region.name,
                   }))}
                   onValueChange={(value) => {
                     if (value == null) return;
-                    setSelection(current => ({ ...current, region: value as WaslEv125Region }));
+                    setSelection((current) => ({
+                      ...current,
+                      region: value as WaslEv125Region,
+                    }));
                   }}
                 >
                   <SelectTrigger
@@ -358,7 +465,7 @@ export default function FinancingPlans() {
                     align="start"
                     className="rounded-xl border border-white/10 bg-[#111] text-white shadow-[0_16px_40px_rgba(0,0,0,0.55)] ring-white/10"
                   >
-                    {waslRegionalPlans.map((region) => (
+                    {waslRegionsData.map((region) => (
                       <SelectItem
                         key={region.id}
                         value={region.id}
@@ -375,7 +482,10 @@ export default function FinancingPlans() {
                 </h3>
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                   {activeWaslRegion.plans.map((plan) => (
-                    <PlanCard key={`${activeWaslRegion.id}-${plan.id}`} plan={plan} />
+                    <PlanCard
+                      key={`${product}-${activeWaslRegion.id}-${plan.id}`}
+                      plan={plan}
+                    />
                   ))}
                 </div>
               </div>
@@ -389,7 +499,10 @@ export default function FinancingPlans() {
                   }))}
                   onValueChange={(value) => {
                     if (value == null) return;
-                    setSelection(current => ({ ...current, burjTerm: Number(value) as BurjTerm }));
+                    setSelection((current) => ({
+                      ...current,
+                      burjTerm: Number(value) as BurjTerm,
+                    }));
                   }}
                 >
                   <SelectTrigger
@@ -421,22 +534,17 @@ export default function FinancingPlans() {
                 </h3>
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                   {burjTermPlans.map((plan) => (
-                    <PlanCard key={`burj-${plan.id}`} plan={plan} />
-                  ))}
-                </div>
-              </div>
-            ) : provider === "woman-plan" ? (
-              <div className="mx-auto w-full max-w-[464px] md:max-w-[960px]">
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                  {plans.map((plan) => (
-                    <PlanCard key={`woman-plan-${plan.id}`} plan={plan} />
+                    <PlanCard key={`${product}-burj-${plan.id}`} plan={plan} />
                   ))}
                 </div>
               </div>
             ) : (
               <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">
                 {plans.map((plan) => (
-                  <PlanCard key={`${provider}-${plan.id}`} plan={plan} />
+                  <PlanCard
+                    key={`${product}-${provider}-${plan.id}`}
+                    plan={plan}
+                  />
                 ))}
               </div>
             )}
@@ -444,7 +552,11 @@ export default function FinancingPlans() {
         </div>
       </section>
 
-      <PaymentCalculator key={JSON.stringify(selection)} initialSelection={selection} />
+      <PaymentCalculator
+        key={`${product}-${JSON.stringify(selection)}`}
+        product={product}
+        initialSelection={selection}
+      />
 
       <section id="get-started" className="bg-[#050505] pb-14 pt-10 lg:pb-24 lg:pt-12">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
@@ -452,7 +564,8 @@ export default function FinancingPlans() {
             Get Started with ELFA
           </h2>
           <p className="font-roboto mx-auto mb-12 max-w-none px-2 text-center text-[14px] leading-snug text-white/60 sm:text-[16px] sm:whitespace-nowrap">
-            Ready to take the first step towards owning your EV bike? Fill out the form below, and let’s make it happen!
+            Ready to take the first step towards owning your{" "}
+            {product === "ev-1" ? "EV Scooty" : "EV bike"}? Fill out the form below, and let’s make it happen!
           </p>
 
           <div
@@ -461,27 +574,68 @@ export default function FinancingPlans() {
             {/* Subtle top ambient glow line */}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/30 to-transparent" />
 
-            <div className="w-full relative z-10  " style={{ height: "100%" }}>
-              <iframe
-                src="https://app.digistartup.io/widget/form/byOsisFes6j0HczrDuIq"
-                style={{ width: "100%", height: "100%", border: "none", borderRadius: "0px", overflow: "hidden" }}
-                scrolling="no"
-                id="inline-byOsisFes6j0HczrDuIq"
-                data-layout="{'id':'INLINE'}"
-                data-trigger-type="alwaysShow"
-                data-trigger-value=""
-                data-activation-type="alwaysActivated"
-                data-activation-value=""
-                data-deactivation-type="neverDeactivate"
-                data-deactivation-value=""
-                data-form-name="Installment Plan | EV125"
-                data-height="967"
-                data-layout-iframe-id="inline-byOsisFes6j0HczrDuIq"
-                data-form-id="byOsisFes6j0HczrDuIq"
-                data-cookie-consent="true"
-                data-cookie-consent-provider="auto"
-                title="Installment Plan | EV125"
-              />
+            <div className="w-full relative z-10" style={{ height: "100%" }}>
+              {/* The embed script reparents its iframes. Keep them mounted when switching products. */}
+              {(allowProductSwitch || product === "ev-1") && (
+                <div hidden={product !== "ev-1"} className="h-full">
+                  <iframe
+                    src="https://app.digistartup.io/widget/form/gRQ9EuVKch15UDsuAgMT"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      border: "none",
+                      borderRadius: "0px",
+                      overflow: "hidden",
+                    }}
+                    scrolling="no"
+                    id="inline-gRQ9EuVKch15UDsuAgMT"
+                    data-layout="{'id':'INLINE'}"
+                    data-trigger-type="alwaysShow"
+                    data-trigger-value=""
+                    data-activation-type="alwaysActivated"
+                    data-activation-value=""
+                    data-deactivation-type="neverDeactivate"
+                    data-deactivation-value=""
+                    data-form-name="Installments Plans | EV1"
+                    data-height="475"
+                    data-layout-iframe-id="inline-gRQ9EuVKch15UDsuAgMT"
+                    data-form-id="gRQ9EuVKch15UDsuAgMT"
+                    data-cookie-consent="true"
+                    data-cookie-consent-provider="auto"
+                    title="Installments Plans | EV1"
+                  />
+                </div>
+              )}
+              {(allowProductSwitch || product === "ev-125") && (
+                <div hidden={product !== "ev-125"} className="h-full">
+                  <iframe
+                    src="https://app.digistartup.io/widget/form/byOsisFes6j0HczrDuIq"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      border: "none",
+                      borderRadius: "0px",
+                      overflow: "hidden",
+                    }}
+                    scrolling="no"
+                    id="inline-byOsisFes6j0HczrDuIq"
+                    data-layout="{'id':'INLINE'}"
+                    data-trigger-type="alwaysShow"
+                    data-trigger-value=""
+                    data-activation-type="alwaysActivated"
+                    data-activation-value=""
+                    data-deactivation-type="neverDeactivate"
+                    data-deactivation-value=""
+                    data-form-name="Installment Plan | EV125"
+                    data-height="967"
+                    data-layout-iframe-id="inline-byOsisFes6j0HczrDuIq"
+                    data-form-id="byOsisFes6j0HczrDuIq"
+                    data-cookie-consent="true"
+                    data-cookie-consent-provider="auto"
+                    title="Installment Plan | EV125"
+                  />
+                </div>
+              )}
               <Script src="https://app.digistartup.io/js/form_embed.js" strategy="afterInteractive" />
             </div>
 

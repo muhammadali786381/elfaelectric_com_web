@@ -170,7 +170,7 @@ export default function ProductAdvancedFeatures({ features }: { features: Produc
 
         <div ref={contentRef} className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
           <div
-            className="relative grid aspect-[21/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-[#111]"
+            className="relative grid aspect-[15/7] w-full overflow-hidden rounded-2xl"
             onPointerEnter={pauseOnMouse}
             onPointerLeave={resumeOnMouse}
           >
@@ -202,7 +202,7 @@ export default function ProductAdvancedFeatures({ features }: { features: Produc
                     alt={feature.title}
                     fill
                     loading="eager"
-                    className="object-cover"
+                    className="object-contain"
                     sizes="(min-width: 1024px) 650px, (min-width: 640px) 90vw, 100vw"
                   />
                 </motion.div>

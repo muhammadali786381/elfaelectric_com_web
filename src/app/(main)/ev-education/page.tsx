@@ -31,7 +31,8 @@ export default function EVEducationPage() {
             EV <span className="text-brand-primary">Education</span>
           </span>
         }
-        description="Learn everything you need to know about charging, maintenance, and the future of electric mobility with ELFA."
+        description="Stay informed with helpful guides and insights on charging, battery care, maintenance, and everyday use of your ELFA electric bike. 
+"
         imageSrc="/assets/images/hero4.jpeg"
         imageAlt="ELFA EV Education"
       />

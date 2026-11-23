@@ -188,7 +188,7 @@ export default function SavingsCalculator({
           <div className="flex flex-1 flex-col justify-between p-5 sm:p-6 lg:p-8">
             <div className="flex flex-col xl:flex-row items-center justify-between gap-4">
               <h3 className="font-montserrat text-lg font-bold text-white sm:text-xl">
-                Calculate Savings
+                Calculate Your Savings
               </h3>
               {!locked && (
                 <div className="relative flex w-full sm:w-auto h-11 sm:h-12 shrink-0 items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1 backdrop-blur-md">

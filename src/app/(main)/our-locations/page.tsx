@@ -7,7 +7,7 @@ import JoinRevolutionCTA from "@/components/sections/JoinRevolutionCTA";
 export const metadata: Metadata = {
   title: "ELFA Electric Dealers | Authorized Showrooms in Pakistan",
   description:
-    "Find authorized ELFA Electric dealers across Karachi, Hyderabad, Lahore, Rahim Yar Khan, and Rawalpindi. Book a test ride or visit a showroom near you.",
+    "Explore ELFA Electric's authorised dealerships, service centres and showrooms across Pakistan. Find your nearest location and book a test ride.",
 };
 
 export default function OurDealersPage() {
@@ -31,10 +31,7 @@ export default function OurDealersPage() {
                 Our <span className="text-brand-primary">Locations</span>
               </h1>
               <p className="font-roboto mx-auto max-w-[920px] text-[15px] font-medium leading-snug text-white/70 sm:text-[17px] lg:max-w-[980px] lg:text-[18px] lg:leading-[1.45]">
-                Our authorised dealers across Karachi, Hyderabad, Lahore, and other cities offer
-                ELFA electric bikes and scooties with expert guidance and support. Whether
-                you&apos;re looking to buy your next ride, book a test ride, or become an authorised
-                ELFA dealer, we&apos;ve got you covered.
+                Explore ELFA Electric&apos;s authorised dealerships, service centres and showrooms across Pakistan. Visit your nearest location to discover our electric bikes and scooties, get expert guidance, or book a test ride.
               </p>
             </FadeIn>
           </div>
