@@ -3,9 +3,9 @@ import FinancingPlans from "./FinancingPlans";
 import SecondaryHero from "@/components/sections/SecondaryHero";
 
 export const metadata: Metadata = {
-  title: "ELFA Financing Partners | Easy Electric Bike Installments",
+  title: "ELFA Financing Partners | Easy Electric Bike & Scooty Installments",
   description:
-    "Explore ELFA EV-125 installment plans with Asaan Ghar, Qist Baazar, WASL, and Burj financing partners.",
+    "Explore ELFA EV-125 and EV-1 Scooty installment plans with Asaan Ghar, Qist Baazar, WASL, and Burj financing partners.",
 };
 
 export default function FinancingPartnersPage() {
@@ -20,7 +20,7 @@ export default function FinancingPartnersPage() {
           compact
         />
 
-        <FinancingPlans />
+        <FinancingPlans allowProductSwitch={true} />
       </main>
     </>
   );
