@@ -70,7 +70,7 @@ export const scootyEv1: Product = {
     },
     {
       title: "Tubeless Tyres",
-      image: `${IMG}/scootytire.png`,
+      image: `${IMG}/scootywheel.png`,
       description:
         "Optimized for stability and smooth handling, our bikes feature an 12-inch front wheel and 12-inch rear wheel diameter, ensuring a comfortable ride on challenging roads.",
     },
