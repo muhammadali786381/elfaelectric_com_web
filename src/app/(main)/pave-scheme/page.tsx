@@ -1,28 +1,20 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import Image from "next/image";
-import { ArrowRight, ChevronRight, Download, Info, Mail, MapPin, Phone, CreditCard, Truck, FileText, Landmark } from "lucide-react";
-import JoinRevolutionCTA from "@/components/sections/JoinRevolutionCTA";
+import { ChevronRight, Download, Info, Mail, MapPin, Phone, Landmark } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
-import SecondaryHero from "@/components/sections/SecondaryHero";
 import FlipButton from "@/components/ui/FlipButton";
+import SecondaryHero from "@/components/sections/SecondaryHero";
 
 export const metadata: Metadata = {
-  title: "PAVE Scheme | ELFA Electric Bike Instructions & Delivery",
+  title: "PAVE Scheme 2.0 | ELFA Electric Bike Instructions & Delivery",
   description:
-    "Details for applicants selected under the PAVE Scheme (Self-Finance): pay order instructions, courier address, delivery timeline, and government subsidy transfer.",
+    "Apply for PAVE 2.0 and take the first step towards securing your ELFA electric bike through pre-booking. Subsidised pricing details and applicant instructions.",
 };
 
-const INFO_VIDEO = "https://youtu.be/AB-iP7vWQtk?si=moPN1gQnP_8B4t8P";
+const PAVE_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdxnx9J7GDgtDHg3_jnbsRfdYb_dR79s9VJc0xZ4kKxqcsA1w/viewform?usp=publish-editor";
 
-const overviewSteps = [
-  { n: 1, label: "Pay Order Instructions" },
-  { n: 2, label: "Courier Your Pay Order" },
-  { n: 3, label: "Delivery Process" },
-  { n: 4, label: "Delivery Timeline" },
-  { n: 5, label: "Government Subsidy Transfer" },
-  { n: 6, label: "Submission of Deposit Slip" },
-];
+const INFO_VIDEO = "https://youtu.be/AB-iP7vWQtk?si=moPN1gQnP_8B4t8P";
 
 const pricing = [
   { model: "EV-125", price: "Rs. 250,000/-" },
@@ -78,14 +70,65 @@ export default function PaveSchemePage() {
       <main className="flex-1 bg-bg-primary">
         <SecondaryHero
           titleLine1="PAVE"
-          titleLine2="SCHEME"
-          description="Complete details for applicants selected under the PAVE Scheme (Self-Finance) to receive your ELFA Electric Bike."
+          titleLine2="SCHEME 2.0"
+          description="Apply for PAVE 2.0 and take the first step towards securing your ELFA electric bike through pre-booking."
           imageSrc="/assets/images/hero4.jpeg"
-          imageAlt="PAVE Scheme"
-        />
+          imageAlt="PAVE Scheme 2.0"
+        >
+          <a
+            href={PAVE_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-roboto inline-flex items-center justify-center rounded-full bg-brand-primary px-8 sm:px-10 py-3.5 sm:py-4 text-[15px] font-bold text-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-black hover:scale-105 shadow-[0_0_28px_rgba(0,200,83,0.4)]"
+          >
+            Apply Through the Form
+          </a>
+        </SecondaryHero>
 
         {/* Content Flow */}
-        <section className="relative z-10 w-full max-w-[900px] mx-auto px-4 sm:px-6 py-16 lg:py-24">
+        <section className="relative z-10 w-full max-w-[1050px] mx-auto px-4 sm:px-6 pt-12 pb-16 lg:pb-24">
+          {/* Scheme Comparison Cards - Both Highlighted */}
+          <div className="mb-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            {/* PAVE II Scheme Card (Highlighted) */}
+            <FadeIn variant="fadeInUp" speed="normal">
+              <div className="relative h-full flex flex-col rounded-[24px] border-2 border-brand-primary bg-[#061209]/85 backdrop-blur-xl p-8 sm:p-10 shadow-[0_0_35px_rgba(0,200,83,0.22),inset_0_0_20px_rgba(0,200,83,0.06)] transition-all duration-300 hover:shadow-[0_0_45px_rgba(0,200,83,0.35)]">
+                <h2 className="font-montserrat text-[24px] sm:text-[28px] font-black text-brand-primary tracking-tight mb-4 drop-shadow-[0_0_12px_rgba(0,200,83,0.5)]">
+                  PAVE II Scheme
+                </h2>
+                <p className="font-roboto text-[15px] sm:text-[16px] leading-relaxed text-white/80">
+                  Under PAVE II, the{" "}
+                  <span className="font-bold text-brand-primary">
+                    government provides the subsidy directly to the OEM
+                  </span>
+                  , so customers{" "}
+                  <span className="font-bold text-white">
+                    only pay the subsidised price
+                  </span>{" "}
+                  when purchasing their bike.
+                </p>
+              </div>
+            </FadeIn>
+
+            {/* Previous Scheme Card (Also Highlighted) */}
+            <FadeIn variant="fadeInUp" speed="normal" delay={0.1}>
+              <div className="relative h-full flex flex-col rounded-[24px] border-2 border-brand-primary bg-[#061209]/85 backdrop-blur-xl p-8 sm:p-10 shadow-[0_0_35px_rgba(0,200,83,0.22),inset_0_0_20px_rgba(0,200,83,0.06)] transition-all duration-300 hover:shadow-[0_0_45px_rgba(0,200,83,0.35)]">
+                <h2 className="font-montserrat text-[24px] sm:text-[28px] font-black text-brand-primary tracking-tight mb-4 drop-shadow-[0_0_12px_rgba(0,200,83,0.5)]">
+                  Previous Scheme
+                </h2>
+                <p className="font-roboto text-[15px] sm:text-[16px] leading-relaxed text-white/80">
+                  Customers had to pay the{" "}
+                  <span className="font-bold text-white">
+                    full amount upfront
+                  </span>{" "}
+                  and receive the subsidy as a{" "}
+                  <span className="font-bold text-brand-primary">
+                    reimbursement
+                  </span>{" "}
+                  after completing the required documentation and taking delivery of their bike.
+                </p>
+              </div>
+            </FadeIn>
+          </div>
 
           {/* Intro Information Card */}
           <FadeIn variant="fadeInUp" speed="normal" className="mb-20 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-md">

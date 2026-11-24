@@ -12,6 +12,7 @@ interface SecondaryHeroProps {
   layout?: "centered" | "split";
   compact?: boolean;
   wideDescription?: boolean;
+  children?: ReactNode;
 }
 
 export default function SecondaryHero({
@@ -23,6 +24,7 @@ export default function SecondaryHero({
   layout = "centered",
   compact = false,
   wideDescription = false,
+  children,
 }: SecondaryHeroProps) {
   if (layout === "split") {
     return (
@@ -94,6 +96,9 @@ export default function SecondaryHero({
             <p className={`font-roboto mx-auto ${wideDescription ? "max-w-2xl lg:max-w-none" : "max-w-2xl"} text-[16px] font-medium leading-relaxed text-white/70 sm:text-[18px]`}>
               {description}
             </p>
+          ) : null}
+          {children ? (
+            <div className="mt-8 flex justify-center">{children}</div>
           ) : null}
         </FadeIn>
       </div>
