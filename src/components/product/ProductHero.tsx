@@ -1,15 +1,20 @@
 "use client";
 
 import Image from "next/image";
+import { useRef, useState } from "react";
 import { Calendar } from "lucide-react";
 import type { Product } from "@/data/products/types";
 import FlipButton from "@/components/ui/FlipButton";
 import styles from "./ProductHero.module.css";
 
 const vehicleSizes = "(max-width: 767px) calc(100vw - 24px), (max-width: 1023px) 90vw, (max-width: 1495px) 83vw, 1162px";
+const vehicleImageClass = "pointer-events-none object-contain object-bottom transition-opacity duration-700 ease-in-out motion-reduce:transition-none";
 
 export default function ProductHero({ product }: { product: Product }) {
   const model = product.title.replace(/\s+(bike|scooty)$/i, "");
+  const hoverImages = product.heroHoverImages ?? [];
+  const nextHoverIndex = useRef(0);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
   return (
     <section className={styles.hero} aria-label={`${model} overview`}>
@@ -17,31 +22,37 @@ export default function ProductHero({ product }: { product: Product }) {
         <div className={styles.stage}>
           <span className={styles.backdropTitle} aria-hidden="true">{model}</span>
           <div className={styles.vehicle}>
-            {product.heroHoverImage ? (
+            {hoverImages.length > 0 && (
               <div
-                className={`peer ${styles.hit}`}
+                className={styles.hit}
                 style={{ ["--frame" as string]: product.heroAspect ?? 1.6 }}
+                onMouseEnter={() => {
+                  setHoverIndex(nextHoverIndex.current);
+                  nextHoverIndex.current = (nextHoverIndex.current + 1) % hoverImages.length;
+                }}
+                onMouseLeave={() => setHoverIndex(null)}
               />
-            ) : null}
+            )}
             <Image
               src={product.heroImage}
               alt={product.name}
               fill
               priority
-              className={`pointer-events-none object-contain object-bottom transition-opacity duration-700 ease-in-out ${product.heroHoverImage ? "peer-hover:opacity-0" : ""}`}
+              className={`${vehicleImageClass} ${hoverIndex === null ? "opacity-100" : "opacity-0"}`}
               sizes={vehicleSizes}
             />
-            {product.heroHoverImage ? (
+            {hoverImages.map((src, index) => (
               <Image
-                src={product.heroHoverImage}
+                key={src}
+                src={src}
                 alt=""
                 fill
                 loading="eager"
                 aria-hidden
-                className="pointer-events-none object-contain object-bottom opacity-0 transition-opacity duration-700 ease-in-out peer-hover:opacity-100"
+                className={`${vehicleImageClass} ${hoverIndex === index ? "opacity-100" : "opacity-0"}`}
                 sizes={vehicleSizes}
               />
-            ) : null}
+            ))}
           </div>
         </div>
 

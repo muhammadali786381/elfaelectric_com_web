@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight, MapPin, Headset, Mail } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import { IoHeadsetOutline, IoLocationOutline } from "react-icons/io5";
+import { MdOutlineEmail } from "react-icons/md";
 import { STORE_BADGES } from "@/data/products/types";
 
 const quickLinks = [
@@ -169,7 +171,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-5">
               <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-5 w-5 shrink-0 fill-brand-primary stroke-[var(--color-brand-primary)]" strokeWidth={1} />
+                <IoLocationOutline aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
                 <div>
                   <p className="font-poppins text-[14px] font-medium leading-5 text-text-inverse">
                     Office Location
@@ -200,7 +202,7 @@ export default function Footer() {
               </li>
 
               <li className="flex items-start gap-3">
-                <Headset className="mt-0.5 h-5 w-5 shrink-0 fill-brand-primary stroke-[var(--color-brand-primary)]" strokeWidth={1} />
+                <IoHeadsetOutline aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
                 <div>
                   <p className="font-poppins text-[14px] font-medium leading-5 text-text-inverse">Call Us</p>
                   <a
@@ -213,7 +215,7 @@ export default function Footer() {
               </li>
 
               <li className="flex items-start gap-3">
-                <Mail className="mt-0.5 h-5 w-5 shrink-0 fill-brand-primary stroke-[var(--color-brand-primary)]" strokeWidth={1} />
+                <MdOutlineEmail aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
                 <div>
                   <p className="font-poppins text-[14px] font-medium leading-5 text-text-inverse">Email Us</p>
                   <a

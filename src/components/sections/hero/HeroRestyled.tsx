@@ -11,9 +11,18 @@ import { useLoaderReady } from "@/components/layout/GlobalLoader";
 import { productCardData } from "@/components/sections/ProductShowcase";
 
 const imageSizes = "(max-width: 767px) 102vw, (max-width: 1595px) 94vw, 1500px";
-const scootySrc = "/assets/images/hero/silverscootyheromain.png";
-const scootyHoverSrc = "/assets/images/hero/redscootyheromain.png";
+const scootySrc = "/assets/images/hero/whitescootyheromain.png";
 const { props: scootyPreload } = getImageProps({ src: scootySrc, alt: "", fill: true, sizes: imageSizes });
+const hoverImages = {
+  ev125: [
+    "/assets/images/hero/Silver EV-125 electric bike.png",
+    "/assets/images/hero/Metallic red ELFA EV-125 motorcycle.png",
+  ],
+  ev1: [
+    "/assets/images/hero/redscootyheromain.png",
+    "/assets/images/hero/silverscootyhero.png",
+  ],
+};
 const sweepDuration = 0.9;
 const revealMask = "linear-gradient(90deg, black 45%, transparent 55%)";
 const concealMask = "linear-gradient(90deg, transparent 45%, black 55%)";
@@ -104,6 +113,7 @@ export default function HeroRestyled() {
   const [selected, setSelected] = useState(0);
   const [focused, setFocused] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [hoverIndex, setHoverIndex] = useState({ ev125: 1, ev1: 1 });
   const [sweeping, setSweeping] = useState(false);
   const [hold, setHold] = useState(0);
   const product = productCardData[selected];
@@ -225,8 +235,7 @@ export default function HeroRestyled() {
       </div>
 
       {/* The vehicle shares the heading's grid row to create depth. */}
-      <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-        className={styles.vehicle}>
+      <div className={styles.vehicle}>
         <motion.div
           initial={{ opacity: 0, x: "20vw" }}
           animate={ready ? { opacity: 1, x: 0 } : { opacity: 0, x: "20vw" }}
@@ -241,6 +250,8 @@ export default function HeroRestyled() {
           {productCardData.map(model => {
             const active = model.id === product.id;
             const modelIsBike = model.id === "ev125";
+            const modelKey = modelIsBike ? "ev125" : "ev1";
+            const showHoverColor = active && hovered && !sweeping;
             return (
           <motion.div key={model.id} data-hero-vehicle={model.id} aria-hidden={!active}
             className="absolute inset-0" initial={false}
@@ -253,9 +264,19 @@ export default function HeroRestyled() {
               visibility: active || sweeping ? "visible" : "hidden",
               pointerEvents: sweeping ? "none" : "auto",
             }}>
-          <div className="peer absolute inset-x-[15%] inset-y-[20%] z-50 cursor-crosshair rounded-full" />
+          <div
+            className="absolute inset-x-[15%] inset-y-[20%] z-50"
+            onMouseEnter={() => {
+              setHoverIndex(indices => ({
+                ...indices,
+                [modelKey]: (indices[modelKey] + 1) % hoverImages[modelKey].length,
+              }));
+              setHovered(true);
+            }}
+            onMouseLeave={() => setHovered(false)}
+          />
 
-          <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-700 ease-in-out peer-hover:opacity-0">
+          <div className={`pointer-events-none absolute inset-0 transition-opacity duration-700 ease-in-out motion-reduce:transition-none ${showHoverColor ? "opacity-0" : "opacity-100"}`}>
             <Image
               src={modelIsBike
                 ? "/assets/images/hero/ELFA EV-125 motorcycle with soft ground shadow-1.png"
@@ -269,19 +290,21 @@ export default function HeroRestyled() {
             />
           </div>
 
-          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out peer-hover:opacity-100">
-            <Image
-              src={modelIsBike
-                ? "/assets/images/hero/Metallic red ELFA EV-125 motorcycle.png"
-                : scootyHoverSrc}
-              alt=""
-              aria-hidden
-              fill
-              loading="eager"
-              className="object-contain object-center drop-shadow-2xl lg:object-bottom"
-              sizes={imageSizes}
-            />
-          </div>
+          {hoverImages[modelKey].map((src, index) => (
+            <div
+              key={src}
+              className={`pointer-events-none absolute inset-0 transition-opacity duration-700 ease-in-out motion-reduce:transition-none ${showHoverColor && index === hoverIndex[modelKey] ? "opacity-100" : "opacity-0"}`}
+            >
+              <Image
+                src={src}
+                alt=""
+                fill
+                loading="eager"
+                className="object-contain object-center drop-shadow-2xl lg:object-bottom"
+                sizes={imageSizes}
+              />
+            </div>
+          ))}
           </motion.div>
             );
           })}

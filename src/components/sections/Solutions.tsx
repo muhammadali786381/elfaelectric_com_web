@@ -1,10 +1,16 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import styles from "./Solutions.module.css";
 
-const solutions = [
+type SolutionItem = {
+  title: string;
+  desc: ReactNode;
+};
+
+const solutions: SolutionItem[] = [
   {
     title: "Advanced LFP Battery",
     desc: "Lithium Iron Phosphate technology enables fast charging and delivers over 3,000+ charge cycles for long-lasting use.",
@@ -19,7 +25,15 @@ const solutions = [
   },
   {
     title: "Digital LED Meter",
-    desc: "Monitor speed, battery status, riding modes and distance at a glance.",
+    desc: (
+      <>
+        Monitor speed, battery status,
+        <br />
+        riding modes and distance
+        <br />
+        at a glance.
+      </>
+    ),
   },
   {
     title: "Disc Brakes",

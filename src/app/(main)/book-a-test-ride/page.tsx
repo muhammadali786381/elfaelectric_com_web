@@ -1,8 +1,7 @@
-import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import Script from "next/script";
+import FlipButton from "@/components/ui/FlipButton";
 import SecondaryHero from "@/components/sections/SecondaryHero";
-
 import JoinRevolutionCTA from "@/components/sections/JoinRevolutionCTA";
 import { FadeIn } from "@/components/motion/FadeIn";
 
@@ -12,87 +11,35 @@ export const metadata: Metadata = {
     "Book a free test ride of the ELFA EV-125 or EV-1 Scooty. Experience 2000W power, long range, and smart features at a dealership near you.",
 };
 
-const BOOKING_IFRAME =
-  "https://app.digistartupgroup.com/widget/booking/f0FdDh2Z0n2Zam9VcR4t";
-
 const whyItems = [
-  "Responsive Performance: Feel the smooth acceleration and easy handling.",
-  "Smart Technology: Explore the digital display, app connectivity and smart features.",
-  "Versatile Riding Modes: Try different riding modes to find what suits your journey.",
-  "Everyday Comfort: Experience a ride designed to make your daily commute easier.",
+  {
+    title: "Responsive Performance",
+    desc: "Feel the smooth acceleration and easy handling.",
+  },
+  {
+    title: "Smart Technology",
+    desc: "Explore the digital display, app connectivity and smart features.",
+  },
+  {
+    title: "Versatile Riding Modes",
+    desc: "Try different riding modes to find what suits your journey.",
+  },
+  {
+    title: "Everyday Comfort",
+    desc: "Experience a ride designed to make your daily commute easier.",
+  },
 ];
 
-const scheduleItems = [
-  "Fill out the booking form below with your details.",
-  "Choose your preferred model: ELFA EV125 or EV-1 Scooty.",
-  "Select your nearest dealership and confirm your date and time. It’s that simple! Book test ride electric bike Pakistan in just within no time.",
+const bikeChoices = [
+  {
+    title: "EV-125",
+    desc: "A powerful electric motorcycle built for everyday commutes, with a range of over 100 km on a single charge.",
+  },
+  {
+    title: "EV-1 Scooty",
+    desc: "Designed for convenient everyday travel, offering a range of up to 80 km on a single charge.",
+  },
 ];
-
-const modelItems = [
-  "ELFA EV125: Pakistan’s best-selling electric bike with 2000W motor, 100km range, and 75Km/h top speed.",
-  "EV-1 Scooty: Compact electric scooty with 1500W motor, 75Km range, and 60Km/h top speed.",
-  "Both models come with 3-year battery warranty and smart app controls.",
-];
-
-const locationItems = [
-  "Karachi: DHA Phase 8, Gulshan-e-Iqbal, Saddar.",
-  "Hyderabad: Jamshoro Road.",
-  "Lahore: Shalamar Link Road.",
-];
-
-const expectItems = [
-  "Get a safety briefing from our experts.",
-  "Test speed modes (Eco, City, Sports).",
-  "Experience smart features (app controls, digital dashboard).",
-];
-
-const reasonItems = [
-  "Powerful Performance: 2000W motors for smooth rides.",
-  "Long Range: Up to 100Km per charge.",
-  "Smart Features: App controls, digital dashboard.",
-  "Affordable: Save PKR 1/km vs. fuel bikes.",
-  "Eco-Friendly: Zero emissions, zero noise.",
-];
-
-function GlassCard({
-  title,
-  intro,
-  items,
-  footer,
-  from,
-}: {
-  title: string;
-  intro?: string;
-  items: string[];
-  footer?: ReactNode;
-  from: "left" | "right";
-}) {
-  return (
-    <FadeIn
-      variant={from === "left" ? "fadeInLeft" : "fadeInRight"}
-      speed="normal"
-      className="flex h-full flex-col rounded-3xl border border-white/5 bg-white/[0.02] p-6 sm:p-8 backdrop-blur-xl transition-colors hover:bg-white/[0.04] hover:border-white/10"
-    >
-      <h2 className="font-montserrat mb-3 text-[22px] font-bold leading-snug text-white sm:text-[26px]">
-        {title}
-      </h2>
-      {intro && (
-        <p className="font-roboto mb-4 text-[15px] font-normal leading-relaxed text-white/60">
-          {intro}
-        </p>
-      )}
-      <ul className="font-roboto flex flex-col gap-3 text-[15px] font-normal leading-relaxed text-white/80">
-        {items.map((item) => (
-          <li key={item} className="flex items-start gap-3">
-            <span className="mt-[6px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-primary/20 text-brand-primary text-[10px] font-bold">✓</span>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-      {footer && <div className="mt-6 border-t border-white/10 pt-4">{footer}</div>}
-    </FadeIn>
-  );
-}
 
 export default function BookTestRidePage() {
   return (
@@ -106,84 +53,110 @@ export default function BookTestRidePage() {
         compact
       />
 
-      {/* Why + How — left / right */}
-      <section className="pt-8 pb-4 sm:pt-12 sm:pb-6">
-        <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-6 px-4 sm:px-6 lg:grid-cols-2">
-          <GlassCard
-            from="left"
-            title="Why Book a Test Ride?"
-            intro="Experience ELFA Electric up close before making your choice. Take a test ride to explore the performance, technology and everyday comfort of our electric bikes."
-            items={whyItems}
-          />
-          <GlassCard
-            from="right"
-            title="How to Schedule Your Electric Bike Demo"
-            intro="Schedule your electric bike demo Pakistan in 3 easy steps:"
-            items={scheduleItems}
-          />
+      {/* Editorial Row: Why Book a Test Ride? & CHOOSE YOUR ELFA BIKE */}
+      <section className="pt-12 pb-10 sm:pt-16 sm:pb-14 border-b border-white/[0.07]">
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-start">
+            {/* Column 1: Why Book a Test Ride? */}
+            <FadeIn variant="fadeInLeft" speed="normal">
+              <div>
+                <h2 className="font-montserrat mb-4 text-[24px] sm:text-[28px] font-bold leading-tight text-white tracking-tight">
+                  Why Book a Test Ride?
+                </h2>
+                <p className="font-roboto mb-8 text-[15px] sm:text-[16px] font-normal leading-relaxed text-white/70 max-w-xl">
+                  Experience ELFA Electric up close before making your choice. Take a test ride to explore the performance, technology and everyday comfort of our electric bikes.
+                </p>
+                <ul className="font-roboto flex flex-col gap-4 text-[15px] font-normal leading-relaxed text-white/80">
+                  {whyItems.map((item) => (
+                    <li key={item.title} className="flex items-start gap-3.5">
+                      <span className="mt-[5px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-primary/20 text-brand-primary text-[10px] font-bold">
+                        ✓
+                      </span>
+                      <span>
+                        <strong className="text-white font-medium">{item.title}:</strong>{" "}
+                        {item.desc}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </FadeIn>
+
+            {/* Column 2: CHOOSE YOUR ELFA BIKE */}
+            <FadeIn variant="fadeInRight" speed="normal" className="lg:border-l lg:border-white/[0.08] lg:pl-16">
+              <div>
+                <h2 className="font-montserrat mb-4 text-[24px] sm:text-[28px] font-bold leading-tight text-white tracking-tight uppercase">
+                  CHOOSE YOUR ELFA BIKE
+                </h2>
+                <p className="font-roboto mb-8 text-[15px] sm:text-[16px] font-normal leading-relaxed text-white/70 max-w-xl">
+                  Select your preferred ELFA model to test ride and discover electric mobility built for Pakistani roads.
+                </p>
+                <div className="flex flex-col gap-6">
+                  {bikeChoices.map((bike) => (
+                    <div
+                      key={bike.title}
+                      className="border-b border-white/[0.08] pb-6 last:border-b-0 last:pb-0"
+                    >
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-primary/20 text-brand-primary text-[10px] font-bold">
+                          ✓
+                        </span>
+                        <h3 className="font-montserrat text-[18px] sm:text-[20px] font-bold text-white tracking-wide">
+                          {bike.title}
+                        </h3>
+                      </div>
+                      <p className="font-roboto text-[15px] leading-relaxed text-white/70 pl-7">
+                        {bike.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
-      {/* Minimal text-only bridge between card rows */}
-      <section className="py-16 sm:py-20 lg:py-24">
+      {/* 4. FIND YOUR NEAREST TEST RIDE LOCATION */}
+      <section className="py-14 sm:py-18 lg:py-20">
         <FadeIn
           variant="fadeInUp"
           speed="normal"
           className="mx-auto w-full max-w-container px-4 sm:px-6"
         >
-          <div className="mx-auto max-w-3xl text-center lg:max-w-4xl">
-            <h2 className="font-montserrat text-[26px] font-bold leading-snug tracking-tight text-white sm:text-[32px]">
-              Book a test ride with an electric bike
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="font-montserrat text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-bold uppercase tracking-tight text-white sm:whitespace-nowrap">
+              FIND YOUR NEAREST <span className="text-brand-primary">TEST RIDE LOCATION</span>
             </h2>
-            <div className="font-roboto mt-5 text-[15px] leading-[1.55] text-white/55 sm:mt-6 sm:text-[16px] sm:leading-[1.6] [&_p+_p]:mt-2">
-              <p>
-                Book a test ride with an electric bike brand proudly made in Pakistan and
-                experience the future of mobility with ELFA Electric!
-              </p>
-              <p>
-                We offer free test rides for our flagship ELFA EV125 and EV-1 Scooty across
-                Karachi. Feel the power of 2000W motors, enjoy a 100Km range, and explore smart
-                features all before you buy.
-              </p>
-              <p>
-                Schedule your electric bike demo today and join us and know why we’re the best
-                electric bike and electric scooty brand!
-              </p>
+            <p className="font-roboto mt-4 text-[15px] leading-relaxed text-white/70 sm:text-[17px]">
+              Explore ELFA test ride locations and select the one most convenient for you.
+            </p>
+            <div className="mt-8 flex justify-center">
+              <FlipButton
+                href="/our-locations"
+                variant="primary"
+                shape="cut"
+                className="rounded-none h-12 sm:h-[50px] px-8 sm:px-10 text-[13px] sm:text-[14px] w-full sm:w-auto font-bold tracking-wider"
+              >
+                Find Your Nearest Location
+              </FlipButton>
             </div>
           </div>
         </FadeIn>
       </section>
 
-      {/* Models + Locations — left / right */}
-      <section className="pt-4 pb-8 sm:pt-6 sm:pb-12">
-        <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-6 px-4 sm:px-6 lg:grid-cols-2">
-          <GlassCard
-            from="left"
-            title="Available Models for Test Ride: EV125 & EV-1 Scooty"
-            items={modelItems}
-          />
-          <GlassCard
-            from="right"
-            title="Test Ride Locations in Karachi, Hyderabad & DHA"
-            intro="We offer test rides at:"
-            items={locationItems}
-          />
-        </div>
-      </section>
-
-      {/* Reach title + booking iframe */}
-      <section id="booking" className="py-10 sm:py-14">
-        <div className="mx-auto w-full max-w-container px-4 text-center sm:px-6">
-          <FadeIn variant="fadeInUp" speed="normal" className="text-center">
-            <h2 className="font-montserrat mb-4 text-[28px] font-bold leading-none text-white sm:text-[36px] lg:text-[42px]">
-              Reach Our Experts For Support
+      {/* 5. BOOK YOUR TEST RIDE (Calendar & Form) */}
+      <section id="booking" className="py-8 sm:py-12">
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6">
+          <FadeIn variant="fadeInUp" speed="normal" className="text-center mb-8 sm:mb-10">
+            <h2 className="font-montserrat mb-3 text-[28px] font-black uppercase italic tracking-tight text-white sm:text-[36px] lg:text-[44px]">
+              BOOK YOUR <span className="text-brand-primary">TEST RIDE</span>
             </h2>
-            <p className="font-roboto mx-auto mb-6 max-w-2xl text-[16px] font-normal leading-relaxed text-white/60">
-              Experience the thrill of riding our electric bikes firsthand. Book your test ride
-              today and feel the power and innovation in every journey!
+            <p className="font-roboto mx-auto max-w-2xl text-[15px] sm:text-[17px] font-normal leading-relaxed text-white/70">
+              Enter your details below, and our team will get in touch to confirm your test ride booking.
             </p>
           </FadeIn>
-          <div className="w-full overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] p-2 sm:p-4">
+          <div className="w-full overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] p-2 sm:p-4 backdrop-blur-xl">
             <iframe
               src="https://app.digistartupgroup.com/widget/booking/f0FdDh2Z0n2Zam9VcR4t" 
               style={{ width: "100%", height: "800px", border: "none", overflow: "hidden" }} 
@@ -196,30 +169,7 @@ export default function BookTestRidePage() {
         </div>
       </section>
 
-      {/* Expect + 5 Reasons — left / right */}
-      <section className="py-8 sm:py-12">
-        <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-6 px-4 sm:px-6 lg:grid-cols-2">
-          <GlassCard
-            from="left"
-            title="What to Expect During Your Test Ride"
-            intro="During your ELFA test ride, you’ll:"
-            items={expectItems}
-            footer={
-              <p className="font-roboto text-[15px] font-medium text-white/80">
-                Book test ride electric bike Pakistan for a complete experience!
-              </p>
-            }
-          />
-          <GlassCard
-            from="right"
-            title="5 Reasons to Try ELFA Electric Bikes Today"
-            items={reasonItems}
-          />
-        </div>
-      </section>
-
       <JoinRevolutionCTA secondaryButtonText="" />
-      
     </main>
   );
 }
