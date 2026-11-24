@@ -19,7 +19,7 @@ export const scootyEv1: Product = {
   priceTagline: "Luxury Living, Smartly Priced",
   heroBackground: "/assets/images/Hero-Banner-Background.webp",
   heroImage: `${IMG}/newscoottyhero.png`,
-  heroHoverImage: `${IMG}/redscootyhero.png`,
+  heroHoverImages: [`${IMG}/redscootyhero.png`, `${IMG}/silverscootyhero2.png`],
   heroAspect: 1536 / 1024,
   heroSpecs: [
     { label: "Motor Power", value: "2,000 W", icon: `${IMG}/motor-icon.png` },

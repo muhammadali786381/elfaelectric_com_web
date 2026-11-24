@@ -44,7 +44,7 @@ export type Product = {
   /** Single product photo in the hero (no slider). */
   heroImage: string;
   /** Optional second photo shown on hover (color swap). */
-  heroHoverImage?: string;
+  heroHoverImages?: readonly string[];
   /** Width / height of the hero photo, used to keep hover on the vehicle. */
   heroAspect?: number;
   heroSpecs: ProductHeroSpec[];

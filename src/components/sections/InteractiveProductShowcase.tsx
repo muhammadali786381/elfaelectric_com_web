@@ -24,10 +24,11 @@ const products = productCardData.map(product => ({
   colors: product.id === "ev125" ? [
     { name: "Black", swatch: "#202222", image: "/assets/images/hero/ELFA EV-125 motorcycle with soft ground shadow-1.png" },
     { name: "Red", swatch: "#c61b23", image: "/assets/images/hero/Metallic red ELFA EV-125 motorcycle.png" },
-    { name: "Silver", swatch: "#c9cdcf", image: "/assets/images/hero/Silver EV-125 electric bike.png" },
+    { name: "Silver", swatch: "#a6acb1", image: "/assets/images/hero/Silver EV-125 electric bike.png" },
   ] : [
-    { name: "Silver", swatch: "#d4d7d9", image: "/assets/images/hero/White ELFA EV-1 Side Profile-2.png" },
+    { name: "White", swatch: "#f3f4f5", image: "/assets/images/hero/whitescootyheromain.png" },
     { name: "Red", swatch: "#c61b23", image: "/assets/images/redscootyheromain.png" },
+    { name: "Silver", swatch: "#a6acb1", image: "/assets/images/hero/silverscootyhero.png" },
   ],
 }));
 

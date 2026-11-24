@@ -69,7 +69,6 @@
   width: min(100cqw, calc(100cqh * var(--frame)));
   height: min(100cqh, calc(100cqw / var(--frame)));
   transform: translateX(-50%);
-  cursor: crosshair;
 }
 
 .details {
