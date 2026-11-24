@@ -200,9 +200,9 @@ export default function SavingsCalculator({
                         type="button"
                         onClick={() => setActiveId(m.id)}
                         className={cn(
-                          "relative flex flex-1 sm:flex-initial h-full items-center justify-center gap-2 rounded-full px-3 sm:px-5 transition-all duration-500 ease-out",
+                          "group relative flex flex-1 sm:flex-initial h-full items-center justify-center gap-2 rounded-full px-3 sm:px-5 transition-all duration-300 ease-out",
                           active
-                            ? "bg-brand-primary text-black shadow-sm"
+                            ? "bg-brand-primary text-black shadow-sm hover:bg-[#CC5500] hover:text-white"
                             : "text-white/50 hover:bg-white/5 hover:text-white",
                         )}
                       >
@@ -212,8 +212,8 @@ export default function SavingsCalculator({
                           width={24}
                           height={24}
                           className={cn(
-                            "h-5 w-5 object-contain transition-transform duration-500",
-                            active && "scale-110"
+                            "h-5 w-5 object-contain transition-all duration-300",
+                            active && "scale-110 group-hover:brightness-0 group-hover:invert"
                           )}
                           aria-hidden
                         />
