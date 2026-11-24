@@ -81,14 +81,16 @@ export default function PaveSchemePage() {
           imageSrc="/assets/images/hero4.jpeg"
           imageAlt="PAVE Scheme 2.0"
         >
-          <a
+          <FlipButton
             href={PAVE_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-roboto inline-flex items-center justify-center rounded-full bg-brand-primary px-8 sm:px-10 py-3.5 sm:py-4 text-[15px] font-bold text-black uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-black hover:scale-105 shadow-[0_0_28px_rgba(0,200,83,0.4)]"
+            variant="primary"
+            shape="cut"
+            className="rounded-none h-12 sm:h-[50px] px-8 sm:px-10 text-[13px] sm:text-[14px] w-full sm:w-auto font-bold tracking-wider"
           >
             Apply Through the Form
-          </a>
+          </FlipButton>
         </SecondaryHero>
 
         {/* Content Flow */}
