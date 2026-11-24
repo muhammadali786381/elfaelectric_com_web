@@ -53,73 +53,67 @@ export default function BookTestRidePage() {
         compact
       />
 
-      {/* Cards Row: Why Book a Test Ride? & CHOOSE YOUR ELFA BIKE */}
-      <section className="pt-8 pb-4 sm:pt-12 sm:pb-6">
-        <div className="mx-auto grid w-full max-w-container grid-cols-1 items-stretch gap-6 px-4 sm:px-6 lg:grid-cols-2">
-          {/* Card 1: Why Book a Test Ride? */}
-          <FadeIn
-            variant="fadeInLeft"
-            speed="normal"
-            className="flex h-full flex-col justify-between rounded-3xl border border-white/5 bg-white/[0.02] p-6 sm:p-8 backdrop-blur-xl transition-colors hover:bg-white/[0.04] hover:border-white/10"
-          >
-            <div>
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold leading-snug text-white sm:text-[26px]">
-                Why Book a Test Ride?
-              </h2>
-              <p className="font-roboto mb-5 text-[15px] font-normal leading-relaxed text-white/60">
-                Experience ELFA Electric up close before making your choice. Take a test ride to explore the performance, technology and everyday comfort of our electric bikes.
-              </p>
-              <ul className="font-roboto flex flex-col gap-3.5 text-[15px] font-normal leading-relaxed text-white/80">
-                {whyItems.map((item) => (
-                  <li key={item.title} className="flex items-start gap-3">
-                    <span className="mt-[6px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-primary/20 text-brand-primary text-[10px] font-bold">
-                      ✓
-                    </span>
-                    <span>
-                      <strong className="text-white font-medium">{item.title}:</strong>{" "}
-                      {item.desc}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </FadeIn>
-
-          {/* Card 2: CHOOSE YOUR ELFA BIKE */}
-          <FadeIn
-            variant="fadeInRight"
-            speed="normal"
-            className="flex h-full flex-col justify-between rounded-3xl border border-white/5 bg-white/[0.02] p-6 sm:p-8 backdrop-blur-xl transition-colors hover:bg-white/[0.04] hover:border-white/10"
-          >
-            <div className="flex h-full flex-col">
-              <h2 className="font-montserrat mb-3 text-[22px] font-bold leading-snug text-white sm:text-[26px]">
-                CHOOSE YOUR ELFA BIKE
-              </h2>
-              <p className="font-roboto mb-5 text-[15px] font-normal leading-relaxed text-white/60">
-                Select your preferred ELFA model to test ride and discover electric mobility built for Pakistani roads.
-              </p>
-              <div className="flex flex-1 flex-col justify-between gap-4">
-                {bikeChoices.map((bike) => (
-                  <div
-                    key={bike.title}
-                    className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 transition-colors hover:border-white/10 hover:bg-white/[0.04]"
-                  >
-                    <div className="flex items-center gap-2.5 mb-2">
-                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-primary/20 text-brand-primary text-[10px] font-bold">
+      {/* Editorial Row: Why Book a Test Ride? & CHOOSE YOUR ELFA BIKE */}
+      <section className="pt-12 pb-10 sm:pt-16 sm:pb-14 border-b border-white/[0.07]">
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-start">
+            {/* Column 1: Why Book a Test Ride? */}
+            <FadeIn variant="fadeInLeft" speed="normal">
+              <div>
+                <h2 className="font-montserrat mb-4 text-[24px] sm:text-[28px] font-bold leading-tight text-white tracking-tight">
+                  Why Book a Test Ride?
+                </h2>
+                <p className="font-roboto mb-8 text-[15px] sm:text-[16px] font-normal leading-relaxed text-white/70 max-w-xl">
+                  Experience ELFA Electric up close before making your choice. Take a test ride to explore the performance, technology and everyday comfort of our electric bikes.
+                </p>
+                <ul className="font-roboto flex flex-col gap-4 text-[15px] font-normal leading-relaxed text-white/80">
+                  {whyItems.map((item) => (
+                    <li key={item.title} className="flex items-start gap-3.5">
+                      <span className="mt-[5px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-primary/20 text-brand-primary text-[10px] font-bold">
                         ✓
                       </span>
-                      <h3 className="font-montserrat text-[16px] sm:text-[17px] font-bold text-white">
-                        {bike.title}
-                      </h3>
-                    </div>
-                    <p className="font-roboto text-[14px] sm:text-[15px] leading-relaxed text-white/70 pl-6.5">
-                      {bike.desc}
-                    </p>
-                  </div>
-                ))}
+                      <span>
+                        <strong className="text-white font-medium">{item.title}:</strong>{" "}
+                        {item.desc}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
-          </FadeIn>
+            </FadeIn>
+
+            {/* Column 2: CHOOSE YOUR ELFA BIKE */}
+            <FadeIn variant="fadeInRight" speed="normal" className="lg:border-l lg:border-white/[0.08] lg:pl-16">
+              <div>
+                <h2 className="font-montserrat mb-4 text-[24px] sm:text-[28px] font-bold leading-tight text-white tracking-tight uppercase">
+                  CHOOSE YOUR ELFA BIKE
+                </h2>
+                <p className="font-roboto mb-8 text-[15px] sm:text-[16px] font-normal leading-relaxed text-white/70 max-w-xl">
+                  Select your preferred ELFA model to test ride and discover electric mobility built for Pakistani roads.
+                </p>
+                <div className="flex flex-col gap-6">
+                  {bikeChoices.map((bike) => (
+                    <div
+                      key={bike.title}
+                      className="border-b border-white/[0.08] pb-6 last:border-b-0 last:pb-0"
+                    >
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-primary/20 text-brand-primary text-[10px] font-bold">
+                          ✓
+                        </span>
+                        <h3 className="font-montserrat text-[18px] sm:text-[20px] font-bold text-white tracking-wide">
+                          {bike.title}
+                        </h3>
+                      </div>
+                      <p className="font-roboto text-[15px] leading-relaxed text-white/70 pl-7">
+                        {bike.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
